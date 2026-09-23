@@ -1,0 +1,14 @@
+{
+  "fldoc": {
+    "url": "https://fontlab.dev/fldoc/fontlab/8/",
+    "shared_assets_aborted": true,
+    "browser_error": "$(...).tooltipster is not a function",
+    "mobile_width": 390
+  },
+  "fontlab_webflow": {
+    "url": "https://www.fontlab.com/",
+    "shared_assets_aborted": true,
+    "mobile_width": 390,
+    "note": "Existing Webflow layout initializes correctly at mobile viewport; desktop-to-mobile resize retains carousel width until reload."
+  }
+}

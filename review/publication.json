@@ -1,0 +1,131 @@
+[
+  {
+    "repo": "Marketing",
+    "commit": "40bba307f23c011d3a4347f1a0d72f7fed25c702",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "blog.fontlab.com",
+    "commit": "706e7e33065dddd39431360d970fbcf376e45003",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "fontlab-partners",
+    "commit": "3bb190205cbd86ceeadba3b0048fae7c0ed73d26",
+    "dirty_files": [
+      "M mkdocs/mkdocs.yml"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "fldoc",
+    "commit": "9ed3111cc80333ad8a86e28f8e87f2d6d72963e4",
+    "dirty_files": [
+      "M mkdocs/mkdocs-fontlab-8.yml",
+      " M mkdocs/mkdocs-fontlab-gordon.yml"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "fontlab-www-toolkit",
+    "commit": "cabb4ecaf803479505e38e3fe98846865e980180",
+    "dirty_files": [
+      "M .DS_Store"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "www.fontlab.com",
+    "commit": "749788293df00578a27dff02aa5b4e6cb2290b65",
+    "dirty_files": [
+      "M .github/workflows/ci.yml",
+      " M CHANGELOG.md",
+      " M DEPENDENCIES.md",
+      " M README.md",
+      " M WORK.md",
+      " M static_docs/.htaccess",
+      " M tests/test_build.py",
+      "?? tests/test_redirects.py"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "www.vexy.art",
+    "commit": "c3f216fe68761856e058953cdeb9166adf59df6b",
+    "dirty_files": [
+      "M src_docs/mkdocs.yml"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "fontlab-python-docs",
+    "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "FontLabVI-help",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "dirty_files": [
+      "?? download-site/download-logs.zip"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "extend-fontlab",
+    "commit": "5408d9dc0a1de6a91227fd12019883a1d9afe8ec",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "getgo-fonts",
+    "commit": "48d4e6e9ae7f752232f841603cdfd43dddafbfa2",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "fontlab-vfj-file-format-spec",
+    "commit": "8e01aa1567d057dfe98900c58834d95e9435f560",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "flchimp",
+    "commit": "cde3ae44d73086a247f6e5473536207385520cfd",
+    "dirty_files": [
+      "M CHANGELOG.md",
+      " M TODO.md",
+      " M WORK.md"
+    ],
+    "remote_verified": true
+  },
+  {
+    "repo": "i.vexy.art",
+    "commit": "251ad0096249c5a88bc88317407e79eefac3ac02",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "img",
+    "publication_worktree": "/tmp/task422-img-publish",
+    "commit": "e9e8fa892568bc88b59cd0f93344d83a9c6d25a9",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "web-fontlab",
+    "publication_worktree": "/tmp/task422-web-publish",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "dirty_files": [],
+    "remote_verified": true
+  },
+  {
+    "repo": "vexy-fontlab-writing-styleguide",
+    "publication_worktree": "/tmp/task422-styleguide",
+    "commit": "4234daa291443da1def73e57e1b95884a5196e25",
+    "dirty_files": [],
+    "remote_verified": true
+  }
+]

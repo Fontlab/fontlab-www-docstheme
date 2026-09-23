@@ -1,0 +1,80 @@
+{
+  "date": "2026-09-23",
+  "commit": "e9e8fa892568bc88b59cd0f93344d83a9c6d25a9",
+  "pages_run": 35894744693,
+  "verified_sha256": {
+    "1.0.0/basecoat.js": {
+      "size": 44399,
+      "sha256": "076fda57db9ea612c0d3a832fb5e4e434be61845e82efa12e89602b0021f7f58"
+    },
+    "1.0.0/chrome/fontlab.css": {
+      "size": 254,
+      "sha256": "e3b92757d9821718ca4e004fb406723a922acdd76e782f75a38b0df027d158f6"
+    },
+    "1.0.0/chrome/partners.css": {
+      "size": 8568,
+      "sha256": "473604a3cbe1494c65d45d4d1c9c344c7402cd571a8c97d2b228a6b41ed1502d"
+    },
+    "1.0.0/components.css": {
+      "size": 1037659,
+      "sha256": "3a2ec7fd8b987e447f9713e665c712213a49cdcf68474fef244cd687cd00f813"
+    },
+    "1.0.0/editorial/fontlab-layout.css": {
+      "size": 42012,
+      "sha256": "1eec7d27536cbfbf3388af62a8748db0ec4fabbbd3421a6542f12dbd3d8ccd62"
+    },
+    "1.0.0/editorial/fontlab-materialx.css": {
+      "size": 4991,
+      "sha256": "5e0602de14bee54d5268e18f2b6a6fc76f99da7ab738c2e6063d7bb0e196d3e2"
+    },
+    "1.0.0/editorial/fontlab-theme.css": {
+      "size": 12011,
+      "sha256": "ae5d28e5aa7068c5ff82b734801e9fb46cff71411410e575b8292bf57149019f"
+    },
+    "1.0.0/editorial/fontlab-theme.js": {
+      "size": 9266,
+      "sha256": "3f278c8d4ab00e988ff4544a925e5a67070c25e4a5287381169ded0928a80004"
+    },
+    "1.0.0/editorial/marketing-vendor.css": {
+      "size": 171952,
+      "sha256": "f1d3d7902e60fc2cb35600b01c1195d484d496a3a02757f0b47f402f6c4edcee"
+    },
+    "1.0.0/editorial/styleguide-vendor.css": {
+      "size": 91254,
+      "sha256": "1e7a3f9be039f57b72300dd624c03a6c902bfe667d2512299db8b323174ffe2b"
+    },
+    "1.0.0/editorial/styleguide.css": {
+      "size": 937,
+      "sha256": "d2b9058c35dd350d2793436a03f842fb754434c31549c2907d97475e83f855df"
+    },
+    "1.0.0/licenses/basecoat-css.txt": {
+      "size": 1068,
+      "sha256": "160a6cea26ff1931297957499ab739e94c4bc79ecea18b490c9f533fa76ace78"
+    },
+    "1.0.0/licenses/daisyui.txt": {
+      "size": 1071,
+      "sha256": "8709e3ac65c84637c422dc8082b893d9997fce093751c77b2f1983bf29dbf9ea"
+    },
+    "1.0.0/licenses/tailwindcss.txt": {
+      "size": 1071,
+      "sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985"
+    },
+    "1.0.0/theme.css": {
+      "size": 2857,
+      "sha256": "b7fdeda4a0ab5b50ace90bd843c04c5294eef805d11f8d81f354d0ebf314ea23"
+    },
+    "1.0.0/theme.js": {
+      "size": 1808,
+      "sha256": "8c90298a8757a94eea9ac9767262788e56be67e4bf576f1099948fddd03759f4"
+    },
+    "specimen.css": {
+      "size": 13561,
+      "sha256": "a32a1203b21ce45e1243250e3b5f10015fefe116f205d82c89baaec717f8fbc0"
+    },
+    "specimen.js": {
+      "size": 675,
+      "sha256": "4cc937facfcf9c582e7dd0e48d00a429ac33ba25348a1f48770d54d37f0b8767"
+    }
+  },
+  "html_note": "Cloudflare replaces the Google Fonts link with same-family hosted @font-face CSS; HTML checked separately in browser."
+}

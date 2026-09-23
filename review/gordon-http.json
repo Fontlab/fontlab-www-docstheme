@@ -1,0 +1,11 @@
+{
+  "name": "gordon",
+  "url": "https://fontlab.dev/fldoc/fontlab/gordon/",
+  "success": true,
+  "assets": {
+    "components.css": 1,
+    "theme.css": 1,
+    "basecoat.js": 1,
+    "theme.js": 1
+  }
+}

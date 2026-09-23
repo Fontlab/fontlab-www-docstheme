@@ -15,7 +15,7 @@ npm ci
 npm run build
 npm test
 npx playwright install chromium
-npx playwright test
+npm run test:browser
 npm run deploy
 ```
 
@@ -87,5 +87,7 @@ Run the specimen with `python3 -m http.server --directory dist 8422`, then open
 
 ## Release evidence
 
-See `PLAN.md`, `TODO.md`, `WORK.md`, `CHANGELOG.md` and `review/`. The full task
-remains open until all consumers are built, reviewed and verified live.
+See `PLAN.md`, `TODO.md`, `WORK.md`, `CHANGELOG.md` and `review/`. Task422 is complete: 32 consumer configurations, 18 live browser checks and
+an independent review score of 96/100. Run `npm run verify:live` to refresh
+the desktop/mobile screenshots and published-site checks. The existing fldoc
+tooltipster error is documented in `review/baseline-limitations.json`.

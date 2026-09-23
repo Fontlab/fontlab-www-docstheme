@@ -9,6 +9,9 @@ daisyUI assets published at https://i.fontlab.com/fltheme26/, adopted by all
 active documentation sites and hybrid Webflow builds, including the legacy
 Extend FontLab and GetGo Fonts sites. Build, commit, push, deploy and verify live.
 
+Completed 2026-09-23. All implementation and release acceptance gates passed.
+See CHANGELOG.md and review/ for the completion record.
+
 ## Architecture
 
 Retain MaterialX as the rendering engine and preserve each site's menus, fonts,
@@ -23,7 +26,7 @@ avoid global Tailwind Preflight resets. Bridge light/dark tokens to MaterialX
 without overriding existing brand typography. Pin dependencies and retain
 redistributed license notices. Document authored markup and runtime lifecycle.
 
-## Ordered implementation
+## Completed implementation
 
 1. Inventory all authored configs, customizations, build commands, deployment
    destinations and existing dirty files. Read both supplied Basecoat/daisyUI

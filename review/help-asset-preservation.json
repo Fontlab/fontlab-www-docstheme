@@ -1,0 +1,34 @@
+{
+  "baseline": "60db3a295",
+  "verified_assets": 2459,
+  "restored_original_bytes": 1041,
+  "source_overrides": "FontLabVI-help/flvi/legacy-assets/",
+  "live_samples": [
+    {
+      "url": "https://help.fontlab.com/fontlab-vi/img/flvi-Accented_Characters_Add_Anchor.png?task422=2e8c89102",
+      "sha256": "d21ffe9b91ebac5caa204985e3d0ddc31012502ffc69035d422272305afd5d31",
+      "verified": true
+    },
+    {
+      "url": "https://help.fontlab.com/fontlab-vi/img/flvi-Accented_Characters_Add_Glyphs.png?task422=2e8c89102",
+      "sha256": "5e446eb18b3642c4ba99da990d15ea350f91fd600857ca56a26ff316dc080f6c",
+      "verified": true
+    },
+    {
+      "url": "https://help.fontlab.com/fontlab/7/manual/img/flvi-editing_guidelines_0.png?task422=2e8c89102",
+      "sha256": "9ba6c907184db297cbf7b14721a90e8ca327e65dbed0acab95cbe01b65ae4784",
+      "verified": true
+    },
+    {
+      "url": "https://help.fontlab.com/fontlab/7/manual/img/flvi-editing_guidelines_1.png?task422=2e8c89102",
+      "sha256": "397a217fea3b0e5d9a14a7ad12a63df6d2660bda24dabad80ec1eceeb41bc86b",
+      "verified": true
+    },
+    {
+      "url": "https://help.fontlab.com/fontlab-vi/fonts/fontawesome-webfont.eot?task422=2e8c89102",
+      "sha256": "a9595e5bf3b6dbbc076902b9abdea356053d69a2fe66506706de9bb39a126b8f",
+      "verified": true
+    }
+  ],
+  "deployment_run": 35901324533
+}

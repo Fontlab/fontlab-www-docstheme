@@ -50,3 +50,64 @@ Follow-up independent cascade review: 96/100; no blocking foundation defect.
 All non-custom computed properties of the native and compiled regression
 fixtures matched. Explicit Tailwind source discovery now excludes unrelated
 repository text. Repeated builds produced identical manifests.
+
+## Consumer publication and failure-driven verification
+
+2026-09-23: Basecoat/daisyUI assets and specimen are live on i.fontlab.com;
+18 non-HTML payloads match the published SHA-256 manifest. Cloudflare Fonts
+rewrites the two HTML pages' Google Font links, so those are checked in browsers.
+Toolkit 1.0.14 is published on PyPI and installed in the Ionos admin environment;
+both hybrid sites rebuilt from their existing Webflow caches and serve all four
+assets exactly once. Production source/admin mirrors are updated.
+
+Extend/GetGo preserve all 4/100 source pages and their hashed assets. Both builds
+and Pages deployments pass. Marketing, partners, blog, VFJ, fldoc and the clean
+styleguide build are deployed. The styleguide publication worktree excludes
+unpublished prose; pre-existing Adobe kit edits remain unstaged in other sites.
+Internal toolkit/flchimp docs build but have no independent Pages authority.
+
+The VI/7 builds pass six compatibility tests. VI is pinned to the source revision
+matching the prior 2019-06-24 publication, retaining VI prose rather than today's
+FontLab 7 wiki. Every pre-migration manual HTML route and image path exists again;
+legacy illustration variants are maintained as explicit source overrides.
+FontLab 8 output from fldoc is also published by the help.fontlab.com authority.
+
+PythonQt's 35 MB generated QtGui page exposed pathological MaterialX HTML search
+parsing. Core ProperDocs search builds it in 64 s; a small hook adds MaterialX's
+field/pipeline defaults and a header override enables its existing search UI.
+Browser search returns QAbstractButton without errors. The independent rollout
+review scored 94 and identified missing API site_url values; all four active and
+generator configs now include the project URLs, with fresh builds in progress.
+
+Publication isolation: img and web-fontlab publish from clean worktrees to avoid
+pre-existing local commits. fldoc's push also included its already-ahead
+31ebe3fbc auto-commit (47 IgorTips source images/numbers files outside docs).
+That existing commit was preserved; no history was rewritten.
+
+
+## Final acceptance — 2026-09-23
+
+Task422 is complete. Earlier pending statements above describe intermediate
+checkpoints, not the final state. All 32 configurations have the shared assets;
+active sites are published, internal sites are built, and archived/generator
+inputs are explicitly classified. Remote commits are verified in publication.json.
+
+Fresh acceptance: 5 Node tests, 13 sequential Chromium tests, 18/18 live browser
+checks, 108 toolkit tests, 6 help compatibility tests and one PythonQt search
+regression passed. The independent final implementation review scored 96/100.
+The 404 project-path issue is fixed in all four API configs; both legacy API
+wrappers now use clean locked builds. CDN manifest reproduction and all 18
+non-HTML published payload hashes pass.
+
+Wait, but retaining an image path does not prove its contents were retained:
+a final baseline Git-object comparison found older illustration variants.
+All 2459 historical image/font assets now match their original bytes; 1041
+per-manual source overrides preserve these across future clean builds.
+The final help Pages run 35901324533 and API run 35901285326 succeeded.
+Live image/font samples also match. Remote toolkit builder.py/theme.py hashes
+match the local released source after synchronization.
+
+The only retained browser limitation is the pre-existing fldoc tooltipster
+error, reproduced with all shared theme assets blocked. It is explicitly
+allowlisted for that preview only. No new theme runtime errors were observed.
+All screenshots, baseline limitations and publication records are in review/.

@@ -17,7 +17,7 @@ permitted Playwright fallback supplied screenshots and interaction checks.
 | --- | --- | --- |
 | Copy | Heading, intro, navigation, tab labels, form label/value/action, badge, step labels and disclosure match | No above-the-fold copy additions, removals or renames |
 | Layout | 864px centered reading column, charcoal header and two divided sections | Preserved |
-| Typography | Outfit loaded through the existing Adobe kit; 60px heading, 30px intro, 40px section headings, 17px form labels | Native web font rendering retained; generated raster lettering is not an exact font specimen |
+| Typography | Outfit loaded through Google Fonts in the specimen; consumer sites retain their Adobe kit; 60px heading, 30px intro, 40px section headings, 17px form labels | Native web font rendering retained; generated raster lettering is not an exact font specimen |
 | Palette | White canvas, charcoal header/button, light-gray input panel, red active-tab line and blue outline badge | Fixed cascade conflict that had erased badge borders and button fill |
 | Controls | Full-width underline tabs, 468px input and compact action button | Fixed vendor specificity conflict that reverted these to small pill controls |
 | Steps/disclosure | Three labeled native daisyUI steps and an initially open details control | Native daisyUI evenly spaced steps and upward open chevron retained intentionally; concept has wider step spacing and downward open chevron |

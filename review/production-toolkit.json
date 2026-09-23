@@ -1,0 +1,27 @@
+{
+  "version": "1.0.14",
+  "host": "fl_ionos",
+  "runtime": "live/api.fontlab.com/www-admin-venv",
+  "source": "live/fontlab-www-toolkit/src/fontlab_www_toolkit",
+  "source_sha256": {
+    "builder.py": "4981c513738c499f65195e9fbeed253b541e25a9807db24b7440b8f9dc52728e",
+    "theme.py": "12e37615e3cc298e95dd5b7bbc35db1cba2dc58f4475df4f4e290685840f1e18"
+  },
+  "remote_hashes_verified": true,
+  "hybrid_rebuilds": [
+    "www.fontlab.com",
+    "www.vexy.art"
+  ],
+  "latest_pages_runs": {
+    "FontLabVI-help": {
+      "run": 35901324533,
+      "conclusion": "success",
+      "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc"
+    },
+    "fontlab-python-docs": {
+      "run": 35901285326,
+      "conclusion": "success",
+      "commit": "102c98af74266d4612f43378ed83c5ce7d83336c"
+    }
+  }
+}

@@ -6,7 +6,18 @@
     "site_dir": "../docs/",
     "docs_dir": "../src_docs/md/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build",
+    "commit": "3bb190205cbd86ceeadba3b0048fae7c0ed73d26",
+    "kind": "active publication configuration",
+    "deployment": "https://partners.fontlab.com/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "blog.fontlab.com/mkdocs/mkdocs.yml",
@@ -15,7 +26,18 @@
     "site_dir": "../docs/",
     "docs_dir": "../src_docs/md/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build",
+    "commit": "706e7e33065dddd39431360d970fbcf376e45003",
+    "kind": "active publication configuration",
+    "deployment": "https://blog.fontlab.com/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "Marketing/src_docs/mkdocs.yml",
@@ -24,7 +46,18 @@
     "site_dir": "../docs/fl1992mk",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build",
+    "commit": "40bba307f23c011d3a4347f1a0d72f7fed25c702",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlab.dev/Marketing/fl1992mk/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "vexy-fontlab-writing-styleguide/src_docs/mkdocs.yml",
@@ -33,7 +66,18 @@
     "site_dir": "../docs/fl1992mk",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build (clean publication worktree)",
+    "commit": "4234daa291443da1def73e57e1b95884a5196e25",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "www.fontlab.com/src_docs/mkdocs.yml",
@@ -42,7 +86,18 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run python build.py build --skip_webflow",
+    "commit": "749788293df00578a27dff02aa5b4e6cb2290b65",
+    "kind": "active publication configuration",
+    "deployment": "https://www.fontlab.com/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "www.vexy.art/src_docs/mkdocs.yml",
@@ -51,7 +106,18 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run python build.py build --skip_webflow",
+    "commit": "c3f216fe68761856e058953cdeb9166adf59df6b",
+    "kind": "active publication configuration",
+    "deployment": "https://www.vexy.art/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "fontlab-www-toolkit/src_docs/mkdocs.yaml",
@@ -60,7 +126,17 @@
     "site_dir": null,
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, committed and pushed; no Pages deployment configured",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run properdocs build -f src_docs/mkdocs.yaml",
+    "commit": "cabb4ecaf803479505e38e3fe98846865e980180",
+    "kind": "internal documentation",
+    "deployment": "source/internal build only"
   },
   {
     "config": "fldoc/mkdocs/mkdocs-fontlab-8.yml",
@@ -69,7 +145,18 @@
     "site_dir": "../docs/fontlab/8/",
     "docs_dir": "../src/fontlab/8/md/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run properdocs build -f CONFIG",
+    "commit": "9ed3111cc80333ad8a86e28f8e87f2d6d72963e4",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlab.dev/fldoc/fontlab/8/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "fldoc/mkdocs/mkdocs-fontlab-gordon.yml",
@@ -78,7 +165,18 @@
     "site_dir": "../docs/fontlab/gordon/",
     "docs_dir": "../src/fontlab/8/dev-md-yurigordon/villion-en/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed and deployed; shared FontLab preview browser verified, Gordon HTTP verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run properdocs build -f CONFIG",
+    "commit": "9ed3111cc80333ad8a86e28f8e87f2d6d72963e4",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlab.dev/fldoc/fontlab/gordon/",
+    "evidence": "review/gordon-http.json"
   },
   {
     "config": "FontLabVI-help/flvi-dev/mkdocs.yml",
@@ -87,7 +185,17 @@
     "site_dir": "../docs/fontlab-vi-dev/",
     "docs_dir": "./devmd/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "shared theme configured; not an active publication input",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "kind": "archived reference configuration",
+    "deployment": "not published as a new site"
   },
   {
     "config": "FontLabVI-help/other/tr4m/mkdocs.yml",
@@ -96,25 +204,57 @@
     "site_dir": "./transtype-4",
     "docs_dir": "./src",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "shared theme configured; not an active publication input",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "kind": "archived reference configuration",
+    "deployment": "not published as a new site"
   },
   {
     "config": "fontlab-python-docs/fontlab7/mkdocs.yml",
     "site_name": "FontLab 7 Python API",
-    "site_url": null,
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/",
     "site_dir": "../docs",
     "docs_dir": "srcdocs/mkdocs",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlabcom.github.io/fontlab-python-docs/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "fontlab-python-docs/pythonqt/mkdocs.yml",
     "site_name": "FontLab 7 PythonQt API",
-    "site_url": null,
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
     "site_dir": "../docs/pythonqt",
     "docs_dir": "srcdocs/mkdocs",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "fontlab-vfj-file-format-spec/mkdocs.yml",
@@ -123,7 +263,17 @@
     "site_dir": null,
     "docs_dir": "src_docs",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "shared theme configured; primary mkdocs/mkdocs-vfj.yml built and deployed",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build",
+    "commit": "8e01aa1567d057dfe98900c58834d95e9435f560",
+    "kind": "alternate source configuration",
+    "deployment": "https://fontlab.dev/fontlab-vfj-file-format-spec/"
   },
   {
     "config": "fontlab-vfj-file-format-spec/mkdocs/mkdocs-vfj.yml",
@@ -132,7 +282,18 @@
     "site_dir": "../docs",
     "docs_dir": "../src_docs",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh build",
+    "commit": "8e01aa1567d057dfe98900c58834d95e9435f560",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "flchimp/mkdocs.yml",
@@ -141,7 +302,17 @@
     "site_dir": "site",
     "docs_dir": "src_docs/md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "built, committed and pushed; no Pages deployment configured",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "uv run properdocs build -f mkdocs.yml",
+    "commit": "cde3ae44d73086a247f6e5473536207385520cfd",
+    "kind": "internal documentation",
+    "deployment": "source/internal build only"
   },
   {
     "config": "web-fontlab/src/ionos/live/vexy.art/src_docs/mkdocs.yml",
@@ -150,7 +321,16 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "web-fontlab/src/ionos/live/fontlab-www-toolkit/src_docs/mkdocs.yaml",
@@ -159,7 +339,16 @@
     "site_dir": null,
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "web-fontlab/src/ionos/live/fontlab.com/src_docs/mkdocs.yml",
@@ -168,7 +357,16 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/fontlab/src_docs/mkdocs.yml",
@@ -177,7 +375,16 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/vexy/src_docs/mkdocs.yml",
@@ -186,7 +393,16 @@
     "site_dir": "../build_docs",
     "docs_dir": "md",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/blog-workdir/mkdocs/mkdocs.yml",
@@ -195,7 +411,16 @@
     "site_dir": "../docs/",
     "docs_dir": "../src_docs/md/",
     "theme": "materialx",
-    "state": "configured; build and live verification pending"
+    "state": "updated; toolkit installed and hybrid sites built on Ionos; live assets verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "kind": "production source mirror",
+    "deployment": "Ionos source/admin mirrors; no separate public site",
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
   },
   {
     "config": "extend-fontlab/src_docs/mkdocs.yml",
@@ -203,7 +428,18 @@
     "theme": "materialx",
     "docs_dir": "md",
     "site_dir": "../docs",
-    "state": "migrated source; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "5408d9dc0a1de6a91227fd12019883a1d9afe8ec",
+    "kind": "active publication configuration",
+    "deployment": "https://extend.fontlab.com/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "getgo-fonts/src_docs/mkdocs.yml",
@@ -211,54 +447,141 @@
     "theme": "materialx",
     "docs_dir": "md",
     "site_dir": "../docs",
-    "state": "migrated source; build and live verification pending"
+    "state": "built, pushed, deployed and live browser verified",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "48d4e6e9ae7f752232f841603cdfd43dddafbfa2",
+    "kind": "active publication configuration",
+    "deployment": "https://fontlabcom.github.io/getgo-fonts/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7-old.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "shared theme configured; not an active publication input",
+    "kind": "archived reference configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "not published as a new site"
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-vi.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "built, pushed, deployed and live browser verified",
+    "kind": "active publication configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "https://help.fontlab.com/fontlab-vi/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "built, pushed, deployed and live browser verified",
+    "kind": "active publication configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "https://help.fontlab.com/fontlab/7/manual/",
+    "evidence": "review/live-browser.json"
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7-alpha.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "shared theme configured; not an active publication input",
+    "kind": "archived reference configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "not published as a new site"
   },
   {
     "config": "FontLabVI-help/flvi-dev/mk-fontlab-vi.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "shared theme configured; not an active publication input",
+    "kind": "archived reference configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "not published as a new site"
   },
   {
     "config": "FontLabVI-help/flvi-dev/pdf/pdf-flvi.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "help configuration"
+    "state": "shared theme configured; not an active publication input",
+    "kind": "archived reference configuration",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
+    "deployment": "not published as a new site"
   },
   {
     "config": "fontlab-python-docs/fontlab7/pydocmk.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "generator source"
+    "state": "shared theme configured; corresponding generated-config build verified",
+    "kind": "generator source",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
+    "deployment": "https://fontlabcom.github.io/fontlab-python-docs/",
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/"
   },
   {
     "config": "fontlab-python-docs/pythonqt/pydocmk.yml",
     "theme": "materialx",
-    "state": "configured; deployment authority and build pending",
-    "kind": "generator source"
+    "state": "shared theme configured; corresponding generated-config build verified",
+    "kind": "generator source",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "build_command": "./build.sh",
+    "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
+    "deployment": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/"
   }
 ]

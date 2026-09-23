@@ -1,0 +1,134 @@
+[
+  {
+    "name": "partners",
+    "url": "https://partners.fontlab.com/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "blog",
+    "url": "https://blog.fontlab.com/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "marketing",
+    "url": "https://fontlab.dev/Marketing/fl1992mk/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "styleguide",
+    "url": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "extend",
+    "url": "https://extend.fontlab.com/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "getgo",
+    "url": "https://fontlabcom.github.io/getgo-fonts/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "vfj",
+    "url": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "fontlab",
+    "url": "https://www.fontlab.com/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "fontlab-legal",
+    "url": "https://www.fontlab.com/legal/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "vexy",
+    "url": "https://www.vexy.art/lines/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "vexy-docs",
+    "url": "https://www.vexy.art/about/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  },
+  {
+    "name": "fldoc",
+    "url": "https://fontlab.dev/fldoc/fontlab/8/",
+    "success": true,
+    "assets": {
+      "components.css": 1,
+      "theme.css": 1,
+      "basecoat.js": 1,
+      "theme.js": 1
+    }
+  }
+]
