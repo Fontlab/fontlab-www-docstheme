@@ -1,0 +1,15 @@
+/* this_file: src/editorial/styleguide.css */
+/* Site-specific additions to the shared editorial theme. */
+:root { --fl-font-table: -apple-system, BlinkMacSystemFont, "Bahnschrift", "Roboto Narrow", "Roboto Condensed", "Arial Narrow", sans-serif; }
+.md-typeset :is(.admonition, details[class~="admonition"]) { font-size: var(--fl-body-size); line-height: var(--fl-line); }
+.md-typeset .language-markdown pre > code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.md-typeset .language-markdown pre > code > span { min-width: 0; }
+.md-content__inner.md-typeset table:not([class]),
+.md-content__inner.md-typeset .table {
+  font-family: var(--fl-font-table); font-size: .82em; font-stretch: 70%;
+  font-variation-settings: "wdth" 70; line-height: 1.35;
+}
+.md-content__inner.md-typeset table:not([class]) :is(th, td),
+.md-content__inner.md-typeset .table :is(th, td) {
+  font-weight: 500; letter-spacing: .01em; padding: .4rem .55rem;
+}

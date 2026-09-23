@@ -1,0 +1,128 @@
+/* this_file: src/editorial/fontlab-materialx.css */
+
+/* MaterialX declares palette variables on body, so the renderer bridge must
+   bind at that same boundary after its palette stylesheet. */
+body[data-md-color-scheme][data-md-color-primary] {
+  --md-default-bg-color: var(--color-base-100);
+  --md-default-bg-color--light: color-mix(in oklab, var(--color-base-100) 70%, transparent);
+  --md-default-bg-color--lighter: color-mix(in oklab, var(--color-base-100) 30%, transparent);
+  --md-default-bg-color--lightest: color-mix(in oklab, var(--color-base-100) 12%, transparent);
+  --md-default-fg-color: var(--color-base-content);
+  --md-default-fg-color--light: color-mix(in oklab, var(--color-base-content) 66%, transparent);
+  --md-default-fg-color--lighter: color-mix(in oklab, var(--color-base-content) 40%, transparent);
+  --md-default-fg-color--lightest: color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  --md-primary-fg-color: var(--color-base-100);
+  --md-primary-bg-color: var(--color-base-content);
+  --md-accent-fg-color: var(--color-secondary);
+  --md-accent-bg-color: var(--color-secondary-content);
+  --md-typeset-a-color: var(--color-secondary);
+  --md-code-bg-color: var(--color-base-200);
+  --md-code-fg-color: var(--color-base-content);
+  --md-admonition-bg-color: var(--color-base-100);
+  --md-admonition-fg-color: var(--color-base-content);
+  --md-text-font: var(--fl-font-body);
+  --md-code-font: var(--fl-font-mono);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]) {
+  --fl-admonition-color: var(--fl-semantic-info);
+  --fl-admonition-content: var(--fl-semantic-info-content);
+  --md-admonition-bg-color: var(--fl-admonition-color);
+  --md-admonition-fg-color: var(--fl-admonition-content);
+  --md-admonition-border-color: color-mix(in oklab, var(--fl-admonition-content) 18%, transparent);
+  --md-admonition-title-bg-color: var(--fl-admonition-color);
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+  overflow: clip;
+  padding: 0;
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]):is(.note, .abstract, .info) {
+  --fl-admonition-color: var(--fl-semantic-info);
+  --fl-admonition-content: var(--fl-semantic-info-content);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]):is(.tip, .success, .question) {
+  --fl-admonition-color: var(--fl-semantic-success);
+  --fl-admonition-content: var(--fl-semantic-success-content);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]).warning {
+  --fl-admonition-color: var(--fl-semantic-warning);
+  --fl-admonition-content: var(--fl-semantic-warning-content);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]):is(.failure, .danger, .bug) {
+  --fl-admonition-color: var(--fl-semantic-error);
+  --fl-admonition-content: var(--fl-semantic-error-content);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]).example {
+  --fl-admonition-color: var(--fl-semantic-example);
+  --fl-admonition-content: var(--fl-semantic-example-content);
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]).quote {
+  --fl-admonition-color: var(--fl-semantic-quote);
+  --fl-admonition-content: var(--fl-semantic-quote-content);
+}
+
+.md-typeset .admonition > .admonition-title,
+.md-typeset details[class~="admonition"] > summary {
+  background-color: var(--fl-admonition-color);
+  box-sizing: border-box;
+  color: var(--fl-admonition-content);
+  margin: 0;
+  padding: 0.65rem 0.8rem 0.65rem 2.25rem;
+  width: 100%;
+}
+
+.md-typeset .admonition > .admonition-title::before,
+.md-typeset details[class~="admonition"] > summary::before {
+  background-color: currentcolor;
+}
+
+.md-typeset :is(.admonition, details[class~="admonition"]) > :not(.admonition-title, summary) {
+  color: var(--color-base-content);
+  margin-inline: 0;
+  padding-inline: 0.8rem;
+}
+
+/* MaterialX owns its div-based authoring components. daisyUI owns the
+   class-unique structural equivalents wherever they appear in the reading
+   surface; .fl-ui is a layout helper, not an ownership switch. */
+.md-typeset div.steps,
+.md-typeset div.grid.cards,
+.md-typeset div.grid > .card {
+  --fl-component-owner: materialx;
+}
+
+.md-typeset ul.steps,
+.md-typeset .card.card:not(div.grid > .card) {
+  --fl-component-owner: daisyui;
+}
+
+/* MaterialX's unlayered component rules outrank daisyUI's cascade layers.
+   Roll back only the colliding properties so ul.steps keeps daisyUI's layout. */
+.md-typeset ul.steps {
+  counter-reset: revert-layer;
+  margin: revert-layer;
+  padding-left: revert-layer;
+  position: revert-layer;
+}
+
+.md-typeset ul.steps::before {
+  content: revert-layer;
+}
+
+/* A div.grid.cards or div.grid > .card remains MaterialX-owned. A daisyUI
+   component card outside that authored structure recovers only the properties
+   shadowed by MaterialX. */
+.md-typeset .card.card:not(div.grid > .card) {
+  border: revert-layer;
+  border-radius: revert-layer;
+  display: revert-layer;
+  margin: revert-layer;
+  padding: revert-layer;
+  transition: revert-layer;
+}

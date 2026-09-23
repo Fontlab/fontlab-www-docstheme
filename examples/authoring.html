@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- this_file: examples/authoring.html -->
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Authoring · FontLab theme 2026</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="specimen.css">
+</head>
+<body>
+  <header class="specimen-header"><a class="wordmark" href="https://www.fontlab.com/">FontLab</a><span>Theme 2026</span><nav aria-label="Main"><a href="index.html">Components</a></nav></header>
+  <main>
+    <h1>Add components.</h1>
+    <p class="intro">One wrapper. Two component libraries.</p>
+    <section>
+      <h2>Load the shared assets</h2>
+      <p>Add these URLs to your ProperDocs configuration. Keep your existing MaterialX theme and site overrides.</p>
+      <pre><code>extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/components.css
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/basecoat.js
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.js</code></pre>
+      <p>For static HTML, load the CSS as stylesheets and the JavaScript as deferred scripts in the same order.</p>
+    </section>
+    <section>
+      <h2>Choose a component</h2>
+      <pre><code>&lt;div class="fltheme-components"&gt;
+  &lt;button class="btn"&gt;Basecoat&lt;/button&gt;
+  &lt;button class="du-btn du-btn-primary"&gt;daisyUI&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      <p>Follow the <a href="https://basecoatui.com/">Basecoat markup</a> or the <a href="https://daisyui.com/components/">daisyUI markup</a>, adding <code>du-</code> to each daisyUI component class. Keep the wrapper separate from the component root.</p>
+      <p>Use unique IDs for tabs, menus and their controls. Call <code>FLTheme.refresh()</code> after restoring or manually inserting containers. The host controls light/dark mode; a wrapper can opt into <code>data-fltheme-mode="dark"</code> or <code>"light"</code>.</p>
+      <p>Chart.js and Basecoat Chart are not included. Page layout utilities are not an unlimited Tailwind build: use site CSS for layout.</p>
+    </section>
+    <footer><span>FontLab theme 2026</span><a href="index.html">Component examples</a></footer>
+  </main>
+</body>
+</html>

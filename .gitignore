@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Theme build and browser artifacts
+node_modules/
+test-results/
+playwright-report/
+.omc/
+.DS_Store

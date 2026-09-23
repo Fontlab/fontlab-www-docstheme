@@ -1,0 +1,5 @@
+/* this_file: src/chrome/fontlab.css */
+/* Hide the MaterialX header (Web Component menu replaces it). Sidebars stay. */
+.md-header { display: none !important; }
+fontlab-menu { position: sticky; top: 0; z-index: 100; }
+.md-main__inner { margin-top: 0; }

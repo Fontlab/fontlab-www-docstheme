@@ -1,0 +1,6 @@
+/* this_file: src/components.css */
+/* Build-time scoping confines this reset and both libraries to the wrapper. */
+@import "tailwindcss" source(none);
+@import "basecoat-css";
+@custom-variant dark (&:where(.fltheme-components.dark, .fltheme-components.dark *));
+@source "../examples/**/*.html";

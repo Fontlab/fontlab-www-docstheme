@@ -1,0 +1,34 @@
+{
+  "src/editorial/fontlab-theme.css": {
+    "source": "Marketing/src_docs/md/assets/stylesheets/fontlab-theme.css",
+    "sha256": "f582a17137bb1e7cf3db87a743dfa9fe8c891a2ddc43906beea162ebc80f3b7f"
+  },
+  "src/editorial/fontlab-materialx.css": {
+    "source": "Marketing/src_docs/md/assets/stylesheets/fontlab-materialx.css",
+    "sha256": "f9ffd0a2f3258d70cf22aef34ba37ab793c617d4fdec239713cfda6ad49892d7"
+  },
+  "src/editorial/fontlab-layout.css": {
+    "source": "Marketing/src_docs/md/assets/stylesheets/fontlab-layout.css",
+    "sha256": "9e06c6959e9c748cfdee280660342e66fbcc79cfd92501009f8d89f75f3c066d"
+  },
+  "src/editorial/fontlab-theme.js": {
+    "source": "Marketing/src_docs/md/assets/javascripts/fontlab-theme.js",
+    "sha256": "9c521418ef83e5e29994a7cd5dd9e95cf5a1e2df2941e81ac2d3ff4c5b62c0cb"
+  },
+  "src/editorial/marketing-vendor.css": {
+    "source": "Marketing/src_docs/md/assets/stylesheets/fontlab-vendor.css",
+    "sha256": "f1d3d7902e60fc2cb35600b01c1195d484d496a3a02757f0b47f402f6c4edcee"
+  },
+  "src/editorial/styleguide-vendor.css": {
+    "source": "vexy-fontlab-writing-styleguide/src_docs/md/assets/stylesheets/fontlab-vendor.css",
+    "sha256": "1e7a3f9be039f57b72300dd624c03a6c902bfe667d2512299db8b323174ffe2b"
+  },
+  "src/chrome/fontlab.css": {
+    "source": "www.fontlab.com/src_docs/md/css/fontlab-chrome.css",
+    "sha256": "5becaef6ff1389e412a95ec4f34e814e7142309390a53cdd6fa229d8bdacdbd3"
+  },
+  "src/chrome/partners.css": {
+    "source": "fontlab-partners/src_docs/md/css/fontlab-chrome.css",
+    "sha256": "10f1bace872e6e44ea17a387477c9c58cd15d4c7b75aec55f06a41b7c9bd47fc"
+  }
+}

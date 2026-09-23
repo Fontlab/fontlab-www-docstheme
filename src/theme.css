@@ -1,0 +1,73 @@
+/* this_file: src/theme.css */
+/* The host retains its typography; components share its active palette. */
+.fltheme-components {
+  --background: var(--md-default-bg-color, #fff);
+  --foreground: var(--md-default-fg-color, #242424);
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: #242424;
+  --primary-foreground: #fff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #242424;
+  --muted: #f4f4f5;
+  --muted-foreground: #62626b;
+  --accent: #ededf0;
+  --accent-foreground: #242424;
+  --destructive: #b42318;
+  --border: #dedee3;
+  --input: #dedee3;
+  --ring: #73737c;
+  --radius: .375rem;
+  --color-base-100: var(--background);
+  --color-base-200: var(--muted);
+  --color-base-300: var(--border);
+  --color-base-content: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-content: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-content: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-content: var(--accent-foreground);
+  --color-neutral: var(--primary);
+  --color-neutral-content: var(--primary-foreground);
+  --color-info: #dbeafe;
+  --color-info-content: #1e40af;
+  --color-success: #dcfce7;
+  --color-success-content: #166534;
+  --color-warning: #fef3c7;
+  --color-warning-content: #854d0e;
+  --color-error: #fee2e2;
+  --color-error-content: #991b1b;
+  --radius-selector: .375rem;
+  --radius-field: .375rem;
+  --radius-box: .5rem;
+  --size-selector: .25rem;
+  --size-field: .25rem;
+  --du-border: 1px;
+  --depth: 0;
+  --noise: 0;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--foreground);
+  color-scheme: light;
+}
+.fltheme-components.dark {
+  --background: var(--md-default-bg-color, #202024);
+  --foreground: var(--md-default-fg-color, #f4f4f5);
+  --primary: #f4f4f5;
+  --primary-foreground: #202024;
+  --secondary: #313137;
+  --secondary-foreground: #f4f4f5;
+  --muted: #313137;
+  --muted-foreground: #b0b0ba;
+  --accent: #3b3b43;
+  --accent-foreground: #f4f4f5;
+  --border: #51515b;
+  --input: #51515b;
+  --ring: #a1a1aa;
+  color-scheme: dark;
+}
+.fltheme-components :is(button, input, select, textarea) { font-family: inherit; }

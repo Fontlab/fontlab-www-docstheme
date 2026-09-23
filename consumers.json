@@ -1,0 +1,264 @@
+[
+  {
+    "config": "fontlab-partners/mkdocs/mkdocs.yml",
+    "site_name": "FontLab Partners",
+    "site_url": "https://partners.fontlab.com/",
+    "site_dir": "../docs/",
+    "docs_dir": "../src_docs/md/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "blog.fontlab.com/mkdocs/mkdocs.yml",
+    "site_name": "FontLab Blog",
+    "site_url": "https://blog.fontlab.com/",
+    "site_dir": "../docs/",
+    "docs_dir": "../src_docs/md/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "Marketing/src_docs/mkdocs.yml",
+    "site_name": "FontLab Marketing Docs",
+    "site_url": "https://fontlab.dev/Marketing/",
+    "site_dir": "../docs/fl1992mk",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "vexy-fontlab-writing-styleguide/src_docs/mkdocs.yml",
+    "site_name": "Vexy FontLab Writing Styleguide",
+    "site_url": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "site_dir": "../docs/fl1992mk",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "www.fontlab.com/src_docs/mkdocs.yml",
+    "site_name": "FontLab",
+    "site_url": "https://www.fontlab.com/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "www.vexy.art/src_docs/mkdocs.yml",
+    "site_name": "Vexy",
+    "site_url": "https://www.vexy.art/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fontlab-www-toolkit/src_docs/mkdocs.yaml",
+    "site_name": "fontlab-www-toolkit",
+    "site_url": "https://github.com/Fontlab/fontlab-www-toolkit",
+    "site_dir": null,
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fldoc/mkdocs/mkdocs-fontlab-8.yml",
+    "site_name": "FontLab 8",
+    "site_url": "https://help.fontlab.com/fontlab/8/",
+    "site_dir": "../docs/fontlab/8/",
+    "docs_dir": "../src/fontlab/8/md/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fldoc/mkdocs/mkdocs-fontlab-gordon.yml",
+    "site_name": "FontLab 8 \u2014 Gordon",
+    "site_url": "https://help.fontlab.com/fontlab/gordon/",
+    "site_dir": "../docs/fontlab/gordon/",
+    "docs_dir": "../src/fontlab/8/dev-md-yurigordon/villion-en/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "FontLabVI-help/flvi-dev/mkdocs.yml",
+    "site_name": "FontLab VI Help",
+    "site_url": "http://help.fontlab.com/fontlab-vi/",
+    "site_dir": "../docs/fontlab-vi-dev/",
+    "docs_dir": "./devmd/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "FontLabVI-help/other/tr4m/mkdocs.yml",
+    "site_name": "TransType 4 Help",
+    "site_url": "http://help.fontlab.com/transtype-4",
+    "site_dir": "./transtype-4",
+    "docs_dir": "./src",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fontlab-python-docs/fontlab7/mkdocs.yml",
+    "site_name": "FontLab 7 Python API",
+    "site_url": null,
+    "site_dir": "../docs",
+    "docs_dir": "srcdocs/mkdocs",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fontlab-python-docs/pythonqt/mkdocs.yml",
+    "site_name": "FontLab 7 PythonQt API",
+    "site_url": null,
+    "site_dir": "../docs/pythonqt",
+    "docs_dir": "srcdocs/mkdocs",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fontlab-vfj-file-format-spec/mkdocs.yml",
+    "site_name": "VFJ Format Documentation",
+    "site_url": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "site_dir": null,
+    "docs_dir": "src_docs",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "fontlab-vfj-file-format-spec/mkdocs/mkdocs-vfj.yml",
+    "site_name": "FontLab VFJ Format",
+    "site_url": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "site_dir": "../docs",
+    "docs_dir": "../src_docs",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "flchimp/mkdocs.yml",
+    "site_name": "flchimp Documentation",
+    "site_url": "https://github.com/Fontlab/flchimp",
+    "site_dir": "site",
+    "docs_dir": "src_docs/md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/vexy.art/src_docs/mkdocs.yml",
+    "site_name": "Vexy",
+    "site_url": "https://www.vexy.art/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/fontlab-www-toolkit/src_docs/mkdocs.yaml",
+    "site_name": "fontlab-www-toolkit",
+    "site_url": "https://github.com/Fontlab/fontlab-www-toolkit",
+    "site_dir": null,
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/fontlab.com/src_docs/mkdocs.yml",
+    "site_name": "FontLab",
+    "site_url": "https://www.fontlab.com/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/fontlab/src_docs/mkdocs.yml",
+    "site_name": "FontLab",
+    "site_url": "https://www.fontlab.com/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/vexy/src_docs/mkdocs.yml",
+    "site_name": "Vexy",
+    "site_url": "https://www.vexy.art/",
+    "site_dir": "../build_docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "web-fontlab/src/ionos/live/api.fontlab.com/blog-workdir/mkdocs/mkdocs.yml",
+    "site_name": "FontLab Blog",
+    "site_url": "https://blog.fontlab.com/",
+    "site_dir": "../docs/",
+    "docs_dir": "../src_docs/md/",
+    "theme": "materialx",
+    "state": "configured; build and live verification pending"
+  },
+  {
+    "config": "extend-fontlab/src_docs/mkdocs.yml",
+    "site_url": "https://extend.fontlab.com/",
+    "theme": "materialx",
+    "docs_dir": "md",
+    "site_dir": "../docs",
+    "state": "migrated source; build and live verification pending"
+  },
+  {
+    "config": "getgo-fonts/src_docs/mkdocs.yml",
+    "site_url": "https://fontlabcom.github.io/getgo-fonts/",
+    "theme": "materialx",
+    "docs_dir": "md",
+    "site_dir": "../docs",
+    "state": "migrated source; build and live verification pending"
+  },
+  {
+    "config": "FontLabVI-help/flvi/mk-fontlab-7-old.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "FontLabVI-help/flvi/mk-fontlab-vi.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "FontLabVI-help/flvi/mk-fontlab-7.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "FontLabVI-help/flvi/mk-fontlab-7-alpha.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "FontLabVI-help/flvi-dev/mk-fontlab-vi.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "FontLabVI-help/flvi-dev/pdf/pdf-flvi.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "help configuration"
+  },
+  {
+    "config": "fontlab-python-docs/fontlab7/pydocmk.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "generator source"
+  },
+  {
+    "config": "fontlab-python-docs/pythonqt/pydocmk.yml",
+    "theme": "materialx",
+    "state": "configured; deployment authority and build pending",
+    "kind": "generator source"
+  }
+]
