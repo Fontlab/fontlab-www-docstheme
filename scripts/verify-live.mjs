@@ -29,7 +29,11 @@ try {
       await page.getByText('Reject All', { exact: true }).click({ timeout: 3000 }).catch(() => {});
       await page.waitForFunction(() => window.FLTheme?.version === '1.0.0', null, { timeout: 20000 });
       await page.locator('main, [role=main], .main-wrapper, .page-wrapper, body').first().waitFor({ state: 'visible' });
-      if (site.name === 'partners') await page.waitForFunction(() => getComputedStyle(document.querySelector('h1')).opacity === '1');
+      if (site.name === 'partners') {
+        await page.waitForLoadState('networkidle');
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForFunction(() => getComputedStyle(document.querySelector('h1')).opacity === '1');
+      }
       await page.screenshot({ path: `review/live/${site.name}-desktop.png`, animations: 'disabled' });
       row.title = await page.title();
       row.theme = await page.evaluate(() => window.FLTheme.version);
@@ -50,7 +54,11 @@ try {
       await page.reload({ waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => window.FLTheme?.version === '1.0.0');
       await page.waitForFunction(() => document.documentElement.scrollWidth <= 392, null, { timeout: 5000 }).catch(() => {});
-      if (site.name === 'partners') await page.waitForFunction(() => getComputedStyle(document.querySelector('h1')).opacity === '1');
+      if (site.name === 'partners') {
+        await page.waitForLoadState('networkidle');
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForFunction(() => getComputedStyle(document.querySelector('h1')).opacity === '1');
+      }
       await page.screenshot({ path: `review/live/${site.name}-mobile.png`, animations: 'disabled' });
       row.mobileWidth = await page.evaluate(() => document.documentElement.scrollWidth);
       row.bodyVisible = await page.locator('main, [role=main], .main-wrapper, .page-wrapper, body').first().isVisible();
