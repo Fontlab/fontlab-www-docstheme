@@ -1,4 +1,24 @@
 /* this_file: src/harmony-forms.css */
+/* Standard action buttons share metrics; explicit size/shape variants stay native. */
+.fltheme-components :is(.md-button, .btn, .du-btn):not(
+  [data-size]:not([data-size=default]), .du-btn-xs, .du-btn-sm, .du-btn-lg, .du-btn-xl,
+  .du-btn-square, .du-btn-circle, .du-btn-wide
+) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border-width: 1px;
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
 /* Shared form rhythm; label/control pairs stay closer than successive fields. */
 .fltheme-components { --fl-field-gap: max(8px, .5rem); --fl-control-size: 1.5rem; }
 .fltheme-components label[for]:not(:has(input), .du-btn, .du-drawer-overlay) {

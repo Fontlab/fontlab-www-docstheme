@@ -4,6 +4,12 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — consistent standard buttons
+
+- Matched MaterialX, Basecoat and daisyUI standard button height, padding, font
+  size, weight and line height while preserving explicit size/shape variants.
+- Added browser coverage for the three-library comparison and sized buttons.
+
 ## 2026-09-24 — Vexy mobile search regression
 
 - Added six browser cases for opaque mobile search panels with transparent headers.

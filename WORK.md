@@ -4,6 +4,18 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — consistent standard buttons
+
+Matched MaterialX, Basecoat and daisyUI standard buttons inside component wrappers:
+2.5rem height, 1rem horizontal padding, .875rem text, 600 weight and 1.25rem line
+height. Explicit size/shape variants retain their library settings.
+The screenshot's Start-page comparison failed its geometry regression before the
+fix. Build, five Node tests and all 65 browser tests passed afterward; ten checks
+across five themes at 1440/390px confirmed identical metrics. Screenshots inspected;
+no page JavaScript errors. Browser plugin unavailable; used the existing Playwright
+setup. Evidence and verification script are under `/tmp/shared-buttons-*` and
+`/tmp/verify-shared-buttons.mjs`.
+
 ## 2026-09-24 — Vexy mobile search background
 
 Reproduced the transparent search field with the homepage's `bg="transparent"`
