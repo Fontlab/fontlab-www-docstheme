@@ -6,6 +6,10 @@ this_file: PLAN.md
 
 ## Publication and documentation follow-up
 
+Completed 2026-09-24. The public guide and starter, all 19 repositories, live
+verification and pre-existing limitations are recorded in
+`review/documentation-publication.json`.
+
 Audit the current remote heads and task-owned changes in all 19 affected repositories.
 Document their individual configuration, source/output boundaries, build and publish
 routes, mobile control ownership, search, keyboard navigation and shared components.

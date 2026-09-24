@@ -13,6 +13,8 @@ Start with the [complete setup guide](https://i.fontlab.com/fltheme26/) and
 They include a pinned Python environment, a complete YAML configuration,
 template overrides, component authoring, Webflow integration and troubleshooting.
 See [AGENTS.md](AGENTS.md) for source boundaries and verification requirements.
+[Publication evidence](review/documentation-publication.json) records the deployed
+guide, the 19-repository documentation rollout and verified baseline limitations.
 
 ## Build and verify
 

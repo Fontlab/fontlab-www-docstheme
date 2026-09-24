@@ -34,18 +34,19 @@
     },
     {
       "repo": "blog.fontlab.com",
-      "commit": "f1198a3884353e1e46faf515e449e1e379583776",
+      "commit": "b3acd763d47ad8fc62da5daddbff82a5d01723e2",
       "branch": "main",
       "published": true,
       "remote_verified": true,
       "runs": [
         {
           "conclusion": "success",
-          "databaseId": 36051073058,
+          "databaseId": 36052484321,
           "name": "deploy",
           "status": "completed"
         }
-      ]
+      ],
+      "agent_instructions_target": "CLAUDE.md (AGENTS.md symlink)"
     },
     {
       "repo": "extend-fontlab",
@@ -278,6 +279,13 @@
           "status": "completed"
         }
       ]
+    },
+    {
+      "repo": "fontlab-www-docstheme",
+      "commit": "f20ab4731e9a99d58c64b1d81d2e36b5c3d71a8c",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true
     }
   ],
   "verification": {
@@ -285,7 +293,60 @@
     "node_tests": 7,
     "final_guide_browser_checks": 7,
     "starter_strict_build": true,
-    "starter_browser_checks": "menu, buttons, indexed search, right drawer, Escape, nav keys; no JS errors"
+    "starter_browser_checks": "menu, buttons, indexed search, right drawer, Escape, nav keys; no JS errors",
+    "tracked_document_audit": {
+      "repositories": 19,
+      "readme_and_effective_agents": true,
+      "consumer_theme_notes": 18
+    },
+    "live_guide": [
+      {
+        "width": 1440,
+        "passed": true,
+        "errors": [],
+        "download": "starter.zip"
+      },
+      {
+        "width": 390,
+        "passed": true,
+        "errors": [],
+        "download": "starter.zip"
+      }
+    ],
+    "live_last_paragraph": [
+      {
+        "height": 800,
+        "paragraph": "200px",
+        "container": "0px"
+      },
+      {
+        "height": 1000,
+        "paragraph": "250px",
+        "container": "0px"
+      }
+    ],
+    "public_starter_strict_build": true,
+    "public_starter_sha256": "d833c96e12899914b8531f306b6e495a8582783a21c9dd626f5c861e75b045f2",
+    "public_assets": {
+      "entries": 71,
+      "byte_identical": 66,
+      "html_exact_after_reversing_cloudflare_transforms": 5,
+      "details": "documentation-public-hashes.json"
+    },
+    "live_consumers": {
+      "total": 18,
+      "passed": 17,
+      "details": "documentation-live-consumers.json",
+      "known_failure": "fldoc: legacy Tooltipster initialization error; navigation and search assertions pass"
+    }
   },
-  "landing_page_publication": "pending"
+  "landing_page_publication": {
+    "status": "published",
+    "url": "https://i.fontlab.com/fltheme26/",
+    "source_commit": "f20ab4731e9a99d58c64b1d81d2e36b5c3d71a8c",
+    "cdn_commit": "f7c25e4606900a3fc30668d140a39be359a2a799",
+    "pages_run": 36051900877,
+    "pages_conclusion": "success",
+    "changed_url_cache_purge": "success"
+  }
 }

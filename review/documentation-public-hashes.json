@@ -1,0 +1,524 @@
+[
+  {
+    "file": "1.0.0/basecoat.js",
+    "expected": "076fda57db9ea612c0d3a832fb5e4e434be61845e82efa12e89602b0021f7f58",
+    "actual": "076fda57db9ea612c0d3a832fb5e4e434be61845e82efa12e89602b0021f7f58",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/chrome/fontlab.css",
+    "expected": "e3b92757d9821718ca4e004fb406723a922acdd76e782f75a38b0df027d158f6",
+    "actual": "e3b92757d9821718ca4e004fb406723a922acdd76e782f75a38b0df027d158f6",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/chrome/partners.css",
+    "expected": "473604a3cbe1494c65d45d4d1c9c344c7402cd571a8c97d2b228a6b41ed1502d",
+    "actual": "473604a3cbe1494c65d45d4d1c9c344c7402cd571a8c97d2b228a6b41ed1502d",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/components.css",
+    "expected": "dd583ffebaee900bd6c5148ce2bbc285f1a40abab96b0bde47480f555c2925c3",
+    "actual": "dd583ffebaee900bd6c5148ce2bbc285f1a40abab96b0bde47480f555c2925c3",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/fontlab-layout.css",
+    "expected": "1eec7d27536cbfbf3388af62a8748db0ec4fabbbd3421a6542f12dbd3d8ccd62",
+    "actual": "1eec7d27536cbfbf3388af62a8748db0ec4fabbbd3421a6542f12dbd3d8ccd62",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/fontlab-materialx.css",
+    "expected": "5e0602de14bee54d5268e18f2b6a6fc76f99da7ab738c2e6063d7bb0e196d3e2",
+    "actual": "5e0602de14bee54d5268e18f2b6a6fc76f99da7ab738c2e6063d7bb0e196d3e2",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/fontlab-theme.css",
+    "expected": "ae5d28e5aa7068c5ff82b734801e9fb46cff71411410e575b8292bf57149019f",
+    "actual": "ae5d28e5aa7068c5ff82b734801e9fb46cff71411410e575b8292bf57149019f",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/fontlab-theme.js",
+    "expected": "2a3508c7943f7c9d805035ebb367731a438056b6bf4bd1d6d8f1b374516de8bf",
+    "actual": "2a3508c7943f7c9d805035ebb367731a438056b6bf4bd1d6d8f1b374516de8bf",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/marketing-vendor.css",
+    "expected": "f1d3d7902e60fc2cb35600b01c1195d484d496a3a02757f0b47f402f6c4edcee",
+    "actual": "f1d3d7902e60fc2cb35600b01c1195d484d496a3a02757f0b47f402f6c4edcee",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/styleguide-vendor.css",
+    "expected": "1e7a3f9be039f57b72300dd624c03a6c902bfe667d2512299db8b323174ffe2b",
+    "actual": "1e7a3f9be039f57b72300dd624c03a6c902bfe667d2512299db8b323174ffe2b",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/editorial/styleguide.css",
+    "expected": "d2b9058c35dd350d2793436a03f842fb754434c31549c2907d97475e83f855df",
+    "actual": "d2b9058c35dd350d2793436a03f842fb754434c31549c2907d97475e83f855df",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/licenses/basecoat-css.txt",
+    "expected": "160a6cea26ff1931297957499ab739e94c4bc79ecea18b490c9f533fa76ace78",
+    "actual": "160a6cea26ff1931297957499ab739e94c4bc79ecea18b490c9f533fa76ace78",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/licenses/daisyui.txt",
+    "expected": "8709e3ac65c84637c422dc8082b893d9997fce093751c77b2f1983bf29dbf9ea",
+    "actual": "8709e3ac65c84637c422dc8082b893d9997fce093751c77b2f1983bf29dbf9ea",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/licenses/tailwindcss.txt",
+    "expected": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+    "actual": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/theme.css",
+    "expected": "50e5b7622b33716f450ef71f22a0780514bf2fb147981bfe3f759f73d0b056a6",
+    "actual": "50e5b7622b33716f450ef71f22a0780514bf2fb147981bfe3f759f73d0b056a6",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "1.0.0/theme.js",
+    "expected": "ee0dd12b1b2cbe40544dfa78583f0f80086ad3fe2e44a8e620c07b61f240f28e",
+    "actual": "ee0dd12b1b2cbe40544dfa78583f0f80086ad3fe2e44a8e620c07b61f240f28e",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "authoring.html",
+    "expected": "3128f6a13f3a34ec0d0086115311947e88613de8a6645563e7d0d1904cecf716",
+    "actual": "495a6ca26967792ed819f7069794cd92bd56a2a65b599a5f59b6eb76f509c685",
+    "passed": false,
+    "error": "",
+    "content_verified": true,
+    "transformations": [
+      "Cloudflare font proxy",
+      "Cloudflare Rocket Loader"
+    ]
+  },
+  {
+    "file": "index.html",
+    "expected": "595475b9b9438b1688367c1a16a4d7f243a98a288f8824bc01568b5161066292",
+    "actual": "2ffd60aed07ad6d1edf69b066eea68a2d932e6381a6f50a291a9eefc10478e74",
+    "passed": false,
+    "error": "",
+    "content_verified": true,
+    "transformations": [
+      "Cloudflare font proxy",
+      "Cloudflare Rocket Loader"
+    ]
+  },
+  {
+    "file": "materialx/404.html",
+    "expected": "0b1ae9d66bc2567c6bc751ef92803a76ebb5e3adb291d2a376e8e42681a762ab",
+    "actual": "97e33c5628389eb712378880fae1681d42c5a58a32989adf84ecf8559a2f929b",
+    "passed": false,
+    "error": "",
+    "content_verified": true,
+    "transformations": [
+      "Cloudflare font proxy",
+      "Cloudflare Rocket Loader"
+    ]
+  },
+  {
+    "file": "materialx/assets/javascripts/bundle.fc193f93.min.js",
+    "expected": "7b735958817d926da1b4c8adcd291e61396cda91f66587ad525583018dfe3f6b",
+    "actual": "7b735958817d926da1b4c8adcd291e61396cda91f66587ad525583018dfe3f6b",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ar.min.js",
+    "expected": "89a1dcb094a8491d968c151ab254a03195c87ff2adaa2408c769928284847125",
+    "actual": "89a1dcb094a8491d968c151ab254a03195c87ff2adaa2408c769928284847125",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.da.min.js",
+    "expected": "12355dc52f49ec9cfd6e2b0fd63ee497a29b81c3f6407dc8127606c4acd19871",
+    "actual": "12355dc52f49ec9cfd6e2b0fd63ee497a29b81c3f6407dc8127606c4acd19871",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.de.min.js",
+    "expected": "9682b22880003b6e5a4211448f1317d55236a9b891cce6624647e111e8bf82e0",
+    "actual": "9682b22880003b6e5a4211448f1317d55236a9b891cce6624647e111e8bf82e0",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.du.min.js",
+    "expected": "13e6571fe0be66528ae3c9303f4acaf0ab9e82263b75bf2ef29585ab4a82a57a",
+    "actual": "13e6571fe0be66528ae3c9303f4acaf0ab9e82263b75bf2ef29585ab4a82a57a",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.el.min.js",
+    "expected": "a6fd5cbbb21d127407bc31c6c4298bf92ec7e1496a1ea83d5e4add14325a0c21",
+    "actual": "a6fd5cbbb21d127407bc31c6c4298bf92ec7e1496a1ea83d5e4add14325a0c21",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.es.min.js",
+    "expected": "e3ecaf6091dfecf3ac77b268ef7439b0c0e5cb6155bd23eb077100101c5188cb",
+    "actual": "e3ecaf6091dfecf3ac77b268ef7439b0c0e5cb6155bd23eb077100101c5188cb",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.fi.min.js",
+    "expected": "ca86d20ce4ab1a51d273d5fe8f24510437a5ed69051ccfb7b2e2e3925434d71d",
+    "actual": "ca86d20ce4ab1a51d273d5fe8f24510437a5ed69051ccfb7b2e2e3925434d71d",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.fr.min.js",
+    "expected": "5250df248926dfed58b99bd3a980e19e95bf8d8735248ee471f61858c6afee80",
+    "actual": "5250df248926dfed58b99bd3a980e19e95bf8d8735248ee471f61858c6afee80",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.he.min.js",
+    "expected": "38ce33dee0d65cbf3678e42e5986c554b7900bee8f1f9e0f8136dfd700c633c8",
+    "actual": "38ce33dee0d65cbf3678e42e5986c554b7900bee8f1f9e0f8136dfd700c633c8",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.hi.min.js",
+    "expected": "631fff52e3623f2dfba35af076c6b8b5a450eeffe30a5cfac7458dab77cbe0a6",
+    "actual": "631fff52e3623f2dfba35af076c6b8b5a450eeffe30a5cfac7458dab77cbe0a6",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.hu.min.js",
+    "expected": "caa4f98730e32b7d711558a7c77d7c6b5d2855789a8cfd09deb52ec2f2d4a157",
+    "actual": "caa4f98730e32b7d711558a7c77d7c6b5d2855789a8cfd09deb52ec2f2d4a157",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.hy.min.js",
+    "expected": "0efbcb902bdb7ec0dddffa5e2ba347b74c49ffc5f43fd73ffed83528eba12e95",
+    "actual": "0efbcb902bdb7ec0dddffa5e2ba347b74c49ffc5f43fd73ffed83528eba12e95",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.it.min.js",
+    "expected": "a6b99eb8f9fb1c1898ef2b2a25e71421d1b754b67ad6a096bba644d83d319e3a",
+    "actual": "a6b99eb8f9fb1c1898ef2b2a25e71421d1b754b67ad6a096bba644d83d319e3a",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ja.min.js",
+    "expected": "c4fded308f633681a6ed53b6c10d8ca5916fdfd50f6b82ec914d725be0cb8bd6",
+    "actual": "c4fded308f633681a6ed53b6c10d8ca5916fdfd50f6b82ec914d725be0cb8bd6",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.jp.min.js",
+    "expected": "04114edc36dc114edce5afbb3c7f795f45c77d8673c1edcdca5675ddab5d5199",
+    "actual": "04114edc36dc114edce5afbb3c7f795f45c77d8673c1edcdca5675ddab5d5199",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.kn.min.js",
+    "expected": "a064d0d7438334957a442b626140fb72f4ede8ebe17eb5c4e25682d87c88bbf8",
+    "actual": "a064d0d7438334957a442b626140fb72f4ede8ebe17eb5c4e25682d87c88bbf8",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ko.min.js",
+    "expected": "73d1bdb1de4aef6c5920f516924c5ab1c440db50a6f5c6126bd0fb7cf5d37664",
+    "actual": "73d1bdb1de4aef6c5920f516924c5ab1c440db50a6f5c6126bd0fb7cf5d37664",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.multi.min.js",
+    "expected": "ffaee7f1e07179595fe8a4b7c469761f90999470e1f04dcb0a94dc2c1cb44f9c",
+    "actual": "ffaee7f1e07179595fe8a4b7c469761f90999470e1f04dcb0a94dc2c1cb44f9c",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.nl.min.js",
+    "expected": "dbebf0651a067e32a8fa473a832c6ade3a9322a2aaf15637591234a3902e37f3",
+    "actual": "dbebf0651a067e32a8fa473a832c6ade3a9322a2aaf15637591234a3902e37f3",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.no.min.js",
+    "expected": "acd8db242abb7f751000b259df6a670082e7b0c5ea7d59b496a43de401071963",
+    "actual": "acd8db242abb7f751000b259df6a670082e7b0c5ea7d59b496a43de401071963",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.pl.min.js",
+    "expected": "0402e9e885b05b0203b6ea35b54b572cedf74d65d0fec595c8b4cc7a6b646eeb",
+    "actual": "0402e9e885b05b0203b6ea35b54b572cedf74d65d0fec595c8b4cc7a6b646eeb",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.pt.min.js",
+    "expected": "225f097191a13f371dcbb3749358b37a70a3578e2f8d5d5051710dfe7e21be4e",
+    "actual": "225f097191a13f371dcbb3749358b37a70a3578e2f8d5d5051710dfe7e21be4e",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ro.min.js",
+    "expected": "6d6701f14d8a510a36e2d7313e7ffd95697699cfcdaea0f285b8cc28311b03f9",
+    "actual": "6d6701f14d8a510a36e2d7313e7ffd95697699cfcdaea0f285b8cc28311b03f9",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ru.min.js",
+    "expected": "a6d6a514a1acd902fab619e8ba55ff90ceb5cece128b60c0b6199de58bfc2acd",
+    "actual": "a6d6a514a1acd902fab619e8ba55ff90ceb5cece128b60c0b6199de58bfc2acd",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.sa.min.js",
+    "expected": "41c558a4355c3eae8f0a27ae870712738f14b0bd88038042ac8ab8b411e5817f",
+    "actual": "41c558a4355c3eae8f0a27ae870712738f14b0bd88038042ac8ab8b411e5817f",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.stemmer.support.min.js",
+    "expected": "5ff7b6bd53462911fc1311c09f654085b748338aced249e719c0b16fda0b90fb",
+    "actual": "5ff7b6bd53462911fc1311c09f654085b748338aced249e719c0b16fda0b90fb",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.sv.min.js",
+    "expected": "0c426be6a744a5cb0f8557f036a7d6988f0215fce0916d9138f95d1cc47e4e64",
+    "actual": "0c426be6a744a5cb0f8557f036a7d6988f0215fce0916d9138f95d1cc47e4e64",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.ta.min.js",
+    "expected": "17a32dc49c27c9d27945625a7e8d066d42f64ea1ce5a5b34de427723fbf9ae2a",
+    "actual": "17a32dc49c27c9d27945625a7e8d066d42f64ea1ce5a5b34de427723fbf9ae2a",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.te.min.js",
+    "expected": "079c8fcf028aeef388e98ec8607c8ea50ba9660c46797c8a119d05f8f8205838",
+    "actual": "079c8fcf028aeef388e98ec8607c8ea50ba9660c46797c8a119d05f8f8205838",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.th.min.js",
+    "expected": "348461266843e316b26820004a96d3fd87a1579829d244ce510c17293eef0439",
+    "actual": "348461266843e316b26820004a96d3fd87a1579829d244ce510c17293eef0439",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.tr.min.js",
+    "expected": "b5d0675dcb5e0f699c0a04931b81e0637679bfef5f151db8168c636ae92781e4",
+    "actual": "b5d0675dcb5e0f699c0a04931b81e0637679bfef5f151db8168c636ae92781e4",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.vi.min.js",
+    "expected": "2e39c3fd7305f6e66fc0424796a7696cb8e36dc0f5c3a83ea1bc44dfe3fecb56",
+    "actual": "2e39c3fd7305f6e66fc0424796a7696cb8e36dc0f5c3a83ea1bc44dfe3fecb56",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/min/lunr.zh.min.js",
+    "expected": "2f61041574bd677c382c16a2edfe4767b1007e1ea3572e6b149bd159ff591a47",
+    "actual": "2f61041574bd677c382c16a2edfe4767b1007e1ea3572e6b149bd159ff591a47",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/tinyseg.js",
+    "expected": "1b044c239610ef65fceff6039567442bb1692d413f5ee8686fee81b1a3067761",
+    "actual": "1b044c239610ef65fceff6039567442bb1692d413f5ee8686fee81b1a3067761",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/lunr/wordcut.js",
+    "expected": "3d38fde68af348915288e45eeb338af8256c8611fa2cfef307e6ab95808b3567",
+    "actual": "3d38fde68af348915288e45eeb338af8256c8611fa2cfef307e6ab95808b3567",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/javascripts/workers/search.2c215733.min.js",
+    "expected": "cfb35333fafd6d2eb148eba21452849fb7fbde32fdfbf986836573f963106188",
+    "actual": "cfb35333fafd6d2eb148eba21452849fb7fbde32fdfbf986836573f963106188",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/stylesheets/main.314bbef5.min.css",
+    "expected": "314bbef5bf9ab3a776c5b1bb3ae42f0db5de636bfe2b1ddd6e67de3d35384d8b",
+    "actual": "314bbef5bf9ab3a776c5b1bb3ae42f0db5de636bfe2b1ddd6e67de3d35384d8b",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/assets/stylesheets/palette.a45159b5.min.css",
+    "expected": "a45159b56103e8b1ad8240a01ec0235924a2bd19e00572efaf4243e82128792d",
+    "actual": "a45159b56103e8b1ad8240a01ec0235924a2bd19e00572efaf4243e82128792d",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/controls.js",
+    "expected": "42da0eaf063f6ba0b681b8a665117d1137bbd873c1b6cfae9d58c3b764e86714",
+    "actual": "42da0eaf063f6ba0b681b8a665117d1137bbd873c1b6cfae9d58c3b764e86714",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "materialx/index.html",
+    "expected": "e89b347dd636ecf84d84f40268cadcbae5bcc60b163341324120e21f041d43f6",
+    "actual": "963b94d4204e7cf6bf3bdbfb04cc39c0a15a58f7225c983b7b904ebce5d4e663",
+    "passed": false,
+    "error": "",
+    "content_verified": true,
+    "transformations": [
+      "Cloudflare font proxy",
+      "Cloudflare Rocket Loader"
+    ]
+  },
+  {
+    "file": "materialx/specimen/index.html",
+    "expected": "07f26e1231643ca2d369297f83aecbc35dd8d1214748cd991270da4d7066a837",
+    "actual": "28952dfc027369e01c99b80fe806c5671e289732ed02b5bbd0279885ec53d5dd",
+    "passed": false,
+    "error": "",
+    "content_verified": true,
+    "transformations": [
+      "Cloudflare font proxy",
+      "Cloudflare Rocket Loader"
+    ]
+  },
+  {
+    "file": "specimen.css",
+    "expected": "291c529f8b99eabc03fc9fa967d968e48c067f331ba1065f2fa207bc3c7e4c61",
+    "actual": "291c529f8b99eabc03fc9fa967d968e48c067f331ba1065f2fa207bc3c7e4c61",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "specimen.js",
+    "expected": "4cc937facfcf9c582e7dd0e48d00a429ac33ba25348a1f48770d54d37f0b8767",
+    "actual": "4cc937facfcf9c582e7dd0e48d00a429ac33ba25348a1f48770d54d37f0b8767",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter.zip",
+    "expected": "d833c96e12899914b8531f306b6e495a8582783a21c9dd626f5c861e75b045f2",
+    "actual": "d833c96e12899914b8531f306b6e495a8582783a21c9dd626f5c861e75b045f2",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/README.md",
+    "expected": "67f60b7e62e6f40f4ca772d6e1dd10084540f2b4f6e8722589e2c53dd617444d",
+    "actual": "67f60b7e62e6f40f4ca772d6e1dd10084540f2b4f6e8722589e2c53dd617444d",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/docs/index.md",
+    "expected": "c00fcab402833574ea19327d548cc6e562f229a9f3d91148d680c5a781fbd44f",
+    "actual": "c00fcab402833574ea19327d548cc6e562f229a9f3d91148d680c5a781fbd44f",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/docs/next.md",
+    "expected": "b3d32de82aaeb0a21a09fd4d215a908d6484373120dc1c5d125ec74c074772f3",
+    "actual": "b3d32de82aaeb0a21a09fd4d215a908d6484373120dc1c5d125ec74c074772f3",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/mkdocs.yml",
+    "expected": "1e0a3717e145894cecc1cb7fac1c4371a3ddd58546cdfb2d0cd77954850d266c",
+    "actual": "1e0a3717e145894cecc1cb7fac1c4371a3ddd58546cdfb2d0cd77954850d266c",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/overrides/main.html",
+    "expected": "663f146a70a7f1c41fd59a697ce743172d480536767c4fb2aca746cc885cc916",
+    "actual": "663f146a70a7f1c41fd59a697ce743172d480536767c4fb2aca746cc885cc916",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "starter/requirements.txt",
+    "expected": "4a5ddc0aa6b63f34a7886c5e434be5a22c2587c49026fa9cf337ccef8cda58a5",
+    "actual": "4a5ddc0aa6b63f34a7886c5e434be5a22c2587c49026fa9cf337ccef8cda58a5",
+    "passed": true,
+    "error": ""
+  },
+  {
+    "file": "manifest.json",
+    "expected": "575a049b5d6b4232f8b786df3ee5c56bd8aae3a8c7f1904f1659959df7a8bb9b",
+    "actual": "575a049b5d6b4232f8b786df3ee5c56bd8aae3a8c7f1904f1659959df7a8bb9b",
+    "passed": true,
+    "error": ""
+  }
+]

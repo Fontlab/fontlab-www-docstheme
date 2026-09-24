@@ -17,6 +17,9 @@ this_file: CHANGELOG.md
   unrelated local changes and published those notes from clean remote-based worktrees.
 - Updated the obsolete browser assertion to test final-paragraph spacing, preserving
   the requested removal of padding from the full content container.
+- Published the guide and starter to the CDN; verified both public screen sizes,
+  the downloaded archive and every deployed asset. Corrected the blog AGENTS symlink
+  target without replacing its existing instructions.
 - Verification: 66 browser tests, seven Node tests, seven final guide/UI checks and
   a fresh starter browser check. Publication evidence is in
   `review/documentation-publication.json`; pre-existing unrelated CI failures are

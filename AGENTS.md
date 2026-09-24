@@ -49,7 +49,7 @@ Keep screenshots/logs outside source unless an explicit deliverable requires the
 Browser tests fetch built `dist/`; do not rebuild it while tests are running.
 
 When editing setup instructions, extract `dist/starter.zip` into a fresh directory,
-install its pinned requirements and run `uv run properdocs build --strict` there.
+install its pinned requirements and run `uv run properdocs build -f mkdocs.yml --strict` there.
 Verify its menu, search, keyboard navigation and components in a browser. Keep
 copyable YAML/template snippets in the guide identical to the starter sources.
 

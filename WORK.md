@@ -35,6 +35,25 @@ the errors match. Documentation commits changed only README, AGENTS and THEME.
 Pages jobs completed successfully wherever triggered; these package/build failures
 are not presented as passing tests and were not changed as part of site documentation.
 
+Final publication: source `f20ab47`, CDN `f7c25e4`, successful Pages run
+`36051900877`. The public guide passes 1440px and 390px checks for section links,
+overflow, tabs, form interaction, dark mode and ZIP download. Both downloaded ZIPs
+match the built archive; a fresh public-download extraction and installation builds
+with the exact documented strict command. Live screenshots were inspected.
+
+All 70 manifest entries plus the manifest were fetched: 66 match byte-for-byte;
+five HTML pages match exactly after reversing Cloudflare font-proxy and Rocket
+Loader transformations. The live consumer sweep passes 17 of 18 sites; fldoc alone
+retains the previously recorded Tooltipster initialization error. Its navigation
+and search assertions pass. This is not reported as a clean console result.
+
+The tracked-document audit checks all 19 repositories, resolving symlinks. It caught
+blog's AGENTS.md link to CLAUDE.md; follow-up `b3acd76` preserves the full existing
+instructions and publishes the missing maintenance notes. Blog deployment
+`36052484321` succeeded. Last-paragraph spacing was rechecked live at 800/1000px:
+200/250px on the final paragraph, zero on the content container. No task-owned
+publication work remains; unrelated worktree edits and baseline CI failures remain.
+
 ## 2026-09-24 — final paragraph spacing
 
 Replaced the content-container padding rule with the requested last-paragraph

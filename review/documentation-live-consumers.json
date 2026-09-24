@@ -1,0 +1,845 @@
+[
+  {
+    "name": "ornotto",
+    "url": "https://fontlab.org/ornotto/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "marketing",
+    "url": "https://fontlab.dev/Marketing/fl1992mk/showcase/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "styleguide",
+    "url": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "partners",
+    "url": "https://partners.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "fontlab",
+    "url": "https://www.fontlab.com/legal/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 334,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 744,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1044,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "global",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "global",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "global",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "vexy",
+    "url": "https://vexy.art/about/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 334,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 744,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1044,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "global",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "global",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "global",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "blog",
+    "url": "https://blog.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "extend",
+    "url": "https://extend.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -523,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "getgo",
+    "url": "https://fontlabcom.github.io/getgo-fonts/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "vfj",
+    "url": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -618,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "fldoc",
+    "url": "https://fontlab.dev/fldoc/fontlab/8/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [
+      "$(...).tooltipster is not a function"
+    ],
+    "passed": false,
+    "stage": "horizontal overflow 1100",
+    "failure": "expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"$(...).tooltipster is not a function\",\n+ ]",
+    "state": {
+      "y": 0,
+      "html": "w-mod-js js-focus-visible js fl-mobile-navigation fontlab-logo-ready",
+      "drawer": false,
+      "search": false,
+      "body": null,
+      "overflow": "visible",
+      "height": 3296,
+      "style": null
+    }
+  },
+  {
+    "name": "gordon",
+    "url": "https://fontlab.dev/fldoc/fontlab/gordon/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "python-api",
+    "url": "https://fontlabcom.github.io/fontlab-python-docs/",
+    "checks": [],
+    "errors": [],
+    "passed": true,
+    "integration": "native MaterialX; no global web component"
+  },
+  {
+    "name": "pythonqt-api",
+    "url": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
+    "checks": [],
+    "errors": [],
+    "passed": true,
+    "integration": "native MaterialX; no global web component"
+  },
+  {
+    "name": "help-vi",
+    "url": "https://help.fontlab.com/fontlab-vi/",
+    "checks": [],
+    "errors": [],
+    "passed": true,
+    "integration": "native MaterialX; no global web component"
+  },
+  {
+    "name": "help-7",
+    "url": "https://help.fontlab.com/fontlab/7/manual/",
+    "checks": [],
+    "errors": [],
+    "passed": true,
+    "integration": "native MaterialX; no global web component"
+  },
+  {
+    "name": "help-8",
+    "url": "https://help.fontlab.com/fontlab/8/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "specimen-native",
+    "url": "https://i.fontlab.com/fltheme26/materialx/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  }
+]
