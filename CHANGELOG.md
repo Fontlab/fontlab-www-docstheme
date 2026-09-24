@@ -4,6 +4,16 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — page and history shortcuts
+
+- Right and Alt+Right follow the next documentation page; Alt+Left follows the
+  previous page; Left goes back in browser history. Applies through the shared
+  theme to ProperDocs/MaterialX sites and the CDN specimen/authoring pages.
+- Preserve editing and widget shortcuts, stop at navigation boundaries, and
+  ignore repeated navigation while a key is held down.
+- Keep the editorial contents toggle below the header by leaving local search
+  placement to the shared navigation adapter.
+
 ## 2026-09-24 — desktop local search
 
 - Connected the global search loupe to MaterialX search at every screen width.

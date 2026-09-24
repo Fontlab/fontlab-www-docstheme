@@ -199,7 +199,7 @@
       }
 
       const search = document.querySelector(".md-sidebar--primary .md-search");
-      if (search) {
+      if (search && search.getClientRects().length) {
         root.style.setProperty("--fl-toc-top", `${Math.max(0, search.getBoundingClientRect().top)}px`);
         return;
       }
@@ -216,6 +216,8 @@
   // MaterialX initializes search inside the header; move the live node (with
   // its listeners intact) to the top of the left rail.
   function relocateSearch() {
+    // The shared navigation adapter owns the all-width local search dialog.
+    if (document.documentElement.classList.contains("fl-mobile-navigation")) return;
     const search = document.querySelector(".md-search");
     const inner = document.querySelector(".md-sidebar--primary .md-sidebar__inner");
     if (search && inner && !inner.contains(search)) inner.insertBefore(search, inner.firstChild);

@@ -116,6 +116,18 @@ uses the vanilla template and provides both ownership selectors. The build uses
 Run `node scripts/verify-mobile-navigation.mjs --local` to test candidate assets
 on published sites; omit `--local` to check the published CDN.
 
+## Keyboard navigation
+
+While reading a page, **Right** or **Alt+Right** opens the next page in the
+documentation navigation; **Alt+Left** opens the previous page. **Left** goes
+back in browser history. Next/previous use ProperDocs' generated `rel` links,
+with the primary navigation as a fallback. At either end, they do not wrap.
+The CDN component and authoring pages provide the same controls.
+
+Search, editable fields, interactive widgets, open dialogs, selected text and
+other modifier combinations retain their normal keyboard behavior. Held keys
+do not repeatedly navigate. Plain Webflow pages are unaffected.
+
 ## Existing customizations
 
 `src/chrome/` centralizes the existing FontLab chrome. `src/editorial/` contains

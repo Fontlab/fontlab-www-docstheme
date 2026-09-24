@@ -720,12 +720,17 @@
     "docs_dir": "md",
     "theme": "materialx",
     "kind": "active publication configuration outside sibling checkout root",
-    "state": "shared CDN integration; no local source change required",
+    "state": "shared CDN components and Marketing/styleguide editorial design",
     "assets": [
       "https://i.fontlab.com/fltheme26/1.0.0/components.css",
       "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
       "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
-      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/editorial/marketing-vendor.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-materialx.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-layout.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-theme.js"
     ],
     "deployment": "https://fontlab.org/ornotto/",
     "mobile_controls": {

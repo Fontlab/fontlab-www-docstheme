@@ -18,6 +18,14 @@ for (const [name, path] of [
     await page.goto(`http://127.0.0.1:8423/${path}`);
     await expect(page.locator('main')).toBeVisible();
     await expect.poll(() => page.evaluate(() => window.FLTheme?.version)).toBe('1.0.0');
+    if (name === 'marketing') {
+      await page.waitForLoadState('load');
+      await expect(page.locator('body > .fl-local-search')).toHaveCount(1);
+      const toc = page.locator('[data-fl-toc-toggle]');
+      await toc.click();
+      await expect(toc).toHaveAttribute('aria-expanded', 'true');
+      await toc.click();
+    }
     await page.locator('.md-content__inner').evaluate(el => {
       const specimen = document.createElement('div');
       specimen.className = 'fltheme-components';

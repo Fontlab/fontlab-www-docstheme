@@ -205,3 +205,27 @@ in review/desktop-search-live-initial.json and review/desktop-search-live-rechec
 the aggregate report uses the successful recheck. Delivery summary:
 review/desktop-search-delivery.json. Desktop screenshots for the five requested
 local-search sites are recorded at 1440px in review/menu-integration-live/.
+
+## 2026-09-24 — page-order and browser-history shortcuts
+
+Added the requested Right/Alt+Right next-page, Alt+Left previous-page and Left
+browser-history mappings to the shared runtime. ProperDocs relation links define
+page order, with normalized primary-nav links as a fallback. Editable controls,
+widgets, open dialogs, text selections and modifier combinations remain native;
+held keys and page-order boundaries cannot repeatedly navigate or wrap. Added
+relations and runtime loading to the two static CDN documentation pages.
+
+Five new browser tests failed before implementation and passed afterwards. The
+full suite passed 35 browser cases plus five Node cases. Real-consumer checks
+and publication are in progress. During the Ornotto editorial migration, fixed
+an older search relocation that could position the contents toggle behind the
+header; the shared navigation adapter now retains ownership of its search dialog.
+
+Candidate verification: all four requested navigation/history behaviors passed
+across 19 public page entries (the Vexy auxiliary page has no declared next page).
+The 17 non-legacy entries were also console-clean. fldoc and Gordon emitted the
+previously observed Tooltipster initialization error during navigation; their
+shortcut assertions still passed, and their strict console rechecks retain the
+error. This is a recorded existing dependency issue, not a waived shortcut test.
+The Marketing editorial regression additionally verifies search remains outside
+the hidden header/sidebar and its contents toggle can be clicked.

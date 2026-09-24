@@ -50,7 +50,7 @@ const styles = await compileCascade({
 });
 await rm('dist/components.raw.css');
 await rm('dist/daisy.raw.css');
-await writeFile('dist/1.0.0/theme.js', `${await readFile('src/navigation.js', 'utf8')}\n${await readFile('src/theme.js', 'utf8')}`);
+await writeFile('dist/1.0.0/theme.js', `${await readFile('src/navigation.js', 'utf8')}\n${await readFile('src/keyboard.js', 'utf8')}\n${await readFile('src/theme.js', 'utf8')}`);
 for (const folder of ['editorial', 'chrome']) await cp(`src/${folder}`, `dist/1.0.0/${folder}`, { recursive: true });
 
 const vendor = 'node_modules/basecoat-css/dist/js';
