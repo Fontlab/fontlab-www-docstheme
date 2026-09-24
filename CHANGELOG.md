@@ -4,7 +4,7 @@ this_file: CHANGELOG.md
 
 # Changelog
 
-## 2026-09-24 — responsive navigation, verified locally
+## 2026-09-24 — responsive navigation, published and verified
 
 - Added the shared mobile default: the global menu scrolls away while a 44px
   MaterialX hamburger stays at the top. Restores the drawer trigger in older
@@ -12,7 +12,10 @@ this_file: CHANGELOG.md
 - Verified keyboard activation, Escape/focus return, scrolling and drawer
   visibility on seven published sites with candidate assets at phone/tablet
   widths, plus desktop checks. All 16 browser tests and five Node tests pass.
-- CDN publication and post-publication verification remain pending.
+- Published CDN commit `40721ae` (Pages run `35995541134`) and verified
+  exact public CSS/JS hashes. All seven sites pass the same interaction checks
+  against public assets. Marketing commit `0c2b294` (run `35995637277`) puts
+  Home first inside Showcase, leaving only Showcase and Design tabs.
 
 ## 2026-09-23 — task422 completed
 

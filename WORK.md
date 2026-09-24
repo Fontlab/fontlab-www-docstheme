@@ -24,7 +24,16 @@ Escape closes and restores focus, and navigation links enter the viewport.
 Fixed double activation from MaterialX's document-level Enter listener.
 Consent dialogs are dismissed through their visible Reject All control.
 Screenshots and results: `review/mobile-navigation-candidate/`.
-Publication and live CDN verification are the remaining gates.
+Publication is complete: CDN `40721ae`, successful Pages run `35995541134`.
+Both public asset hashes match the local build. All seven sites pass live at
+390px and 800px, with desktop checks at 1440px. Public Marketing navigation
+is exactly Showcase / Design, with Home first inside Showcase; its isolated
+publication `0c2b294` passed 108 tests and Pages run `35995637277`.
+
+Cloudflare initially served cached assets. Available credentials lacked cache
+purge permission (401); no purge succeeded. The public cache subsequently
+refreshed, and the final unmodified-URL hash and browser checks passed.
+Evidence: `review/mobile-navigation-live/`, asset hashes and publication JSON.
 
 ## 2026-09-23: task422 baseline
 

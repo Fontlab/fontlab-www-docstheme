@@ -1,0 +1,12 @@
+[
+  {
+    "asset": "theme.js",
+    "sha256": "cf9367fd5f555923d579b8fbf4edf81787b20b1a5b73157cd587f6818258d087",
+    "matches": true
+  },
+  {
+    "asset": "theme.css",
+    "sha256": "087007a601a2bcdd484f686c04ef18e6b0097cbd7336d5d276e5464927dba621",
+    "matches": true
+  }
+]

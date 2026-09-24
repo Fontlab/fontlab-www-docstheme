@@ -1,0 +1,212 @@
+[
+  {
+    "name": "ornotto",
+    "url": "https://fontlab.org/ornotto/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "marketing",
+    "url": "https://fontlab.dev/Marketing/fl1992mk/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -473,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -186,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "styleguide",
+    "url": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "partners",
+    "url": "https://partners.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "fontlab",
+    "url": "https://www.fontlab.com/legal/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "vexy",
+    "url": "https://vexy.art/about/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  {
+    "name": "blog",
+    "url": "https://blog.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 0,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true
+  }
+]

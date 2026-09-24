@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-24",
+  "theme_source": "cb05e36",
+  "cdn": {
+    "commit": "40721aebef8e3bbf4955ed9a3c559755f9621d6f",
+    "deployment": "https://github.com/Fontlab/img/actions/runs/35995541134",
+    "conclusion": "success"
+  },
+  "marketing": {
+    "commit": "0c2b29407ed4caf3c27ff9d5d5a408f57daba675",
+    "deployment": "https://github.com/Fontlab/Marketing/actions/runs/35995637277",
+    "conclusion": "success",
+    "node_tests": 108,
+    "live_tabs": [
+      "Showcase",
+      "Design"
+    ],
+    "first_showcase_entry": "Home"
+  },
+  "browser_report": "mobile-navigation-live/report.json",
+  "asset_hashes": "mobile-navigation-asset-hashes.json",
+  "cache_purge": "Not performed: available credentials lacked permission; public cache refreshed before final checks."
+}
