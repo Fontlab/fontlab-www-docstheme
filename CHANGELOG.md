@@ -13,6 +13,8 @@ this_file: CHANGELOG.md
 - Extended both-brand ownership tests to desktop results, centering, backdrop
   dismissal and Escape/focus return, plus native pages without a global menu.
 - Build, five Node tests, 30 browser tests and all 18 candidate page checks pass.
+- Published both menu scripts and shared assets; all four public hashes match.
+  Live acceptance covers 18 pages (one legacy Tooltipster error passed recheck).
 
 ## 2026-09-24 — integrated mobile controls (issue 212)
 

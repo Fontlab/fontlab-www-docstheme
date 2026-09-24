@@ -192,3 +192,16 @@ candidate interaction suite passed all 18 entries, including desktop searches
 at 1280, 1440 and 1920px, mobile controls at 390, 800 and 1100px, both global
 exceptions and four native-only legacy pages. All 63 publication files match
 the build manifest. Candidate evidence: review/menu-integration-candidate/report.json.
+
+Published source `f2266be`, FontLab CDN `2e210d1` (Pages run 36009474949), and
+Vexy menu `e2b13ba` (Pages run 36009476116). Both Pages deployments succeeded.
+Purged only the four changed CDN URLs; every public asset matches the tested
+build byte for byte (review/desktop-search-live-hashes.json).
+
+Live acceptance passed all 18 pages. All search interactions passed on the first
+run; fldoc additionally reported a legacy Tooltipster initialization error. Its
+isolated strict recheck passed with no page errors. Both attempts are retained
+in review/desktop-search-live-initial.json and review/desktop-search-live-recheck.json;
+the aggregate report uses the successful recheck. Delivery summary:
+review/desktop-search-delivery.json. Desktop screenshots for the five requested
+local-search sites are recorded at 1440px in review/menu-integration-live/.

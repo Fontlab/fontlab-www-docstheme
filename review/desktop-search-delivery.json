@@ -1,0 +1,19 @@
+{
+  "verified_at": "2026-09-24T14:05:35.198171+00:00",
+  "source_commit": "f2266be",
+  "fontlab_cdn_commit": "2e210d1",
+  "vexy_cdn_commit": "e2b13ba",
+  "pages_runs": [
+    36009474949,
+    36009476116
+  ],
+  "node_tests": 5,
+  "browser_tests": 30,
+  "candidate_pages": 18,
+  "live_pages": 18,
+  "public_asset_hashes": "desktop-search-live-hashes.json",
+  "live_report": "menu-integration-live/report.json",
+  "initial_live_report": "desktop-search-live-initial.json",
+  "recheck_report": "desktop-search-live-recheck.json",
+  "note": "All search interactions passed on the first live run. fldoc reported a legacy Tooltipster initialization error; its isolated strict recheck passed with no page errors. The aggregate uses that recheck."
+}

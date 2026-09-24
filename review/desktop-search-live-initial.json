@@ -622,9 +622,22 @@
         "focusReturn": true
       }
     ],
-    "errors": [],
-    "passed": true,
-    "stage": "horizontal overflow 1100"
+    "errors": [
+      "$(...).tooltipster is not a function"
+    ],
+    "passed": false,
+    "stage": "horizontal overflow 1100",
+    "failure": "expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"$(...).tooltipster is not a function\",\n+ ]",
+    "state": {
+      "y": 0,
+      "html": "w-mod-js js-focus-visible js fl-mobile-navigation fontlab-logo-ready",
+      "drawer": false,
+      "search": false,
+      "body": null,
+      "overflow": "visible",
+      "height": 3046,
+      "style": null
+    }
   },
   {
     "name": "gordon",

@@ -1,0 +1,59 @@
+[
+  {
+    "name": "fldoc",
+    "url": "https://fontlab.dev/fldoc/fontlab/8/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1280,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1440,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      },
+      {
+        "width": 1920,
+        "desktopSearch": "materialx",
+        "focusReturn": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  }
+]
