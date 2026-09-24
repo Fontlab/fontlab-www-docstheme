@@ -1,6 +1,5 @@
 /* this_file: src/harmony-display.css */
 /* Reading components share the same scale, surfaces and spacing across libraries. */
-article.md-typeset > p:last-of-type { padding-bottom: 25vh !important; }
 :root { --fl-key-bg: #f4f4f5; }
 [data-md-color-scheme=slate] { --fl-key-bg: #313137; }
 .md-typeset kbd, .fltheme-components kbd {
@@ -85,18 +84,34 @@ article.md-typeset > p:last-of-type { padding-bottom: 25vh !important; }
 .fltheme-components .du-countdown > * { --du-value: var(--value, 0); --du-digits: var(--digits, 1); }
 .fltheme-components .du-countdown { vertical-align: middle; margin-inline-end: .25em; }
 
-/* Keep the approved daisyUI semantic colors and type size for all admonitions. */
+/* A shared text column keeps every body block aligned with its heading. */
 .md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) {
-  --fl-note-bg: #dbeafe; --fl-note-fg: #1e40af;
-  background: var(--fl-note-bg); color: var(--fl-note-fg); font-size: .875rem; line-height: 1.5;
-  border: 1px solid color-mix(in srgb, var(--fl-note-fg) 18%, transparent); border-radius: .5rem;
+  --fl-note-fg: light-dark(#1e40af, #93c5fd);
+  background: none; color: var(--fl-note-fg); font-size: .875rem; line-height: 1.5;
+  border: 0; border-radius: 0; box-shadow: none; overflow: visible;
+  padding-block: 0; padding-inline: 2.25rem .8rem;
 }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.tip, .success, .question) { --fl-note-bg: #dcfce7; --fl-note-fg: #166534; }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))).warning { --fl-note-bg: #fef3c7; --fl-note-fg: #854d0e; }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.failure, .danger, .bug) { --fl-note-bg: #fee2e2; --fl-note-fg: #991b1b; }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))).quote { --fl-note-bg: #f4f4f5; --fl-note-fg: #242424; }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > :is(.admonition-title, summary) { background: transparent; color: inherit; font-size: inherit; }
-.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) :is(p, li) { color: inherit; font-size: inherit; line-height: inherit; text-indent: 0; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.tip, .success, .question) { --fl-note-fg: light-dark(#166534, #86efac); }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.warning, .caution, .attention) { --fl-note-fg: light-dark(#854d0e, #fde68a); }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.failure, .fail, .missing, .danger, .error, .bug) { --fl-note-fg: light-dark(#991b1b, #fca5a5); }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))).example { --fl-note-fg: light-dark(#6b21a8, #d8b4fe); }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.quote, .cite) { --fl-note-fg: light-dark(#52525b, #d4d4d8); }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > :is(.admonition-title, summary) {
+  position: relative; background: none; color: inherit; font-size: inherit;
+  border: 0; box-shadow: none; margin: 0; padding: .65rem 0; width: auto; overflow: visible;
+}
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > summary { padding-inline-end: 1.5rem; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > :is(.admonition-title, summary)::before {
+  background-color: currentColor; inset-inline-start: -1.65rem;
+  inset-block-start: calc(.65rem + .75em - .5rem);
+}
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > summary::after { background-color: currentColor; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > :not(.admonition-title, summary) {
+  color: inherit; margin-inline: 0; padding-inline: 0;
+}
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) :is(p, li, a, strong, em) {
+  color: inherit; font-size: inherit; line-height: inherit; text-indent: 0;
+}
 
 :root { --fl-hint-size: .75rem; --fl-hint-line: 1.333333; }
 .fltheme-components [data-tooltip]::before, .fltheme-components .du-tooltip::before,

@@ -15,4 +15,4 @@ right-hand navigation with the hamburger in the FontLab menu.
 
 </div>
 
-This final paragraph receives the shared end-of-reading spacing.
+This final paragraph uses the normal paragraph spacing.

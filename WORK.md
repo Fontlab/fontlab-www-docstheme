@@ -4,6 +4,21 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — unboxed admonitions and normal article spacing
+
+Regression tests reproduced the old colored boxes and 25vh final-paragraph gap.
+Replaced the boxes with semantic text colors and one shared heading/body column;
+removed duplicate editorial overrides and the special paragraph rule. Dark mode
+uses lighter semantic colors. Visual review caught the native summary overflow
+clipping its icon; a further failing regression covers icon visibility and matching
+disclosure color. Guide, starter and consumer integration notes reflect the change.
+
+Final build, all seven Node tests and all 68 browser tests pass. Ten candidate
+checks across five themes at 1440/390px verify matching icon/heading/body colors,
+zero borders/backgrounds/shadows, heading/body alignment, collapse interactions
+and zero final-paragraph padding. Screenshots inspected, no page JavaScript errors.
+Published the corrected THEME.md contract in all 18 consumer/infrastructure repos.
+
 ## 2026-09-24 — range thumb alignment
 
 Reproduced the reported Marketing daisyUI range offset. A Chromium native-shadow

@@ -87,9 +87,9 @@ The generated daisyUI stylesheet renames its border-width token to `--du-border`
 because Basecoat's `--border` token is a color. Countdown values use the familiar
 `--value` and `--digits` properties; the theme maps them to daisyUI's prefixed tokens.
 The shared styles harmonize fields, choices, tabs, frames, hints and data displays.
-MaterialX keycaps, captions, admonitions and tooltips use the same scale. The final
-direct paragraph (`article.md-typeset > p:last-of-type`) has `25vh` bottom padding;
-the content container does not. Standard MaterialX, Basecoat and daisyUI buttons
+MaterialX keycaps, captions, admonitions and tooltips use the same scale. Admonitions
+have no border or background: icon, heading and body share a semantic color, with
+body text aligned to the heading. No artificial end-of-article padding is added. Standard MaterialX, Basecoat and daisyUI buttons
 share height, padding, font size, weight and line height. Explicit size and shape
 variants stay native. Key labels retain their text alongside keyboard symbols.
 Changing the host's light/dark mode also refreshes optional Basecoat charts.

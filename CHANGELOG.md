@@ -4,6 +4,14 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — unboxed admonitions and normal article spacing
+
+- Removed admonition borders, backgrounds and shadows. Icons, headings and body
+  text share semantic colors, including readable dark-mode colors. Body content
+  aligns with the heading; collapsible icons and disclosure controls remain visible.
+- Removed the final-paragraph 25vh padding rule. Updated the guide, starter and
+  integration notes to describe normal end-of-article spacing.
+
 ## 2026-09-24 — range thumb alignment
 
 - Removed daisyUI's additional thumb translation from the shared horizontal

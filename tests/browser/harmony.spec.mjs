@@ -114,12 +114,12 @@ test('countdown displays its actual authored value without overlapping its label
   expect(parseFloat(await style(value,'top','::after'))).toBeLessThan(-500);
 });
 
-test('skeletons have real dimensions and the final paragraph reserves a quarter viewport', async ({ page }) => {
+test('skeletons have real dimensions without artificial end-of-article spacing', async ({ page }) => {
   await visit(page,'feedback/progress');
   for(const node of await specimen(page,'daisyui-skeleton').locator('.du-skeleton').all()) {
     const box=await node.boundingBox(); expect(box.width).toBeGreaterThan(20);expect(box.height).toBeGreaterThan(8);
   }
   const padding=parseFloat(await style(page.locator('article.md-typeset > p:last-of-type'),'paddingBottom'));
-  expect(padding).toBeCloseTo(page.viewportSize().height/4,0);
-  expect(parseFloat(await style(page.locator('.md-content'),'paddingBottom'))).not.toBeCloseTo(padding,0);
+  expect(padding).toBe(0);
+  expect(parseFloat(await style(page.locator('.md-content'),'paddingBottom'))).not.toBeCloseTo(page.viewportSize().height/4,0);
 });

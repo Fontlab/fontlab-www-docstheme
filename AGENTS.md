@@ -37,8 +37,8 @@ Keep native MaterialX markup and search indexes. Do not add duplicate controls.
 Right and Alt+Right go next; Alt+Left goes previous in navigation; Left goes
 back in browser history. Interactive controls and selected text are exempt.
 Standard button metrics match across the three libraries; size/shape variants
-remain available. Reading-end spacing belongs only to
-`article.md-typeset > p:last-of-type`, not `.md-content`.
+remain available. Do not add viewport-based end-of-article padding. Admonitions
+have no border/background; body text shares the heading color and text alignment.
 
 ## Required verification
 

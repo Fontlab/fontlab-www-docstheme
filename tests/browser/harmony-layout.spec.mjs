@@ -93,14 +93,32 @@ test('date and range fields have space and both slider styles retain native valu
   await expect(specimen(page,'daisyui-range').locator('output')).toHaveText('49 px');
 });
 
-test('MaterialX admonitions use the approved alert palette and type size',async({page})=>{
+test('MaterialX admonitions are unboxed, colored and align body text with headings',async({page})=>{
   await visit(page,'feedback/notes');
-  const alert=specimen(page,'daisyui-alert').locator('.du-alert-info');
-  const note=specimen(page,'materialx-admonitions').locator('.admonition');
-  for(const prop of ['backgroundColor','color','fontSize']) expect(await style(note,prop)).toBe(await style(alert,prop));
-  const tip=specimen(page,'materialx-admonitions').locator('details');
-  for(const prop of ['backgroundColor','color','fontSize']) expect(await style(tip,prop)).toBe(await style(specimen(page,'daisyui-alert').locator('.du-alert-success'),prop));
+  const preview=specimen(page,'materialx-admonitions');
+  const tip=preview.locator('details');
   await tip.locator('summary').click();await expect(tip).toHaveAttribute('open','');
+  for(const note of await preview.locator('.admonition, details').all()) {
+    const title=note.locator(':scope > .admonition-title, :scope > summary');
+    const body=note.locator(':scope > p:not(.admonition-title)');
+    for(const node of [note,title]) {
+      expect(await style(node,'backgroundColor')).toBe('rgba(0, 0, 0, 0)');
+      expect(await style(node,'boxShadow')).toBe('none');
+      for(const edge of ['Top','Right','Bottom','Left'])expect(await style(node,`border${edge}Width`)).toBe('0px');
+    }
+    const color=await style(title,'color');
+    expect(await style(body,'color')).toBe(color);
+    expect(await style(title,'backgroundColor','::before')).toBe(color);
+    expect(await style(title,'maskImage','::before')).not.toBe('none');
+    expect(await style(title,'overflow')).toBe('visible');
+    if(await title.evaluate(el=>el.tagName==='SUMMARY'))expect(await style(title,'backgroundColor','::after')).toBe(color);
+    const textLeft=async node=>node.evaluate(el=>{
+      const range=document.createRange();range.selectNodeContents(el);return range.getBoundingClientRect().left;
+    });
+    expect(Math.abs(await textLeft(title)-await textLeft(body))).toBeLessThanOrEqual(1);
+    expect(await textLeft(body)-(await note.boundingBox()).x).toBeGreaterThan(20);
+  }
+  await tip.locator('summary').press('Enter');await expect(tip).not.toHaveAttribute('open','');
 });
 
 test('progress tracks match and table headings and captions align left',async({page})=>{
