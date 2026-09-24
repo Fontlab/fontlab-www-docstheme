@@ -4,6 +4,13 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — range thumb alignment
+
+- Removed daisyUI's additional thumb translation from the shared horizontal
+  slider styling, centering the thumb on the track.
+- Added rendered native-part geometry regressions at desktop and phone widths,
+  covering minimum, middle and maximum values plus keyboard/output updates.
+
 ## 2026-09-24 — setup guide and repository documentation
 
 - Expanded the CDN landing page with a complete MaterialX setup, template override,

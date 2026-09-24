@@ -4,6 +4,20 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — range thumb alignment
+
+Reproduced the reported Marketing daisyUI range offset. A Chromium native-shadow
+geometry regression fails before the fix at both widths: 6.64px at 1440px and
+5.36px at 390px. The shared negative margin was combining with daisyUI's relative
+positioning and translateY. Reset those vendor offsets so the shared margin is
+the sole centering mechanism. Regression checks pass for both daisyUI and Basecoat
+at minimum, middle and maximum values; keyboard/output and pointer interaction
+remain working. Browser plugin unavailable; used Playwright with real Chrome.
+
+Build, all seven Node tests and the full 68-test browser suite pass. Ten additional
+geometry checks pass across five themes and both viewport sizes. Candidate preview
+screenshots were inspected; the live-page candidate check has no JavaScript errors.
+
 ## 2026-09-24 — publish and document the integration
 
 Audited all 19 repositories against remote heads. Existing shared theme, menu,
