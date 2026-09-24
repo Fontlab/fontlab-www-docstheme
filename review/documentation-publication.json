@@ -1,0 +1,291 @@
+{
+  "date": "2026-09-24",
+  "scope": "Shared theme guide plus README/AGENTS/THEME documentation for every affected repository",
+  "repositories": [
+    {
+      "repo": "FontLabVI-help",
+      "commit": "80c5e505462ee0041ff1e593d61fb00864f3a302",
+      "branch": "master",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051064230,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "Marketing",
+      "commit": "2d650ef7ba30dbdb9de619202c4c8f93f94fb76a",
+      "branch": "master",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051066289,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "blog.fontlab.com",
+      "commit": "f1198a3884353e1e46faf515e449e1e379583776",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051073058,
+          "name": "deploy",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "extend-fontlab",
+      "commit": "8399f84fd3ba18e9a3fce18ca673377e409d89d4",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051075135,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "flchimp",
+      "commit": "5da1b3af38b873fe74f3a0b9ef6fb67cb5d62aa3",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "failure",
+          "databaseId": 36051079392,
+          "name": "Build & Test",
+          "status": "completed"
+        }
+      ],
+      "preexisting_failed_run": 35897278402
+    },
+    {
+      "repo": "fldoc",
+      "commit": "e5f61ad7a7a6ec8d6308b7c4300e646fd312f50d",
+      "branch": "master",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051083219,
+          "name": "CI",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "databaseId": 36051081870,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "fontlab-partners",
+      "commit": "b402be74c484f6172cd652e48475431f342fbc90",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051086285,
+          "name": "pr-check",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "databaseId": 36051085928,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "fontlab-python-docs",
+      "commit": "3420f757d899df03faf12ee2c4b6944830b8df42",
+      "branch": "master",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051088616,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "fontlab-vfj-file-format-spec",
+      "commit": "38d4b0ce4f65ef681a661c9aae77a1bcd57ef6fe",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "failure",
+          "databaseId": 36051095784,
+          "name": "CI",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "databaseId": 36051094175,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ],
+      "preexisting_failed_run": 35897336426
+    },
+    {
+      "repo": "fontlab-www-toolkit",
+      "commit": "324ac251f552ee4cf096563dc24f12485ec529c5",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "failure",
+          "databaseId": 36051097267,
+          "name": "CI",
+          "status": "completed"
+        }
+      ],
+      "preexisting_failed_run": 35895816786
+    },
+    {
+      "repo": "getgo-fonts",
+      "commit": "475a238fd3339d2ca0c3cea83355ef9e079625a0",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051098840,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "i.vexy.art",
+      "commit": "0246358e6ebd21daea2683c4693833f71e315b72",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": []
+    },
+    {
+      "repo": "img",
+      "commit": "8d2ae5da2be4bb48bfc5ca844a824c05d8954d1d",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051106729,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "vexy-fontlab-writing-styleguide",
+      "commit": "2ea2f0a1cc5f6117c375e2ff93adc2dbc1da2553",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051110543,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "repo": "web-fontlab",
+      "commit": "fac73109698916dfce8033dc7c50498b721ecd8a",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": []
+    },
+    {
+      "repo": "www.fontlab.com",
+      "commit": "eb342603c085db8e6973fee19e2996004091f1c8",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "failure",
+          "databaseId": 36051118427,
+          "name": "CI",
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "databaseId": 36051118096,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ],
+      "preexisting_failed_run": 36002644111
+    },
+    {
+      "repo": "www.vexy.art",
+      "commit": "ef37aa367586f09df826d274d98c7b990a91d1cc",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": []
+    },
+    {
+      "repo": "ornotto",
+      "commit": "1b5226ec0bdee20605c62647d5da7f41436363d1",
+      "branch": "main",
+      "published": true,
+      "remote_verified": true,
+      "runs": [
+        {
+          "conclusion": "success",
+          "databaseId": 36051124709,
+          "name": "pages build and deployment",
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "browser_tests": 66,
+    "node_tests": 7,
+    "final_guide_browser_checks": 7,
+    "starter_strict_build": true,
+    "starter_browser_checks": "menu, buttons, indexed search, right drawer, Escape, nav keys; no JS errors"
+  },
+  "landing_page_publication": "pending"
+}

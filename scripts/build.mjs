@@ -65,11 +65,12 @@ for (const name of ['basecoat-css', 'daisyui', 'tailwindcss']) {
   await cp(`node_modules/${name}/${filename}`, `dist/1.0.0/licenses/${name}.txt`);
 }
 await cp('examples', 'dist', { recursive: true });
+execFileSync('python3', ['scripts/package-starter.py'], { stdio: 'inherit' });
 for (const [path, css] of Object.entries(styles)) await writeFile(`dist/${path}`, css);
 execFileSync('uv', ['run', '--no-project', '--python', '3.13', '--with', 'properdocs==1.6.7', '--with', 'mkdocs==1.6.1', '--with', 'mkdocs-materialx==10.1.8', 'mkdocs', 'build', '-f', 'fixtures/materialx/mkdocs.yml', '-d', '../../dist/materialx'], { stdio: 'inherit' });
 const files = {};
 for (const path of (await readdir('dist', { recursive: true })).sort()) {
-  if (!/\.(css|js|html|txt)$/.test(path)) continue;
+  if (!/\.(css|js|html|txt|md|ya?ml|zip)$/.test(path)) continue;
   const bytes = await readFile(`dist/${path}`);
   files[path] = { size: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
 }

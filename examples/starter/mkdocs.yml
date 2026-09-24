@@ -1,0 +1,39 @@
+# this_file: examples/starter/mkdocs.yml
+site_name: My FontLab documentation
+site_url: https://example.org/docs/
+docs_dir: docs
+site_dir: site
+theme:
+  name: materialx
+  custom_dir: overrides
+  features:
+    - navigation.tabs
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+plugins:
+  - search
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.superfences
+nav:
+  - Showcase:
+      - Home: index.md
+  - Design:
+      - Next steps: next.md
+extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/components.css
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/basecoat.js
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.js

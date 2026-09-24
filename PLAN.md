@@ -4,6 +4,21 @@ this_file: PLAN.md
 
 # FontLab theme 2026
 
+## Publication and documentation follow-up
+
+Audit the current remote heads and task-owned changes in all 19 affected repositories.
+Document their individual configuration, source/output boundaries, build and publish
+routes, mobile control ownership, search, keyboard navigation and shared components.
+Preserve unrelated edits by publishing from clean worktrees when necessary.
+
+Expand `examples/index.html` with complete copyable setup, MaterialX template
+integration, static/hybrid setup, component authoring, optional editorial styles,
+theme/keyboard behavior, troubleshooting and release instructions. Keep the existing
+interactive examples and add a downloadable setup fixture proven by a clean build.
+Verify documentation links and code examples, desktop/mobile rendering and keyboard
+interactions. Publish the source, CDN and consumer documentation, then inspect public
+assets and remote commits before completing the follow-up.
+
 Implement task422.md: a shared MaterialX customization, Basecoat and prefixed
 daisyUI assets published at https://i.fontlab.com/fltheme26/, adopted by all
 active documentation sites and hybrid Webflow builds, including the legacy

@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FontLab theme 2026 · Components</title>
+  <title>FontLab theme 2026 · Setup and MaterialX integration</title>
+  <meta name="description" content="Set up FontLab theme 2026 with ProperDocs and MaterialX. Download a starter and combine global navigation, Basecoat and daisyUI.">
   <link rel="next" href="authoring.html">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="1.0.0/components.css">
@@ -18,15 +19,123 @@
 <body data-fl-page-navigation>
   <fontlab-menu site-label="Theme 2026" site-url="./"></fontlab-menu>
   <header class="specimen-header">
-    <a class="wordmark" href="https://www.fontlab.com/">FontLab</a><span>Theme 2026</span>
-    <nav aria-label="Main"><a href="#components">Components</a><a href="authoring.html">Authoring</a>
+
+    <nav aria-label="Main"><a href="#quick-start">Setup</a><a href="#basecoat-heading">Demo</a><a href="authoring.html">Authoring</a>
       <button id="mode" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg><span>Dark mode</span></button>
     </nav>
   </header>
   <p class="integration-link"><a href="materialx/">Test MaterialX navigation and search</a></p>
   <main id="components">
-    <h1>Components, together.</h1>
-    <p class="intro">Basecoat and daisyUI for FontLab documentation.</p>
+<p class="eyebrow">FontLab theme 2026 · Integration guide</p>
+<h1>One site. Three libraries.</h1>
+<p class="intro">Keep MaterialX for your documentation. Add FontLab navigation, Basecoat and daisyUI from one shared CDN.</p>
+<p>This is a browser asset layer, not a replacement Python theme. ProperDocs builds your Markdown; MaterialX supplies the page, navigation and search; FontLab theme 2026 connects the global menus and adds scoped components.</p>
+<p class="guide-actions"><a class="guide-primary" href="starter.zip" download>Download the MaterialX starter</a><a href="https://fontlab.dev/Marketing/fl1992mk/start/">Browse the full component catalogue →</a></p>
+<nav class="guide-toc" aria-label="Setup guide"><a href="#quick-start">Start a site</a><a href="#materialx">Existing MaterialX site</a><a href="#global-menu">Global menu &amp; footer</a><a href="#controls">Navigation &amp; search</a><a href="#authoring">Write components</a><a href="#appearance">Appearance</a><a href="#static">Static &amp; Webflow</a><a href="#keyboard">Keyboard</a><a href="#troubleshooting">Troubleshooting</a><a href="#publishing">Build &amp; publish</a><a href="#basecoat-heading">Try the demo</a></nav>
+<section id="quick-start" aria-labelledby="quick-start-heading"><h2 id="quick-start-heading">Start a site</h2><p>Install <a href="https://docs.astral.sh/uv/">uv</a>, download <a href="starter.zip">starter.zip</a>, and extract it. The archive contains two Markdown pages, a pinned requirements file, a MaterialX configuration and a template override. From its extracted directory:</p><pre><code>uv venv --python 3.13
+uv pip install -r requirements.txt
+uv run properdocs serve -f mkdocs.yml</code></pre><p>Open the preview URL printed by ProperDocs. The sample <code>site_url</code> includes <code>/docs/</code>, so the preview may use that path. Change <code>site_name</code> and <code>site_url</code> before publishing. Then run <code>uv run properdocs build -f mkdocs.yml --strict</code> and publish the contents of <code>site/</code>.</p><p>The tested baseline is Python 3.13, ProperDocs 1.6.7, MkDocs 1.6.1 and MaterialX 10.1.8. Consumers need no npm or Tailwind build. The CDN, global menus and external fonts require internet access.</p></section>
+<section id="materialx" aria-labelledby="materialx-heading"><h2 id="materialx-heading">Add it to an existing MaterialX site</h2><p>Keep <code>theme.name: materialx</code>. Merge the entries below into your existing YAML; do not create duplicate <code>plugins</code>, <code>extra_css</code> or <code>extra_javascript</code> keys. Keep your current navigation, plugins, fonts and template overrides.</p><p>This is the complete <a href="starter/mkdocs.yml">starter configuration</a>. The first two CSS entries and first two JavaScript entries are the shared layer:</p><pre><code># this_file: examples/starter/mkdocs.yml
+site_name: My FontLab documentation
+site_url: https://example.org/docs/
+docs_dir: docs
+site_dir: site
+theme:
+  name: materialx
+  custom_dir: overrides
+  features:
+    - navigation.tabs
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+plugins:
+  - search
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.superfences
+nav:
+  - Showcase:
+      - Home: index.md
+  - Design:
+      - Next steps: next.md
+extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/components.css
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/basecoat.js
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.js</code></pre><p>Load <code>components.css</code> before <code>theme.css</code>, and <code>basecoat.js</code> before <code>theme.js</code>. Load them once per page, after broad legacy resets. Deliberate site overrides may follow them. If your toolkit already injects these assets into final HTML, check for duplicates before adding another copy.</p><div class="guide-table"><table><thead><tr><th>Asset</th><th>Responsibility</th></tr></thead><tbody><tr><td><code>components.css</code></td><td>Scoped Basecoat 1.0.2 and prefixed daisyUI 5.7.44 styles.</td></tr><tr><td><code>theme.css</code></td><td>Shared colours, component sizing, MaterialX adjustments and responsive panel placement.</td></tr><tr><td><code>basecoat.js</code></td><td>Basecoat component behavior, restricted to component wrappers.</td></tr><tr><td><code>theme.js</code></td><td>Mode synchronization, menu/search bridge, page shortcuts and component initialization.</td></tr></tbody></table></div></section>
+<section id="global-menu" aria-labelledby="global-menu-heading"><h2 id="global-menu-heading">Add the global menu and footer</h2><p>Create <code>overrides/main.html</code> beside <code>mkdocs.yml</code>, or merge these blocks into your existing override. <code>custom_dir: overrides</code> points MaterialX to it. Keep <code>{{ super() }}</code> in the header: the bridge needs MaterialX’s native navigation and search elements.</p><pre><code>{# this_file: examples/starter/overrides/main.html #}
+{% extends &quot;base.html&quot; %}
+{% block extrahead %}
+  {{ super() }}
+  &lt;script src=&quot;https://i.fontlab.com/menu/fontlab.js&quot; defer&gt;&lt;/script&gt;
+{% endblock %}
+{% block header %}
+  &lt;fontlab-menu site-label=&quot;{{ config.site_name | e }}&quot;
+                site-url=&quot;{{ config.site_url | e }}&quot;
+                mobile-menu=&quot;materialx&quot; mobile-search=&quot;materialx&quot;&gt;&lt;/fontlab-menu&gt;
+  {{ super() }}
+{% endblock %}
+{% block footer %}
+  {{ super() }}
+  &lt;fontlab-footer&gt;&lt;/fontlab-footer&gt;
+{% endblock %}</code></pre><p>For Vexy, use <code>https://i.vexy.art/menu/vexy.js</code> and replace <code>fontlab-menu</code>/<code>fontlab-footer</code> with <code>vexy-menu</code>/<code>vexy-footer</code>. The script registers both components. Keep existing site labels, logos, links and menu configuration when merging.</p><p>Global menus are separate assets from the theme bundle. Use the <a href="https://github.com/Fontlab/img/blob/main/docs/menu/README.md">FontLab menu API</a> or <a href="https://github.com/Fontlab/i.vexy.art/blob/main/docs/menu/README.md">Vexy menu API</a> for branding and dropdown configuration. A transparent header can use <code>bg="transparent"</code>; set opaque <code>panel-bg</code> and contrasting <code>panel-fg</code> for dropdowns and mobile search.</p></section>
+<section id="controls" aria-labelledby="controls-heading"><h2 id="controls-heading">Choose navigation and search independently</h2><p>On a MaterialX documentation site, the shared layer defaults to the local drawer and local search when those elements exist. The global bar shows one loupe to the left of one hamburger. The local drawer opens on the right; the theme switcher moves to its bottom. Below the MaterialX desktop breakpoint (76.25em), the global branding scrolls away and the compact controls stay at the upper right while either control serves MaterialX.</p><pre><code>&lt;!-- Documentation-first site --&gt;
+&lt;fontlab-menu mobile-menu=&quot;materialx&quot; mobile-search=&quot;materialx&quot;&gt;&lt;/fontlab-menu&gt;
+
+&lt;!-- Webflow-first site with auxiliary MaterialX pages --&gt;
+&lt;vexy-menu mobile-menu=&quot;global&quot; mobile-search=&quot;global&quot;&gt;&lt;/vexy-menu&gt;</code></pre><p>Both brands accept either value on either attribute. JavaScript configuration uses <code>mobileMenu</code> and <code>mobileSearch</code>; attributes take precedence. The current FontLab and Vexy main websites explicitly use global controls, including on auxiliary documentation pages.</p><p>Despite its name, <code>mobile-search</code> selects search at <strong>every width</strong>. Local ownership opens the native MaterialX search index in a desktop dialog or full-screen mobile panel. Global ownership uses the brand search. It does not query the local documentation index. Without a usable local target, the global control remains available.</p><p>Keep <code>#__drawer</code>, <code>.md-sidebar--primary</code>, <code>#__search</code> and <code>.md-search</code>. Enable the search plugin and publish <code>search/search_index.json</code>. Do not add a second hamburger, loupe or independent sticky header. Escape closes an open local panel and returns focus.</p><p><a href="materialx/">Try the native MaterialX integration fixture</a>: change ownership, narrow the window, scroll, open the drawer and search for “specimen”.</p></section>
+<section id="authoring" aria-labelledby="authoring-heading"><h2 id="authoring-heading">Write components alongside Markdown</h2><p>Put Basecoat and daisyUI markup inside a separate <code>.fltheme-components</code> container. MaterialX keeps <code>md-</code> class names; Basecoat uses names such as <code>btn</code>; every daisyUI component class gets <code>du-</code>. The shared reset and vendor styles stay inside the wrapper.</p><pre><code>&lt;div class=&quot;fltheme-components&quot; markdown=&quot;1&quot;&gt;
+
+[MaterialX](next.md){ .md-button }
+[Basecoat](next.md){ .btn data-variant=&quot;outline&quot; }
+[daisyUI](next.md){ .du-btn .du-btn-primary }
+
+&lt;/div&gt;</code></pre><p>Enable <code>attr_list</code> for the brace attributes and <code>md_in_html</code> for Markdown inside <code>markdown="1"</code> containers. Keep blank lines around Markdown content. Plain HTML works without those two extensions. Use native links for navigation and buttons for actions; give interactive controls labels and unique IDs.</p><p>Standard buttons share height, padding, font size, weight and line height. Explicit small, large, icon and shape variants retain their library settings. The shared layer also aligns fields, choices, keycaps, tabs, tooltips, captions, alerts, pagination, frames and data displays. MaterialX’s final direct paragraph receives <code>25vh</code> bottom padding via <code>article.md-typeset &gt; p:last-of-type</code>.</p><p><a href="https://fontlab.dev/Marketing/fl1992mk/start/">The field guide</a> includes rendered examples, compiled HTML and authored Markdown. <a href="authoring.html">The compact authoring reference</a> covers wrapper and runtime usage. Use <a href="https://basecoatui.com/components/button/">Basecoat 1.0 markup</a> and <a href="https://daisyui.com/components/">daisyUI 5 markup</a>; older Basecoat examples may use different variant classes.</p><p>The bundle includes all daisyUI component classes, but only a selected set of layout utilities. Use your site CSS for missing layouts. Chart.js and the optional Basecoat Chart module are not bundled.</p></section>
+<section id="appearance" aria-labelledby="appearance-heading"><h2 id="appearance-heading">Follow the site’s appearance</h2><p>Components inherit the host font and active MaterialX colours. The host owns the theme picker and persistence. A wrapper may explicitly choose <code>data-fltheme-mode="light"</code> or <code>data-fltheme-mode="dark"</code>. The source maps Basecoat and daisyUI tokens together; daisyUI’s border width is <code>--du-border</code>, while Basecoat’s <code>--border</code> remains a colour.</p><pre><code>&lt;div class=&quot;fltheme-components&quot; data-fltheme-mode=&quot;dark&quot;&gt;
+  &lt;button class=&quot;btn&quot;&gt;Dark component area&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  // After manually inserting/restoring component containers:
+  window.FLTheme?.refresh();
+&lt;/script&gt;</code></pre><p>ProperDocs/MaterialX instant navigation is handled automatically through <code>document$</code>. Do not load a second Basecoat runtime. Call <code>FLTheme.refresh()</code> after your own DOM replacement.</p><details class="guide-details"><summary>Use the Marketing / writing-styleguide editorial design</summary><p>The component bundle alone preserves native MaterialX typography. The optional editorial layer supplies the five branded modes used by Marketing, the writing styleguide and Ornotto. This is a larger design choice; start from a working site template so its theme picker and body classes travel with its CSS.</p><pre><code># Before the shared components.css and theme.css entries:
+extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/editorial/marketing-vendor.css
+  - https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-theme.css
+  - https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-materialx.css
+  - https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-layout.css
+# Also load the editorial theme controller:
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/editorial/fontlab-theme.js</code></pre><p>Merge these lists with the four shared assets; the fragment is not a complete configuration. Inspect the <a href="https://github.com/Fontlab/Marketing/tree/master/src_docs">Marketing sources</a> or <a href="https://github.com/fontlaborg/ornotto/tree/main/src_docs">Ornotto sources</a> for the companion markup. <code>marketing-vendor.css</code> supports legacy unprefixed content; new components should still use the scoped bundle. The small <code>styleguide.css</code> variant is specific to the writing guide.</p></details></section>
+<section id="static" aria-labelledby="static-heading"><h2 id="static-heading">Use it in static or Webflow pages</h2><p>Load the same assets in the final HTML, after existing broad styles. This example adds the FontLab global menu and footer without a MaterialX drawer:</p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://i.fontlab.com/fltheme26/1.0.0/components.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://i.fontlab.com/fltheme26/1.0.0/theme.css&quot;&gt;
+&lt;script src=&quot;https://i.fontlab.com/fltheme26/1.0.0/basecoat.js&quot; defer&gt;&lt;/script&gt;
+&lt;script src=&quot;https://i.fontlab.com/fltheme26/1.0.0/theme.js&quot; defer&gt;&lt;/script&gt;
+&lt;script src=&quot;https://i.fontlab.com/menu/fontlab.js&quot; defer&gt;&lt;/script&gt;
+
+&lt;fontlab-menu mobile-menu=&quot;global&quot; mobile-search=&quot;global&quot;&gt;&lt;/fontlab-menu&gt;
+&lt;main&gt;
+  &lt;div class=&quot;fltheme-components&quot;&gt;&lt;button class=&quot;btn&quot;&gt;Continue&lt;/button&gt;&lt;/div&gt;
+&lt;/main&gt;
+&lt;fontlab-footer&gt;&lt;/fontlab-footer&gt;</code></pre><p>Plain Webflow pages retain their global controls. In <code>fontlab-www-toolkit</code> builds, Markdown is built first, Webflow and static pages are overlaid, then shared assets are injected into final HTML. Check <code>public/</code>, not only the intermediate <code>build_docs/</code>. Preserve cached Webflow content when rebuilding with <code>--skip_webflow</code>.</p></section>
+<section id="keyboard" aria-labelledby="keyboard-heading"><h2 id="keyboard-heading">Navigate with the keyboard</h2><div class="guide-table"><table><thead><tr><th>Key</th><th>While reading a documentation page</th></tr></thead><tbody><tr><td>Right or Alt+Right</td><td>Next page in navigation.</td></tr><tr><td>Alt+Left</td><td>Previous page in navigation.</td></tr><tr><td>Left</td><td>Previous page in browser history.</td></tr></tbody></table></div><p>Generated <code>rel="next"</code>/<code>rel="prev"</code> links take priority; primary navigation is the fallback. There is no wraparound at either end. Inputs, editable text, widgets, open dialogs, selected text and other modifier combinations keep their normal behavior. Repeated keydown events do not repeatedly navigate.</p><p>Standalone HTML can opt in with <code>data-fl-page-navigation</code> on the body and next/previous links in the head. This guide opts in; ordinary Webflow pages do not.</p></section>
+<section id="troubleshooting" aria-labelledby="troubleshooting-heading"><h2 id="troubleshooting-heading">Check the integration</h2><ol><li>Open browser Network tools. Confirm all four shared assets load once, with CSS before their overrides and Basecoat before the theme runtime.</li><li>Inspect a button: its ancestor must be <code>.fltheme-components</code>. A daisyUI class such as <code>btn-primary</code> must become <code>du-btn-primary</code>.</li><li>If Markdown attributes print literally, enable <code>attr_list</code>. If Markdown inside a div is literal, enable <code>md_in_html</code> and add <code>markdown="1"</code>.</li><li>If local menu/search is missing, preserve the native MaterialX header via <code>{{ super() }}</code>, enable search, and check the four required native selectors. Check your ownership attributes before changing CSS.</li><li>If search opens but finds nothing, serve through HTTP, wait for its index to initialize, and check that <code>search/search_index.json</code> is published at the correct subpath.</li><li>If an old look persists, check the final HTML after Webflow/static overlays. Remove duplicate bundles, verify the public asset against the release manifest, then reload cached assets.</li><li>At a narrow width, scroll the global bar out of view. Open and close local navigation and search, check the right-hand drawer, then widen the window and confirm desktop controls and palette placement.</li></ol><p>Local previews can retain unrelated browser-console problems from a host site. Record those separately from failures in the shared assets; do not hide them or infer success from a screenshot alone.</p></section>
+<section id="publishing" aria-labelledby="publishing-heading"><h2 id="publishing-heading">Build, update and publish</h2><p>To consume the theme, publish the output of your normal site build. To change the shared theme itself, work in <a href="https://github.com/Fontlab/fontlab-www-docstheme">fontlab-www-docstheme</a>:</p><pre><code>npm ci
+npm run build
+npm test
+npm run test:browser
+npm run deploy</code></pre><p>The build needs Node, npm, uv and Python; browser tests need Playwright Chromium (<code>npx playwright install chromium</code>). <code>npm run deploy</code> only stages and hash-verifies <code>dist/</code> into the sibling <code>img/docs/fltheme26/</code>. Commit and push the CDN repository, wait for Pages success, purge changed URLs if needed, and verify the public files. It does not deploy consumer sites.</p><p>Edit <code>src/</code> for behavior and styles, <code>examples/</code> for this guide, and <code>fixtures/materialx/</code> for the native integration fixture. Never edit generated CDN CSS as a source change. <code>manifest.json</code> contains SHA-256 hashes and sizes; <code>1.0.0/licenses/</code> retains upstream licences.</p><p>The <code>1.0.0/</code> path currently receives compatible fixes in place; it is not an immutable release snapshot. Consumers get those changes without a Markdown rebuild once caches refresh. Pin a downloaded asset set if you need an immutable deployment.</p><p>See the <a href="https://github.com/Fontlab/fontlab-www-docstheme/blob/main/CHANGELOG.md">change history</a>, <a href="https://github.com/Fontlab/fontlab-www-docstheme/blob/main/consumers.json">consumer inventory</a> and <a href="manifest.json">published manifest</a>. The latest shared work covers responsive menu/search ownership, Ornotto’s branded layout, page shortcuts, component harmony, equal-sized buttons, opaque Vexy mobile search and final-paragraph spacing.</p></section>
+
     <section aria-labelledby="basecoat-heading">
       <h2 id="basecoat-heading">Basecoat</h2>
       <div class="fltheme-components">

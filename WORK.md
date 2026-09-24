@@ -4,6 +4,37 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — publish and document the integration
+
+Audited all 19 repositories against remote heads. Existing shared theme, menu,
+keyboard, button and paragraph-spacing changes were already published. Remaining
+Typekit/config, redirects, campaign notes, generated screenshots and submodule edits
+were unrelated and preserved. Root README/AGENTS updates and detailed THEME.md notes
+were published for all 18 consumer/infrastructure repositories, then synchronized
+back without replacing unrelated local changes. Exact commits and remote checks are
+in `review/documentation-publication.json`.
+
+The CDN guide now covers new-site setup, native MaterialX extension, branding,
+menu/search ownership, Markdown/HTML authoring, appearance, optional editorial CSS,
+static/Webflow output, keyboard navigation, troubleshooting and publication. The
+starter download is reproducible, uses pinned packages and has matching copyable
+examples. Extracted it into a fresh directory, installed its requirements and ran
+`uv run properdocs build -f mkdocs.yml --strict`. Browser checks exercised the native
+search index, right-hand mobile drawer, Escape, equal button metrics and navigation
+keys with no page JavaScript errors.
+
+Fixed one stale test still asserting container padding. All 66 browser tests then
+passed; seven Node tests verify scoping, cascade, example consistency and archive
+manifest coverage. Seven guide/component checks passed after the final header/layout
+cleanup. Screenshots and logs are under `/tmp/theme-guide-*` and `/tmp/guide-*`.
+
+Four unrelated CI workflows were already failing on their parent commits: flchimp
+Ruff lint, toolkit's missing Ruff executable, VFJ corpus source lookup, and the main
+FontLab site's virtualenv creation. Read both baseline and current failed-run logs;
+the errors match. Documentation commits changed only README, AGENTS and THEME.
+Pages jobs completed successfully wherever triggered; these package/build failures
+are not presented as passing tests and were not changed as part of site documentation.
+
 ## 2026-09-24 — final paragraph spacing
 
 Replaced the content-container padding rule with the requested last-paragraph

@@ -7,7 +7,10 @@ a:hover { text-decoration: underline; }
 button { cursor: pointer; }
 .specimen-header { height: 56px; background: #25292c; color: #fff; display: flex; align-items: center; gap: 26px; padding: 0 48px; }
 .wordmark { font-size: 25px; font-weight: 600; }
-.specimen-header nav { margin-left: auto; display: flex; align-items: center; gap: 32px; }
+.specimen-header nav { width: 864px; margin-inline: auto; display: flex; align-items: center; gap: 32px; }
+.specimen-header #mode { margin-left: auto; }
+.integration-link { max-width: 864px; margin: 20px auto; }
+.integration-link a { text-decoration: underline; text-underline-offset: 3px; }
 #mode { display: flex; align-items: center; gap: 10px; color: inherit; background: transparent; border: 1px solid #aeb3b6; border-radius: 4px; font: inherit; padding: 6px 12px; }
 main { max-width: 864px; margin: 34px auto 20px; }
 h1 { font-size: 60px; line-height: 1.2; letter-spacing: -2px; font-weight: 500; margin: 40px 0 12px; }
@@ -33,11 +36,31 @@ output:empty { display: none; }
 .du-collapse-content { font-size: 16px; color: #626b77; padding: 14px 24px; border-top: 1px solid #d3d8df; }
 footer { display: flex; justify-content: space-between; border-top: 1px solid #dadde2; padding: 12px 0; color: #747c89; font-size: 14px; }
 pre { overflow-x: auto; }
+.eyebrow { font-size: .875rem; letter-spacing: .06em; text-transform: uppercase; color: #626b77; }
+.guide-actions, .guide-toc { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+.guide-actions { margin: 28px 0; }
+.guide-primary { padding: 12px 18px; background: #25292c; color: white; border-radius: 5px; font-weight: 600; }
+.guide-toc { padding: 18px 0 28px; }
+.guide-toc a, main p a, main li a { text-decoration: underline; text-underline-offset: 3px; }
+main > section { scroll-margin-top: 20px; }
+main > section > pre, .guide-details pre { padding: 20px; border: 1px solid #dadde2; border-radius: 5px; background: #f7f8f9; font-size: .875rem; line-height: 1.6; }
+main code { overflow-wrap: anywhere; }
+main pre code { overflow-wrap: normal; }
+.guide-table { overflow-x: auto; margin-block: 20px; }
+.guide-table table { border-collapse: collapse; width: 100%; text-align: left; }
+.guide-table th, .guide-table td { padding: 12px; vertical-align: top; border-bottom: 1px solid #dadde2; }
+.guide-details { padding: 16px; border: 1px solid #dadde2; border-radius: 5px; }
+.guide-details summary { cursor: pointer; font-weight: 600; }
+main li + li { margin-top: 10px; }
+:focus-visible { outline: 2px solid #1673ca; outline-offset: 3px; }
+body[data-theme=dark] :is(main > section > pre, .guide-details pre) { background: #29292f; }
+body[data-theme=dark] .eyebrow { color: #b0b0ba; }
+body[data-theme=dark] .guide-primary { background: #f4f4f5; color: #202024; }
 body[data-theme=dark] { color-scheme: dark; background: #202024; color: #f4f4f5; }
 body[data-theme=dark] :is(.tabs>[role=tabpanel], .du-collapse-title) { background: #29292f; }
 body[data-theme=dark] .input { background: #202024; }
 body[data-theme=dark] :is(.intro, .du-collapse-content, footer) { color: #b0b0ba; }
-@media (max-width: 960px) { main { margin-inline: 24px; } h1 { font-size: 48px; } .intro { font-size: 24px; } }
+@media (max-width: 960px) { main, .integration-link { margin-inline: 24px; } h1 { font-size: 48px; } .intro { font-size: 24px; } }
 @media (max-width: 600px) {
   .specimen-header { padding: 12px 20px; height: auto; flex-wrap: wrap; gap: 12px; }
   .specimen-header nav { margin-left: 0; width: 100%; justify-content: space-between; gap: 16px; }

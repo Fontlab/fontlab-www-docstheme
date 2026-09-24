@@ -1,0 +1,4 @@
+# this_file: examples/starter/requirements.txt
+properdocs==1.6.7
+mkdocs==1.6.1
+mkdocs-materialx==10.1.8

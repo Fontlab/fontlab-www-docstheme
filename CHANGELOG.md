@@ -4,6 +4,24 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — setup guide and repository documentation
+
+- Expanded the CDN landing page with a complete MaterialX setup, template override,
+  per-control ownership, component authoring, optional editorial styling, static and
+  Webflow integration, keyboard behavior, troubleshooting and publication procedure.
+- Added a downloadable two-page MaterialX starter with pinned Python dependencies.
+  Its YAML and template are checked against the guide; its archive and source files
+  are included in the release manifest. A fresh extracted copy builds in strict mode.
+- Updated README.md and AGENTS.md across all 19 affected repositories; consumer and
+  infrastructure repositories now have detailed THEME.md integration notes. Preserved
+  unrelated local changes and published those notes from clean remote-based worktrees.
+- Updated the obsolete browser assertion to test final-paragraph spacing, preserving
+  the requested removal of padding from the full content container.
+- Verification: 66 browser tests, seven Node tests, seven final guide/UI checks and
+  a fresh starter browser check. Publication evidence is in
+  `review/documentation-publication.json`; pre-existing unrelated CI failures are
+  recorded separately from successful Pages publication.
+
 ## 2026-09-24 — final paragraph spacing
 
 - Moved 25vh bottom padding from `.md-main .md-content` to

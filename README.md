@@ -8,6 +8,12 @@ Shared customizations for ProperDocs + MaterialX and FontLab/Vexy hybrid sites.
 Source for `https://i.fontlab.com/fltheme26/`; deployment files are staged in
 the sibling `img/docs/fltheme26/` repository.
 
+Start with the [complete setup guide](https://i.fontlab.com/fltheme26/) and
+[downloadable MaterialX starter](https://i.fontlab.com/fltheme26/starter.zip).
+They include a pinned Python environment, a complete YAML configuration,
+template overrides, component authoring, Webflow integration and troubleshooting.
+See [AGENTS.md](AGENTS.md) for source boundaries and verification requirements.
+
 ## Build and verify
 
 ```sh
@@ -22,6 +28,11 @@ npm run deploy
 `deploy` stages and hash-verifies the CDN tree; publishing requires committing
 and pushing `img`, then checking its Pages deployment and live asset hashes.
 It does not publish consumer sites. `consumers.json` tracks the full rollout.
+
+The `1.0.0/` CDN path receives compatible fixes in place. It is not an immutable
+snapshot: consumers receive fixes after caches refresh. For frozen deployments,
+retain a complete downloaded asset set and its manifest. Licences are published
+under `1.0.0/licenses/`.
 
 ## Add components to a site
 
@@ -74,8 +85,11 @@ The generated daisyUI stylesheet renames its border-width token to `--du-border`
 because Basecoat's `--border` token is a color. Countdown values use the familiar
 `--value` and `--digits` properties; the theme maps them to daisyUI's prefixed tokens.
 The shared styles harmonize fields, choices, tabs, frames, hints and data displays.
-MaterialX keycaps, captions, admonitions and tooltips use the same scale; its content
-has `25vh` bottom padding. Key labels retain their text alongside keyboard symbols.
+MaterialX keycaps, captions, admonitions and tooltips use the same scale. The final
+direct paragraph (`article.md-typeset > p:last-of-type`) has `25vh` bottom padding;
+the content container does not. Standard MaterialX, Basecoat and daisyUI buttons
+share height, padding, font size, weight and line height. Explicit size and shape
+variants stay native. Key labels retain their text alongside keyboard symbols.
 Changing the host's light/dark mode also refreshes optional Basecoat charts.
 
 ## Responsive navigation
@@ -129,6 +143,9 @@ documentation navigation; **Alt+Left** opens the previous page. **Left** goes
 back in browser history. Next/previous use ProperDocs' generated `rel` links,
 with the primary navigation as a fallback. At either end, they do not wrap.
 The CDN component and authoring pages provide the same controls.
+
+Standalone HTML opts in with `data-fl-page-navigation` on the body and
+`<link rel="next" href="...">` / `<link rel="prev" href="...">` in the head.
 
 Search, editable fields, interactive widgets, open dialogs, selected text and
 other modifier combinations retain their normal keyboard behavior. Held keys
