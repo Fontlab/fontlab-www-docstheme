@@ -4,6 +4,20 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — integrated mobile controls (issue 212)
+
+- Added independent `mobile-menu` and `mobile-search` ownership to FontLab and
+  Vexy chrome. MaterialX defaults replace global controls in the same right-hand
+  slot; search stays left of the hamburger and local controls remain after scroll.
+- Moved the native drawer right, placed palettes at its bottom, and preserved
+  keyboard trapping, Escape/focus return and desktop restoration.
+- Added the global menu/footer and a vanilla MaterialX ownership fixture to the
+  CDN showcase. Auxiliary FontLab/Vexy pages explicitly use global controls.
+- Fixed legacy search form hiding/opacity and explicit light/dark component
+  surfaces. All seven candidate sites, 29 browser tests and five Node tests pass;
+  the repaired search opacity has additional vanilla and real-consumer checks.
+- Independent implementation review: 95/100. Publication evidence follows in WORK.
+
 ## 2026-09-24 — responsive navigation, published and verified
 
 - Added the shared mobile default: the global menu scrolls away while a 44px

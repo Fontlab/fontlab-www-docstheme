@@ -17,7 +17,11 @@
     "commit": "3bb190205cbd86ceeadba3b0048fae7c0ed73d26",
     "kind": "active publication configuration",
     "deployment": "https://partners.fontlab.com/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "blog.fontlab.com/mkdocs/mkdocs.yml",
@@ -37,7 +41,11 @@
     "commit": "706e7e33065dddd39431360d970fbcf376e45003",
     "kind": "active publication configuration",
     "deployment": "https://blog.fontlab.com/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "Marketing/src_docs/mkdocs.yml",
@@ -57,7 +65,11 @@
     "commit": "40bba307f23c011d3a4347f1a0d72f7fed25c702",
     "kind": "active publication configuration",
     "deployment": "https://fontlab.dev/Marketing/fl1992mk/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "vexy-fontlab-writing-styleguide/src_docs/mkdocs.yml",
@@ -77,7 +89,11 @@
     "commit": "4234daa291443da1def73e57e1b95884a5196e25",
     "kind": "active publication configuration",
     "deployment": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "www.fontlab.com/src_docs/mkdocs.yml",
@@ -97,7 +113,11 @@
     "commit": "749788293df00578a27dff02aa5b4e6cb2290b65",
     "kind": "active publication configuration",
     "deployment": "https://www.fontlab.com/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "www.vexy.art/src_docs/mkdocs.yml",
@@ -117,7 +137,11 @@
     "commit": "c3f216fe68761856e058953cdeb9166adf59df6b",
     "kind": "active publication configuration",
     "deployment": "https://www.vexy.art/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "fontlab-www-toolkit/src_docs/mkdocs.yaml",
@@ -136,7 +160,11 @@
     "build_command": "uv run properdocs build -f src_docs/mkdocs.yaml",
     "commit": "cabb4ecaf803479505e38e3fe98846865e980180",
     "kind": "internal documentation",
-    "deployment": "source/internal build only"
+    "deployment": "source/internal build only",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fldoc/mkdocs/mkdocs-fontlab-8.yml",
@@ -156,7 +184,11 @@
     "commit": "9ed3111cc80333ad8a86e28f8e87f2d6d72963e4",
     "kind": "active publication configuration",
     "deployment": "https://fontlab.dev/fldoc/fontlab/8/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fldoc/mkdocs/mkdocs-fontlab-gordon.yml",
@@ -176,7 +208,11 @@
     "commit": "9ed3111cc80333ad8a86e28f8e87f2d6d72963e4",
     "kind": "active publication configuration",
     "deployment": "https://fontlab.dev/fldoc/fontlab/gordon/",
-    "evidence": "review/gordon-http.json"
+    "evidence": "review/gordon-http.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi-dev/mkdocs.yml",
@@ -195,7 +231,11 @@
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
     "kind": "archived reference configuration",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/other/tr4m/mkdocs.yml",
@@ -214,7 +254,11 @@
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
     "kind": "archived reference configuration",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-python-docs/fontlab7/mkdocs.yml",
@@ -234,7 +278,11 @@
     "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
     "kind": "active publication configuration",
     "deployment": "https://fontlabcom.github.io/fontlab-python-docs/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-python-docs/pythonqt/mkdocs.yml",
@@ -254,7 +302,11 @@
     "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
     "kind": "active publication configuration",
     "deployment": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-vfj-file-format-spec/mkdocs.yml",
@@ -273,7 +325,11 @@
     "build_command": "./build.sh build",
     "commit": "8e01aa1567d057dfe98900c58834d95e9435f560",
     "kind": "alternate source configuration",
-    "deployment": "https://fontlab.dev/fontlab-vfj-file-format-spec/"
+    "deployment": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-vfj-file-format-spec/mkdocs/mkdocs-vfj.yml",
@@ -293,7 +349,11 @@
     "commit": "8e01aa1567d057dfe98900c58834d95e9435f560",
     "kind": "active publication configuration",
     "deployment": "https://fontlab.dev/fontlab-vfj-file-format-spec/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "flchimp/mkdocs.yml",
@@ -312,7 +372,11 @@
     "build_command": "uv run properdocs build -f mkdocs.yml",
     "commit": "cde3ae44d73086a247f6e5473536207385520cfd",
     "kind": "internal documentation",
-    "deployment": "source/internal build only"
+    "deployment": "source/internal build only",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/vexy.art/src_docs/mkdocs.yml",
@@ -330,7 +394,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/fontlab-www-toolkit/src_docs/mkdocs.yaml",
@@ -348,7 +416,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/fontlab.com/src_docs/mkdocs.yml",
@@ -366,7 +438,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/fontlab/src_docs/mkdocs.yml",
@@ -384,7 +460,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/src-workdir/vexy/src_docs/mkdocs.yml",
@@ -402,7 +482,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "global",
+      "search": "global"
+    }
   },
   {
     "config": "web-fontlab/src/ionos/live/api.fontlab.com/blog-workdir/mkdocs/mkdocs.yml",
@@ -420,7 +504,11 @@
     ],
     "kind": "production source mirror",
     "deployment": "Ionos source/admin mirrors; no separate public site",
-    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf"
+    "commit": "7c35a1c3daf55b393681595cb34dceebfb1682cf",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "extend-fontlab/src_docs/mkdocs.yml",
@@ -439,7 +527,11 @@
     "commit": "5408d9dc0a1de6a91227fd12019883a1d9afe8ec",
     "kind": "active publication configuration",
     "deployment": "https://extend.fontlab.com/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "getgo-fonts/src_docs/mkdocs.yml",
@@ -458,7 +550,11 @@
     "commit": "48d4e6e9ae7f752232f841603cdfd43dddafbfa2",
     "kind": "active publication configuration",
     "deployment": "https://fontlabcom.github.io/getgo-fonts/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7-old.yml",
@@ -473,7 +569,11 @@
     ],
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-vi.yml",
@@ -489,7 +589,11 @@
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
     "deployment": "https://help.fontlab.com/fontlab-vi/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7.yml",
@@ -505,7 +609,11 @@
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
     "deployment": "https://help.fontlab.com/fontlab/7/manual/",
-    "evidence": "review/live-browser.json"
+    "evidence": "review/live-browser.json",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi/mk-fontlab-7-alpha.yml",
@@ -520,7 +628,11 @@
     ],
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi-dev/mk-fontlab-vi.yml",
@@ -535,7 +647,11 @@
     ],
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "FontLabVI-help/flvi-dev/pdf/pdf-flvi.yml",
@@ -550,7 +666,11 @@
     ],
     "build_command": "./build.sh",
     "commit": "2e8c89102e55597c9a02ad7def7169ac42da0cfc",
-    "deployment": "not published as a new site"
+    "deployment": "not published as a new site",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-python-docs/fontlab7/pydocmk.yml",
@@ -566,7 +686,11 @@
     "build_command": "./build.sh",
     "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
     "deployment": "https://fontlabcom.github.io/fontlab-python-docs/",
-    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/"
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   },
   {
     "config": "fontlab-python-docs/pythonqt/pydocmk.yml",
@@ -582,6 +706,10 @@
     "build_command": "./build.sh",
     "commit": "102c98af74266d4612f43378ed83c5ce7d83336c",
     "deployment": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
-    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/"
+    "site_url": "https://fontlabcom.github.io/fontlab-python-docs/pythonqt/",
+    "mobile_controls": {
+      "menu": "materialx when present",
+      "search": "materialx when enabled"
+    }
   }
 ]

@@ -74,18 +74,42 @@ because Basecoat's `--border` token is a color.
 
 ## Responsive navigation
 
-On MaterialX pages with a `fontlab-menu` or `vexy-menu`, the global menu scrolls
-with the page below MaterialX's 76.25em drawer breakpoint. A 44px local hamburger
-stays at the top edge and opens MaterialX's existing navigation drawer. Enter
-and Space open it; Escape closes it and returns focus. Desktop navigation keeps
-the site's existing layout. Webflow pages without a MaterialX drawer are unchanged.
+MaterialX pages default to local navigation and local search. The global bar
+shows one search icon immediately left of one hamburger. The local drawer
+opens on the right, with the theme switcher at the bottom. Below 76.25em the
+branding scrolls away; the compact controls stay at the top right while either
+control serves the local site. Escape closes an open panel and restores focus.
 
-This is the default in `theme.css` and `theme.js`; consumers already loading
-the shared assets need no extra stylesheet. Older templates with an empty
-MaterialX header receive the missing drawer label automatically. Keep the
-`#__drawer`, `.md-header` and `.md-sidebar--primary` elements in custom templates.
-Run `node scripts/verify-mobile-navigation.mjs --local` against published pages
-with candidate assets, or omit `--local` to check the published CDN.
+Choose each control independently, using the same API for both brands:
+
+```html
+<fontlab-menu mobile-menu="materialx" mobile-search="materialx"></fontlab-menu>
+<vexy-menu mobile-menu="global" mobile-search="global"></vexy-menu>
+```
+
+JavaScript `.config` accepts `mobileMenu` and `mobileSearch` with the same
+values; explicit attributes take precedence. Keep existing configuration fields
+when updating it. FontLab and Vexy auxiliary pages select `global` for both.
+Plain Webflow pages without a MaterialX drawer retain the global controls.
+If a requested local target is absent, its global equivalent remains available.
+
+Load the menu script together with the shared `theme.css` and `theme.js` above.
+Keep MaterialX's native `#__drawer`, `.md-sidebar--primary`, `#__search` and
+`.md-search` markup; enable its search plugin. Older search-only custom headers
+are supported. Desktop restores each original search and palette position.
+
+The menu exposes `mobileControls` and emits cancelable
+`fontlab-menu:mobile-control` / `vexy-menu:mobile-control` events with
+`{control, owner, trigger}`. The shared adapter handles local controls by
+preventing the default global action. Re-render events reconnect accessibility
+state after configuration or brand changes. Internal `data-*` flags are owned
+by the adapter; consumers configure only the public attributes or `.config`.
+
+The [MaterialX integration specimen](https://i.fontlab.com/fltheme26/materialx/)
+uses the vanilla template and provides both ownership selectors. The build uses
+`uv`, Python 3.13, ProperDocs 1.6.7 and MaterialX 10.1.8 to compile this fixture.
+Run `node scripts/verify-mobile-navigation.mjs --local` to test candidate assets
+on published sites; omit `--local` to check the published CDN.
 
 ## Existing customizations
 

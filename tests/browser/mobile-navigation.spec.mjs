@@ -1,63 +1,88 @@
 // this_file: tests/browser/mobile-navigation.spec.mjs
 import { test, expect } from '@playwright/test';
 
-async function fixture(page, originalTrigger = false) {
-  await page.goto('/');
-  await page.setContent(`<style>
-    body { margin:0; font-size:16px; }
-    fontlab-menu { display:block; height:56px; position:sticky; top:0; }
-    .md-header { display:none !important; }
-    main { min-height:2000px; }
-  </style>
-  <input type="checkbox" id="__drawer" hidden>
-  <header class="md-header" aria-hidden="true">${originalTrigger ? '<nav class="md-header__inner"><label for="__drawer"><svg viewBox="0 0 24 24"></svg></label><span>Title</span></nav>' : ''}</header>
-  <fontlab-menu>Global navigation</fontlab-menu>
-  <main><aside class="md-sidebar md-sidebar--primary"><a href="#content">Local destination</a></aside><p id="content">Page content</p></main>`);
-  await page.addStyleTag({ url: '/1.0.0/theme.css' });
-  // Emulate MaterialX's document-level Enter activation, which must not
-  // double-toggle the local label after the shared keyboard handler runs.
-  await page.evaluate(() => {
-    delete window.FLTheme;
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Enter' && event.target.tagName === 'LABEL') event.target.click();
-    });
-  });
-  await page.addScriptTag({ url: '/1.0.0/theme.js' });
+async function fixture(page, brand = 'fontlab') {
+  await page.route('**/fltheme26/1.0.0/**', route => route.fulfill({
+    path: `dist/1.0.0/${new URL(route.request().url()).pathname.split('/1.0.0/')[1]}`,
+  }));
+  await page.route('**/menu/fontlab.js', route => route.fulfill({ path: '../img/docs/menu/fontlab.js' }));
+  await page.goto('/materialx/');
+  if (brand === 'vexy') {
+    await page.evaluate(() => document.querySelector('fontlab-menu').replaceWith(document.createElement('vexy-menu')));
+    await page.addScriptTag({ url: 'http://127.0.0.1:8423/i.vexy.art/docs/menu/vexy.js' });
+  }
 }
 
-for (const originalTrigger of [false, true]) {
-  test(`small sticky navigation with ${originalTrigger ? 'native' : 'legacy missing'} trigger`, async ({ page }) => {
+for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'materialx']) for (const search of ['global', 'materialx']) {
+  test(`${brand}: vanilla MaterialX with ${menu} navigation and ${search} search`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await fixture(page, originalTrigger);
-    const trigger = page.locator('.fl-local-nav-toggle');
-    await expect(trigger).toBeVisible();
-    await page.evaluate(() => { FLTheme.refresh(); FLTheme.refresh(); });
-    await expect(trigger).toHaveCount(1);
-    await page.evaluate(() => scrollTo(0, 600));
-    expect((await trigger.boundingBox()).y).toBe(0);
-    expect(await page.locator('fontlab-menu').evaluate(e => e.getBoundingClientRect().bottom)).toBeLessThan(0);
-    await trigger.focus();
-    await page.keyboard.press('Enter');
-    await expect(page.locator('#__drawer')).toBeChecked();
-    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    await page.keyboard.press('Escape');
-    await expect(page.locator('#__drawer')).not.toBeChecked();
-    await expect(trigger).toBeFocused();
-    await page.keyboard.press('Space');
-    await expect(page.locator('#__drawer')).toBeChecked();
-    await trigger.click();
-    await expect(page.locator('#__drawer')).not.toBeChecked();
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await expect(trigger).not.toBeVisible();
-    expect(await page.locator('fontlab-menu').evaluate(e => getComputedStyle(e).position)).toBe('sticky');
+    await fixture(page, brand);
+    const host = page.locator(`${brand}-menu`);
+    await host.evaluate((el, owners) => {
+      el.setAttribute('mobile-menu', owners.menu);
+      el.setAttribute('mobile-search', owners.search);
+    }, { menu, search });
+    const hamburger = host.locator('[part="mobile-menu"]');
+    const loupe = host.locator('[part="mobile-search"] button');
+    const sidebar = page.locator('.md-sidebar--primary');
+    const palette = page.locator('[data-md-component="palette"]');
+    for (const width of [390, 800, 1100]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.evaluate(() => scrollTo(0, 0));
+      await expect(hamburger).toBeVisible();
+      await expect(loupe).toBeVisible();
+      expect((await loupe.boundingBox()).x).toBeLessThan((await hamburger.boundingBox()).x);
+      await hamburger.focus();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#__drawer')).toBeChecked({ checked: menu === 'materialx' });
+      if (menu === 'materialx') {
+        await expect(sidebar).toBeVisible();
+        await expect(palette).toBeVisible();
+        const box = await sidebar.boundingBox();
+        expect(box.x + box.width).toBeCloseTo(width, 0);
+        expect((await palette.boundingBox()).y).toBeGreaterThan(650);
+        for (let i = 0; i < 10; i++) {
+          await page.keyboard.press('Tab');
+          expect(await sidebar.evaluate(el => el.contains(document.activeElement))).toBe(true);
+        }
+        await sidebar.locator('.fl-nav-close').focus();
+        await page.keyboard.press('Shift+Tab');
+        expect(await sidebar.evaluate(el => el.contains(document.activeElement))).toBe(true);
+      }
+      if (menu === 'global') {
+        const panel = host.locator('.fl-drawer, .vx-drawer');
+        await expect(panel).toBeVisible();
+        if (brand === 'fontlab') await panel.locator('button').filter({visible:true}).first().click();
+        await expect(panel.locator('a[href]').filter({visible:true}).first()).toBeVisible();
+      }
+      await page.keyboard.press('Escape');
+      await expect(hamburger).toBeFocused();
+      await loupe.click();
+      await expect(page.locator('#__search')).toBeChecked({ checked: search === 'materialx' });
+      if (search === 'materialx') {
+        await expect(page.locator('.md-search__inner')).toHaveCSS('opacity', '1');
+        await page.locator('.md-search__input').fill('');
+        await page.locator('.md-search__input').pressSequentially('specimen');
+        await expect(page.locator('.md-search-result__list a').first()).toBeVisible();
+      } else await expect(host.locator('[part="mobile-search"] input[type="search"]')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('body')).not.toHaveAttribute('data-md-scrolllock', '');
+      await page.evaluate(() => scrollTo(0, 500));
+      if (menu === 'materialx' || search === 'materialx') {
+        await expect.poll(async () => (await hamburger.boundingBox()).y).toBeLessThan(2);
+        await hamburger.click();
+        if (menu === 'global') expect((await host.locator('.fl-drawer, .vx-drawer').boundingBox()).y).toBeGreaterThanOrEqual(0);
+        await page.keyboard.press('Escape');
+        await loupe.click();
+        if (search === 'global') expect((await host.locator('[part="mobile-search"] input[type="search"]').boundingBox()).width).toBeGreaterThan(250);
+        await page.keyboard.press('Escape');
+        await expect(page.locator('body')).not.toHaveAttribute('data-md-scrolllock', '');
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    }
+    await page.setViewportSize({ width: 1488, height: 1000 });
+    await expect(hamburger).toBeHidden();
+    await expect(page.locator('.md-header .md-search')).toHaveCount(1);
+    await expect(page.locator('.md-header [data-md-component="palette"]')).toHaveCount(1);
   });
 }
-
-test('Webflow pages without a MaterialX drawer keep their global menu', async ({ page }) => {
-  await page.goto('/');
-  await page.setContent('<fontlab-menu>Global navigation</fontlab-menu><main>Webflow page</main>');
-  await page.evaluate(() => { delete window.FLTheme; });
-  await page.addScriptTag({ url: '/1.0.0/theme.js' });
-  await expect(page.locator('.fl-local-nav-toggle')).toHaveCount(0);
-  await expect(page.locator('html')).not.toHaveClass(/fl-local-navigation/);
-});

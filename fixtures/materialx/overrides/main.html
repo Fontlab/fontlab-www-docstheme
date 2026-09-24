@@ -1,0 +1,13 @@
+{# this_file: fixtures/materialx/overrides/main.html #}
+{% extends "base.html" %}
+{% block extrahead %}
+  {{ super() }}
+  <script src="https://i.fontlab.com/menu/fontlab.js" defer></script>
+{% endblock %}
+{% block header %}
+  <fontlab-menu site-label="Theme 2026" site-url="../"></fontlab-menu>
+  {{ super() }}
+{% endblock %}
+{% block footer %}
+  <fontlab-footer></fontlab-footer>
+{% endblock %}

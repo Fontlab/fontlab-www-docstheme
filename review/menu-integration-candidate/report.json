@@ -1,0 +1,297 @@
+[
+  {
+    "name": "ornotto",
+    "url": "https://fontlab.org/ornotto/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "marketing",
+    "url": "https://fontlab.dev/Marketing/fl1992mk/showcase/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "styleguide",
+    "url": "https://fontlab.dev/vexy-fontlab-writing-styleguide/fl1992mk/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "partners",
+    "url": "https://partners.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "sourceOverlay": "fontlab-partners/docs (search plugin enabled)",
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "fontlab",
+    "url": "https://www.fontlab.com/legal/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 322,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 732,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1032,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "vexy",
+    "url": "https://vexy.art/about/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 334,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 744,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1044,
+          "y": -694,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  },
+  {
+    "name": "blog",
+    "url": "https://blog.fontlab.com/",
+    "checks": [
+      {
+        "width": 390,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 346,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 800,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 756,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      },
+      {
+        "width": 1100,
+        "globalBottom": -644,
+        "trigger": {
+          "x": 1056,
+          "y": 0,
+          "width": 44,
+          "height": 44
+        },
+        "keyboard": true
+      }
+    ],
+    "errors": [],
+    "passed": true,
+    "stage": "horizontal overflow 1100"
+  }
+]

@@ -50,7 +50,7 @@ const styles = await compileCascade({
 });
 await rm('dist/components.raw.css');
 await rm('dist/daisy.raw.css');
-await cp('src/theme.js', 'dist/1.0.0/theme.js');
+await writeFile('dist/1.0.0/theme.js', `${await readFile('src/navigation.js', 'utf8')}\n${await readFile('src/theme.js', 'utf8')}`);
 for (const folder of ['editorial', 'chrome']) await cp(`src/${folder}`, `dist/1.0.0/${folder}`, { recursive: true });
 
 const vendor = 'node_modules/basecoat-css/dist/js';
@@ -65,6 +65,7 @@ for (const name of ['basecoat-css', 'daisyui', 'tailwindcss']) {
 }
 await cp('examples', 'dist', { recursive: true });
 for (const [path, css] of Object.entries(styles)) await writeFile(`dist/${path}`, css);
+execFileSync('uv', ['run', '--no-project', '--python', '3.13', '--with', 'properdocs==1.6.7', '--with', 'mkdocs==1.6.1', '--with', 'mkdocs-materialx==10.1.8', 'mkdocs', 'build', '-f', 'fixtures/materialx/mkdocs.yml', '-d', '../../dist/materialx'], { stdio: 'inherit' });
 const files = {};
 for (const path of (await readdir('dist', { recursive: true })).sort()) {
   if (!/\.(css|js|html|txt)$/.test(path)) continue;

@@ -111,8 +111,7 @@
       const desktop = desktopQuery.matches;
       const target = desktop ? tabs : sidebar;
       if (target && node.parentElement !== target) {
-        if (desktop) target.appendChild(node);
-        else target.insertBefore(node, target.firstChild);
+        target.appendChild(node);
       }
     }
     place();

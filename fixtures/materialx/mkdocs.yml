@@ -1,0 +1,25 @@
+# this_file: fixtures/materialx/mkdocs.yml
+site_name: MaterialX integration
+site_url: https://i.fontlab.com/fltheme26/materialx/
+theme:
+  name: materialx
+  custom_dir: overrides
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+nav:
+  - Integration: index.md
+  - Specimen: specimen.md
+plugins:
+  - search
+extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.js
+  - controls.js

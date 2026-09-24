@@ -70,64 +70,132 @@
   --ring: #a1a1aa;
   color-scheme: dark;
 }
+/* An explicit component mode overrides inherited host surface tokens. */
+.fltheme-components[data-fltheme-mode="light"] {
+  --background: #fff;
+  --foreground: #242424;
+}
+.fltheme-components[data-fltheme-mode="dark"] {
+  --background: #202024;
+  --foreground: #f4f4f5;
+}
 .fltheme-components :is(button, input, select, textarea) { font-family: inherit; }
 
-/* MaterialX's drawer breakpoint. Global branding scrolls; local navigation
-   remains within reach. Activate only on pages with both navigation systems. */
+/* Component display rules must not expose a closed native overlay. */
+.fltheme-components [popover]:not(:popover-open),
+.fltheme-components dialog:not([open]) { display: none; }
+
+.fl-nav-close { display: none; }
 @media screen and (max-width: 76.234375em) {
-  html.fl-local-navigation :is(fontlab-menu, vexy-menu) {
+  html.fl-mobile-navigation :is(fontlab-menu, vexy-menu) {
     position: relative !important;
     top: auto !important;
-    z-index: auto !important;
+    z-index: 30 !important;
+    contain: none !important;
   }
-  html.fl-local-navigation .md-header.fl-local-header {
-    display: block !important;
-    position: sticky !important;
-    top: 0 !important;
-    width: 44px;
+  html.fl-mobile-navigation :is(fontlab-menu, vexy-menu)[data-fl-docked]::part(mobile-controls) {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 30;
     height: 44px;
-    min-height: 44px;
-    margin: 0;
-    padding: 0;
-    z-index: 3;
-    transform: none !important;
-    background: var(--md-default-bg-color, #fff) !important;
-    color: var(--md-default-fg-color, #242424) !important;
-    border-radius: 0 0 .25rem 0;
-    box-shadow: 0 1px 4px #0002 !important;
+    background: var(--fl-bg, var(--vx-bg, #171717));
+    border-radius: 0 0 0 .25rem;
+    box-shadow: 0 1px 4px #0003;
   }
-  html.fl-local-navigation .fl-local-header > :not(.md-header__inner):not(.fl-local-nav-toggle),
-  html.fl-local-navigation .fl-local-header .md-header__inner > :not(.fl-local-nav-toggle) {
+  html.fl-mobile-navigation .md-header { display: none !important; }
+  html.fl-mobile-navigation .md-sidebar--primary .md-search { display: none !important; }
+  html.fl-mobile-navigation[data-fl-mobile-menu="global"] .md-sidebar--primary { display: none !important; }
+  html.fl-mobile-navigation[data-fl-mobile-menu="materialx"] .md-sidebar.md-sidebar--primary {
     display: none !important;
+    position: fixed !important;
+    left: auto !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: min(20rem, 90vw) !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    visibility: hidden;
+    background: var(--md-default-bg-color, white);
+    color: var(--md-default-fg-color, #242424);
+    box-shadow: -2px 0 8px #0003;
+    z-index: 201;
   }
-  html.fl-local-navigation .fl-local-header .md-header__inner {
-    width: 44px;
-    height: 44px;
-    margin: 0;
-    padding: 0;
-  }
-  html.fl-local-navigation .fl-local-header .fl-local-nav-toggle {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    margin: 0;
-    padding: 0;
-    color: inherit;
-    cursor: pointer;
-    opacity: 1;
-  }
-  html.fl-local-navigation .fl-local-nav-toggle svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-  }
-  html.fl-local-navigation .fl-local-nav-toggle:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: -4px;
-  }
-  html.fl-local-navigation .md-sidebar.md-sidebar--primary {
+  html.fl-mobile-navigation.fl-drawer-open .md-sidebar.md-sidebar--primary {
     display: block !important;
+    transform: translateX(0) !important;
+    visibility: visible;
+  }
+  html.fl-mobile-navigation .md-sidebar--primary .md-sidebar__scrollwrap {
+    height: 100% !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+    overflow-y: auto;
+  }
+  html.fl-mobile-navigation .md-sidebar--primary .md-sidebar__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 0 12px 12px;
+  }
+  html.fl-mobile-navigation .md-sidebar--primary .md-nav--primary > .md-nav__title { display: none; }
+  html.fl-mobile-navigation .fl-nav-close {
+    display: block;
+    align-self: flex-end;
+    min-width: 44px;
+    min-height: 44px;
+    font: 28px/1 sans-serif;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  html.fl-mobile-navigation .md-sidebar--primary :is(.fl-theme, [data-md-component="palette"]) {
+    margin-top: auto;
+    padding-top: 16px;
+    align-self: stretch;
+  }
+  html.fl-mobile-navigation .md-sidebar--primary .fl-theme__pop { top: auto; bottom: 100%; }
+  html.fl-mobile-navigation .md-overlay { z-index: 200; }
+  html.fl-mobile-navigation .fl-mobile-search { display: none !important; }
+  html.fl-mobile-navigation.fl-search-open .fl-mobile-search {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: var(--md-default-bg-color, white);
+    z-index: 202;
+    transform: none !important;
+  }
+  html.fl-mobile-navigation .fl-mobile-search .md-search__inner {
+    position: static !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+  html.fl-mobile-navigation .fl-mobile-search .md-search__form {
+    display: flex !important; /* Older branded headers hid the form globally. */
+    border-radius: 0;
+  }
+  html.fl-mobile-navigation .fl-mobile-search .md-search__output {
+    position: static !important;
+    display: block !important;
+    width: 100%;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html.fl-mobile-navigation .fl-mobile-search .md-search__scrollwrap {
+    height: calc(100dvh - 3rem) !important;
+    max-height: none !important;
+    overflow: auto;
   }
 }

@@ -142,3 +142,14 @@ The only retained browser limitation is the pre-existing fldoc tooltipster
 error, reproduced with all shared theme assets blocked. It is explicitly
 allowlisted for that preview only. No new theme runtime errors were observed.
 All screenshots, baseline limitations and publication records are in review/.
+
+## 2026-09-24 — issue 212 review repairs
+
+- Fixed explicit light/dark component surfaces and exercised both setup toggles
+  with computed colours, restoring the original mode and preserving the host.
+- Fixed Partners' transparent native search inner container after mobile
+  reparenting; regression checks now include ancestor opacity and real typing.
+- Auxiliary production sites rebuilt with global/global controls; source and
+  admin mirrors updated without replacing unrelated production files.
+- Partners deployment required replacing the obsolete FAQ class check with
+  current markup and adding a generated search-index assertion.

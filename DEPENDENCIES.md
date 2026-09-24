@@ -37,3 +37,7 @@ and its dark variant, plus PostCSS prefix transformation behavior.
   Official implementation contracts:
   https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-cascade-layers
   and https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting.
+
+- The vanilla MaterialX integration specimen is compiled with uv and Python 3.13,
+  using ProperDocs 1.6.7, MkDocs 1.6.1 and mkdocs-materialx 10.1.8.
+  These exact pins live in scripts/build.mjs; no frontend framework was added.
