@@ -4,6 +4,10 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — Vexy mobile search regression
+
+- Added six browser cases for opaque mobile search panels with transparent headers.
+
 ## 2026-09-24 — component harmony (issue 213)
 
 - Unified labels, checkboxes, radios, switch thumbs, selects, sliders, keycaps,

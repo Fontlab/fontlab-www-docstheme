@@ -4,6 +4,14 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — Vexy mobile search background
+
+Reproduced the transparent search field with the homepage's `bg="transparent"`
+and opaque panel settings. The regression failed before the CDN fix, then all
+14 search-background and menu-ownership tests passed. Coverage includes dark/light
+panels at 390, 800 and 1100px, focus, Escape, search destination and desktop hiding.
+The canonical fix is in `../i.vexy.art/docs/menu/vexy.js`.
+
 ## 2026-09-24 — issue 213
 
 Implemented the 37 requested component corrections in shared source, preserving
