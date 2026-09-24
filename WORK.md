@@ -18,6 +18,13 @@ Build, all seven Node tests and the full 68-test browser suite pass. Ten additio
 geometry checks pass across five themes and both viewport sizes. Candidate preview
 screenshots were inspected; the live-page candidate check has no JavaScript errors.
 
+Published source `1f98b33` and CDN `305b685`; Pages run `36056707687` succeeded.
+Purged theme.css and manifest.json; both public files match the build byte-for-byte.
+The same geometry regressions pass against the public Marketing page at 1440/390px.
+Live pointer clicks produce value 76 and ArrowRight changes 48 to 49 with the output
+updated. No JavaScript errors; final live screenshots inspected. Evidence is under
+`/tmp/range-*`, including live-regression.log, live-hashes.json and live.json.
+
 ## 2026-09-24 — publish and document the integration
 
 Audited all 19 repositories against remote heads. Existing shared theme, menu,
