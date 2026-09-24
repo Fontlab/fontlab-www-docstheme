@@ -32,7 +32,8 @@ daisy.walkDecls(decl => {
   decl.value = decl.value.replace(/var\(--border\b/g, 'var(--du-border');
 });
 await mkdir('.cache', { recursive: true });
-await writeFile('.cache/native.css', `${css}\n${await scopeCSS(daisy.toString())}\n${await readFile('src/theme.css', 'utf8')}`);
+const theme = (await Promise.all(['theme', 'harmony-forms', 'harmony-display'].map(name => readFile(`src/${name}.css`, 'utf8')))).join('\n');
+await writeFile('.cache/native.css', `${css}\n${await scopeCSS(daisy.toString())}\n${theme}`);
 daisy.walkDecls(decl => {
   // daisyUI 5.7.44's reset fallbacks, checked against native layers in Chromium.
   // collapse-open rolls back to the lower collapse-content layer (overflow:clip);
@@ -45,7 +46,7 @@ daisy.walkDecls(decl => {
 });
 const styles = await compileCascade({
   '1.0.0/components.css': `${css}\n${await scopeCSS(daisy.toString())}`,
-  '1.0.0/theme.css': await readFile('src/theme.css', 'utf8'),
+  '1.0.0/theme.css': theme,
   'specimen.css': await readFile('examples/specimen.css', 'utf8'),
 });
 await rm('dist/components.raw.css');

@@ -1,8 +1,17 @@
 // this_file: src/theme.js
 (() => {
   if (window.FLTheme) return;
+  const keys = {tab: '⇥', shift: '⇧', ctrl: '⌃', control: '⌃', alt: '⎇', option: '⌥', command: '⌘', enter: '↵', escape: '⎋', backspace: '⌫', delete: '⌦'};
   const refresh = () => {
     window.FLNavigation?.refresh();
+    document.querySelectorAll('.md-typeset kbd, .fltheme-components kbd').forEach(key => {
+      const name = key.textContent.trim().toLowerCase();
+      if (keys[name]) {
+        key.dataset.flKeySymbol = keys[name];
+        key.classList.add(`key-${name}`);
+      }
+    });
+    let modeChanged = false;
     document.querySelectorAll('.fltheme-components').forEach(root => {
       const host = root.parentElement.closest('[data-md-color-scheme], [data-theme]') || document.documentElement;
       const scheme = host.getAttribute('data-md-color-scheme');
@@ -10,8 +19,10 @@
         ? root.dataset.flthemeMode === 'dark'
         : scheme === 'slate' ? true : scheme === 'default' ? false
           : getComputedStyle(host).colorScheme === 'dark' || host.classList.contains('dark') || host.dataset.theme === 'dark';
+      modeChanged ||= root.classList.contains('dark') !== dark;
       root.classList.toggle('dark', dark);
     });
+    if (modeChanged) document.dispatchEvent(new Event('basecoat:themechange'));
     window.basecoat?.initAll();
     window.basecoat?.start();
   };

@@ -64,13 +64,19 @@ Basecoat on the same page. MaterialX instant navigation is supported; call
 The host remains responsible for theme choice and persistence. Component colors
 follow MaterialX's scheme or the host's dark appearance. Override one component
 area with `data-fltheme-mode="light"` or `"dark"`, then call `FLTheme.refresh()`.
-Component overrides belong in `src/theme.css` (or the specimen stylesheet),
+Component overrides belong in `src/theme.css`, `src/harmony-forms.css` and
+`src/harmony-display.css` (or the specimen stylesheet),
 then run the shared build. The build transforms all three stylesheets together
 to preserve layer precedence against unlayered MaterialX/Webflow CSS; editing
 the generated stylesheets independently bypasses that contract.
 
 The generated daisyUI stylesheet renames its border-width token to `--du-border`
-because Basecoat's `--border` token is a color.
+because Basecoat's `--border` token is a color. Countdown values use the familiar
+`--value` and `--digits` properties; the theme maps them to daisyUI's prefixed tokens.
+The shared styles harmonize fields, choices, tabs, frames, hints and data displays.
+MaterialX keycaps, captions, admonitions and tooltips use the same scale; its content
+has `25vh` bottom padding. Key labels retain their text alongside keyboard symbols.
+Changing the host's light/dark mode also refreshes optional Basecoat charts.
 
 ## Responsive navigation
 

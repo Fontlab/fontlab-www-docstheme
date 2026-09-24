@@ -4,6 +4,17 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — component harmony (issue 213)
+
+- Unified labels, checkboxes, radios, switch thumbs, selects, sliders, keycaps,
+  content tabs, tooltips and annotation text across the three libraries.
+- Matched MaterialX admonitions to the approved alert palette. Fixed captions,
+  pagination, dropdown chevrons, drawers, skeletons, progress tracks and hero gaps.
+- Repaired all four mockup frames, chart containment and theme refresh, countdown
+  values, filter reset clipping, and added 25vh below MaterialX page content.
+- Added 20 browser regressions with desktop/mobile and five-theme acceptance.
+  See `review/issue213.md` for all 37 requirements and WORK.md for release evidence.
+
 ## 2026-09-24 — page and history shortcuts
 
 - Right and Alt+Right follow the next documentation page; Alt+Left follows the

@@ -1,0 +1,117 @@
+/* this_file: src/harmony-display.css */
+/* Reading components share the same scale, surfaces and spacing across libraries. */
+.md-main .md-content { padding-bottom: 25vh !important; }
+:root { --fl-key-bg: #f4f4f5; }
+[data-md-color-scheme=slate] { --fl-key-bg: #313137; }
+.md-typeset kbd, .fltheme-components kbd {
+  display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+  min-width: 1.5rem; height: 1.5rem; padding: 0 .5em; gap: .2em;
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .75rem; line-height: 1.25; font-weight: 400;
+  color: var(--foreground, var(--md-default-fg-color, #242424)); background: var(--muted, var(--fl-key-bg));
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-bottom-width: 2px; border-radius: .375rem; box-shadow: none;
+}
+.md-typeset kbd[data-fl-key-symbol]::before, .fltheme-components kbd[data-fl-key-symbol]::before { content: attr(data-fl-key-symbol); padding: 0; }
+.md-typeset kbd[data-fl-key-symbol]::after, .fltheme-components kbd[data-fl-key-symbol]::after { content: none; }
+.md-typeset figcaption, .fltheme-components figcaption {
+  font-size: .75rem; line-height: 1.5; font-style: normal; text-align: start; margin-block-start: .65rem;
+}
+.fltheme-components :is(table.table caption, table.du-table th) { text-align: start; }
+.fltheme-components nav.pagination .button-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+.fltheme-components nav.pagination .btn {
+  background: transparent; color: var(--foreground); border: 0; border-radius: 2rem; box-shadow: none;
+  margin: 0; min-height: 2.25rem; padding-inline: .8rem;
+}
+.fltheme-components nav.pagination .btn[aria-current=page] { background: var(--muted); font-weight: 600; }
+.fltheme-components nav.pagination a.btn:hover { text-decoration: underline; text-underline-offset: .2em; }
+
+/* Match MaterialX content tabs without changing daisyUI's radio/panel contract. */
+.fltheme-components .du-tabs-border { position: relative; font-size: 1rem; line-height: 1.8; }
+.fltheme-components .du-tabs-border::after { content: ''; position: absolute; top: calc(2.3rem - 1px); inset-inline: 0; height: 1px; background: var(--border); pointer-events: none; }
+.fltheme-components .du-tabs-border > .du-tab {
+  height: 2.3rem; min-height: 2.3rem; padding: .546875rem .875rem .4375rem;
+  font-size: .7rem; line-height: 1.8; font-weight: 400; border-radius: .1rem .1rem 0 0;
+  color: var(--md-default-fg-color--light, var(--muted-foreground));
+}
+.fltheme-components .du-tabs-border > .du-tab:checked { color: var(--md-accent-fg-color, var(--foreground)); }
+.fltheme-components .du-tabs-border > .du-tab::before { height: 2px; background: currentColor; border-radius: 0; width: 100%; inset-inline: 0; bottom: 0; opacity: 0; z-index: 1; }
+.fltheme-components .du-tabs-border > .du-tab:checked::before { opacity: 1; }
+.fltheme-components .du-tabs-border > .du-tab-content { border: 0; border-radius: 0; padding: 1rem 0 !important; font-size: 1rem; line-height: 1.8; }
+.fltheme-components details.du-dropdown > summary {
+  position: relative; display: inline-flex; align-items: center; padding-inline-end: 2.25rem;
+}
+.fltheme-components details.du-dropdown > summary::after {
+  content: ''; position: absolute; inset-inline-end: .85rem; top: 50%; margin-top: -.35rem;
+  width: .5rem; height: .5rem; border: solid var(--muted-foreground); border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg); mask: none; background: none;
+}
+.fltheme-components details.du-dropdown[open] > summary::after { transform: rotate(225deg); margin-top: -.1rem; }
+.fltheme-components dialog.drawer > div > :is(header, section, footer) { padding: 1.25rem; margin: 0; }
+.fltheme-components dialog.drawer > div > :is(header, section, footer) > :first-child { margin-top: 0; }
+.fltheme-components .du-drawer { isolation: isolate; }
+.fltheme-components .du-drawer-side > :not(.du-drawer-overlay) {
+  position: relative; z-index: 1; background: var(--background); color: var(--foreground);
+  min-height: 100%; width: min(18rem, 85%); padding: 1rem;
+}
+.fltheme-components .du-drawer-content > * + * { margin-block-start: .75rem; }
+
+/* Frames contain an article, not an unstyled block under decorative chrome. */
+.fltheme-components figure:has([class*=du-mockup]) { display: block; width: 100%; max-width: 100%; }
+.fltheme-components :is(.du-mockup-browser, .du-mockup-window) { width: 100%; background: var(--muted); }
+.fltheme-components :is(.du-mockup-browser, .du-mockup-window) article { background: var(--background); min-height: 8rem; }
+.fltheme-components :is(.du-mockup-browser, .du-mockup-window, .du-mockup-phone) article > * + * { margin-block-start: .75rem; }
+.fltheme-components :is(.du-mockup-browser, .du-mockup-window, .du-mockup-phone, .du-hero) h3 { font-size: 1.3em; font-weight: 600; line-height: 1.3; }
+.fltheme-components .du-mockup-phone { width: min(19rem, 100%); height: auto; aspect-ratio: auto; border-radius: 2.75rem; }
+.fltheme-components .du-mockup-phone-display { width: 100%; height: 28rem; min-height: 0; aspect-ratio: auto; border-radius: 2.25rem; background: var(--background); }
+.fltheme-components .du-mockup-phone-display article { padding: 4rem 1.25rem 2rem; }
+.fltheme-components .du-mockup-phone-camera { width: 6rem; top: 1rem; }
+.fltheme-components .du-mockup-code pre { display: flex; align-items: flex-start; gap: .75rem; margin: 0; padding: .25rem 1.25rem; background: transparent; color: inherit; }
+.fltheme-components .du-mockup-code pre::before { flex: 0 0 1rem; margin: 0; width: auto; }
+.fltheme-components .du-mockup-code code { flex: 1; min-width: 0; padding-inline-end: 2rem; white-space: pre-wrap; overflow-wrap: anywhere; background: transparent; color: inherit; }
+.fltheme-components .du-hero-content > * + * { margin-block-start: 1rem; }
+.fltheme-components .du-hero-content { max-width: 100%; overflow-wrap: break-word; }
+
+.fltheme-components .progress { height: .5rem; color: var(--primary); background: color-mix(in oklab, currentColor 20%, transparent); border-radius: var(--radius-box); }
+.fltheme-components .progress > span { height: 100%; border-radius: inherit; background: currentColor; }
+.fltheme-components :is(.skeleton, .du-skeleton) { background-color: var(--muted); border-radius: .375rem; }
+.fltheme-components .du-skeleton.rounded-full { border-radius: 50%; }
+.fltheme-components .skeleton { max-width: 24rem; }
+.fltheme-components div:has(> canvas) { position: relative; min-width: 0; margin-block-end: 1rem; }
+.fltheme-components canvas { display: block; max-width: 100%; max-height: 100%; }
+.fltheme-components .chart { height: 100%; min-height: 0; max-height: 100%; }
+.fltheme-components div:has(> .chart) { margin-block-end: 1rem; }
+/* daisyUI prefixes its internal CSS variables as well as component classes. */
+.fltheme-components .du-countdown > * { --du-value: var(--value, 0); --du-digits: var(--digits, 1); }
+.fltheme-components .du-countdown { vertical-align: middle; margin-inline-end: .25em; }
+
+/* Keep the approved daisyUI semantic colors and type size for all admonitions. */
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) {
+  --fl-note-bg: #dbeafe; --fl-note-fg: #1e40af;
+  background: var(--fl-note-bg); color: var(--fl-note-fg); font-size: .875rem; line-height: 1.5;
+  border: 1px solid color-mix(in srgb, var(--fl-note-fg) 18%, transparent); border-radius: .5rem;
+}
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.tip, .success, .question) { --fl-note-bg: #dcfce7; --fl-note-fg: #166534; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))).warning { --fl-note-bg: #fef3c7; --fl-note-fg: #854d0e; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))):is(.failure, .danger, .bug) { --fl-note-bg: #fee2e2; --fl-note-fg: #991b1b; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))).quote { --fl-note-bg: #f4f4f5; --fl-note-fg: #242424; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) > :is(.admonition-title, summary) { background: transparent; color: inherit; font-size: inherit; }
+.md-typeset :is(.admonition, details:not(:where(.fltheme-components *))) :is(p, li) { color: inherit; font-size: inherit; line-height: inherit; text-indent: 0; }
+
+:root { --fl-hint-size: .75rem; --fl-hint-line: 1.333333; }
+.fltheme-components [data-tooltip]::before, .fltheme-components .du-tooltip::before,
+.md-tooltip__inner, .md-tooltip2__inner {
+  background: var(--md-default-fg-color, #242424); color: var(--md-default-bg-color, #fff);
+  font-family: var(--fl-font-body, inherit); font-size: var(--fl-hint-size); line-height: var(--fl-hint-line);
+  font-weight: 400; padding: .375rem .75rem; border-radius: .375rem; box-shadow: none;
+  text-align: start; white-space: normal; width: max-content; max-width: min(20rem, 80vw);
+}
+.fltheme-components .du-tooltip::after { display: none; }
+.md-tooltip2 { border: 0; box-shadow: none; background: transparent; }
+.md-tooltip2::before, .md-tooltip2::after { display: none; }
+.fltheme-components [data-tooltip]:focus-visible::before { display: block; visibility: visible; opacity: 1; scale: 1; translate: -50% 0; }
+.fltheme-components .du-tooltip:focus-visible::before { opacity: 1; --du-tt-pos: 0rem; }
+.md-annotation__index .md-tooltip__inner, .md-annotation__content, .md-annotation .md-tooltip__inner { font-size: var(--fl-hint-size); line-height: var(--fl-hint-line); }
+@media (prefers-reduced-motion: reduce) {
+  .fltheme-components :is(.skeleton, .du-skeleton, .du-countdown > *, .du-countdown > *::before, .du-countdown > *::after) { animation: none; transition: none; }
+}

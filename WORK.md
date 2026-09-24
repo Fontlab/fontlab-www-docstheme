@@ -4,6 +4,30 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — issue 213
+
+Implemented the 37 requested component corrections in shared source, preserving
+the component wrapper and vendor behavior. Marketing pagination now has real
+neighbouring destinations and an aria-current pill. Its clean publication worktree
+contains only the source page, generated page and regenerated search index.
+
+Seven initial regressions failed before implementation. Visual review then found
+two further regressions (terminal prompt alignment and checkbox rotation); both
+were reproduced as failing tests before the final build. The review also corrected
+duplicated key symbols, phone aspect-ratio slack, chart theme refresh and tooltip
+focus handling. Theme assertions wait for finite CSS transitions to finish.
+
+The full requirement mapping and direct standards/spec review are in
+`review/issue213.md`. No dependencies changed. Existing unrelated source and
+review-image edits were retained.
+
+Candidate verification: the final 63-file build and all 5 Node tests passed.
+The complete 55-test browser suite passed; all 200 five-theme desktop/mobile
+checks passed, followed by 20 checks of the two final visual repairs. All 520
+specimen captures were generated; the changed frames and choices were refreshed
+after the last build. Direct cleanup and standards/spec review found no remaining
+issue-213 blockers. Logs and screenshots are under `/tmp/issue213/`.
+
 ## 2026-09-24: responsive local navigation
 
 User correction: global FontLab/Vexy navigation must scroll away on small
