@@ -16,6 +16,10 @@ no page JavaScript errors. Browser plugin unavailable; used the existing Playwri
 setup. Evidence and verification script are under `/tmp/shared-buttons-*` and
 `/tmp/verify-shared-buttons.mjs`.
 
+Published source `5feb78d` and CDN `cf2bbcb`; Pages run `36044506693` succeeded.
+Purged the changed stylesheet and manifest. Both public files match the build
+byte-for-byte; all ten live theme/viewport checks passed with no page JS errors.
+
 ## 2026-09-24 — Vexy mobile search background
 
 Reproduced the transparent search field with the homepage's `bg="transparent"`
