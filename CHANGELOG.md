@@ -4,6 +4,11 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — final paragraph spacing
+
+- Moved 25vh bottom padding from `.md-main .md-content` to
+  `article.md-typeset > p:last-of-type`.
+
 ## 2026-09-24 — consistent standard buttons
 
 - Matched MaterialX, Basecoat and daisyUI standard button height, padding, font

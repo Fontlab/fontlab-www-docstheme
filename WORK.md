@@ -4,6 +4,13 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24 — final paragraph spacing
+
+Replaced the content-container padding rule with the requested last-paragraph
+selector. Build and all five Node tests passed. Browser checks at 800px and
+1000px viewport heights confirm 200px and 250px padding on the final paragraph,
+respectively, with the container rule removed.
+
 ## 2026-09-24 — consistent standard buttons
 
 Matched MaterialX, Basecoat and daisyUI standard buttons inside component wrappers:

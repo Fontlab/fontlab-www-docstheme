@@ -1,6 +1,6 @@
 /* this_file: src/harmony-display.css */
 /* Reading components share the same scale, surfaces and spacing across libraries. */
-.md-main .md-content { padding-bottom: 25vh !important; }
+article.md-typeset > p:last-of-type { padding-bottom: 25vh !important; }
 :root { --fl-key-bg: #f4f4f5; }
 [data-md-color-scheme=slate] { --fl-key-bg: #313137; }
 .md-typeset kbd, .fltheme-components kbd {
