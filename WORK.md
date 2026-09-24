@@ -19,6 +19,14 @@ zero borders/backgrounds/shadows, heading/body alignment, collapse interactions
 and zero final-paragraph padding. Screenshots inspected, no page JavaScript errors.
 Published the corrected THEME.md contract in all 18 consumer/infrastructure repos.
 
+Published source `f86841a` and CDN `f0bf703`; Pages run `36058475529` succeeded.
+Purged the changed CDN URLs. All six public assets match the build (HTML after
+reversing Cloudflare font/Rocket Loader transformations). All ten five-theme
+desktop/phone checks pass on the public Marketing page with no JavaScript errors.
+Both live regressions pass, including zero final-paragraph padding. Inspected live
+screenshots; revised starter builds in strict mode. Evidence: `/tmp/notes-live.json`,
+`/tmp/notes-live-assets.json`, `/tmp/notes-live-regression.log` and live screenshots.
+
 ## 2026-09-24 — range thumb alignment
 
 Reproduced the reported Marketing daisyUI range offset. A Chromium native-shadow
