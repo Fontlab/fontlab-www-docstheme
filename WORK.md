@@ -18,8 +18,8 @@ duplicated key symbols, phone aspect-ratio slack, chart theme refresh and toolti
 focus handling. Theme assertions wait for finite CSS transitions to finish.
 
 The full requirement mapping and direct standards/spec review are in
-`review/issue213.md`. No dependencies changed. Existing unrelated source and
-review-image edits were retained.
+`review/issue213.md`. No dependencies changed. Unrelated source changes and
+generated review-image changes were excluded from the task commits.
 
 Candidate verification: the final 63-file build and all 5 Node tests passed.
 The complete 55-test browser suite passed; all 200 five-theme desktop/mobile
@@ -27,6 +27,11 @@ checks passed, followed by 20 checks of the two final visual repairs. All 520
 specimen captures were generated; the changed frames and choices were refreshed
 after the last build. Direct cleanup and standards/spec review found no remaining
 issue-213 blockers. Logs and screenshots are under `/tmp/issue213/`.
+
+Live screenshot review caught a terminal row wider than its phone frame, which
+the page-level overflow assertion had missed. A new row/text containment test
+reproduced it (509px right edge versus a 351px frame edge). Constraining the row
+width passed that regression and 15 checks across five themes at 1440/390/320px.
 
 ## 2026-09-24: responsive local navigation
 

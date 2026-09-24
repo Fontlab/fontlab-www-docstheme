@@ -12,7 +12,7 @@ this_file: CHANGELOG.md
   pagination, dropdown chevrons, drawers, skeletons, progress tracks and hero gaps.
 - Repaired all four mockup frames, chart containment and theme refresh, countdown
   values, filter reset clipping, and added 25vh below MaterialX page content.
-- Added 20 browser regressions with desktop/mobile and five-theme acceptance.
+- Added 21 browser regressions with desktop/mobile and five-theme acceptance.
   See `review/issue213.md` for all 37 requirements and WORK.md for release evidence.
 
 ## 2026-09-24 — page and history shortcuts

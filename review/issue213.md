@@ -10,7 +10,7 @@ page markup and explanatory sentence require a Marketing rebuild.
 
 ## Requirement coverage
 
-`harmony.spec.mjs` and `harmony-layout.spec.mjs` exercise the real catalogue
+`harmony.spec.mjs`, `harmony-layout.spec.mjs` and `frame-containment.spec.mjs` exercise the real catalogue
 markup against the candidate bundle, and support unmodified live URLs through
 `HARMONY_LIVE=1`. The same assertions run at 1440px and 390px in Material Light,
 Material Dark, Retro, Miller and Lines. Frames also check 320px reflow.
@@ -23,7 +23,7 @@ Material Dark, Retro, Miller and Lines. Frames also check 320px reflow.
 | 4 | Daisy tabs match MaterialX | Header geometry, full baseline, active underline; geometry and arrow-key test |
 | 5 | Figure captions | Smaller, upright, reading-edge alignment; caption test |
 | 6 | Badge margins | Wrapped rows and inter-row margin; badge test |
-| 7 | Four mockup frames | Scoped layout utilities, content padding, compact contained phone; reflow/containment test and captures |
+| 7 | Four mockup frames | Scoped layout utilities, content padding, compact phone and contained terminal text; reflow/row-containment tests and captures |
 | 8 | Subtle pagination | Plain links, current-page pill with aria-current; pagination test |
 | 9 | Dropdown chevron | Centered neutral chevron; palette and open/close test |
 | 10 | Basecoat drawer padding | Equal header/section/footer padding; dialog test |
