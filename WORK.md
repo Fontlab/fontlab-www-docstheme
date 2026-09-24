@@ -216,8 +216,7 @@ held keys and page-order boundaries cannot repeatedly navigate or wrap. Added
 relations and runtime loading to the two static CDN documentation pages.
 
 Five new browser tests failed before implementation and passed afterwards. The
-full suite passed 35 browser cases plus five Node cases. Real-consumer checks
-and publication are in progress. During the Ornotto editorial migration, fixed
+full suite passed 35 browser cases plus five Node cases. During the Ornotto editorial migration, fixed
 an older search relocation that could position the contents toggle behind the
 header; the shared navigation adapter now retains ownership of its search dialog.
 
@@ -229,3 +228,18 @@ shortcut assertions still passed, and their strict console rechecks retain the
 error. This is a recorded existing dependency issue, not a waived shortcut test.
 The Marketing editorial regression additionally verifies search remains outside
 the hidden header/sidebar and its contents toggle can be clicked.
+
+Published source `51d2228` and CDN `9124937`; Pages run `36015310383`
+succeeded. The 63 staged files match the build manifest. Both changed public
+JavaScript files match their build hashes after targeted CDN purging. Cloudflare
+transforms the two showcase HTML files; their navigation relations and runtime
+were verified structurally and through actual live keyboard interactions.
+
+Live acceptance exercised 19 page entries: all four shortcuts passed on 18,
+and browser history passed on the Vexy page without a declared next page.
+Seventeen entries were console-clean; fldoc and Gordon retained the documented
+Tooltipster errors while passing every shortcut assertion. The strict overall
+matrix therefore reports those two entries as failures, not clean passes.
+Ornotto also passed its complete live editorial/responsive check with no page
+errors. Reports and screenshots: `/tmp/ornotto-theme-qa/keyboard-live.json`,
+`live-assets.json`, and `live-report.json` in the same directory.
