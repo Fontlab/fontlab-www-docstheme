@@ -13,6 +13,24 @@ async function fixture(page, brand = 'fontlab') {
   }
 }
 
+test('native MaterialX without a global menu preserves mobile Escape handling', async ({page}) => {
+  await page.route('**/materialx/', async route => {
+    const response = await route.fetch();
+    await route.fulfill({response, body:(await response.text()).replace(/<fontlab-menu\b[^>]*><\/fontlab-menu>/g, '')});
+  });
+  await page.setViewportSize({width:390, height:844});
+  await fixture(page);
+  await page.locator('.md-header label[for="__drawer"]').click();
+  await expect(page.locator('#__drawer')).toBeChecked();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#__drawer')).not.toBeChecked();
+  await page.locator('.md-header label.md-header__button[for="__search"]').click();
+  await page.locator('.md-search__input').pressSequentially('specimen');
+  await expect(page.locator('.md-search-result__list a').first()).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#__search')).not.toBeChecked();
+});
+
 for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'materialx']) for (const search of ['global', 'materialx']) {
   test(`${brand}: vanilla MaterialX with ${menu} navigation and ${search} search`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -21,6 +39,7 @@ for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'material
     await host.evaluate((el, owners) => {
       el.setAttribute('mobile-menu', owners.menu);
       el.setAttribute('mobile-search', owners.search);
+      if (owners.search === 'materialx') el.setAttribute('no-search', '');
       el.setAttribute('site-label', 'A documentation site with a deliberately long title');
     }, { menu, search });
     const hamburger = host.locator('[part="mobile-menu"]');
@@ -64,6 +83,8 @@ for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'material
       await expect(page.locator('#__search')).toBeChecked({ checked: search === 'materialx' });
       if (search === 'materialx') {
         await expect(page.locator('.md-search__inner')).toHaveCSS('opacity', '1');
+        const panel = await page.locator('.md-search__inner').boundingBox();
+        expect(Math.abs(panel.x + panel.width / 2 - width / 2)).toBeLessThan(2);
         await page.locator('.md-search__input').fill('');
         await page.locator('.md-search__input').pressSequentially('specimen');
         await expect(page.locator('.md-search-result__list a').first()).toBeVisible();
@@ -85,7 +106,36 @@ for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'material
     }
     await page.setViewportSize({ width: 1488, height: 1000 });
     await expect(hamburger).toBeHidden();
-    await expect(page.locator('.md-header .md-search')).toHaveCount(1);
+    await expect(page.locator('.md-header .md-search')).toHaveCount(search === 'materialx' ? 0 : 1);
     await expect(page.locator('.md-header [data-md-component="palette"]')).toHaveCount(1);
+    for (const width of [1280, 1488, 1920]) {
+      await page.setViewportSize({ width, height: 1000 });
+      const desktopSearch = host.locator('[data-search-toggle]').filter({visible:true});
+      await expect(desktopSearch).toHaveCount(1);
+      await desktopSearch.click();
+      if (search === 'materialx') {
+        await expect(page.locator('#__search')).toBeChecked();
+        const input = page.locator('.md-search__input');
+        await expect(input).toBeFocused();
+        await expect(page.locator('.md-search__inner')).toHaveCSS('opacity', '1');
+        const panel = await page.locator('.md-search__inner').boundingBox();
+        expect(Math.abs(panel.x + panel.width / 2 - width / 2)).toBeLessThan(2);
+        await input.fill('');
+        await input.pressSequentially('specimen');
+        await expect(page.locator('.md-search-result__list a').first()).toBeVisible();
+        await expect(host.locator('input[type="search"]').filter({visible:true})).toHaveCount(0);
+      } else {
+        await expect(page.locator('#__search')).not.toBeChecked();
+        await expect(host.locator('input[type="search"]').filter({visible:true})).toHaveCount(1);
+      }
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#__search')).not.toBeChecked();
+      await expect(desktopSearch).toBeFocused();
+      if (search === 'materialx') {
+        await desktopSearch.click();
+        await page.locator('.md-search__overlay').click({position:{x:10,y:10}});
+        await expect(page.locator('#__search')).not.toBeChecked();
+      }
+    }
   });
 }

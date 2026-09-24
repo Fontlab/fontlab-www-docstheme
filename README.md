@@ -96,11 +96,16 @@ If a requested local target is absent, its global equivalent remains available.
 Load the menu script together with the shared `theme.css` and `theme.js` above.
 Keep MaterialX's native `#__drawer`, `.md-sidebar--primary`, `#__search` and
 `.md-search` markup; enable its search plugin. Older search-only custom headers
-are supported. Desktop restores each original search and palette position.
+are supported. Desktop restores the palette position; the global loupe opens
+the selected search at every width. Local search uses the native MaterialX index
+in a centered desktop dialog and a full-screen mobile panel. Despite the legacy
+`mobile-search` / `mobileSearch` names, that search choice now applies at all sizes.
+Local ownership also restores the loupe on legacy `no-search` pages.
 
 The menu exposes `mobileControls` and emits cancelable
 `fontlab-menu:mobile-control` / `vexy-menu:mobile-control` events with
-`{control, owner, trigger}`. The shared adapter handles local controls by
+`{control, owner, trigger}`. Search events fire from the desktop loupe too.
+The shared adapter handles local controls by
 preventing the default global action. Re-render events reconnect accessibility
 state after configuration or brand changes. Internal `data-*` flags are owned
 by the adapter; consumers configure only the public attributes or `.config`.

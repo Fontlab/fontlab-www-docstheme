@@ -118,10 +118,12 @@ try {
           await expect(page.locator('#__search')).not.toBeChecked();
         } else {
           await expect(page.locator('#__search')).toBeChecked();
-          await expect(page.locator('.fl-mobile-search input')).toBeVisible();
-          await expect(page.locator('.fl-mobile-search .md-search__inner')).toHaveCSS('opacity', '1');
-          await page.locator('.fl-mobile-search input').fill('');
-          await page.locator('.fl-mobile-search input').pressSequentially(queries[name] || 'font');
+          await expect(page.locator('.fl-local-search input')).toBeVisible();
+          await expect(page.locator('.fl-local-search .md-search__inner')).toHaveCSS('opacity', '1');
+          const panel = await page.locator('.fl-local-search .md-search__inner').boundingBox();
+          expect(Math.abs(panel.x + panel.width / 2 - width / 2)).toBeLessThan(2);
+          await page.locator('.fl-local-search input').fill('');
+          await page.locator('.fl-local-search input').pressSequentially(queries[name] || 'font');
           await expect(page.locator('.md-search-result__list a').first()).toBeVisible({timeout:15000});
         }
         await page.screenshot({ path: `${out}/${name}-${width}-search.png`, animations: 'disabled' });
@@ -148,6 +150,32 @@ try {
       await page.screenshot({ path: `${out}/${name}-desktop.png`, animations: 'disabled' });
       await expect(global).toBeVisible();
       await expect(toggle).not.toBeVisible();
+      for (const width of [1280, 1440, 1920]) {
+        await page.setViewportSize({width, height:1000});
+        const loupe = global.locator('[data-search-toggle]').filter({visible:true});
+        await expect(loupe).toHaveCount(1);
+        await loupe.click();
+        if (auxiliary) {
+          await expect(page.locator('#__search')).not.toBeChecked();
+          await expect(global.locator('input[type="search"]').filter({visible:true})).toHaveCount(1);
+        } else {
+          await expect(page.locator('#__search')).toBeChecked();
+          const input = page.locator('.fl-local-search input');
+          await expect(input).toBeFocused();
+          await expect(page.locator('.fl-local-search .md-search__inner')).toHaveCSS('opacity', '1');
+          const panel = await page.locator('.fl-local-search .md-search__inner').boundingBox();
+          expect(Math.abs(panel.x + panel.width / 2 - width / 2)).toBeLessThan(2);
+          await input.fill('');
+          await input.pressSequentially(queries[name] || 'font');
+          await expect(page.locator('.md-search-result__list a').first()).toBeVisible({timeout:15000});
+          await expect(global.locator('input[type="search"]').filter({visible:true})).toHaveCount(0);
+          await page.screenshot({path:`${out}/${name}-${width}-desktop-search.png`, animations:'disabled'});
+        }
+        await page.keyboard.press('Escape');
+        await expect(page.locator('#__search')).not.toBeChecked();
+        await expect(loupe).toBeFocused();
+        row.checks.push({width, desktopSearch:auxiliary ? 'global' : 'materialx', focusReturn:true});
+      }
       expect(row.errors).toEqual([]);
       row.passed = true;
     } catch (error) {

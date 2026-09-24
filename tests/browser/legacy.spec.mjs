@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import { resolve } from 'node:path';
 
 test.beforeEach(async ({ page }) => {
+  await page.route('https://i.fontlab.com/menu/fontlab.js', route => route.fulfill({path: resolve('../img/docs/menu/fontlab.js')}));
   await page.route('https://i.fontlab.com/fltheme26/**', route => route.fulfill({
     path: resolve('dist', new URL(route.request().url()).pathname.split('/fltheme26/')[1]),
   }));
@@ -24,6 +25,7 @@ test('GetGo preserves font specimens, illustrations, downloads and search', asyn
   await page.screenshot({ path: 'review/getgo-mobile.png', animations: 'disabled' });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   await page.setViewportSize({ width: 1505, height: 1045 });
+  await page.locator('fontlab-menu [data-search-toggle]').filter({visible:true}).click();
   await expect(page.locator('.md-search-result__meta')).not.toContainText('Initializing', { timeout: 20000 });
   await page.getByRole('textbox', { name: 'Search' }).pressSequentially('Pixa', { delay: 80 });
   await expect(page.locator('.md-search-result__list')).toContainText('GG Pixa');

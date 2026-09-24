@@ -160,42 +160,80 @@
   }
   html.fl-mobile-navigation .md-sidebar--primary .fl-theme__pop { top: auto; bottom: 100%; }
   html.fl-mobile-navigation .md-overlay { z-index: 200; }
-  html.fl-mobile-navigation .fl-mobile-search { display: none !important; }
-  html.fl-mobile-navigation.fl-search-open .fl-mobile-search {
-    display: block !important;
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100dvh !important;
-    padding: 0 !important;
-    margin: 0 !important;
+}
+
+/* The global loupe opens the native site search at every screen width. */
+html.fl-mobile-navigation .fl-local-search { display: none !important; }
+html.fl-mobile-navigation.fl-search-open .fl-local-search {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: var(--md-default-bg-color, white);
+  z-index: 202;
+  transform: none !important;
+}
+html.fl-mobile-navigation .fl-local-search .md-search__inner {
+  position: static !important;
+  float: none !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+html.fl-mobile-navigation .fl-local-search .md-search__form {
+  display: flex !important; /* Older branded headers hid the form globally. */
+  border-radius: 0;
+}
+html.fl-mobile-navigation .fl-local-search .md-search__output {
+  position: static !important;
+  display: block !important;
+  width: 100%;
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.fl-mobile-navigation .fl-local-search .md-search__scrollwrap {
+  width: 100% !important;
+  height: calc(100dvh - 3rem) !important;
+  max-height: none !important;
+  overflow: auto;
+}
+
+html.fl-mobile-navigation .md-header label.md-header__button[for="__search"],
+html.fl-mobile-navigation[data-fl-mobile-search="global"] .md-header .md-search {
+  display: none !important;
+}
+@media screen and (min-width: 76.25em) {
+  html.fl-mobile-navigation.fl-search-open .fl-local-search {
+    background: #0008;
+    z-index: 1001;
+  }
+  html.fl-mobile-navigation .fl-local-search .md-search__inner {
+    position: relative !important;
+    width: min(48rem, calc(100% - 4rem)) !important;
+    height: auto !important;
+    margin: 5rem auto 0 !important;
     background: var(--md-default-bg-color, white);
-    z-index: 202;
-    transform: none !important;
+    border-radius: .25rem;
+    overflow: hidden;
   }
-  html.fl-mobile-navigation .fl-mobile-search .md-search__inner {
-    position: static !important;
-    opacity: 1 !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transform: none !important;
-  }
-  html.fl-mobile-navigation .fl-mobile-search .md-search__form {
-    display: flex !important; /* Older branded headers hid the form globally. */
-    border-radius: 0;
-  }
-  html.fl-mobile-navigation .fl-mobile-search .md-search__output {
-    position: static !important;
+  html.fl-mobile-navigation .fl-local-search .md-search__overlay {
     display: block !important;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    opacity: 1 !important;
-    transform: none !important;
+    height: 100%;
+    pointer-events: auto;
+    background: transparent;
+    opacity: 1;
   }
-  html.fl-mobile-navigation .fl-mobile-search .md-search__scrollwrap {
-    height: calc(100dvh - 3rem) !important;
-    max-height: none !important;
-    overflow: auto;
+  html.fl-mobile-navigation .fl-local-search .md-search__scrollwrap {
+    height: auto !important;
+    max-height: calc(100dvh - 9rem) !important;
   }
 }

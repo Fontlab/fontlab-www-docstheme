@@ -172,3 +172,23 @@ rebuilds retain the shared assets.
 
 Final independent deployment review: 96/100, no blockers. Public asset hashes
 and Partners search were checked again independently.
+
+## Desktop search follow-up
+
+Use the selected MaterialX search from the global loupe at every viewport width;
+keep www.fontlab.com and www.vexy.art on global search. Reuse the current ownership
+choice and native search worker. Extend both-brand ownership tests to desktop
+clicks, real results, one field, Escape/focus return and breakpoint changes.
+
+Implemented all-width search dispatch in both menu components and native search
+placement in the shared adapter. Removed the inherited float and fixed result
+width that displaced desktop dialogs. Legacy `no-search` pages expose the local
+loupe when MaterialX owns search. Preserved mobile Escape handling on pages
+without a global menu and added a dedicated regression test. The GetGo test now
+opens search through the visible global loupe before typing.
+
+Validation: build passed; five Node tests and 30 browser tests passed. The
+candidate interaction suite passed all 18 entries, including desktop searches
+at 1280, 1440 and 1920px, mobile controls at 390, 800 and 1100px, both global
+exceptions and four native-only legacy pages. All 63 publication files match
+the build manifest. Candidate evidence: review/menu-integration-candidate/report.json.

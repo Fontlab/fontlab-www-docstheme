@@ -31,7 +31,7 @@
   const sync = () => {
     const open = mobile.matches && !!drawer?.checked;
     stateClass('fl-drawer-open', open);
-    stateClass('fl-search-open', mobile.matches && !!searchToggle?.checked);
+    stateClass('fl-search-open', !!searchToggle?.checked);
     if (navigation) {
       if (!roles.has(navigation)) roles.set(navigation, navigation.getAttribute('role'));
       if (open) {
@@ -59,8 +59,8 @@
     menu.toggleAttribute('data-fl-docked', mobile.matches && local && menu.getBoundingClientRect().bottom <= 0);
   };
   const request = event => {
-    if (!mobile.matches) return;
     const { control, owner } = event.detail;
+    if (control === 'menu' && !mobile.matches) return;
     if (owner !== 'materialx') {
       setChecked(drawer, false);
       setChecked(searchToggle, false);
@@ -93,7 +93,8 @@
       menu.addEventListener(`${menu.localName}:render`, refresh);
     }
     menu.dataset.mobileMenuDefault = 'materialx';
-    menu.dataset.mobileSearchDefault = search && searchToggle ? 'materialx' : 'global';
+    const searchDefault = search && searchToggle ? 'materialx' : 'global';
+    if (menu.dataset.mobileSearchDefault !== searchDefault) menu.dataset.mobileSearchDefault = searchDefault;
     menu.toggleAttribute('data-materialx-mobile', true);
     const owners = menu.mobileControls;
     const html = document.documentElement;
@@ -112,25 +113,26 @@
       inner.prepend(close);
     }
     const small = mobile.matches;
-    place(search, small && owners.search === 'materialx' ? document.body : null);
-    search?.classList.toggle('fl-mobile-search', small && owners.search === 'materialx');
+    place(search, owners.search === 'materialx' ? document.body : null);
+    search?.classList.toggle('fl-local-search', owners.search === 'materialx');
     for (const node of document.querySelectorAll('.fl-theme, [data-md-component="palette"]')) {
       place(node, small && owners.menu === 'materialx' ? inner : null);
     }
     if (!small || owners.menu !== 'materialx') setChecked(drawer, false);
-    if (!small || owners.search !== 'materialx') setChecked(searchToggle, false);
+    if (owners.search !== 'materialx') setChecked(searchToggle, false);
     sync();
     dock();
   };
   document.addEventListener('change', event => {
-    if (mobile.matches && menu) {
-      if (event.target === drawer && menu.mobileControls.menu !== 'materialx') setChecked(drawer, false);
+    if (menu) {
+      if (mobile.matches && event.target === drawer && menu.mobileControls.menu !== 'materialx') setChecked(drawer, false);
       if (event.target === searchToggle && menu.mobileControls.search !== 'materialx') setChecked(searchToggle, false);
     }
     if (event.target === drawer || event.target === searchToggle) sync();
   });
   document.addEventListener('keydown', event => {
-    const panel = mobile.matches && (searchToggle?.checked ? search : drawer?.checked ? navigation : null);
+    if (!menu && !mobile.matches) return;
+    const panel = searchToggle?.checked ? search : mobile.matches && drawer?.checked ? navigation : null;
     if (panel && event.key === 'Tab') {
       const stops = [...panel.querySelectorAll('a[href], button, input, select, textarea, [tabindex]')]
         .filter(node => node.tabIndex >= 0 && !node.disabled && node.getClientRects().length && getComputedStyle(node).visibility === 'visible')
@@ -142,11 +144,11 @@
         next.focus();
       }
     }
-    if (event.key !== 'Escape' || !mobile.matches) return;
-    if (drawer?.checked) { setChecked(drawer, false); trigger?.focus(); }
+    if (event.key !== 'Escape') return;
+    if (mobile.matches && drawer?.checked) { setChecked(drawer, false); trigger?.focus(); }
     if (searchToggle?.checked) {
       setChecked(searchToggle, false);
-      menu?.shadowRoot?.querySelector('[part="mobile-search"] button')?.focus();
+      [...(menu?.shadowRoot?.querySelectorAll('[data-search-toggle]') || [])].find(button => button.getClientRects().length)?.focus();
     }
   });
   mobile.addEventListener('change', refresh);

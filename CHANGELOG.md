@@ -4,6 +4,16 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — desktop local search
+
+- Connected the global search loupe to MaterialX search at every screen width.
+  Auxiliary www.fontlab.com and www.vexy.art keep global search.
+- Centered desktop results, preserved full-screen mobile search, and restored
+  the loupe on older documentation pages that disabled the global search field.
+- Extended both-brand ownership tests to desktop results, centering, backdrop
+  dismissal and Escape/focus return, plus native pages without a global menu.
+- Build, five Node tests, 30 browser tests and all 18 candidate page checks pass.
+
 ## 2026-09-24 — integrated mobile controls (issue 212)
 
 - Added independent `mobile-menu` and `mobile-search` ownership to FontLab and
