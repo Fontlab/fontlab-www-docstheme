@@ -72,6 +72,21 @@ the generated stylesheets independently bypasses that contract.
 The generated daisyUI stylesheet renames its border-width token to `--du-border`
 because Basecoat's `--border` token is a color.
 
+## Responsive navigation
+
+On MaterialX pages with a `fontlab-menu` or `vexy-menu`, the global menu scrolls
+with the page below MaterialX's 76.25em drawer breakpoint. A 44px local hamburger
+stays at the top edge and opens MaterialX's existing navigation drawer. Enter
+and Space open it; Escape closes it and returns focus. Desktop navigation keeps
+the site's existing layout. Webflow pages without a MaterialX drawer are unchanged.
+
+This is the default in `theme.css` and `theme.js`; consumers already loading
+the shared assets need no extra stylesheet. Older templates with an empty
+MaterialX header receive the missing drawer label automatically. Keep the
+`#__drawer`, `.md-header` and `.md-sidebar--primary` elements in custom templates.
+Run `node scripts/verify-mobile-navigation.mjs --local` against published pages
+with candidate assets, or omit `--local` to check the published CDN.
+
 ## Existing customizations
 
 `src/chrome/` centralizes the existing FontLab chrome. `src/editorial/` contains

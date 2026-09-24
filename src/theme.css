@@ -71,3 +71,63 @@
   color-scheme: dark;
 }
 .fltheme-components :is(button, input, select, textarea) { font-family: inherit; }
+
+/* MaterialX's drawer breakpoint. Global branding scrolls; local navigation
+   remains within reach. Activate only on pages with both navigation systems. */
+@media screen and (max-width: 76.234375em) {
+  html.fl-local-navigation :is(fontlab-menu, vexy-menu) {
+    position: relative !important;
+    top: auto !important;
+    z-index: auto !important;
+  }
+  html.fl-local-navigation .md-header.fl-local-header {
+    display: block !important;
+    position: sticky !important;
+    top: 0 !important;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+    transform: none !important;
+    background: var(--md-default-bg-color, #fff) !important;
+    color: var(--md-default-fg-color, #242424) !important;
+    border-radius: 0 0 .25rem 0;
+    box-shadow: 0 1px 4px #0002 !important;
+  }
+  html.fl-local-navigation .fl-local-header > :not(.md-header__inner):not(.fl-local-nav-toggle),
+  html.fl-local-navigation .fl-local-header .md-header__inner > :not(.fl-local-nav-toggle) {
+    display: none !important;
+  }
+  html.fl-local-navigation .fl-local-header .md-header__inner {
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+  }
+  html.fl-local-navigation .fl-local-header .fl-local-nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    opacity: 1;
+  }
+  html.fl-local-navigation .fl-local-nav-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+  html.fl-local-navigation .fl-local-nav-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -4px;
+  }
+  html.fl-local-navigation .md-sidebar.md-sidebar--primary {
+    display: block !important;
+  }
+}

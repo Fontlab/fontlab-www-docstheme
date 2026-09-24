@@ -4,6 +4,16 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-09-24 — responsive navigation, verified locally
+
+- Added the shared mobile default: the global menu scrolls away while a 44px
+  MaterialX hamburger stays at the top. Restores the drawer trigger in older
+  search-only header templates; preserves desktop and Webflow layouts.
+- Verified keyboard activation, Escape/focus return, scrolling and drawer
+  visibility on seven published sites with candidate assets at phone/tablet
+  widths, plus desktop checks. All 16 browser tests and five Node tests pass.
+- CDN publication and post-publication verification remain pending.
+
 ## 2026-09-23 — task422 completed
 
 - Published the shared MaterialX customization, scoped Basecoat 1.0.2 and

@@ -4,6 +4,28 @@ this_file: WORK.md
 
 # Work
 
+## 2026-09-24: responsive local navigation
+
+User correction: global FontLab/Vexy navigation must scroll away on small
+screens while a compact MaterialX hamburger stays reachable. Verified the
+initial defect on ornotto, Marketing, the writing styleguide, Partners, FontLab
+legal, Vexy about and the blog. Marketing/styleguide retained a search-only
+header without the drawer label; other sites hid the native header in CSS.
+
+The shared runtime reuses the native checkbox and drawer, restores the missing
+label where necessary and orders the header after the global menu. Scoped
+responsive rules show a 44px sticky control and restore hidden mobile drawers.
+Desktop and non-MaterialX Webflow pages retain their existing behavior.
+
+Five Node tests and all 16 browser tests pass. Candidate CDN substitution on
+all seven live sites passes at 390px and 800px, with desktop checks at 1440px:
+global menu leaves the viewport, local trigger remains at top, Enter opens,
+Escape closes and restores focus, and navigation links enter the viewport.
+Fixed double activation from MaterialX's document-level Enter listener.
+Consent dialogs are dismissed through their visible Reject All control.
+Screenshots and results: `review/mobile-navigation-candidate/`.
+Publication and live CDN verification are the remaining gates.
+
 ## 2026-09-23: task422 baseline
 
 Read task422 and both supplied library studies. Confirmed current official
