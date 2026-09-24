@@ -126,7 +126,7 @@ Run the specimen with `python3 -m http.server --directory dist 8422`, then open
 
 ## Release evidence
 
-See `PLAN.md`, `TODO.md`, `WORK.md`, `CHANGELOG.md` and `review/`. Task422 is complete: 32 consumer configurations, 18 live browser checks and
+See `PLAN.md`, `TODO.md`, `WORK.md`, `CHANGELOG.md` and `review/`. Task422 is complete: 33 consumer configurations (including ornotto), 18 live browser checks and
 an independent review score of 96/100. Run `npm run verify:live` to refresh
 the desktop/mobile screenshots and published-site checks. The existing fldoc
 tooltipster error is documented in `review/baseline-limitations.json`.

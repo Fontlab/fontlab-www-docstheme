@@ -153,3 +153,22 @@ All screenshots, baseline limitations and publication records are in review/.
   admin mirrors updated without replacing unrelated production files.
 - Partners deployment required replacing the obsolete FAQ class check with
   current markup and adding a generated search-index assertion.
+
+## Issue 212 — published acceptance
+
+All 33 inventoried configurations consume the centralized theme; ornotto is
+recorded at its external checkout path. Both live suites pass 18 entries, and
+the final shared suite passes 29 browser cases plus five unit cases. The four
+bare menu/theme URLs match their build hashes. See review/issue212-delivery.json,
+review/issue212-live-hashes.json, review/menu-integration-live/report.json and
+review/live-browser.json.
+
+The final menu fix constrains long site names without pushing search or the
+hamburger off a narrow screen. Both brands and all eight ownership combinations
+are tested with a deliberately long title. Targeted Cloudflare purges succeeded
+for both menu scripts. Production Webflow caches remain unchanged (22 files);
+current toolkit source is installed in the site virtual environments so future
+rebuilds retain the shared assets.
+
+Final independent deployment review: 96/100, no blockers. Public asset hashes
+and Partners search were checked again independently.

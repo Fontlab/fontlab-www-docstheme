@@ -13,7 +13,7 @@
       "basecoat.js": 1,
       "theme.js": 1
     },
-    "search": 0,
+    "search": 1,
     "mobileWidth": 390,
     "bodyVisible": true,
     "baselineErrors": [],
@@ -45,7 +45,7 @@
     "errors": [],
     "assetFailures": [],
     "status": 200,
-    "title": "FontLab Marketing Docs",
+    "title": "Home - FontLab Marketing Docs",
     "theme": "1.0.0",
     "assetCounts": {
       "components.css": 1,
@@ -115,7 +115,7 @@
       "theme.js": 1
     },
     "search": 1,
-    "searchResults": 2,
+    "searchResults": 3,
     "mobileWidth": 390,
     "bodyVisible": true,
     "baselineErrors": [],
@@ -188,7 +188,7 @@
     "errors": [],
     "assetFailures": [],
     "status": 200,
-    "title": "Vexy Lines \u2014 vector art app for Mac & Windows",
+    "title": "Vexy Lines — vector art app for Mac & Windows",
     "theme": "1.0.0",
     "assetCounts": {
       "components.css": 1,
@@ -225,9 +225,7 @@
   {
     "name": "fldoc",
     "url": "https://fontlab.dev/fldoc/fontlab/8/",
-    "errors": [
-      "$(...).tooltipster is not a function"
-    ],
+    "errors": [],
     "assetFailures": [],
     "status": 200,
     "title": "FontLab 8",
@@ -242,9 +240,7 @@
     "searchResults": 10,
     "mobileWidth": 390,
     "bodyVisible": true,
-    "baselineErrors": [
-      "$(...).tooltipster is not a function"
-    ],
+    "baselineErrors": [],
     "passed": true
   },
   {
@@ -358,7 +354,7 @@
     "errors": [],
     "assetFailures": [],
     "status": 200,
-    "title": "FontLab theme 2026 \u00b7 Components",
+    "title": "FontLab theme 2026 · Components",
     "theme": "1.0.0",
     "assetCounts": {
       "components.css": 1,

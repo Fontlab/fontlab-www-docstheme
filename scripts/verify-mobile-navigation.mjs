@@ -12,6 +12,20 @@ const sites = [
   ['vexy', 'https://vexy.art/about/'],
   ['blog', 'https://blog.fontlab.com/'],
 ];
+if (process.argv.includes('--all')) sites.push(
+  ['extend', 'https://extend.fontlab.com/'],
+  ['getgo', 'https://fontlabcom.github.io/getgo-fonts/'],
+  ['vfj', 'https://fontlab.dev/fontlab-vfj-file-format-spec/'],
+  ['fldoc', 'https://fontlab.dev/fldoc/fontlab/8/'],
+  ['gordon', 'https://fontlab.dev/fldoc/fontlab/gordon/'],
+  ['python-api', 'https://fontlabcom.github.io/fontlab-python-docs/'],
+  ['pythonqt-api', 'https://fontlabcom.github.io/fontlab-python-docs/pythonqt/'],
+  ['help-vi', 'https://help.fontlab.com/fontlab-vi/'],
+  ['help-7', 'https://help.fontlab.com/fontlab/7/manual/'],
+  ['help-8', 'https://help.fontlab.com/fontlab/8/'],
+  ['specimen-native', 'https://i.fontlab.com/fltheme26/materialx/'],
+);
+const queries = { getgo: 'Pixa', extend: 'TypeRig', 'pythonqt-api': 'QAbstractButton', 'specimen-native': 'specimen' };
 const selected = process.env.SITES?.split(',');
 const out = `review/menu-integration-${local ? 'candidate' : 'live'}`;
 await mkdir(out, { recursive: true });
@@ -47,7 +61,25 @@ try {
       expect(response.status()).toBe(200);
       await page.getByRole('button', { name: 'Reject All', exact: true }).click({ timeout: 10000 }).catch(() => {});
       await page.waitForFunction(() => window.FLTheme?.version === '1.0.0');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
       const global = page.locator('fontlab-menu, vexy-menu').first();
+      if (!await global.count()) {
+        row.integration = 'native MaterialX; no global web component';
+        await page.locator('.md-header label[for="__drawer"]').click();
+        await expect(page.locator('#__drawer')).toBeChecked();
+        await expect(page.locator('.md-sidebar--primary a[href]').filter({visible:true}).first()).toBeVisible();
+        await page.keyboard.press('Escape');
+        await expect(page.locator('#__drawer')).not.toBeChecked();
+        await page.locator('.md-header label.md-header__button[for="__search"]').click();
+        await page.locator('.md-search__input').pressSequentially(queries[name] || 'font');
+        await expect(page.locator('.md-search-result__list a').first()).toBeVisible({timeout:15000});
+        await page.keyboard.press('Escape');
+        row.passed = row.errors.length === 0;
+        results.push(row);
+        await writeFile(`${out}/report.json`, JSON.stringify(results, null, 2) + '\n');
+        console.log(`${row.passed ? 'PASS' : 'FAIL'} ${name}: native drawer and search preserved`);
+        continue;
+      }
       const toggle = global.locator('[part="mobile-menu"]');
       const loupe = global.locator('[part="mobile-search"] [data-search-toggle]');
       const drawer = page.locator('#__drawer');
@@ -89,7 +121,7 @@ try {
           await expect(page.locator('.fl-mobile-search input')).toBeVisible();
           await expect(page.locator('.fl-mobile-search .md-search__inner')).toHaveCSS('opacity', '1');
           await page.locator('.fl-mobile-search input').fill('');
-          await page.locator('.fl-mobile-search input').pressSequentially('font');
+          await page.locator('.fl-mobile-search input').pressSequentially(queries[name] || 'font');
           await expect(page.locator('.md-search-result__list a').first()).toBeVisible({timeout:15000});
         }
         await page.screenshot({ path: `${out}/${name}-${width}-search.png`, animations: 'disabled' });

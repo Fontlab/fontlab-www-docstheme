@@ -1,0 +1,75 @@
+{
+  "verified_at": "2026-09-24T13:21:01.796651+00:00",
+  "issues": [
+    "211",
+    "212"
+  ],
+  "guide": {
+    "base": "https://fontlab.dev/Marketing/fl1992mk/",
+    "pages": 40,
+    "specimens": 210,
+    "clipboard_checks": 296,
+    "layouts": 400,
+    "interaction_cases": 20,
+    "node_tests": 113,
+    "extraction_tests": 10
+  },
+  "navigation": {
+    "consumer_configurations": 33,
+    "mobile_sites": 18,
+    "general_live_sites": 18,
+    "browser_tests": 29,
+    "unit_tests": 5,
+    "hashes": [
+      {
+        "url": "https://i.fontlab.com/fltheme26/1.0.0/theme.js",
+        "status": 200,
+        "sha256": "53a2090c375aa1485ad7f4b467991ff7a5ac835687b7d121646a064c00f70e1d",
+        "expected": "53a2090c375aa1485ad7f4b467991ff7a5ac835687b7d121646a064c00f70e1d",
+        "passed": true
+      },
+      {
+        "url": "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+        "status": 200,
+        "sha256": "e0c126cc36a7433bd875c26345f8f51ec75443322a329a2a319c53cde443db28",
+        "expected": "e0c126cc36a7433bd875c26345f8f51ec75443322a329a2a319c53cde443db28",
+        "passed": true
+      },
+      {
+        "url": "https://i.fontlab.com/menu/fontlab.js",
+        "status": 200,
+        "sha256": "ad3469e645c7e24735144174b2d8cc575153f15d0e220c8f57829b44f4f24095",
+        "expected": "ad3469e645c7e24735144174b2d8cc575153f15d0e220c8f57829b44f4f24095",
+        "passed": true
+      },
+      {
+        "url": "https://i.vexy.art/menu/vexy.js",
+        "status": 200,
+        "sha256": "05000571aa190ccb5018e3e904180998e26ba0a45cd62d1a3e467c9c802b2876",
+        "expected": "05000571aa190ccb5018e3e904180998e26ba0a45cd62d1a3e467c9c802b2876",
+        "passed": true
+      }
+    ]
+  },
+  "commits": {
+    "cdn": "0ebd6bb5f342f83b84d6eb78b239a6e409aed508",
+    "vexy-menu": "2a0f4c07259b9ede35f8d0cc3b94838b41cd1500",
+    "theme": "14dd4a935ca838c5a2aa3c0d28069923dbaea468",
+    "marketing": "1c235981943561f8dcffac7c6a62c7123544c890",
+    "partners": "49fed083f8c4ca102a54e3178adc24ee490e792a",
+    "fontlab": "5db10efefbb67b3acdae94f2c01e647a781f6f42",
+    "vexy": "8829935a7f049dce9be0b4451afe73d5ee813a13",
+    "mirrors": "bf80bb7fb3297712ea1d63c0675e38a0f06ac9fd"
+  },
+  "webflow_cache_preserved": {
+    "fontlab.com": 13,
+    "vexy.art": 9
+  },
+  "cache_purge": "Both specific menu URLs successfully purged using the existing cache_reset_cloudflare.py. No zone-wide purge.",
+  "independent_review": {
+    "implementation_score": 95,
+    "deployment_score": 96,
+    "report": "Marketing/REVIEW/semantic-guide/deployment-review-212.md",
+    "blockers": []
+  }
+}

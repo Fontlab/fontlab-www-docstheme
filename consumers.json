@@ -711,5 +711,27 @@
       "menu": "materialx when present",
       "search": "materialx when enabled"
     }
+  },
+  {
+    "config": "/Users/adam/Developer/vcs3/github.fontlaborg/ornotto-project/ornotto/src_docs/properdocs.yml",
+    "site_name": "ornotto",
+    "site_url": "https://fontlab.org/ornotto/",
+    "site_dir": "../docs",
+    "docs_dir": "md",
+    "theme": "materialx",
+    "kind": "active publication configuration outside sibling checkout root",
+    "state": "shared CDN integration; no local source change required",
+    "assets": [
+      "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+      "https://i.fontlab.com/fltheme26/1.0.0/basecoat.js",
+      "https://i.fontlab.com/fltheme26/1.0.0/theme.js"
+    ],
+    "deployment": "https://fontlab.org/ornotto/",
+    "mobile_controls": {
+      "menu": "materialx",
+      "search": "materialx"
+    },
+    "evidence": "review/menu-integration-live/report.json"
   }
 ]

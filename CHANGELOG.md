@@ -16,7 +16,9 @@ this_file: CHANGELOG.md
 - Fixed legacy search form hiding/opacity and explicit light/dark component
   surfaces. All seven candidate sites, 29 browser tests and five Node tests pass;
   the repaired search opacity has additional vanilla and real-consumer checks.
-- Independent implementation review: 95/100. Publication evidence follows in WORK.
+- Independent implementation review: 95/100. Published both menus and the CDN;
+  both live suites pass 18 entries and all four bare asset hashes match.
+  Long site names retain both controls inside narrow headers. Evidence is in WORK.
 
 ## 2026-09-24 — responsive navigation, published and verified
 

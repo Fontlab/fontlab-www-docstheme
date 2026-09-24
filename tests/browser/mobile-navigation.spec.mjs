@@ -21,6 +21,7 @@ for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'material
     await host.evaluate((el, owners) => {
       el.setAttribute('mobile-menu', owners.menu);
       el.setAttribute('mobile-search', owners.search);
+      el.setAttribute('site-label', 'A documentation site with a deliberately long title');
     }, { menu, search });
     const hamburger = host.locator('[part="mobile-menu"]');
     const loupe = host.locator('[part="mobile-search"] button');
@@ -31,6 +32,8 @@ for (const brand of ['fontlab', 'vexy']) for (const menu of ['global', 'material
       await page.evaluate(() => scrollTo(0, 0));
       await expect(hamburger).toBeVisible();
       await expect(loupe).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 1);
+      expect((await hamburger.boundingBox()).x + (await hamburger.boundingBox()).width).toBeLessThanOrEqual(width);
       expect((await loupe.boundingBox()).x).toBeLessThan((await hamburger.boundingBox()).x);
       await hamburger.focus();
       await page.keyboard.press('Enter');
