@@ -24,14 +24,29 @@ generated review-image changes were excluded from the task commits.
 Candidate verification: the final 63-file build and all 5 Node tests passed.
 The complete 55-test browser suite passed; all 200 five-theme desktop/mobile
 checks passed, followed by 20 checks of the two final visual repairs. All 520
-specimen captures were generated; the changed frames and choices were refreshed
-after the last build. Direct cleanup and standards/spec review found no remaining
+specimen captures were generated; frames and choices were refreshed after the
+main visual repairs. Direct cleanup and standards/spec review found no remaining
 issue-213 blockers. Logs and screenshots are under `/tmp/issue213/`.
 
 Live screenshot review caught a terminal row wider than its phone frame, which
 the page-level overflow assertion had missed. A new row/text containment test
 reproduced it (509px right edge versus a 351px frame edge). Constraining the row
 width passed that regression and 15 checks across five themes at 1440/390/320px.
+
+Published source `be55f9f` plus the terminal correction `cb9d8c1`, CDN `c0b7af2`
+(Pages run `36024043979`, success), and Marketing `0e10102` (Pages run
+`36023270219`, success). Targeted cache purges succeeded. All 63 staged files
+match the manifest; the three public CSS/JS assets and public manifest match the
+final build hashes.
+
+Final acceptance: 5 Node tests and the full 56-test browser suite passed. All 200
+live component checks passed across five themes and desktop/phone widths, plus
+15 live terminal checks at desktop, phone and 320px. All 19 catalogue pages were
+free of JavaScript errors. Live shortcuts remained correct on Ornotto, styleguide,
+partners, blog, FontLab auxiliary pages and the CDN specimen; Vexy history passed
+on its page without a declared successor. The earlier full shortcut audit also
+covered Marketing and the other consumers, retaining the known fldoc/Gordon
+Tooltipster limitations. `review/issue213-delivery.json` records the final evidence.
 
 ## 2026-09-24: responsive local navigation
 

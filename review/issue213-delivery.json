@@ -1,0 +1,418 @@
+{
+  "issue": 213,
+  "requirements": 37,
+  "source_commits": [
+    "be55f9f",
+    "cb9d8c1"
+  ],
+  "cdn_commit": "c0b7af25bb4a25eaeb50ecc1b6518b9736d86ae2",
+  "cdn_pages_run": 36024043979,
+  "marketing_commit": "0e10102fe957d662e1c64e07d96980fb0fb8cdf6",
+  "marketing_pages_run": 36023270219,
+  "node_tests": 5,
+  "browser_regressions": 56,
+  "verified_manifest_files": 63,
+  "candidate_checks": 200,
+  "candidate_final_visual_checks": 20,
+  "live_checks": 200,
+  "live_terminal_checks": 15,
+  "candidate_matrix": [
+    {
+      "theme": "material-light",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-material-light-1440.log"
+    },
+    {
+      "theme": "material-light",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-material-light-390.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-material-dark-1440.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-material-dark-390.log"
+    },
+    {
+      "theme": "retro",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-retro-1440.log"
+    },
+    {
+      "theme": "retro",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-retro-390.log"
+    },
+    {
+      "theme": "miller",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-miller-1440.log"
+    },
+    {
+      "theme": "miller",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-miller-390.log"
+    },
+    {
+      "theme": "lines",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-lines-1440.log"
+    },
+    {
+      "theme": "lines",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-lines-390.log"
+    }
+  ],
+  "candidate_visual_delta": [
+    {
+      "theme": "material-light",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-material-light-1440.log"
+    },
+    {
+      "theme": "material-light",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-material-light-390.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-material-dark-1440.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-material-dark-390.log"
+    },
+    {
+      "theme": "retro",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-retro-1440.log"
+    },
+    {
+      "theme": "retro",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-retro-390.log"
+    },
+    {
+      "theme": "miller",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-miller-1440.log"
+    },
+    {
+      "theme": "miller",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-miller-390.log"
+    },
+    {
+      "theme": "lines",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-lines-1440.log"
+    },
+    {
+      "theme": "lines",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/candidate-delta-lines-390.log"
+    }
+  ],
+  "live_matrix": [
+    {
+      "theme": "material-light",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/live-material-light-1440.log"
+    },
+    {
+      "theme": "material-light",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/live-material-light-390.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/live-material-dark-1440.log"
+    },
+    {
+      "theme": "material-dark",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/live-material-dark-390.log"
+    },
+    {
+      "theme": "retro",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/live-retro-1440.log"
+    },
+    {
+      "theme": "retro",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/live-retro-390.log"
+    },
+    {
+      "theme": "miller",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/live-miller-1440.log"
+    },
+    {
+      "theme": "miller",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/live-miller-390.log"
+    },
+    {
+      "theme": "lines",
+      "width": "1440",
+      "exit": 0,
+      "log": "/tmp/issue213/live-lines-1440.log"
+    },
+    {
+      "theme": "lines",
+      "width": "390",
+      "exit": 0,
+      "log": "/tmp/issue213/live-lines-390.log"
+    }
+  ],
+  "live_terminal_matrix": [
+    {
+      "theme": "material-light",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "theme": "material-light",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "theme": "material-light",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "theme": "material-dark",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "theme": "material-dark",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "theme": "material-dark",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "theme": "retro",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "theme": "retro",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "theme": "retro",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "theme": "miller",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "theme": "miller",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "theme": "miller",
+      "width": 320,
+      "passed": true
+    },
+    {
+      "theme": "lines",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "theme": "lines",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "theme": "lines",
+      "width": 320,
+      "passed": true
+    }
+  ],
+  "live_audit": {
+    "assets": [
+      {
+        "url": "https://i.fontlab.com/fltheme26/1.0.0/components.css",
+        "status": 200,
+        "hash": "b7d11cca20644e5428d6ea60ead2676372b409e2068274c9c5733fd05304ca7a",
+        "expected": "b7d11cca20644e5428d6ea60ead2676372b409e2068274c9c5733fd05304ca7a",
+        "passed": true
+      },
+      {
+        "url": "https://i.fontlab.com/fltheme26/1.0.0/theme.css",
+        "status": 200,
+        "hash": "fb7ad82083d9cdeb876800169738ea5e27915e6af50a2b422badac73a18b0a1e",
+        "expected": "fb7ad82083d9cdeb876800169738ea5e27915e6af50a2b422badac73a18b0a1e",
+        "passed": true
+      },
+      {
+        "url": "https://i.fontlab.com/fltheme26/1.0.0/theme.js",
+        "status": 200,
+        "hash": "ee0dd12b1b2cbe40544dfa78583f0f80086ad3fe2e44a8e620c07b61f240f28e",
+        "expected": "ee0dd12b1b2cbe40544dfa78583f0f80086ad3fe2e44a8e620c07b61f240f28e",
+        "passed": true
+      },
+      {
+        "url": "https://i.fontlab.com/fltheme26/manifest.json",
+        "status": 200,
+        "hash": "2ef1703499501957ca2932cad07a03c3b806979ad535237afba1904bf97a7154",
+        "expected": "2ef1703499501957ca2932cad07a03c3b806979ad535237afba1904bf97a7154",
+        "passed": true
+      }
+    ],
+    "pages": [
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/text/links/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/text/code/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/structure/disclosure/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/images/pictures/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/images/marks/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/images/frames/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/navigation/location/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/navigation/menus/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/navigation/drawers/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/forms/fields/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/forms/choices/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/forms/ranges/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/feedback/notes/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/feedback/progress/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/feedback/hints/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/data/tables/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/data/statistics/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/data/states/",
+        "errors": [],
+        "passed": true
+      },
+      {
+        "url": "https://fontlab.dev/Marketing/fl1992mk/layouts/products/",
+        "errors": [],
+        "passed": true
+      }
+    ]
+  },
+  "review": {
+    "standards": "APPROVE",
+    "spec": "APPROVE",
+    "method": "Direct single-agent review against 1ca0c18 and issue 213"
+  },
+  "screenshots": "/tmp/issue213",
+  "requirement_map": "review/issue213.md"
+}

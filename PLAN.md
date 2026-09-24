@@ -12,6 +12,10 @@ Extend FontLab and GetGo Fonts sites. Build, commit, push, deploy and verify liv
 Completed 2026-09-23. All implementation and release acceptance gates passed.
 See CHANGELOG.md and review/ for the completion record.
 
+Issue 213 component harmony was published and accepted on 2026-09-24. All 37
+requirements and the five-theme desktop/mobile checks are recorded in
+`review/issue213.md` and `review/issue213-delivery.json`; no rollout work remains.
+
 ## Architecture
 
 Retain MaterialX as the rendering engine and preserve each site's menus, fonts,
