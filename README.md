@@ -41,7 +41,8 @@ The starter and native build fixture enable PyMdown Keys (`++ctrl+s++`), Mark
 Tasklist, plus tables and footnotes. PyMdown Extensions is pinned to 11.0.1.
 Copy the starter's `markdown_extensions` into existing site configurations;
 these run during the Python build. CDN assets provide the shared styling.
-`mark` uses black text and `--md-typeset-mark-color: transparent`, including
+`mark` uses black text and `--md-typeset-mark-color: transparent`; `.md-typeset mark`
+uses font weight 500, including
 the optional editorial layer and dark palettes.
 
 ## Add components to a site

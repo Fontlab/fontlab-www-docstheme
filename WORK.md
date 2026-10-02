@@ -4,6 +4,13 @@ this_file: WORK.md
 
 # Work
 
+## 2026-10-02 — marked text weight
+
+Added a computed-style regression for `font-weight: 500`; it failed at 400 before
+the change. Set `.md-typeset mark` to 500 while preserving black text and the
+transparent mark token/background. Build, all eight Node tests and all 69 browser tests pass. CDN/live verification
+is in progress; the deployment tool hash-verified all 70 staged files.
+
 ## 2026-10-02 — Markdown extensions and transparent marks
 
 Confirmed the existing `npm run deploy` copies and hash-verifies the theme into

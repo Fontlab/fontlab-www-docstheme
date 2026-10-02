@@ -4,6 +4,11 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-10-02 — marked text weight
+
+- Set `.md-typeset mark` to `font-weight: 500`, retaining black text and a
+  transparent background; added responsive/light/dark/editorial regression.
+
 ## 2026-10-02 — Markdown extensions and transparent marks
 
 - Enabled PyMdown Keys, Mark, Details, Highlight, InlineHilite, Tabbed and

@@ -4,6 +4,7 @@
 /* MaterialX palettes may redefine this token on body; scope it to the reading surface. */
 .md-typeset, .fltheme-components { --md-typeset-mark-color: transparent; }
 .md-typeset mark, .fltheme-components mark { color: black; background: var(--md-typeset-mark-color); }
+.md-typeset mark { font-weight: 500; }
 [data-md-color-scheme=slate] { --fl-key-bg: #313137; }
 .md-typeset kbd, .fltheme-components kbd {
   display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;

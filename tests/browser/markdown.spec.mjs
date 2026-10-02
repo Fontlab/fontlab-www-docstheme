@@ -26,6 +26,7 @@ test('Markdown extensions render keys, marks, notes, tabs and tasks', async ({ p
       if (editorial) await page.addStyleTag({ url: '/1.0.0/editorial/fontlab-layout.css' });
       const mark = article.locator('mark');
       await expect(mark).toHaveCSS('color', 'rgb(0, 0, 0)');
+      await expect(mark).toHaveCSS('font-weight', '500');
       await expect(mark).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
       expect(await mark.evaluate(el => getComputedStyle(el).getPropertyValue('--md-typeset-mark-color').trim())).toBe('transparent');
     }
