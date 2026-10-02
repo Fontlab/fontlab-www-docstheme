@@ -13,6 +13,8 @@ this_file: CHANGELOG.md
 - Set shared `mark` text to black and `--md-typeset-mark-color` to transparent;
   removed the competing optional editorial colors.
 - Added browser and generated-output regressions for parsing and computed styles.
+- Published and verified the CDN files: eight Node tests, 69 browser tests,
+  a strict starter build, exact public asset hashes and live responsive checks.
 
 ## 2026-09-24 — unboxed admonitions and normal article spacing
 

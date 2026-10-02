@@ -21,7 +21,14 @@ pinned requirements and passed `uv run properdocs build -f mkdocs.yml --strict`.
 
 Final build, all eight Node tests and all 69 browser tests pass. The existing
 deployment tool staged and hash-verified all 70 manifest files in the requested
-CDN directory. CDN publication and public-byte checks are in progress.
+CDN directory. Published source `704dc4f` and CDN `9ba8df1`; GitHub Pages run
+`37060324904` succeeded. Purged only changed CDN URLs with the existing cache
+reset utility. The two public CSS files, starter ZIP and four starter source/docs
+files match the manifest byte-for-byte at bare URLs. Live browser checks pass for
+Keys, notes and tab interaction, black/transparent marks in light/dark at
+1440/390px, and the optional editorial stylesheet, with no page JavaScript errors.
+Inspected desktop and phone screenshots. Logs/screenshots are under
+`/tmp/fltheme-keys-*`. Unrelated source screenshots and CDN OMC files were preserved.
 
 ## 2026-09-24 — unboxed admonitions and normal article spacing
 
