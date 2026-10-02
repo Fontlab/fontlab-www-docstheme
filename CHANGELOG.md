@@ -8,6 +8,8 @@ this_file: CHANGELOG.md
 
 - Set `.md-typeset mark` to `font-weight: 500`, retaining black text and a
   transparent background; added responsive/light/dark/editorial regression.
+- Published to the CDN and verified exact public asset hashes and the live Pad
+  post. Eight Node tests and all 69 browser tests pass.
 
 ## 2026-10-02 — Markdown extensions and transparent marks
 

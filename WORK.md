@@ -8,8 +8,14 @@ this_file: WORK.md
 
 Added a computed-style regression for `font-weight: 500`; it failed at 400 before
 the change. Set `.md-typeset mark` to 500 while preserving black text and the
-transparent mark token/background. Build, all eight Node tests and all 69 browser tests pass. CDN/live verification
-is in progress; the deployment tool hash-verified all 70 staged files.
+transparent mark token/background. Build, all eight Node tests and all 69 browser tests pass. The deployment tool hash-verified all 70 staged files. Published source `f6ba807`
+and CDN `f7ee777`; CDN Pages run `37064697960` succeeded. Purged only theme.css
+and manifest.json; both public files match the build byte-for-byte. Blog source
+and verification notes are published through `35bc973`, whose deploy run
+`37064789509` succeeded. Live Pad 2.1 checks pass for the `/` keycap and every
+mark's black text, transparent background/token and weight 500 at 1440/390px in
+light/dark, with no page JavaScript errors. Inspected the desktop screenshot;
+evidence is in `/tmp/blog-pad-slash-live.json` and `/tmp/fltheme-mark-weight-*`.
 
 ## 2026-10-02 — Markdown extensions and transparent marks
 
