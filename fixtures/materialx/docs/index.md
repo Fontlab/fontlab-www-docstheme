@@ -55,3 +55,35 @@ accepts the same attributes. JavaScript configuration uses `mobileMenu` and
 Visit the [component specimen](https://i.fontlab.com/fltheme26/) or the [authoring guide](https://i.fontlab.com/fltheme26/authoring.html)
 for Basecoat and prefixed daisyUI examples. This page tests the navigation
 integration separately from component styling.
+
+## Markdown extensions
+
+Press ++ctrl+s++ to save. ==Marked text== keeps black text on a transparent background.
+
+??? tip "Collapsible note"
+
+    Extra instructions.
+
+=== "macOS"
+
+    macOS instructions.
+
+=== "Windows"
+
+    Windows instructions.
+
+- [x] Check the exported font.
+
+```python
+print("FontLab")
+```
+
+Inline code: `#!python print("FontLab")`.
+
+| Format | File |
+| --- | --- |
+| OpenType | .otf |
+
+A footnote example.[^format]
+
+[^format]: Choose the format your application supports.

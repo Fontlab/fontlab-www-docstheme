@@ -25,7 +25,18 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - admonition
+  - tables
+  - footnotes
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
 nav:
   - Showcase:
       - Home: index.md

@@ -19,3 +19,11 @@ No Node build is needed to consume the CDN. Internet access is needed for the
 shared assets, fonts and menus. The four shared CSS/JS assets are versioned but
 receive compatible fixes in place. See https://i.fontlab.com/fltheme26/ for
 existing-site integration, optional branding, control ownership and updates.
+
+## Markdown
+
+The configuration enables keyboard keys (`++ctrl+s++`), marked text
+(`==marked text==`), collapsible notes, highlighted code, tabs, task lists,
+tables and footnotes. See `docs/index.md` for working examples. PyMdown
+Extensions is pinned in `requirements.txt`; CDN assets provide the styling.
+Marked text is black with a transparent background in both palettes.

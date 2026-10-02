@@ -1,6 +1,9 @@
 /* this_file: src/harmony-display.css */
 /* Reading components share the same scale, surfaces and spacing across libraries. */
 :root { --fl-key-bg: #f4f4f5; }
+/* MaterialX palettes may redefine this token on body; scope it to the reading surface. */
+.md-typeset, .fltheme-components { --md-typeset-mark-color: transparent; }
+.md-typeset mark, .fltheme-components mark { color: black; background: var(--md-typeset-mark-color); }
 [data-md-color-scheme=slate] { --fl-key-bg: #313137; }
 .md-typeset kbd, .fltheme-components kbd {
   display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;

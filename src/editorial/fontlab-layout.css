@@ -995,11 +995,6 @@ html[data-fl-menu="flat-dark"] .md-tabs__link:hover {
   color: var(--color-secondary);
 }
 
-.md-content__inner.md-typeset mark {
-  background: color-mix(in oklab, var(--color-secondary) 14%, transparent);
-  color: var(--color-secondary);
-}
-
 .md-content__inner.md-typeset figcaption {
   --fl-caption-size: max(.91em, 14px);
   color: color-mix(in oklab, var(--color-base-content) 72%, transparent);

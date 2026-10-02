@@ -4,6 +4,25 @@ this_file: WORK.md
 
 # Work
 
+## 2026-10-02 — Markdown extensions and transparent marks
+
+Confirmed the existing `npm run deploy` copies and hash-verifies the theme into
+`../img/docs/fltheme26`; no new deployment tool is needed. Blog already enables
+Keys and Mark, so its configuration needs no change. Consulted official PyMdown
+Keys/Mark/Details/Tabbed/Tasklist/InlineHilite documentation before configuration.
+
+Enabled the useful documentation extensions in the starter and native fixture,
+pinned PyMdown 11.0.1 and changed the fixture build to the ProperDocs CLI. Added
+real Markdown examples, guide configuration and rendering/style regressions.
+The first regression failed because the fixture did not render Keys. The changed
+fixture passes, including black/transparent marks at 1440/390px in light/dark
+with the optional editorial stylesheet. A fresh starter extraction installed its
+pinned requirements and passed `uv run properdocs build -f mkdocs.yml --strict`.
+
+Final build, all eight Node tests and all 69 browser tests pass. The existing
+deployment tool staged and hash-verified all 70 manifest files in the requested
+CDN directory. CDN publication and public-byte checks are in progress.
+
 ## 2026-09-24 — unboxed admonitions and normal article spacing
 
 Regression tests reproduced the old colored boxes and 25vh final-paragraph gap.

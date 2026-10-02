@@ -4,6 +4,16 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-10-02 — Markdown extensions and transparent marks
+
+- Enabled PyMdown Keys, Mark, Details, Highlight, InlineHilite, Tabbed and
+  Tasklist in the shared starter and native build fixture; retained SuperFences
+  and added tables and footnotes. Pinned PyMdown Extensions to 11.0.1.
+- Added authored/rendered examples and kept the public YAML guide synchronized.
+- Set shared `mark` text to black and `--md-typeset-mark-color` to transparent;
+  removed the competing optional editorial colors.
+- Added browser and generated-output regressions for parsing and computed styles.
+
 ## 2026-09-24 — unboxed admonitions and normal article spacing
 
 - Removed admonition borders, backgrounds and shadows. Icons, headings and body

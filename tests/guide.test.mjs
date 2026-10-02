@@ -14,6 +14,18 @@ test('public configuration and template examples match the downloadable starter'
   }
 });
 
+test('native fixture and starter enable the same Markdown extensions', async () => {
+  const extensions = source => source.split('markdown_extensions:\n')[1].split(/\n(?:nav|extra_css):/)[0];
+  const starter = extensions(await readFile('examples/starter/mkdocs.yml', 'utf8'));
+  const fixture = extensions(await readFile('fixtures/materialx/mkdocs.yml', 'utf8'));
+  assert.equal(fixture, starter, 'Fixture must exercise the documented Markdown configuration');
+  const html = await readFile('dist/materialx/index.html', 'utf8');
+  for (const token of ['class="keys"', '<mark>Marked text</mark>', 'class="tabbed-set',
+    'class="task-list-item', '<details class="tip"', 'class="footnote"']) {
+    assert.ok(html.includes(token), `Built fixture must render ${token}`);
+  }
+});
+
 test('release manifest covers the downloadable starter and its source files', async () => {
   const manifest = JSON.parse(await readFile('dist/manifest.json', 'utf8'));
   for (const path of ['starter.zip', 'starter/mkdocs.yml', 'starter/requirements.txt',

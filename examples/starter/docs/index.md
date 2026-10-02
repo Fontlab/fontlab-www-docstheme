@@ -16,3 +16,35 @@ right-hand navigation with the hamburger in the FontLab menu.
 </div>
 
 This final paragraph uses the normal paragraph spacing.
+
+## Markdown extensions
+
+Press ++ctrl+s++ to save. ==Marked text== keeps black text on a transparent background.
+
+??? tip "Collapsible note"
+
+    Extra instructions.
+
+=== "macOS"
+
+    macOS instructions.
+
+=== "Windows"
+
+    Windows instructions.
+
+- [x] Check the exported font.
+
+```python
+print("FontLab")
+```
+
+Inline code: `#!python print("FontLab")`.
+
+| Format | File |
+| --- | --- |
+| OpenType | .otf |
+
+A footnote example.[^format]
+
+[^format]: Choose the format your application supports.
