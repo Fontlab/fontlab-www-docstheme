@@ -625,3 +625,18 @@ reaches closed mobile navigation through its keyboard opener) against the built
 docs site with fltheme26 CDN requests served from this `dist/1.0.0`: PASS, 28/28
 page/viewport/scheme cases, 0 failures (the live theme produced 433). Receipt:
 fontlab-scripting verification/issue-101-ecosystem/evidence/tg8-theme/.
+
+## 2026-10-14 — publication of accessibility fixes
+
+Built clean worktree of `0c6bacb` (owner's untracked build.sh files excluded);
+its `dist/1.0.0` is byte-identical (16 files) to the browser-tested dist.
+`npm run deploy` staged and hash-verified 70 files into a clean CDN worktree of
+origin/main. Published source `0c6bacb` and CDN `48890f4`; Pages run
+`38573326488` succeeded. Purged only the 10 changed CDN URLs via the Cloudflare
+API (zone fontlab.com). All 60 non-HTML manifest files match public bytes at bare
+and query URLs; the 5 HTML pages differ only by Cloudflare HTML rewriting, as in
+earlier publications. `npm run verify:live`: 18/18 consumer sites PASS. The docs
+consumer audit against the live CDN (no interception): 28/28 cases, 0 failures.
+Evidence: fontlab-scripting verification/issue-101-ecosystem/evidence/tg8-theme/.
+Owner's review screenshots: the five owner-modified PNGs re-rendered byte-identical
+to intake; four other rewritten PNGs are git-excluded generated output.
