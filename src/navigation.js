@@ -2,9 +2,15 @@
 // Bridge the global menu's public controls to MaterialX's existing UI.
 (() => {
   const mobile = matchMedia('(max-width: 76.234375em)');
+  const compactToc = matchMedia('(max-width: 59.984375em)');
   const placements = new Map();
   const roles = new WeakMap();
-  let menu, drawer, navigation, searchToggle, search, trigger;
+  let menu, drawer, navigation, searchToggle, search, trigger, drawerOpener, searchOpener;
+  const returnFocus = node => {
+    if (!node) return;
+    if (node.matches('label') && !node.hasAttribute('tabindex')) node.tabIndex = -1;
+    node.focus();
+  };
   const setChecked = (input, checked) => {
     if (!input || input.checked === checked) return;
     input.checked = checked;
@@ -29,10 +35,36 @@
     if (html.classList.contains(name) !== enabled) html.classList.toggle(name, enabled);
   };
   const sync = () => {
+    // MaterialX initializes the visible palette label without checking its radio.
+    for (const option of document.querySelectorAll('[data-md-component="palette"] .md-option:has(+ label:not([hidden]))')) {
+      option.checked = true;
+    }
+    const tocToggle = document.querySelector('input.md-toggle[data-md-toggle="toc"]');
+    for (const sidebar of document.querySelectorAll('.md-sidebar--secondary')) {
+      sidebar.inert = compactToc.matches && !tocToggle?.checked;
+    }
+    for (const label of document.querySelectorAll('.md-header label.md-header__button:is([for="__drawer"], [for="__search"])')) {
+      const isDrawer = label.htmlFor === '__drawer';
+      const panel = isDrawer ? navigation : search;
+      const toggle = isDrawer ? drawer : searchToggle;
+      if (!panel || !toggle) continue;
+      panel.id ||= isDrawer ? 'fl-native-navigation' : 'fl-native-search';
+      label.tabIndex = 0;
+      label.setAttribute('role', 'button');
+      label.setAttribute('aria-label', isDrawer ? 'Site navigation' : 'Search');
+      label.setAttribute('aria-controls', panel.id);
+      label.setAttribute('aria-expanded', String(toggle.checked));
+    }
     const open = mobile.matches && !!drawer?.checked;
     stateClass('fl-drawer-open', open);
     stateClass('fl-search-open', !!searchToggle?.checked);
+    if (search) {
+      // Native desktop search keeps its collapsed field; only results are hidden.
+      search.inert = !searchToggle?.checked && (mobile.matches || search.classList.contains('fl-local-search'));
+      search.querySelector('.md-search__output')?.toggleAttribute('inert', !searchToggle?.checked);
+    }
     if (navigation) {
+      navigation.inert = mobile.matches && !open;
       if (!roles.has(navigation)) roles.set(navigation, navigation.getAttribute('role'));
       if (open) {
         navigation.setAttribute('role', 'dialog');
@@ -68,11 +100,13 @@
     }
     if (control === 'menu' && drawer && navigation) {
       event.preventDefault();
+      drawerOpener = null;
       setChecked(searchToggle, false);
       setChecked(drawer, !drawer.checked);
       if (drawer.checked) navigation.querySelector('button, a[href]')?.focus();
     } else if (control === 'search' && searchToggle && search) {
       event.preventDefault();
+      searchOpener = null;
       setChecked(drawer, false);
       setChecked(searchToggle, !searchToggle.checked);
       if (searchToggle.checked) requestAnimationFrame(() => search.querySelector('input')?.focus());
@@ -86,7 +120,10 @@
     searchToggle = document.querySelector('#__search');
     search = document.querySelector('.md-search');
     // A plain Webflow page continues using the global menu alone.
-    if (!candidate || !drawer || !navigation || !candidate.mobileControls) return;
+    if (!candidate || !drawer || !navigation || !candidate.mobileControls) {
+      sync();
+      return;
+    }
     if (candidate !== menu) {
       menu = candidate;
       menu.addEventListener(`${menu.localName}:mobile-control`, request);
@@ -123,15 +160,54 @@
     sync();
     dock();
   };
+  const nativeLabel = event => event.target.closest?.('.md-header label.md-header__button:is([for="__drawer"], [for="__search"])');
+  const activateNative = label => {
+    const isDrawer = label.htmlFor === '__drawer';
+    const toggle = isDrawer ? drawer : searchToggle;
+    const panel = isDrawer ? navigation : search;
+    if (!toggle || !panel) return;
+    if (isDrawer) drawerOpener = label;
+    else searchOpener = label;
+    setChecked(isDrawer ? searchToggle : drawer, false);
+    setChecked(toggle, !toggle.checked);
+    sync();
+    if (toggle.checked) requestAnimationFrame(() => {
+      panel.querySelector(isDrawer ? 'a[href]' : 'input')?.focus();
+    });
+    else returnFocus(label);
+  };
+  // Capture prevents MaterialX's label/default handlers from toggling twice.
+  document.addEventListener('click', event => {
+    const label = nativeLabel(event);
+    if (!label) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    activateNative(label);
+  }, true);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      const input = searchOpener && searchToggle?.checked ? searchToggle : drawerOpener && drawer?.checked ? drawer : null;
+      if (!input) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setChecked(input, false);
+      returnFocus(input === searchToggle ? searchOpener : drawerOpener);
+      return;
+    }
+    const label = nativeLabel(event);
+    if (!label || !['Enter', ' '].includes(event.key)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (!event.repeat) activateNative(label);
+  }, true);
   document.addEventListener('change', event => {
     if (menu) {
       if (mobile.matches && event.target === drawer && menu.mobileControls.menu !== 'materialx') setChecked(drawer, false);
       if (event.target === searchToggle && menu.mobileControls.search !== 'materialx') setChecked(searchToggle, false);
     }
-    if (event.target === drawer || event.target === searchToggle) sync();
+    if (event.target === drawer || event.target === searchToggle || event.target.id === '__toc') sync();
   });
   document.addEventListener('keydown', event => {
-    if (!menu && !mobile.matches) return;
     const panel = searchToggle?.checked ? search : mobile.matches && drawer?.checked ? navigation : null;
     if (panel && event.key === 'Tab') {
       const stops = [...panel.querySelectorAll('a[href], button, input, select, textarea, [tabindex]')]
@@ -145,13 +221,19 @@
       }
     }
     if (event.key !== 'Escape') return;
-    if (mobile.matches && drawer?.checked) { setChecked(drawer, false); trigger?.focus(); }
+    if (mobile.matches && drawer?.checked) {
+      setChecked(drawer, false);
+      returnFocus(drawerOpener || trigger || document.querySelector('.md-header label[for="__drawer"]'));
+    }
     if (searchToggle?.checked) {
       setChecked(searchToggle, false);
-      [...(menu?.shadowRoot?.querySelectorAll('[data-search-toggle]') || [])].find(button => button.getClientRects().length)?.focus();
+      const opener = searchOpener || [...(menu?.shadowRoot?.querySelectorAll('[data-search-toggle]') || [])].find(button => button.getClientRects().length)
+        || document.querySelector('.md-header label[for="__search"]');
+      returnFocus(opener);
     }
   });
   mobile.addEventListener('change', refresh);
+  compactToc.addEventListener('change', sync);
   addEventListener('scroll', dock, { passive: true });
   for (const name of ['fontlab-menu', 'vexy-menu']) customElements.whenDefined(name).then(refresh);
   window.FLNavigation = { refresh };

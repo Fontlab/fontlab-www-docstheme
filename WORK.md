@@ -451,3 +451,177 @@ matrix therefore reports those two entries as failures, not clean passes.
 Ornotto also passed its complete live editorial/responsive check with no page
 errors. Reports and screenshots: `/tmp/ornotto-theme-qa/keyboard-live.json`,
 `live-assets.json`, and `live-report.json` in the same directory.
+
+
+## 2026-10-14 — accessibility repair, awaiting controller verification
+
+Changed shared theme.css/navigation.js, the MaterialX fixture copy feature and
+accessibility tests. Native-only pages previously bypassed panel synchronization;
+closed transformed drawers/results retained focus stops. Visible controls lacked
+native :focus-visible rings. Palette radio inputs were zero-sized (the audited
+header form is the palette, not a second search form); selected radios now keep
+native keyboard behavior with a visible focus box. Existing shared unboxed notes
+already use #93c5fd for dark note headings/body; the old audit's primary-coloured
+note text must be rechecked with current assets.
+
+Calculated WCAG ratios on the supplied audit surfaces, before -> source fix:
+links 4.299 -> 5.044; linked code 4.128 -> 4.845; active navigation 2.194 -> 7.142;
+note text 2.347 -> 8.925 (existing note rule); secondary/footer 4.063 -> 4.798;
+number token 4.450 -> 4.840; constant token 4.483 -> 4.953. Alpha text was
+composited before calculating luminance. These are numerical calculations,
+not a claim of rendered browser acceptance.
+
+Three new Node tests pass; all three fail against the previous HEAD sources.
+JavaScript syntax and git diff whitespace checks pass. Required build fails
+because postcss is absent. Full npm test has missing dependency/generated-output
+failures. npm run test:browser cannot invoke the missing Node Playwright runner
+(the Python CLI on PATH reports unknown command test). npm ci fails ENOTFOUND
+for registry.npmjs.org; offline install fails ENOTCACHED for tailwindcss 4.3.3.
+A direct Python Playwright Chromium launch also fails with MachPortRendezvous
+bootstrap_check_in Permission denied (1100) in this sandbox.
+
+Wait, but numerical contrast and VM state checks cannot prove rendered focus or
+native event timing: controller must install pinned dependencies, run build,
+unit and the complete browser suite, and substitute candidate assets into the
+fontlab-python-docs built site before rerunning its supplied a11y_check.py on
+all seven pages at 1280x800/375x812 in light/dark. Verify real Tab cycles, closed
+and open panels, palette activation, focus rings, Escape/focus restoration,
+search results, viewport changes, single-control ownership/docking, reading
+shortcuts and host-style isolation. Confirm the owner's unrelated edits remain
+untouched. Before publication, compare regenerated files to the manifest; after
+an authorized publication, compare public bytes and repeat rendered live checks.
+No deploy, commit, push, publication or consumer-file modifications performed.
+
+
+## 2026-10-14 — controller's real-consumer follow-up
+
+Inspected the read-only candidate site. The recorded main/div/div/button is
+Back to top (.md-top__button), not the copy control. MaterialX's display:flex
+on .md-top defeated native [hidden]; opacity:0/pointer-events:none still allowed
+keyboard focus. The hidden container now uses display:none and visible top/copy
+controls get explicit focus rings. A white inset top ring with a blue outer
+ring remains distinct when native focus changes the button's accent surface.
+
+The mobile offscreen nav is .md-sidebar--secondary > .md-sidebar__scrollwrap >
+.md-sidebar__inner > nav.md-nav--secondary (the independent TOC). It now follows
+#__toc at its native 60em breakpoint, with closed content inert/hidden and open
+content reachable. Primary/integrated TOC content retains inherited primary
+inertness and native nested navigation visibility rules.
+
+The failing paragraph is article > div.api-hero > p.api-kicker. Consumer
+assets/reference.css loads after shared CSS and assigns --md-primary-fg-color,
+which is the header surface indigo, to this text. A more specific dark-only
+shared rule uses --md-typeset-a-color: calculated 2.347 -> 5.454:1 on [30,33,41].
+Light colours are unchanged. This corrects the earlier mistaken note diagnosis.
+
+Extended all eight native/global, desktop/mobile, light/dark fixture focus cases
+with closed/open secondary drawer assertions, hidden/visible Back to top, and
+legacy md-clipboard focus. The contrast case recreates api-hero/api-kicker and
+loads the offending consumer rule afterward. Enabled navigation.top in the
+fixture and added a fourth unit regression for independent TOC state changes.
+
+The normal build command reached uv but sandbox cache writes failed. A temporary
+/tmp/fltheme-a11y-bin/uv adapter invokes the existing cached Python environment
+and asserts exact pinned versions (ProperDocs 1.6.7, MkDocs 1.6.1, MaterialX
+10.1.8, PyMdown Extensions 11.0.1) before running the unchanged build arguments.
+With that environment adapter, npm run build succeeds (70 manifest files).
+Full npm test passes 12/12. npm run test:browser remains blocked before tests:
+loopback HTTP server bind raises PermissionError [Errno 1]. A separate launch
+using the installed Node Playwright runner confirms Chromium also fails with
+MachPortRendezvous Permission denied (1100). Syntax/whitespace checks pass.
+
+Controller must run the full browser suite outside this sandbox and rerun the
+28-case real-consumer audit with freshly built assets and its corrected mobile
+keyboard targets. Verify both independent drawers and integrated/nested nav,
+actual Tab cycles, hidden top controls, visible top/copy rings, and computed
+api-kicker contrast. The prior controller's 69 passing browser cases describe
+the previous candidate only. No deploy, commit, push or publication performed;
+owner files and the supplied consumer candidate remain untouched.
+
+
+## 2026-10-14 — native mobile toggle reachability
+
+The native header labels had no Tab stop or keyboard activation, leaving native
+mobile sites without reachable drawer/search openers. Existing labels now have
+tabindex=0, role=button, accessible names, aria-controls to their actual panel
+IDs, and aria-expanded synchronized with the native checkboxes. Hidden native
+headers remain hidden when global controls own their slots; no controls added.
+
+Delegated capture handlers implement Enter/Space and pointer activation once,
+prevent held-key repeats and native label/default double toggles, close the
+other panel, remove inertness and focus the first navigation link/query input.
+Escape for a native-opened panel is captured before vendor handlers so it closes
+and reliably restores its actual opener. Global request paths retain global
+focus return and ownership. Native desktop search Escape is covered too.
+
+Added two VM activation tests (mobile/desktop), including semantics, Enter,
+Space, repeats, pointer toggling, expanded state and focus movement/restoration.
+Added two mobile browser cases (light/dark) that reach the drawer and search
+labels by actual Tab presses within eight steps, open with Enter, verify visible
+focused navigation/search content, restore focus with Escape and exercise Space.
+Shared CSS marks the native button labels as pointer controls; existing focus
+rings apply to their tabindex.
+
+Fresh gates: build passed using the documented cached pinned Python environment
+adapter; npm test passed 14/14. Full browser suite attempted and blocked at the
+loopback server bind with PermissionError [Errno 1]; this sandbox's Chromium
+launch denial remains as previously independently demonstrated. JavaScript
+syntax, whitespace and all 70 generated manifest hashes pass. Controller must
+run the new mobile Tab regressions/full suite and the 28-case consumer audit
+outside the sandbox before accepting/publication. No owner-file edits, commit,
+deploy, push or publication.
+
+
+## 2026-10-14 — browser-suite selector and palette follow-up
+
+The four desktop palette failures were a runtime defect: the fixture already
+declares both palettes, but MaterialX 10.1.8 initializes the visible label without
+checking its radio. Synchronize that radio in navigation.js so the existing
+`:checked` focus box works on first load. The four mobile failures used ambiguous
+`#__toc` locators; both the test and runtime now target the independent
+`input.md-toggle[data-md-toggle="toc"]`, leaving native markup intact. The runtime
+previously selected the correct first input in this fixture; the explicit selector
+also handles a nested duplicate appearing first. Added a palette unit case,
+strengthened the duplicate-ID regression and added Enter/scheme/focus assertions.
+Both new regression conditions failed before the source fix and pass afterward.
+All existing accessibility thresholds and assertions remain intact.
+
+Fresh gates: `npm run build` passes (70 files, all manifest hashes checked) with
+`UV_CACHE_DIR` under /tmp; the initial default-cache attempt hit a sandbox write
+denial. `npm test`: 15 passed, 0 failed. Complete `npm run test:browser` with JSON
+reporting: 0 passed, 80 failed, 0 skipped; every failure occurs at Chromium launch
+with `MachPortRendezvous ... Permission denied (1100)`, before assertions. Browser
+tests ran against an exact temporary source/dist copy to protect owner screenshots.
+
+Built an exact archive of HEAD `0722b06a507608e620b0ebad87d26c5064ba131e`, reusing
+identical lockfile-pinned npm dependencies and the documented pinned Python
+adapter. API/legacy specs: 0 passed, 4 failed, all with the same launch denial.
+Both specs are byte-identical to HEAD. Separately reproduced ENOENT for both API
+404.html reads at candidate and HEAD; both sibling API/Extend checkouts are absent.
+All three consumer URLs return HTTP 404; Extend has no `.md-content` or TypeRig.
+These missing external inputs affect HEAD too; browser confirmation of the
+reported three consumer failures and post-fix accessibility acceptance remain
+unresolved until Chromium can run with the intended sibling sites available.
+
+Evidence: /tmp/fltheme-browser-fix-_mal0a2u/{build.log,node.log,browser.json,
+browser-summary.json,head-build.log,head-browser.json,head-browser-summary.json,
+baseline-inputs.json,api-head-input-errors.json}. Owner files were hash-checked
+against intake and preserved. No deploy, CDN writes, commit, push or publication.
+
+## 2026-10-14 — controller browser verification (outside sandbox)
+
+`npm ci`, `npm run build` (70 files) and `npm test` (15/15) pass. The global-menu
+mobile drawer case asserted focus on the drawer's first link; the runtime correctly
+focuses the drawer's first visible stop (the Close button) and the native path
+focuses inside requestAnimationFrame. The spec now polls for visible focus inside the
+opened drawer, then focuses the first visible link. No product change was needed.
+`npm run test:browser`: 75 passed, 5 failed before that spec fix; afterwards the
+accessibility spec passes 11/11. The remaining 3 failures (api.spec x2, legacy Extend)
+need sibling checkouts `../fontlab-python-docs` and `../extend-fontlab` that are
+absent here; they are unrelated to this change.
+
+Consumer audit: fontlab-python-docs `scripts/a11y_check.py` (docs baf9077, which
+reaches closed mobile navigation through its keyboard opener) against the built
+docs site with fltheme26 CDN requests served from this `dist/1.0.0`: PASS, 28/28
+page/viewport/scheme cases, 0 failures (the live theme produced 433). Receipt:
+fontlab-scripting verification/issue-101-ecosystem/evidence/tg8-theme/.

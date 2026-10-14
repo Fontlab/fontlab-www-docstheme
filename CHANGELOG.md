@@ -4,6 +4,47 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-10-14 — accessibility suite follow-up (unpublished)
+
+- Initialize the active palette radio from MaterialX's visible label; upstream
+  initialization leaves every radio unchecked, hiding the shared focus box.
+- Target the independent TOC's `data-md-toggle="toc"` input in the runtime and
+  browser tests; nested navigation can reuse the `__toc` ID.
+- Add a palette initialization unit regression and exercise keyboard palette
+  switching without relaxing any focus, closed-panel or contrast assertion.
+- Build and 15 Node tests pass. All 80 browser cases and the four-case HEAD
+  API/legacy comparison are blocked by sandbox Chromium launch permissions.
+
+## 2026-10-14 — native toggle keyboard access (unpublished)
+
+- Make visible native header drawer/search labels focusable buttons with names,
+  panel references and expanded state; support Enter/Space without double toggles.
+- Focus the first navigation link/query field on opening and return focus to the
+  actual opener on Escape; retain existing global/local ownership and controls.
+- Add two activation unit cases and two mobile Tab/Enter/Space browser cases.
+
+## 2026-10-14 — consumer accessibility follow-up (unpublished)
+
+- Synchronize the independent secondary TOC drawer at its native 60em breakpoint.
+- Hide inactive Back to top controls from layout and keyboard focus; add explicit
+  focus rings to top and copy controls, including legacy `.md-clipboard` buttons.
+- Fix dark `.api-hero > .api-kicker` text whose consumer CSS used the primary
+  header colour; the shared override survives consumer CSS loaded afterward.
+- Extend fixture browser coverage and add a TOC state unit regression.
+
+## 2026-10-14 — accessibility fixes (unpublished)
+
+- Exclude closed native drawers/search panels and search results from focus,
+  including pages without global chrome; retain native desktop search access.
+- Add inset keyboard focus rings, visible copy-button focus and a real focus
+  box for MaterialX palette radios; restore native mobile triggers on Escape.
+- Raise slate indigo links/active navigation, secondary text and numeric/constant
+  code tokens; preserve light colours and branded header surfaces.
+- Add three Node regressions and nine fixture browser cases (both viewport sizes,
+  both schemes and native/global chrome), with copy controls enabled in the fixture.
+- Full gates remain blocked by unavailable pinned npm dependencies and sandbox
+  Chromium launch permissions. No deployment or publication was performed.
+
 ## 2026-10-02 — marked text weight
 
 - Set `.md-typeset mark` to `font-weight: 500`, retaining black text and a

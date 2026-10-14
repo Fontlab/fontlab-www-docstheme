@@ -45,6 +45,16 @@ these run during the Python build. CDN assets provide the shared styling.
 uses font weight 500, including
 the optional editorial layer and dark palettes.
 
+Closed mobile navigation/TOC drawers and search panels are excluded from keyboard focus;
+native desktop search keeps its visible field and excludes closed results.
+Visible native navigation/search labels support Tab, Enter and Space, expose
+button semantics and restore opener focus on Escape. Search, buttons and palette
+controls show keyboard focus rings. The active native palette radio is checked
+on initialization so its focus box is available before the first theme switch.
+The shared slate
+palette raises indigo text accents, secondary text and code tokens above 4.5:1
+on the standard MaterialX dark surfaces; light text colours stay unchanged.
+
 ## Add components to a site
 
 Keep `theme.name: materialx` and any site-specific template overrides. Add:
