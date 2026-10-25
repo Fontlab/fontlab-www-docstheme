@@ -27,3 +27,7 @@ The configuration enables keyboard keys (`++ctrl+s++`), marked text
 tables and footnotes. See `docs/index.md` for working examples. PyMdown
 Extensions is pinned in `requirements.txt`; CDN assets provide the styling.
 Marked text is black with a transparent background in both palettes.
+
+See [PLUGINS.md](PLUGINS.md) for choosing API, include, navigation, metadata,
+taxonomy, local editing and print plugins. The starter keeps a small baseline;
+its native breadcrumbs and ToC work without legacy navigation plugins.

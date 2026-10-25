@@ -35,7 +35,7 @@
 <section id="quick-start" aria-labelledby="quick-start-heading"><h2 id="quick-start-heading">Start a site</h2><p>Install <a href="https://docs.astral.sh/uv/">uv</a>, download <a href="starter.zip">starter.zip</a>, and extract it. The archive contains two Markdown pages, a pinned requirements file, a MaterialX configuration and a template override. From its extracted directory:</p><pre><code>uv venv --python 3.13
 uv pip install -r requirements.txt
 uv run properdocs serve -f mkdocs.yml</code></pre><p>Open the preview URL printed by ProperDocs. The sample <code>site_url</code> includes <code>/docs/</code>, so the preview may use that path. Change <code>site_name</code> and <code>site_url</code> before publishing. Then run <code>uv run properdocs build -f mkdocs.yml --strict</code> and publish the contents of <code>site/</code>.</p><p>The tested baseline is Python 3.13, ProperDocs 1.6.7, MkDocs 1.6.1, MaterialX 10.1.8 and PyMdown Extensions 11.0.1. Consumers need no npm or Tailwind build. The CDN, global menus and external fonts require internet access.</p></section>
-<section id="materialx" aria-labelledby="materialx-heading"><h2 id="materialx-heading">Add it to an existing MaterialX site</h2><p>Keep <code>theme.name: materialx</code>. Merge the entries below into your existing YAML; do not create duplicate <code>plugins</code>, <code>extra_css</code> or <code>extra_javascript</code> keys. Keep your current navigation, plugins, fonts and template overrides.</p><p>This is the complete <a href="starter/mkdocs.yml">starter configuration</a>. The first two CSS entries and first two JavaScript entries are the shared layer:</p><pre><code># this_file: examples/starter/mkdocs.yml
+<section id="materialx" aria-labelledby="materialx-heading"><h2 id="materialx-heading">Add it to an existing MaterialX site</h2><p>Choose plugins for the content you maintain: see the <a href="starter/PLUGINS.md">plugin selection guide</a> included with the starter.</p><p>Keep <code>theme.name: materialx</code>. Merge the entries below into your existing YAML; do not create duplicate <code>plugins</code>, <code>extra_css</code> or <code>extra_javascript</code> keys. Keep your current navigation, plugins, fonts and template overrides.</p><p>This is the complete <a href="starter/mkdocs.yml">starter configuration</a>. The first two CSS entries and first two JavaScript entries are the shared layer:</p><pre><code># this_file: examples/starter/mkdocs.yml
 site_name: My FontLab documentation
 site_url: https://example.org/docs/
 docs_dir: docs
@@ -44,6 +44,7 @@ theme:
   name: materialx
   custom_dir: overrides
   features:
+    - navigation.path
     - navigation.tabs
     - search.highlight
     - content.code.copy
@@ -57,7 +58,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 plugins:
-  - search
+  - materialx/search
 markdown_extensions:
   - attr_list
   - md_in_html

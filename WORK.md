@@ -640,3 +640,7 @@ consumer audit against the live CDN (no interception): 28/28 cases, 0 failures.
 Evidence: fontlab-scripting verification/issue-101-ecosystem/evidence/tg8-theme/.
 Owner's review screenshots: the five owner-modified PNGs re-rendered byte-identical
 to intake; four other rewritten PNGs are git-excluded generated output.
+
+## 2026-10-18: documentation plugin adoption
+
+Made MaterialX search explicit in starter/fixture and enabled native breadcrumbs. Added downloadable PLUGINS.md covering all 15 requested projects, actual compatibility limitations and profile inheritance. Updated the public copyable YAML to match the starter. `npm run build` and all 15 `npm test` checks pass. Extracted ZIP, installed pinned requirements in a fresh environment and built strictly. No shared CSS/runtime source changed.

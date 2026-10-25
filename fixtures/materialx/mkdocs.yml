@@ -5,6 +5,7 @@ theme:
   name: materialx
   custom_dir: overrides
   features:
+    - navigation.path
     - content.code.copy
     - navigation.top
   palette:
@@ -20,7 +21,7 @@ nav:
   - Integration: index.md
   - Specimen: specimen.md
 plugins:
-  - search
+  - materialx/search
 markdown_extensions:
   - attr_list
   - md_in_html

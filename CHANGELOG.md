@@ -4,6 +4,10 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-10-18: documentation plugin adoption
+
+Made MaterialX search explicit in starter/fixture and enabled native breadcrumbs. Added downloadable PLUGINS.md covering all 15 requested projects, actual compatibility limitations and profile inheritance. Updated the public copyable YAML to match the starter. `npm run build` and all 15 `npm test` checks pass. Extracted ZIP, installed pinned requirements in a fresh environment and built strictly. No shared CSS/runtime source changed.
+
 ## 2026-10-14 — accessibility suite follow-up (unpublished)
 
 - Initialize the active palette radio from MaterialX's visible label; upstream

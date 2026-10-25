@@ -216,6 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+_private
+__version__.py
+
 
 # Theme build and browser artifacts
 node_modules/
