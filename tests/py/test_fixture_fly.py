@@ -121,11 +121,15 @@ def test_chrome_none_when_built_then_no_bars_and_materialx_header_shown(sites):
     hide = re.search(r"([^{}]*header\.md-header[^{}]*)\{\s*display: none", css)
     assert hide and "fly-chrome-fontlab" in hide[1] and "fly-chrome-vexy" in hide[1], hide
     assert "fly-chrome-none" not in hide[1] and "fly-chrome-custom" not in hide[1]
+    assert set(re.findall(r"fly-chrome-(\w+)", hide[1])) == {"fontlab", "vexy"}, hide[1]
 
 
 def test_chrome_custom_when_built_then_materialx_header_kept_beside_custom_bars(sites):
     html = read(sites, "mkdocs-custom")
     assert "fly-chrome-custom" in body(html) and "<acme-menu " in html
+    css = (sites["mkdocs-custom"] / "assets/fly/fly.css").read_text()
+    hide = re.search(r"([^{}]*header\.md-header[^{}]*)\{\s*display: none", css)
+    assert hide and set(re.findall(r"fly-chrome-(\w+)", hide[1])) == {"fontlab", "vexy"}, hide
     # The fixture has no search plugin or palette; the header and its drawer button remain.
     assert '<header class="md-header' in html and 'for="__drawer"' in html
 

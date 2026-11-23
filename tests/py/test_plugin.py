@@ -91,6 +91,7 @@ def test_parse_site_when_no_fly_then_defaults():
         ({"fonts": {"roles": {"h1": {"family": '"A'}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"size": "calc(1rem"}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"size": "1rem)"}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"family": "url(a'b)c'"}}}}, "not a plain CSS value"),
         ({"fonts": {"sources": ["google:A&display=block"]}}, "font source must be"),
         ({"presets": {"Bad Name": {}}}, "preset name must match"),
         ({"presets": {"x": {"css": "a.css"}}}, "extra.fly.presets.x: unknown key(s) css"),
@@ -425,12 +426,67 @@ def test_on_post_build_when_materialx_css_present_then_rescaled(tmp_path):
     (d / "palette.def.min.css").write_text("b{top:2rem}")
     FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
     marker = assets.RESCALED
-    assert (d / "main.abc.min.css").read_text() == marker + "a{width:1.3889rem}"
-    assert (d / "palette.def.min.css").read_text() == marker + "b{top:2.7778rem}"
+    assert (d / "main.abc.min.css").read_text() == "a{width:1.3889rem}" + marker
+    assert (d / "palette.def.min.css").read_text() == "b{top:2.7778rem}" + marker
     FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
-    assert (d / "main.abc.min.css").read_text() == marker + "a{width:1.3889rem}", (
+    assert (d / "main.abc.min.css").read_text() == "a{width:1.3889rem}" + marker, (
         "second run: no-op"
     )
+
+
+def test_on_post_build_when_charset_leads_then_it_stays_the_first_bytes(tmp_path):
+    d = tmp_path / "assets/stylesheets"
+    d.mkdir(parents=True)
+    (d / "main.abc.min.css").write_text('@charset "UTF-8";a{width:1rem}')
+    (d / "palette.def.min.css").write_text("b{top:2rem}")
+    FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
+    assert (d / "main.abc.min.css").read_text().startswith('@charset "UTF-8";')
+
+
+def test_rescale_rem_when_data_uri_holds_paren_then_following_rems_scaled():
+    css = (
+        "a{background:url(\"data:image/svg+xml;utf8,<svg width='1rem'>"
+        "<path d='M1 2h3)'/></svg>\")}.v{font-size:.8rem;height:2.4rem}"
+        "b{c:url('x).svg') 1rem}d{e:url(p/1rem.png);f:1rem}"
+    )
+    out = assets.rescale_rem(css)
+    assert ".v{font-size:1.1111rem;height:3.3333rem}" in out, out
+    assert "width='1rem'" in out and "url(p/1rem.png);f:1.3889rem" in out
+    assert "url('x).svg') 1.3889rem" in out
+
+
+def _outside_strings(css: str) -> str:
+    """CSS with quoted strings and unquoted url() bodies blanked (independent of REM)."""
+    out, i = [], 0
+    while i < len(css):
+        ch = css[i]
+        if ch in "\"'":
+            j = i + 1
+            while css[j] != ch:
+                j += 2 if css[j] == "\\" else 1
+            out.append("\0")
+            i = j + 1
+        elif css.startswith("url(", i) and css[i + 4] not in "\"'":
+            i = css.index(")", i) + 1
+            out.append("\0")
+        else:
+            out.append(ch)
+            i += 1
+    return "".join(out)
+
+
+def test_rescale_rem_when_real_materialx_stylesheet_then_every_rem_scaled():
+    material = pytest.importorskip("material")
+    (main,) = (Path(material.__file__).parent / "templates/assets/stylesheets").glob(
+        "main.*.min.css"
+    )
+    css = main.read_text(encoding="utf-8")
+    number = re.compile(r"(?<![\w.])(?<![eE][+-])(\d*\.?\d+(?:[eE][+-]?\d+)?)rem\b")
+    before = [float(n) for n in number.findall(_outside_strings(css))]
+    after = [float(n) for n in number.findall(_outside_strings(assets.rescale_rem(css)))]
+    assert len(before) == len(after) > 300
+    bad = [(b, a) for b, a in zip(before, after) if abs(a - b * assets.REM_SCALE) > 0.001]
+    assert bad == [], bad[:5]
 
 
 def test_rescale_rem_when_calc_url_strings_and_e_notation_then_lengths_only():

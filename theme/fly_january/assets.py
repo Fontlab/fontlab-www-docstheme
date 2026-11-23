@@ -22,14 +22,16 @@ ASSET_VERSION_LEN = 10
 # written in rem against its 125% (20px) root, so its built CSS is rescaled by 20/14.4 to
 # keep every MaterialX size in px.
 REM_SCALE = 20 / 14.4
-# A rem length (sign kept by leaving it outside; e-notation included), or a url()/string
-# whose text is never a length.
+# A quoted string (escapes allowed, so a data-URI holding ")" stays whole), an unquoted
+# url(...), or a rem length (sign kept by leaving it outside; e-notation included). Only
+# the last group is rewritten; strings and urls are text, never lengths.
 REM = re.compile(
-    r"url\([^)]*\)|\"[^\"]*\"|'[^']*'"
+    r"\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*'|url\([^)'\"]*\)"
     r"|(?<![\w.])(?<![eE][+-])(\d*\.?\d+(?:[eE][+-]?\d+)?)rem\b"
 )
-# First line of a rescaled stylesheet: a second run (serve rebuilds) leaves it alone.
-RESCALED = "/* fly: MaterialX rem rescaled by 20/14.4 */\n"
+# Last line of a rescaled stylesheet: a second run (serve rebuilds) leaves it alone. At the
+# end, so MaterialX's leading @charset stays the first bytes of the file.
+RESCALED = "\n/* fly: MaterialX rem rescaled by 20/14.4 */"
 MATERIALX_CSS = ("assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css")
 
 
@@ -93,5 +95,5 @@ def rescale_materialx(site: Path) -> None:
         raise PluginError(f"fly: expected MaterialX main + palette CSS, found {files}")
     for f in files:
         css = f.read_text(encoding="utf-8")
-        if not css.startswith(RESCALED):
-            f.write_text(RESCALED + rescale_rem(css), encoding="utf-8")
+        if not css.endswith(RESCALED):
+            f.write_text(rescale_rem(css) + RESCALED, encoding="utf-8")

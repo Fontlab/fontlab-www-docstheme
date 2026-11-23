@@ -78,6 +78,8 @@ GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+(?:&family=[A-Za-z0-9+:@.,;_-]
 HTTPS = re.compile(r"https://[^\s\"'<>]+")
 CSS_VALUE = re.compile(r"[^<>{};\\\n\r]+")
 NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
+# A quote inside an unquoted url( ) is a bad-url token that can swallow what follows.
+BAD_URL = re.compile(r"url\(\s*(?![\"'\s])[^)]*[\"']", re.IGNORECASE)
 CUSTOM_ELEMENT = re.compile(r"[a-z][a-z0-9._]*-[a-z0-9._-]*")
 
 Roles = dict[str, dict[str, str]]
@@ -182,12 +184,12 @@ def css_value(where: str, value: Any) -> str:
     """A role value as CSS text that cannot end its declaration, rule or <style> element.
 
     Rejects < > { } ; backslashes, newlines, comment openers and unbalanced quotes or
-    parentheses, since the value is written unescaped into the plugin's role style.
+    parentheses, quotes inside an unquoted url(), since the value is written unescaped into the plugin's role style.
     """
     if isinstance(value, bool) or not isinstance(value, (str, int, float)):
         raise fail(where, f"must be a string or a number, got {value!r}")
     text = str(value).strip()
-    if not CSS_VALUE.fullmatch(text) or "/*" in text or not balanced(text):
+    if not CSS_VALUE.fullmatch(text) or "/*" in text or not balanced(text) or BAD_URL.search(text):
         raise fail(where, f"is not a plain CSS value: {value!r}")
     return text
 
