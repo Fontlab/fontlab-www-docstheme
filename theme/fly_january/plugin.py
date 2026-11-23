@@ -25,7 +25,7 @@ from vexy_markdown_figure_groups import group_figures
 from .assets import rescale_materialx, theme_versions, version_links
 from .config import PageConfig, SiteConfig, parse_page, parse_site
 from .markup import log, name_permalinks, patch_tags, stray_attr_lists
-from .view import body_attributes, page_classes, preset_look, view
+from .view import body_attributes, h1_mode, page_classes, preset_look, view
 
 # Margin figures (img-small/img-tall/img-cut) and their paragraphs become one block in the
 # theme's vocabulary: <div class="fly-aside[ fly-cut]" style="--rows: N">.
@@ -93,7 +93,8 @@ class FlyPlugin(BasePlugin):
         page_config = self.page_config(page)
         hue = preset_look(self.site, page_config).hue
         classes = page_classes(page.meta or {}, self.site, page_config)
-        return patch_tags(output, classes, body_attributes(hue))
+        h1 = h1_mode(self.site, page_config)
+        return patch_tags(output, classes, body_attributes(hue, h1, self.site.links))
 
     def on_post_template(self, output_content: str, template_name: str, **_: Any) -> str:
         """Site-level body classes and hue on static HTML templates (404.html)."""
@@ -101,7 +102,8 @@ class FlyPlugin(BasePlugin):
             return output_content
         hue = preset_look(self.site, None).hue
         classes = page_classes({}, self.site, None)
-        return patch_tags(output_content, classes, body_attributes(hue))
+        h1 = h1_mode(self.site, None)
+        return patch_tags(output_content, classes, body_attributes(hue, h1, self.site.links))
 
     def on_post_build(self, config: Any, **_: Any) -> None:
         """Rescale MaterialX's built stylesheets to the theme's 14.4px root."""

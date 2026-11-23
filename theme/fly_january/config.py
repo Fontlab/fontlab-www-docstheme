@@ -56,16 +56,33 @@ BLOCK_PROPS = (
     "scale",
 )
 HEADING_MEASURE_ROLES = ("h1", "h2")
-INLINE_ROLES = ("em", "strong", "mono")
-INLINE_PROPS = ("family", "weight", "adjust")
+INLINE_ROLES = ("em", "strong", "mono", "sans")
+INLINE_PROPS = {
+    "em": ("family", "weight", "adjust", "style"),
+    "strong": ("family", "weight", "adjust"),
+    "mono": ("family", "weight", "adjust"),
+    "sans": ("family", "stretch", "variation", "adjust"),
+}
+EM_STYLES = ("normal", "italic")
+LINKS = ("inherit", "accent")
+H1_COLOURS = ("ink", "accent")
+# The faces the default roles name (tokens/type.css), as one Typekit kit each plus Outfit for
+# the buttons. A site that sets fonts.sources replaces them; fonts.sources: [] loads none.
+DEFAULT_SOURCES = (
+    "typekit:cmv5add",  # News Serif (h1)
+    "typekit:gav0zux",  # Quire Sans (h2, lead)
+    "typekit:cna4jfp",  # Sole Serif Small (body)
+    "typekit:wck5koo",  # Grtsk (navigation, tables, inline sans)
+    "google:Outfit:wght@100..900",  # buttons
+)
 ROLE_PROPS = (
     {r: BLOCK_PROPS for r in BLOCK_ROLES}
     | {r: BLOCK_PROPS + ("measure",) for r in HEADING_MEASURE_ROLES}
-    | {r: INLINE_PROPS for r in INLINE_ROLES}
+    | {r: INLINE_PROPS[r] for r in INLINE_ROLES}
 )
 SIDES = ("left", "right")
 NAMED_CHROMES = ("fontlab", "vexy", "none")
-CHROME_OPTIONS = ("site-label", "mobile-menu", "mobile-search", "search-from")
+CHROME_OPTIONS = ("site-label", "mobile-menu", "mobile-search", "search-from", "sticky")
 SITE_KEYS = (
     "chrome",
     "chrome_options",
@@ -73,10 +90,12 @@ SITE_KEYS = (
     "fonts",
     "presets",
     "margin_side",
+    "h1",
+    "links",
     "utilities",
     "debug",
 )
-PAGE_KEYS = ("preset", "hue", "fonts")
+PAGE_KEYS = ("preset", "hue", "fonts", "h1")
 TYPEKIT = re.compile(r"typekit:([a-z0-9]+)")
 # One css2 family spec, or several joined by "&family=" (one stylesheet for many families).
 GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+(?:&family=[A-Za-z0-9+:@.,;_-]+)*)")
@@ -117,6 +136,9 @@ class SiteConfig:
 
     chrome: Chrome = Chrome("fontlab")
     chrome_options: dict[str, str] = field(default_factory=dict)
+    sticky: bool = False
+    h1: str = "ink"
+    links: str = "inherit"
     look: Look = Look()
     presets: dict[str, Look] = field(default_factory=dict)
     margin_side: str = "left"
@@ -130,6 +152,7 @@ class PageConfig:
 
     preset: str | None = None
     look: Look = Look()
+    h1: str | None = None
 
 
 def fail(where: str, message: str) -> PluginError:
@@ -210,6 +233,15 @@ def measure(where: str, value: Any) -> str:
     return text
 
 
+def role_value(where: str, prop: str, value: Any) -> str:
+    """One role property: measure and style have their own grammar, the rest is plain CSS."""
+    if prop == "measure":
+        return measure(where, value)
+    if prop == "style":
+        return choice(where, value, EM_STYLES)
+    return css_value(where, value)
+
+
 def parse_roles(where: str, value: Any) -> Roles:
     """Roles mapping: role name -> {property: value}, per SPEC 4.3."""
     roles: Roles = {}
@@ -217,15 +249,20 @@ def parse_roles(where: str, value: Any) -> Roles:
         here = f"{where}.{role}"
         props = mapping(here, props, ROLE_PROPS[role])
         roles[role] = {
-            p: measure(f"{here}.{p}", v) if p == "measure" else css_value(f"{here}.{p}", v)
-            for p, v in props.items()
+            p: role_value(f"{here}.{p}", p, v) for p, v in props.items()
         }
     return roles
 
 
-def parse_look(where: str, fonts: Any, hue: Any) -> Look:
-    """Fonts ({sources, roles}) and hue at one level."""
+def parse_look(where: str, fonts: Any, hue: Any, default_sources: tuple[str, ...] = ()) -> Look:
+    """Fonts ({sources, roles}) and hue at one level.
+
+    `default_sources` apply only when `fonts.sources` is absent (the site level passes the
+    theme defaults); an explicit empty list means none.
+    """
     fonts = mapping(f"{where}.fonts", fonts, ("sources", "roles"))
+    if "sources" not in fonts and default_sources:
+        fonts = fonts | {"sources": list(default_sources)}
     sources = fonts.get("sources") or []
     if not isinstance(sources, list):
         raise fail(f"{where}.fonts.sources", f"must be a list, got {sources!r}")
@@ -254,13 +291,14 @@ def parse_chrome(where: str, value: Any) -> Chrome:
     return Chrome("custom", value["script"], tags["header"], tags["footer"])
 
 
-def parse_options(where: str, value: Any) -> dict[str, str]:
-    """Menu attributes under chrome_options."""
-    options = mapping(where, value, CHROME_OPTIONS)
+def parse_options(where: str, value: Any) -> tuple[dict[str, str], bool]:
+    """Menu attributes under chrome_options, and the `sticky` flag (a bool, not an attribute)."""
+    options = dict(mapping(where, value, CHROME_OPTIONS))
+    sticky = boolean(f"{where}.sticky", options.pop("sticky", False))
     for key, text in options.items():
         if not isinstance(text, str):
             raise fail(f"{where}.{key}", f"must be a string, got {text!r}")
-    return dict(options)
+    return options, sticky
 
 
 def parse_presets(where: str, value: Any) -> dict[str, Look]:
@@ -281,10 +319,14 @@ def parse_presets(where: str, value: Any) -> dict[str, Look]:
 def parse_site(extra: Any) -> SiteConfig:
     """Validate `config.extra` -> SiteConfig (absent `fly` is all defaults)."""
     raw = mapping("extra.fly", (extra or {}).get("fly"), SITE_KEYS)
+    options, sticky = parse_options("extra.fly.chrome_options", raw.get("chrome_options"))
     return SiteConfig(
         chrome=parse_chrome("extra.fly.chrome", raw.get("chrome", "fontlab")),
-        chrome_options=parse_options("extra.fly.chrome_options", raw.get("chrome_options")),
-        look=parse_look("extra.fly", raw.get("fonts"), raw.get("hue")),
+        chrome_options=options,
+        sticky=sticky,
+        h1=choice("extra.fly.h1", raw.get("h1", "ink"), H1_COLOURS),
+        links=choice("extra.fly.links", raw.get("links", "inherit"), LINKS),
+        look=parse_look("extra.fly", raw.get("fonts"), raw.get("hue"), DEFAULT_SOURCES),
         presets=parse_presets("extra.fly.presets", raw.get("presets")),
         margin_side=choice("extra.fly.margin_side", raw.get("margin_side", "left"), SIDES),
         utilities=boolean("extra.fly.utilities", raw.get("utilities", False)),
@@ -308,4 +350,7 @@ def parse_page(meta: dict[str, Any], site: SiteConfig, src: str) -> PageConfig:
     if preset is not None and preset not in site.presets:
         known = ", ".join(site.presets) or "none configured"
         raise fail(f"{where}.preset", f"unknown preset {preset!r} (known: {known})")
-    return PageConfig(preset=preset, look=parse_look(where, raw.get("fonts"), raw.get("hue")))
+    h1 = None if raw.get("h1") is None else choice(f"{where}.h1", raw["h1"], H1_COLOURS)
+    return PageConfig(
+        preset=preset, look=parse_look(where, raw.get("fonts"), raw.get("hue")), h1=h1
+    )
