@@ -21,7 +21,7 @@
     --fly-h1-tracking: -0.01em;
     --fly-h1-scale: 1;
 
-    --fly-h2-family: 'quire-sans', Arial, sans-serif;
+    --fly-h2-family: 'grtsk-vf', Arial, sans-serif; /* in the small default kit; quire-sans is only in the all-families kit */
     --fly-h2-weight: 300;
     --fly-h2-stretch: normal;
     --fly-h2-features: normal;
@@ -151,7 +151,7 @@
     --fly-sans-stretch: 90%;
     --fly-sans-variation: 'slnt' 0;
     --fly-sans-adjust: 0.95;
-    --fly-button-family: 'outfit', Arial, sans-serif;
+    --fly-button-family: var(--fly-sans-family);
     --fly-button-size: 0.9em;
     --fly-button-weight: 500;
     --fly-button-tracking: 0.06em;

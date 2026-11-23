@@ -22,6 +22,12 @@ const MIME = {'.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript'
   '.png': 'image/png', '.json': 'application/json', '.xml': 'application/xml', '.woff2': 'font/woff2'};
 
 let failures = 0;
+let skipped = 0;
+// A check that could not run (a third-party host or component is unreachable) is a SKIP, never an ok.
+const skip = (name, why) => {
+  skipped += 1;
+  console.log(`SKIP ${name} ${why}`);
+};
 const check = (name, ok, detail = '') => {
   if (!ok) failures += 1;
   console.log(`${ok ? 'ok' : 'FAIL'} ${name} ${detail}`.trimEnd());
@@ -648,7 +654,8 @@ const verifyNoErrors = async base => {
 
 
 // --- task 11c: titles, links, em, sans, sticky, defaults, blog ------------------------------
-const EXTRA = {accent: 'mkdocs-accent.yml', sticky: 'mkdocs-sticky.yml', minimal: 'mkdocs-minimal.yml', blog: 'mkdocs-blog.yml'};
+const EXTRA = {accent: 'mkdocs-accent.yml', sticky: 'mkdocs-sticky.yml', minimal: 'mkdocs-minimal.yml', blog: 'mkdocs-blog.yml',
+  search: 'mkdocs-search.yml', searchx: 'mkdocs-search-explicit.yml'};
 
 const probeAccent = () => `JSON.stringify((() => {${COLOUR_LIB}
   const art = document.querySelector('.md-content .md-typeset');
@@ -692,7 +699,7 @@ const verifyAccent = async base => {
 const PROBE_STICKY = `JSON.stringify((() => {
   const bar = document.querySelector('fontlab-menu');
   const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-  const barH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fly-bar-h')) * rem;
+  const barH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fly-bar-h')) * (/rem/.test(getComputedStyle(document.documentElement).getPropertyValue('--fly-bar-h')) ? rem : 1);
   const rails = [...document.querySelectorAll('.md-sidebar__scrollwrap, .md-sidebar--secondary')].map(el => el.getBoundingClientRect().top);
   return {cls: document.body.classList.contains('fly-sticky'), attr: !!bar && bar.hasAttribute('sticky'), defined: !!customElements.get('fontlab-menu'),
     barTop: bar && bar.getBoundingClientRect().top, barHeight: bar && bar.getBoundingClientRect().height, barH,
@@ -700,50 +707,107 @@ const PROBE_STICKY = `JSON.stringify((() => {
 })())`;
 
 const verifySticky = async base => {
-  await open(`${base}/sticky/`, 1440);
-  await ab('wait', '500');
-  const t = await ev(PROBE_STICKY);
-  check('sticky.attribute-and-class', t.cls && t.attr, `class ${t.cls} attr ${t.attr}`);
-  check('sticky.scroll-padding-clears-bar', parseFloat(t.scrollPad) >= t.barH, `scroll-padding-top ${t.scrollPad} bar ${t.barH}px`);
-  await ev('scrollTo(0, 600), 1');
-  await settle();
-  const s = await ev(PROBE_STICKY);
-  if (!t.defined) console.log('ok sticky.bar-pinned skipped: <fontlab-menu> is not defined (the component CDN is unreachable)');
-  else {
-    check('sticky.bar-pinned', Math.abs(s.barTop) < 1 && Math.abs(s.barHeight - t.barH) <= 2, `bar top ${s.barTop} height ${s.barHeight} want ${t.barH}`);
-    check('sticky.rails-below-bar', s.railTops.every(top => top >= t.barH - 1), `rail tops ${s.railTops.map(Math.round)} bar ${t.barH}`);
+  for (const width of [1440, 390]) {
+    await open(`${base}/sticky/`, width);
+    await ab('wait', '500');
+    const t = await ev(PROBE_STICKY);
+    check(`sticky.attribute-and-class@${width}`, t.cls && t.attr, `class ${t.cls} attr ${t.attr}`);
+    if (!t.defined) { skip(`sticky.bar-height@${width}`, '<fontlab-menu> is not defined (the component CDN is unreachable)'); continue; }
+    check(`sticky.bar-height@${width}`, Math.abs(t.barHeight - t.barH) <= 1, `menu ${t.barHeight}px, --fly-bar-h ${t.barH}px`);
+    check(`sticky.scroll-padding-clears-bar@${width}`, parseFloat(t.scrollPad) >= t.barH, `scroll-padding-top ${t.scrollPad} bar ${t.barH}px`);
+    await ev('scrollTo(0, 600), 1');
+    await settle();
+    const s = await ev(PROBE_STICKY);
+    check(`sticky.bar-pinned@${width}`, Math.abs(s.barTop) < 1, `bar top ${s.barTop}`);
+    if (width >= 960) check(`sticky.rails-below-bar@${width}`, s.railTops.every(top => top >= t.barH - 1), `rail tops ${s.railTops.map(Math.round)} bar ${t.barH}`);
   }
   await open(`${base}/fontlab/`, 1440);
   await ab('wait', '500');
   await ev('scrollTo(0, 600), 1');
   await settle();
   const d = await ev(PROBE_STICKY);
-  check('sticky.default-scrolls-away', !d.cls && !d.attr && (!d.defined || d.barTop < -1), `class ${d.cls} attr ${d.attr} bar top ${d.barTop}`);
+  check('sticky.default-has-no-attribute', !d.cls && !d.attr, `class ${d.cls} attr ${d.attr}`);
+  if (!d.defined) skip('sticky.default-scrolls-away', '<fontlab-menu> is not defined (the component CDN is unreachable)');
+  else check('sticky.default-scrolls-away', d.barTop < -1, `bar top ${d.barTop}`);
 };
 
 const verifyMinimal = async base => {
   await open(`${base}/minimal/`, 1440);
   const t = await ev(`(async () => {
     await document.fonts.ready;
-    const out = {};
-    for (const [k, sel] of [['h1', '.md-typeset h1'], ['body', '.md-typeset p'], ['nav', '.md-nav__link']]) {
-      const f = getComputedStyle(document.querySelector(sel)).fontFamily;
-      out[k] = {family: f, loaded: [...document.fonts].some(face => face.status === 'loaded' && f.split(',')[0].trim().replace(/['"]/g, '') === face.family.replace(/['"]/g, ''))};
+    const out = {roles: {}};
+    const first = f => f.split(',')[0].trim().replace(/['"]/g, '');
+    const pairs = [['h1', getComputedStyle(document.querySelector('.md-typeset h1')).fontFamily],
+      ['h2', getComputedStyle(document.querySelector('.md-typeset h2')).fontFamily],
+      ['body', getComputedStyle(document.querySelector('.md-typeset p')).fontFamily],
+      ['nav', getComputedStyle(document.querySelector('.md-nav__link')).fontFamily],
+      ['button', getComputedStyle(document.documentElement).getPropertyValue('--fly-button-family')]];
+    for (const [k, f] of pairs) {
+      const name = first(f);
+      out.roles[k] = {family: name, face: [...document.fonts].some(face => face.family.replace(/['"]/g, '') === name), loaded: [...document.fonts].some(face => face.status === 'loaded' && face.family.replace(/['"]/g, '') === name), check: document.fonts.check('16px "' + name + '"')};
     }
     out.sheets = document.querySelectorAll('link[data-fly-font]').length;
+    out.kits = [...document.querySelectorAll('link[data-fly-font]')].map(l => l.href);
+    out.preconnect = [...document.querySelectorAll('link[rel=preconnect]')].map(l => l.href);
     out.search = (await fetch(new URL('search/search_index.json', document.baseURI))).ok;
     return JSON.stringify(out);
   })()`);
   const got = typeof t === 'string' ? JSON.parse(t) : t;
-  check('minimal.default-font-sources', got.sheets === 5, `${got.sheets} font stylesheets`);
-  // Offline the kits cannot load; each role's stack then ends in a system face, so the page still reads.
-  for (const k of ['h1', 'body', 'nav']) {
-    check(`minimal.font.${k}`, got[k].loaded || /(Arial|serif|sans-serif|system-ui)/.test(got[k].family), `${got[k].family} loaded ${got[k].loaded}`);
+  check('minimal.default-font-sources', got.sheets === 3 && !got.kits.some(k => k.includes('gav0zux')), `${got.sheets} font stylesheets: ${got.kits}`);
+  check('minimal.preconnect-typekit', ['https://use.typekit.net/', 'https://p.typekit.net/'].every(o => got.preconnect.includes(o)), `${got.preconnect}`);
+  // Every default role family must be a loaded face and pass document.fonts.check(); without the font host there is nothing to test.
+  const reachable = Object.values(got.roles).some(r => r.loaded);
+  for (const [k, r] of Object.entries(got.roles)) {
+    if (!reachable) skip(`minimal.font.${k}`, 'no Typekit face loaded (use.typekit.net is unreachable)');
+    else check(`minimal.font.${k}`, r.face && r.loaded && r.check, `${r.family}: declared ${r.face} loaded ${r.loaded} check() ${r.check}`);
   }
   check('minimal.search-index-served', got.search, 'search/search_index.json answers 200 under the bare search plugin');
   await open(`${base}/minimal/guide/`, 1440);
   const w = await ev('document.documentElement.scrollWidth - innerWidth');
   check('minimal.no-overflow', w <= 0, `overflow ${w}px`);
+};
+
+
+// MaterialX's header tests the literal plugin key "materialx/search": the bare name must give the same page.
+const PROBE_SEARCH = `JSON.stringify({button: !!document.querySelector('label.md-header__button[for="__search"]'), input: !!document.querySelector('.md-search__input'),
+  checked: !!document.querySelector('#__search') && document.querySelector('#__search').checked,
+  visible: !!document.querySelector('.md-search') && getComputedStyle(document.querySelector('.md-search')).visibility === 'visible',
+  results: document.querySelectorAll('.md-search-result__item').length})`;
+
+const verifySearch = async base => {
+  for (const [label, site] of [['bare', 'search'], ['explicit', 'searchx']]) {
+    await open(`${base}/${site}/`, 390); // the header's search button shows below 60em
+    const h = await ev(PROBE_SEARCH);
+    check(`search.${label}.header-button-and-dialog`, h.button && h.input, `button ${h.button} input ${h.input}`);
+    await ab('click', 'label.md-header__button[for="__search"]');
+    await ab('wait', '400');
+    const o = await ev(PROBE_SEARCH);
+    check(`search.${label}.opens`, o.checked && o.visible, `checked ${o.checked} visible ${o.visible}`);
+    await ab('type', '.md-search__input', 'paragrap');
+    await ab('press', 'h'); // MaterialX searches on a real key event, not on inserted text
+    await ab('wait', '1500');
+    const f = await ev(PROBE_SEARCH);
+    check(`search.${label}.finds-a-fixture-word`, f.results >= 1, `${f.results} results for "paragraph"`);
+  }
+  // Chrome fontlab: below 900px the menu's search icon opens MaterialX's dialog.
+  await open(`${base}/minimal/`, 390);
+  await ab('wait', '1500');
+  const m = await ev(`JSON.stringify((() => {
+    const el = document.querySelector('fontlab-menu');
+    const button = el && el.shadowRoot && [...el.shadowRoot.querySelectorAll('.fl-search-button')].find(b => b.getBoundingClientRect().width > 0);
+    return {defined: !!customElements.get('fontlab-menu'), button: !!button, clicked: !!button && (button.click(), true), header: !!document.querySelector('label.md-header__button[for="__search"]')};
+  })())`);
+  if (!m.defined) skip('search.menu-icon', '<fontlab-menu> is not defined (the component CDN is unreachable)');
+  else {
+    await ab('wait', '500');
+    const o = await ev(PROBE_SEARCH);
+    check('search.menu-icon.opens-materialx-dialog', m.button && o.checked && o.visible && m.header, `menu button ${m.button} checked ${o.checked} visible ${o.visible} header button ${m.header}`);
+    await ab('type', '.md-search__input', 'paragrap');
+    await ab('press', 'h'); // MaterialX searches on a real key event, not on inserted text
+    await ab('wait', '1500');
+    const f = await ev(PROBE_SEARCH);
+    check('search.menu-icon.finds-a-fixture-word', f.results >= 1, `${f.results} results`);
+  }
 };
 
 const PROBE_BLOG_INDEX = `JSON.stringify((() => {
@@ -762,9 +826,10 @@ const PROBE_POST = `JSON.stringify((() => {
   const art = document.querySelector('article.md-content__inner.md-typeset, .md-content__inner .md-typeset');
   const p = art.querySelector('p');
   const plain = art.querySelector('a:not([class])'), cta = art.querySelector('a.site-cta');
+  const attr = art.querySelector('a.fixture-ref'), refs = art.querySelector('a.autorefs'), btn = art.querySelector('a.md-button'), card = art.querySelector('a.fixture-card');
   const style = el => el && ({color: getComputedStyle(el).color, line: getComputedStyle(el).textDecorationLine});
   return {overflow: document.documentElement.scrollWidth - innerWidth, text: p.getBoundingClientRect().width,
-    plain: style(plain), cta: style(cta), body: getComputedStyle(p).color};
+    plain: style(plain), cta: style(cta), attr: style(attr), refs: style(refs), btn: style(btn), card: style(card), body: getComputedStyle(p).color};
 })())`;
 
 const verifyBlog = async base => {
@@ -779,6 +844,10 @@ const verifyBlog = async base => {
   const post = await ev(PROBE_POST);
   check('blog.component-link-keeps-colour', post.cta.color === 'rgb(200, 26, 39)' && post.cta.line === 'none',
     `cta ${JSON.stringify(post.cta)}`);
+  check('blog.attr-list-link-is-content', post.attr && post.attr.color === post.body && post.attr.line === 'underline', `attr_list link ${JSON.stringify(post.attr)} body ${post.body}`);
+  check('blog.autorefs-link-is-content', post.refs && post.refs.color === post.body && post.refs.line === 'underline', `autorefs link ${JSON.stringify(post.refs)}`);
+  check('blog.md-button-untouched', post.btn && post.btn.line === 'none', `md-button ${JSON.stringify(post.btn)}`);
+  check('blog.plain-wrapper-opts-out-descendants', post.card && post.card.color === 'rgb(10, 100, 50)' && post.card.line === 'none', `link inside [data-fly-plain] ${JSON.stringify(post.card)}`);
   check('blog.classless-link-restyled', post.plain.color === post.body && post.plain.line !== 'none', `plain ${JSON.stringify(post.plain)} body ${post.body}`);
   await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 1440);
   const wideAt1440 = await ev(PROBE_POST);
@@ -788,6 +857,12 @@ const verifyBlog = async base => {
   await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 390);
   const wide = await ev(PROBE_POST);
   check('blog.mobile-no-overflow', wide.overflow <= 0, `overflow ${wide.overflow}px at 390`);
+  // Features that need the blog and tags plugin keys: the post sidebar and the tag index.
+  await open(`${base}/blog/blog/a-plain-post/`, 1440);
+  check('blog.post-sidebar-rendered', await ev("!!document.querySelector('.md-sidebar--post .md-post__authors')"), 'blog plugin post sidebar with its author');
+  await open(`${base}/blog/tags/`, 1440);
+  const tags = await ev("document.querySelectorAll('.md-typeset .md-tag').length");
+  check('blog.tags-index-lists-tags', tags >= 1, `${tags} tag links on the tag index`);
   await open(`${base}/blog/blog/`, 390);
   const mi = await ev(PROBE_BLOG_INDEX);
   check('blog.mobile-index-no-overflow', mi.overflow <= 0, `overflow ${mi.overflow}px at 390`);
@@ -818,6 +893,7 @@ try {
   await verifySticky(base);
   await verifyMinimal(base);
   await verifyBlog(base);
+  await verifySearch(base);
   await verifyButtons(base);
   await verifyActiveNav(base);
   await verifyHeadings(base, table);
@@ -835,5 +911,6 @@ try {
   server?.close();
   fs.rmSync(tmp, {recursive: true, force: true});
 }
-console.log(failures ? `${failures} assertion(s) FAILED` : 'all assertions ok');
+const note = skipped ? `, ${skipped} skipped` : '';
+console.log(failures ? `${failures} assertion(s) FAILED${note}` : `all assertions ok${note}`);
 process.exit(failures ? 1 : 0);

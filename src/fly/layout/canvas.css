@@ -49,7 +49,7 @@
 
     @container fly-canvas (min-width: 66.6667rem) {
       .md-content__inner {
-        --m: clamp(11.1111rem, 20cqi, 20.8333rem);
+        --m: var(--fly-margin-col);
         --gap: clamp(1.3889rem, 2.5cqi, 2.7778rem);
         --out: calc(var(--m) + var(--gap));
         box-sizing: border-box;

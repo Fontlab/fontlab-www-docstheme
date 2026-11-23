@@ -42,6 +42,28 @@ def src_of(page: Any) -> str:
     return getattr(getattr(page, "file", None), "src_uri", "?")
 
 
+THEME_PLUGINS = "fly-january/"
+MATERIALX_PLUGINS = "materialx/"
+
+
+def alias_materialx_plugins(plugins: Any) -> list[str]:
+    """Also expose each `fly-january/<name>` plugin under `materialx/<name>`.
+
+    A bare `search` in `plugins` registers as `fly-january/search` (pyproject entry
+    points), but MaterialX's header.html tests the literal key `materialx/search`; without
+    the twin the header ships no search box. Only the dict entry is added (not through
+    PluginCollection.__setitem__), so no event handler is registered twice. Returns the
+    added keys.
+    """
+    added = []
+    for key in list(plugins):
+        twin = MATERIALX_PLUGINS + key.removeprefix(THEME_PLUGINS)
+        if key.startswith(THEME_PLUGINS) and twin not in plugins:
+            dict.__setitem__(plugins, twin, plugins[key])
+            added.append(twin)
+    return added
+
+
 class FlyPlugin(BasePlugin):
     """Site-build plugin for the fly-january theme."""
 
@@ -55,6 +77,8 @@ class FlyPlugin(BasePlugin):
     def on_config(self, config: Any, **_: Any) -> Any:
         """Validate extra.fly and version local CSS/JS links."""
         self.site = parse_site(config.get("extra"))
+        if config.get("plugins") is not None:
+            alias_materialx_plugins(config["plugins"])
         self.versions = theme_versions()
         self.pages = {}
         version_links(config)

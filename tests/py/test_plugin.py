@@ -84,6 +84,10 @@ def test_parse_site_when_no_fly_then_defaults():
         ({"chrome": {"script": "https://x.test/a.js", "header": "a-b"}}, "chrome.footer"),
         ({"chrome_options": {"site-url": "x"}}, "chrome_options.site-url: must be an http(s) URL"),
         ({"chrome_options": {"site-url": "//evil.test/"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": "/\\evil.test"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": "https://"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": "https:///path"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": "http://?x"}}, "chrome_options.site-url: must be"),
         ({"chrome_options": {"site-url": 'https://a.test/"x'}}, "chrome_options.site-url: must be"),
         ({"chrome_options": {"site-url": 5}}, "chrome_options.site-url: must be a string"),
         ({"chrome_options": {"site-label": 5}}, "chrome_options.site-label: must be a string"),
@@ -274,7 +278,7 @@ def test_head_when_sources_then_links_distinct_and_preconnects_skip_template_ori
         Look(("typekit:a1", "google:A", "google:B", "https://x.test/f.css", "https://x.test/g.css"))
     )
     assert out.links[0] == "https://use.typekit.net/a1.css" and len(out.links) == 5
-    assert out.preconnects == ("https://use.typekit.net", "https://x.test")
+    assert out.preconnects == ("https://use.typekit.net", "https://x.test", "https://p.typekit.net")
     assert head(Look()).style == "" and head(Look()).links == ()
 
 
@@ -692,15 +696,10 @@ def test_default_sources_when_roles_then_cover_every_default_family():
         for value in re.findall(r"--fly-(?:h1|h2|body|nav|sans)-family: ([^;]+);", css)
         for f in value.split(",")
     } - {"Georgia", "Arial", "serif", "sans-serif"}
-    families |= {"outfit"}
-    assert {"newsserif-huge-variable", "quire-sans", "sole-serif-small-variable", "grtsk-vf"} <= families
-    assert {s for s in DEFAULT_SOURCES} == {
-        "typekit:cmv5add",
-        "typekit:gav0zux",
-        "typekit:cna4jfp",
-        "typekit:wck5koo",
-        "google:Outfit:wght@100..900",
-    }
+    assert families == {"newsserif-huge-variable", "sole-serif-small-variable", "grtsk-vf"}
+    assert set(DEFAULT_SOURCES) == {"typekit:cmv5add", "typekit:cna4jfp", "typekit:wck5koo"}, (
+        "three small kits; the 654 KB all-families kit gav0zux is never a default"
+    )
 
 
 @pytest.mark.parametrize(

@@ -171,9 +171,10 @@ one `<style>` setting the role variables for that page. `typekit:<id>` expands t
 `https://use.typekit.net/<id>.css`; `google:<spec>` to a `css2?family=<spec>&display=swap`
 URL; anything starting `https://` is used as is. A hue sets `data-fly-hue` on `<body>`.
 
-Without `fonts.sources` a site gets the theme's defaults (the four Typekit kits `cmv5add`,
-`gav0zux`, `cna4jfp`, `wck5koo` and `google:Outfit:wght@100..900`), so every default role family is
-loaded; setting `sources` replaces them and `[]` loads none. Further site keys: `h1` (`ink` default, or
+Without `fonts.sources` a site gets the theme's defaults (the small Typekit kits `cmv5add`,
+`cna4jfp` and `wck5koo`, about 6 KB of CSS), so every default role family is loaded; setting
+`sources` replaces them (roles alone do not) and `[]` loads none. The all-families kit `gav0zux`
+(654 KB) is never a default, so the default h2 is Grtsk and buttons use the sans role. Further site keys: `h1` (`ink` default, or
 `accent`: titles take the hue's text colour; a page that sets its own hue or preset always does
 unless it sets `h1: ink`; the plugin writes `data-fly-h1="accent"`), `links` (`inherit` default: article
 links keep the text colour and are underlined; `accent` sets `--fly-link-color` to `--fly-link`,

@@ -33,7 +33,7 @@
     --md-accent-bg-color--light: color-mix(in srgb, var(--fly-bar-ink) 70%, transparent);
 
     --md-typeset-color: var(--fly-ink);
-    --md-typeset-a-color: var(--fly-link);
+    --md-typeset-a-color: var(--fly-link-color, currentColor); /* a classed link left to MaterialX inherits */
     --md-typeset-mark-color: var(--fly-mark);
     --md-typeset-del-color: color-mix(in srgb, var(--fly-danger) 15%, transparent);
     --md-typeset-ins-color: color-mix(in srgb, var(--fly-success) 15%, transparent);

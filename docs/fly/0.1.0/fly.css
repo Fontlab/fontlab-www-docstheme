@@ -38,7 +38,7 @@
     --fly-h1-tracking: -0.01em;
     --fly-h1-scale: 1;
 
-    --fly-h2-family: 'quire-sans', Arial, sans-serif;
+    --fly-h2-family: 'grtsk-vf', Arial, sans-serif;
     --fly-h2-weight: 300;
     --fly-h2-stretch: normal;
     --fly-h2-features: normal;
@@ -165,7 +165,7 @@
     --fly-sans-stretch: 90%;
     --fly-sans-variation: 'slnt' 0;
     --fly-sans-adjust: 0.95;
-    --fly-button-family: 'outfit', Arial, sans-serif;
+    --fly-button-family: var(--fly-sans-family);
     --fly-button-size: 0.9em;
     --fly-button-weight: 500;
     --fly-button-tracking: 0.06em;
@@ -625,6 +625,7 @@
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
     --fly-h2-measure: 20ch;
+    --fly-margin-col: clamp(11.1111rem, 20cqi, 20.8333rem);
     --fly-post-bar: 16.8rem;
     --fly-bar-h: 3.8889rem;
   }
@@ -683,7 +684,7 @@
     --md-accent-bg-color--light: color-mix(in srgb, var(--fly-bar-ink) 70%, transparent);
 
     --md-typeset-color: var(--fly-ink);
-    --md-typeset-a-color: var(--fly-link);
+    --md-typeset-a-color: var(--fly-link-color, currentColor);
     --md-typeset-mark-color: var(--fly-mark);
     --md-typeset-del-color: color-mix(in srgb, var(--fly-danger) 15%, transparent);
     --md-typeset-ins-color: color-mix(in srgb, var(--fly-success) 15%, transparent);
@@ -1089,7 +1090,7 @@
 
     @container fly-canvas (min-width: 66.6667rem) {
       .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) {
-        --m: clamp(11.1111rem, 20cqi, 20.8333rem);
+        --m: var(--fly-margin-col);
         --gap: clamp(1.3889rem, 2.5cqi, 2.7778rem);
         --out: calc(var(--m) + var(--gap));
         box-sizing: border-box;
@@ -1360,7 +1361,7 @@
   }
   @media screen and (min-width: 76.25em) {
     .md-content--post:not(#\#):not(#\#):not(#\#):not(#\#) > .md-content__inner {
-      --m: calc(clamp(11.1111rem, 20cqi, 20.8333rem) - var(--fly-post-bar) / 2);
+      --m: calc(var(--fly-margin-col) - var(--fly-post-bar) / 2);
     }
   }
   .md-post__content:not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2):first-child {
@@ -1520,7 +1521,7 @@
     font-weight: inherit;
     line-height: inherit;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)) {
     color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -1530,7 +1531,7 @@
     font-size: calc(var(--fly-sans-adjust) * 1em);
     line-height: 1;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])):is(:hover, :focus-visible) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)):is(:hover, :focus-visible) {
     color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) strong {

@@ -17,6 +17,11 @@
 }
 
 /* As against MaterialX's own .md-typeset a: a site's component link carries that much weight. */
+.md-typeset .fixture-card {
+  color: rgb(10, 100, 50);
+  text-decoration: none;
+}
+
 .md-typeset .site-cta {
   color: rgb(200, 26, 39);
   text-decoration: none;

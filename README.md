@@ -61,10 +61,27 @@ guide, the 19-repository documentation rollout and verified baseline limitations
    `site-url`, `search-from`, `sticky`.
 3. Delete what the theme now does: `custom_dir` overrides, fltheme26 CDN CSS and JS, rules that
    set the sans, link colours or italic emphasis. Use `links: accent`, `h1: accent` and
-   `fonts.roles.em: {style: italic}` instead, and `.md-typeset .your-class` for component links.
-4. The root font size is 1rem = 14.4px (the grid is 20px): convert old rem values by 20/14.4
-   (about 1.39), or use em, px or `--fly-*` tokens.
+   `fonts.roles.em: {style: italic}` instead. Every article link is restyled except MaterialX
+   components (classes starting `md-`, `.headerlink`); mark a site's own component links (CTA
+   buttons, cards) with `data-fly-plain` on the link or an element around it, and style them
+   with `.md-typeset .your-class`.
+4. MaterialX's root font size is 20px (125% of 16px). The plugin rescales MaterialX's own
+   stylesheets to the theme's root; it does not touch your site CSS, so convert your own rem
+   values (multiply by 20/14.4, about 1.39) or use em, px or `--fly-*` tokens.
 5. Utilities stay off until `utilities: true`.
+6. Fonts. With no `fonts.sources` the theme loads three small Adobe Fonts (Typekit) kits, about
+   6 KB of CSS: `cmv5add` (News Serif, h1), `cna4jfp` (Sole Serif Small, body) and `wck5koo`
+   (Grtsk: h2, lead, navigation, buttons). Setting `fonts.sources` replaces them (no defaults
+   are added); setting only `fonts.roles` keeps them; `sources: []` loads none and the roles use
+   their system stacks. The pages contact `use.typekit.net` and `p.typekit.net` (Adobe) and,
+   for the icon font, `fonts.googleapis.com` and `fonts.gstatic.com` (Google): visitors' IP
+   addresses reach those hosts, so mention them in your privacy notice or self-host.
+   **Recommended (owner decision):** one dedicated Adobe Fonts kit with exactly the default
+   families and `font-display: swap`: News Serif Huge variable (100-900), Sole Serif Small
+   variable (200-900, roman and italic), Grtsk variable (100-700); then set `sources` to it.
+7. Plugins keep their bare names (`search`, `blog`, `tags`, ...): the theme registers them as
+   `fly-january/<name>` and exposes the same plugin as `materialx/<name>`, which MaterialX's
+   header looks for, so the search box and dialog render as under MaterialX.
 
 ## Build and verify
 
