@@ -50,7 +50,9 @@ def copy_panel(soup: BeautifulSoup, name: str, language: str, source: str):
     button = soup.new_tag("button", attrs={"type": "button", "data-copy-target": target, "aria-label": f"Copy {language.upper()} for {name.removeprefix('example-').replace('-', ' ')}"})
     button.string = "Copy HTML" if language == "html" else "Copy Markdown"
     bar.extend([label, button])
-    pre = soup.new_tag("pre", attrs={"tabindex": "0", "class": "no-copy"})
+    # An id of its own: MaterialX renames every code block's <pre> to __code_<id of its
+    # nearest ancestor with one>, which for both listings would be the example section's.
+    pre = soup.new_tag("pre", attrs={"id": f"{target}-block", "tabindex": "0", "class": "no-copy"})
     code = soup.new_tag("code", attrs={"id": target, "class": f"language-{language}"})
     code.string = source
     pre.append(code)
