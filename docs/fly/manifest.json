@@ -27,12 +27,12 @@
       "sha256": "99e2737d401b0c40ff52f5e8837ded0df6b1b7b1c2d06edd7d13c47248e18220"
     },
     "0.1.0/fly.css": {
-      "size": 80969,
-      "sha256": "eb664d678d2625c04d8ee753ec77afe2cfdaad254e0df8a79cde3d8f04ea914a"
+      "size": 82783,
+      "sha256": "9a59c9ca302c108170d7c5e3bd6525f7aa8ad31abf6680a2557aafea2c38e12d"
     },
     "0.1.0/fly.js": {
-      "size": 3301,
-      "sha256": "c9db6e0731cbe9d16b7a32ac0b1e06b7ed9cb4173e9a11eba8fde48171e55f7e"
+      "size": 4922,
+      "sha256": "607db7e12ba8e41a2ba2999b36efffd23956b645191cbe640ed31200e773332f"
     },
     "0.1.0/licenses/basecoat-css.txt": {
       "size": 1068,
@@ -75,12 +75,12 @@
       "sha256": "99e2737d401b0c40ff52f5e8837ded0df6b1b7b1c2d06edd7d13c47248e18220"
     },
     "latest/fly.css": {
-      "size": 80969,
-      "sha256": "eb664d678d2625c04d8ee753ec77afe2cfdaad254e0df8a79cde3d8f04ea914a"
+      "size": 82783,
+      "sha256": "9a59c9ca302c108170d7c5e3bd6525f7aa8ad31abf6680a2557aafea2c38e12d"
     },
     "latest/fly.js": {
-      "size": 3301,
-      "sha256": "c9db6e0731cbe9d16b7a32ac0b1e06b7ed9cb4173e9a11eba8fde48171e55f7e"
+      "size": 4922,
+      "sha256": "607db7e12ba8e41a2ba2999b36efffd23956b645191cbe640ed31200e773332f"
     },
     "latest/licenses/basecoat-css.txt": {
       "size": 1068,

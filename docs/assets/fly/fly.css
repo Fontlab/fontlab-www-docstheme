@@ -919,6 +919,43 @@
       margin-inline: 0;
     }
   }
+  @media screen and (76.25em <= width < 100em) {
+    .md-sidebar--primary:not(#\#):not(#\#):not(#\#):not(#\#) .md-nav__link .md-ellipsis {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body:not(.fly-no-l2):not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap {
+      width: calc(var(--fly-l1) - 0.5rem);
+    }
+
+    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)):not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap,
+    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):not(#\#):not(#\#):not(#\#):not(#\#)
+      .md-sidebar--primary:is(:hover, :focus-within)
+      .md-sidebar__scrollwrap {
+      width: var(--fly-l1-reveal);
+    }
+  }
+  @media screen and (min-width: 60em) {
+    body:not(:has(.md-sidebar--secondary .md-nav__link)):not(#\#):not(#\#):not(#\#):not(#\#) {
+      --fly-rail: inherit;
+      --fly-l1: var(--fly-rail);
+      --fly-l1-reveal: var(--fly-rail);
+    }
+
+    body:not(:has(.md-sidebar--secondary .md-nav__link)):not(#\#):not(#\#):not(#\#):not(#\#) .md-main__inner::before,
+    body:not(:has(.md-sidebar--secondary .md-nav__link)):not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--secondary {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 76.25em) {
+    body:has(.md-nav--primary.md-nav--lifted > .md-nav__list > .md-nav__item--active:not(.md-nav__item--nested)):not(#\#):not(#\#):not(#\#):not(#\#) {
+      --fly-l1: 4.1667rem;
+      --fly-l1-reveal: 4.1667rem;
+    }
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(h2, h3, h4, h5, h6) {
     margin: var(--fly-mt) 0 var(--fly-mb);
   }
@@ -1500,6 +1537,12 @@
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
     line-height: 0;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) code:not(pre > code, :is(td, th) code, h1 + p code) {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
   .md-nav:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
     font-family: var(--fly-nav-family);
