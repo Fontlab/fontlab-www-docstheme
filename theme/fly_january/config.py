@@ -66,14 +66,14 @@ INLINE_PROPS = {
 EM_STYLES = ("normal", "italic")
 LINKS = ("inherit", "accent")
 H1_COLOURS = ("ink", "accent")
-# The faces the default roles name (tokens/type.css), as one Typekit kit each plus Outfit for
-# the buttons. A site that sets fonts.sources replaces them; fonts.sources: [] loads none.
+# The faces the default roles name (tokens/type.css): three small existing Typekit kits
+# (about 6 KB of CSS in all). Kit gav0zux is an all-families kit (654 KB, 920 @font-face
+# rules) and is never a default. A site that sets fonts.sources replaces these;
+# fonts.sources: [] loads none.
 DEFAULT_SOURCES = (
-    "typekit:cmv5add",  # News Serif (h1)
-    "typekit:gav0zux",  # Quire Sans (h2, lead)
-    "typekit:cna4jfp",  # Sole Serif Small (body)
-    "typekit:wck5koo",  # Grtsk (navigation, tables, inline sans)
-    "google:Outfit:wght@100..900",  # buttons
+    "typekit:cmv5add",  # News Serif Huge/Large/Text variable (h1)
+    "typekit:cna4jfp",  # Sole Serif Small/Titling variable (body)
+    "typekit:wck5koo",  # Grtsk variable (h2, lead, navigation, tables, inline sans, buttons)
 )
 ROLE_PROPS = (
     {r: BLOCK_PROPS for r in BLOCK_ROLES}
@@ -84,7 +84,8 @@ SIDES = ("left", "right")
 NAMED_CHROMES = ("fontlab", "vexy", "none")
 CHROME_OPTIONS = ("site-label", "site-url", "mobile-menu", "mobile-search", "search-from", "sticky")
 # The menu's site-url: an absolute http(s) URL or a root-relative path, no quotes or markup.
-SITE_URL = re.compile(r"(?:https?://|/(?!/))[^\s\"'<>]*")
+# A host must follow "://"; "//host" and "/\host" (protocol-relative to a browser) are refused.
+SITE_URL = re.compile(r"https?://[^\s\"'<>/\\?#]+[^\s\"'<>\\]*|/(?![/\\])[^\s\"'<>\\]*")
 SITE_KEYS = (
     "chrome",
     "chrome_options",

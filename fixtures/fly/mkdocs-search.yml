@@ -1,0 +1,17 @@
+# this_file: fixtures/fly/mkdocs-search.yml
+# MaterialX's search through the bare name "search", under the plain MaterialX header
+# (chrome: none): the header must carry the search button and dialog.
+site_name: fly-january search fixture
+site_url: https://fixture.example/
+docs_dir: docs-minimal
+theme:
+  name: fly-january
+plugins:
+  - search
+  - fly
+extra:
+  fly:
+    chrome: none
+nav:
+  - Home: index.md
+  - Guide: guide.md

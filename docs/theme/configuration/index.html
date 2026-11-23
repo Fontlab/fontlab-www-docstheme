@@ -45,7 +45,7 @@
       
     
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
-  <link rel="stylesheet" href="../../assets/fly/fly.css?v=55221223ba">
+  <link rel="stylesheet" href="../../assets/fly/fly.css?v=8689e8d72b">
 
     
 
@@ -81,6 +81,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&amp;icon_names=arrow_back,arrow_forward,dark_mode,light_mode&amp;display=block">
   <link rel="preconnect" href="https://use.typekit.net" crossorigin="">
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin="">
   <link rel="stylesheet" href="https://use.typekit.net/gav0zux.css" data-fly-font="">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&amp;display=swap" data-fly-font="">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" data-fly-font="">
@@ -3007,7 +3008,7 @@ hook or a partial for additions.</p>
 </tr>
 <tr>
 <td><code>fonts.sources</code></td>
-<td>the theme's five (below)</td>
+<td>the theme's three small kits (below)</td>
 <td>stylesheets loaded on every page: <code>typekit:&lt;kit&gt;</code>, <code>google:&lt;css2 family spec&gt;</code> or an <code>https://</code> URL; setting it replaces the defaults, <code>[]</code> loads none</td>
 </tr>
 <tr>
@@ -3047,12 +3048,14 @@ hook or a partial for additions.</p>
 </tr>
 </tbody>
 </table>
-<p>The default sources are the Typekit kits <code>cmv5add</code> (News Serif, the h1), <code>gav0zux</code> (Quire Sans,
-h2 and lead), <code>cna4jfp</code> (Sole Serif Small, body) and <code>wck5koo</code> (Grtsk, navigation, tables and
-the inline sans), and Google's Outfit (buttons): one for each face the default roles name, so a
-site with no <code>extra.fly</code> is set in them. A site that sets <code>fonts.sources</code> replaces the list,
-so it names every face its roles use; <code>fonts.sources: []</code> loads nothing and the roles fall back
-to their system stacks.</p>
+<p>The default sources are three small Typekit kits, about 6 KB of CSS in all: <code>cmv5add</code> (News
+Serif, the h1), <code>cna4jfp</code> (Sole Serif Small, body) and <code>wck5koo</code> (Grtsk: h2, lead, navigation,
+tables, the inline sans and buttons). A site with no <code>extra.fly</code> is set in them. Rules, exactly:
+a site that sets <code>fonts.sources</code> gets only those sources, the defaults are not loaded, so it
+names every face its roles use; a site that sets <code>fonts.roles</code> without <code>fonts.sources</code> still gets
+the defaults; <code>fonts.sources: []</code> loads nothing and the roles fall back to their system stacks.
+The prototype's Quire Sans exists only in an all-families kit (<code>gav0zux</code>, 654 KB), which the
+theme never loads by default: add it to <code>sources</code> and set the <code>h2</code> family to use it.</p>
 <p>A complete site block:</p>
 <div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">extra</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>

@@ -16,6 +16,8 @@ from .config import ROLE_PROPS, Look, Roles
 
 TYPEKIT_CSS = "https://use.typekit.net/{}.css"
 GOOGLE_CSS = "https://fonts.googleapis.com/css2?family={}&display=swap"
+TYPEKIT_ORIGIN = "https://use.typekit.net"
+TYPEKIT_CSS_ORIGIN = "https://p.typekit.net"
 # main.html always preconnects to these (the Material Symbols icon font).
 TEMPLATE_ORIGINS = ("https://fonts.googleapis.com", "https://fonts.gstatic.com")
 
@@ -78,5 +80,7 @@ def head(look: Look) -> Head:
     """Preconnects, stylesheet links and the role style for a resolved look."""
     links = tuple(dict.fromkeys(source_url(s) for s in look.sources))
     origins = dict.fromkeys(origin(u) for u in links)
+    if TYPEKIT_ORIGIN in origins:
+        origins.setdefault(TYPEKIT_CSS_ORIGIN)  # every kit @imports its stylesheet from here
     preconnects = tuple(o for o in origins if o not in TEMPLATE_ORIGINS)
     return Head(preconnects, links, roles_css(look.roles))

@@ -108,7 +108,7 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each has nine varia
 | Role | family | weight | stretch | features | variation | size | leading | tracking |
 |---|---|---|---|---|---|---|---|---|
 | `h1` | `'newsserif-huge-variable', Georgia, serif` | `700` | `normal` | `normal` | `normal` | `calc(clamp(2.625rem, 6vw, 6rem) * var(--fly-h1-scale))` | `round(up, 0.8em, 1rem)` | `-0.01em` |
-| `h2` | `'quire-sans', Arial, sans-serif` | `300` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 3.75rem + 1vw, 3.375rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `-0.02em` |
+| `h2` | `'grtsk-vf', Arial, sans-serif` | `300` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 3.75rem + 1vw, 3.375rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `-0.02em` |
 | `h3` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h3-scale))` | `round(up, 1.3em, 1rem)` | `0` |
 | `h4` | `var(--fly-nav-family)` | `300` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h4-scale))` | `round(up, 1.3em, 1rem)` | `0` |
 | `h5` | `var(--fly-h2-family)` | `400` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h5-scale))` | `round(up, 1.1em, 1rem)` | `0` |
@@ -128,7 +128,7 @@ back to those unitless values where `round()` is missing. Tables keep the protot
 `code` are xs text; SPEC §4.1 lets tables and small text leave the grid. Below 60em h3
 and h4 move into the text column and switch to the sans at its 90% width, h3 at 600 and
 h4 at 500 (a media-query override of their role variables in `type.css`). Families are the prototype's: Sole Serif Small for text, News Serif
-Huge for h1, Quire Sans for h2, h5 and the lead, condensed Grtsk for navigation, h3, h4,
+Huge for h1, Grtsk for h2, h5 and the lead (the prototype's Quire Sans lives only in an all-families Typekit kit of 654 KB, so a site that wants it adds that kit and sets the h2 family), condensed Grtsk for navigation, h3, h4,
 tables and captions, Grtsk at 90% width for h6.
 
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
@@ -156,7 +156,7 @@ Faces outside the roles, used by the rules in `src/fly/`:
 | `--fly-sans-stretch` | `90%` | width of the inline sans and of h6 |
 | `--fly-sans-variation` | `'slnt' 0` | the root's variation settings; h3/h4 below 60em |
 | `--fly-sans-adjust` | `0.95` | inline sans size relative to the text around it |
-| `--fly-button-family` | `'outfit', Arial, sans-serif` | MaterialX buttons |
+| `--fly-button-family` | `var(--fly-sans-family)` | MaterialX buttons |
 | `--fly-button-size` | `0.9em` | button label size |
 | `--fly-button-weight` | `500` | button label weight |
 | `--fly-button-tracking` | `0.06em` | button letter-spacing |
@@ -179,6 +179,7 @@ prototype's values):
 | `--fly-l1-label` | `10.0694rem` | longest L1 label at 1440px |
 | `--fly-l1-reveal` | `calc(1.1111rem + var(--fly-l1-label) + 1.3889rem)` at mid desktop | how far L2 retracts |
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
+| `--fly-margin-col` | `clamp(11.1111rem, 20cqi, 20.8333rem)` | the margin column (`--m`) from 66.67rem of canvas; the blog post layout takes half of `--fly-post-bar` off it |
 | `--fly-bar-h` | `3.8889rem` | the global bar's height (56px at the default root); sticky rails and anchors clear it |
 | `--fly-post-bar` | `16.8rem` | the blog post sidebar's width; half comes off each margin so the post's text column matches other pages |
 | `--fly-h1-measure` | `16ch` | H1 maximum width |

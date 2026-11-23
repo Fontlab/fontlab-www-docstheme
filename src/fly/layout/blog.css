@@ -17,7 +17,7 @@
 
   @media screen and (min-width: 76.25em) {
     .md-content--post > .md-content__inner {
-      --m: calc(clamp(11.1111rem, 20cqi, 20.8333rem) - var(--fly-post-bar) / 2);
+      --m: calc(var(--fly-margin-col) - var(--fly-post-bar) / 2);
     }
   }
 

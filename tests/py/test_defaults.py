@@ -58,6 +58,30 @@ def test_minimal_when_search_bare_then_materialx_search_plugin_and_worker(minima
     assert (minimal / "search/search_index.json").is_file()
 
 
+def test_alias_when_bare_name_then_materialx_key_added_without_second_registration():
+    from fly_january.plugin import alias_materialx_plugins
+    from properdocs.plugins import BasePlugin, PluginCollection
+
+    class Probe(BasePlugin):
+        def on_config(self, config, **_):
+            return config
+
+    plugins = PluginCollection()
+    plugins["fly-january/search"] = Probe()
+    plugins["materialx/blog"] = Probe()
+    events = list(plugins.events["config"])
+    assert alias_materialx_plugins(plugins) == ["materialx/search"]
+    assert plugins["materialx/search"] is plugins["fly-january/search"]
+    assert plugins.events["config"] == events, "events are registered once"
+    assert alias_materialx_plugins(plugins) == [], "idempotent"
+
+
+def test_minimal_when_search_bare_then_header_has_search_box(minimal):
+    html, _ = body_tag(minimal)
+    assert '<label class="md-header__button md-icon" for="__search">' in html, "header search button"
+    assert 'class="md-search"' in html or 'data-md-component="search"' in html, "search dialog"
+
+
 def body_tag(site, page="index.html"):
     import re
 
@@ -69,9 +93,11 @@ def test_minimal_when_no_extra_fly_then_default_font_sources_loaded(minimal):
     from fly_january.config import DEFAULT_SOURCES
 
     html, _ = body_tag(minimal)
-    for kit in ("cmv5add", "gav0zux", "cna4jfp", "wck5koo"):
+    for kit in ("cmv5add", "cna4jfp", "wck5koo"):
         assert f"https://use.typekit.net/{kit}.css" in html, kit
-    assert "family=Outfit:wght@100..900" in html
+    assert "gav0zux" not in html and "Outfit" not in html, "no all-families kit, no Google font"
+    for origin in ("https://use.typekit.net", "https://p.typekit.net"):
+        assert f'<link rel="preconnect" href="{origin}" crossorigin>' in html, origin
     assert html.count("data-fly-font") == len(DEFAULT_SOURCES)
 
 
