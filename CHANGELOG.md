@@ -4,6 +4,14 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.2.0 — 2026-11-24
+
+- h5 now takes its family from the `sans` role (Grtsk), no longer from H2, so it stays a sans
+  heading under the Polymath H2; `fonts.roles.sans` therefore also moves h5.
+- DESIGN-TOKENS.md: the documented H2 clamp now matches the CSS.
+- H1 now uses Polymath Display at weight 900 with `-0.01em` tracking. H2 uses Polymath at 500 with zero tracking. The lead follows the H2 family. H3–H6 keep Grtsk.
+- The default Typekit sources are `typekit:xht3uat` (Polymath), `typekit:cna4jfp` (Sole) and `typekit:wck5koo` (Grtsk). Sites can still request News Serif with `typekit:cmv5add`.
+
 ## 0.1.1 — 2026-11-23
 
 - Nav titles (`label.md-nav__title`: the drawer title and the page title above the

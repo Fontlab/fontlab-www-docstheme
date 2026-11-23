@@ -45,7 +45,7 @@
       
     
   <link rel="stylesheet" data-fly-photoswipe="" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../assets/fly/fly.css?v=24c03d88bb">
+  <link rel="stylesheet" href="../../assets/fly/fly.css?v=9c4bf08315">
 
     
 
@@ -3048,12 +3048,11 @@ hook or a partial for additions.</p>
 </tr>
 </tbody>
 </table>
-<p>The default sources are three small Typekit kits, about 6 KB of CSS in all: <code>cmv5add</code> (News
-Serif, the h1), <code>cna4jfp</code> (Sole Serif Small, body) and <code>wck5koo</code> (Grtsk: h2, lead, navigation,
-tables, the inline sans and buttons). A site with no <code>extra.fly</code> is set in them. Rules, exactly:
-a site that sets <code>fonts.sources</code> gets only those sources, the defaults are not loaded, so it
-names every face its roles use; a site that sets <code>fonts.roles</code> without <code>fonts.sources</code> still gets
-the defaults; <code>fonts.sources: []</code> loads nothing and the roles fall back to their system stacks.
+<p>The default Typekit sources are <code>xht3uat</code> for Polymath Display (H1) and Polymath (H2 and
+lead), <code>cna4jfp</code> for Sole Serif Small (body), and <code>wck5koo</code> for Grtsk (H3–H6, navigation,
+tables, inline sans and buttons). Setting <code>fonts.roles</code> alone keeps the default sources.
+Setting <code>fonts.sources</code> replaces the list, so include a source for each web font the site
+uses. Set <code>fonts.sources: []</code> to use the system fallbacks.
 The prototype's Quire Sans exists only in an all-families kit (<code>gav0zux</code>, 654 KB), which the
 theme never loads by default: add it to <code>sources</code> and set the <code>h2</code> family to use it.</p>
 <p>A complete site block:</p>

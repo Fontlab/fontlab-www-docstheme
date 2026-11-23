@@ -105,6 +105,10 @@ Rules consume roles only through these variables. `th` uses the `caption` role; 
 cells use `table`. The `-size` of `body`, `table` is `--fly-size-sm`; of `nav`, `caption`
 `--fly-size-xs`; of `lead` `--fly-size-md`.
 
+H1 defaults to `polymath-display` at weight 900 and `-0.01em` tracking. H2 defaults
+to `polymath` at 500 and zero tracking. The lead takes its family from H2. Body text
+uses Sole Serif Small at 400. Navigation, H3–H6 and inline strong and em use Grtsk.
+
 ### 4.4 Colour
 
 - Twelve perceptually spaced hues, defined in OKLCH with sRGB fallbacks, named
@@ -171,10 +175,11 @@ one `<style>` setting the role variables for that page. `typekit:<id>` expands t
 `https://use.typekit.net/<id>.css`; `google:<spec>` to a `css2?family=<spec>&display=swap`
 URL; anything starting `https://` is used as is. A hue sets `data-fly-hue` on `<body>`.
 
-Without `fonts.sources` a site gets the theme's defaults (the small Typekit kits `cmv5add`,
-`cna4jfp` and `wck5koo`, about 6 KB of CSS), so every default role family is loaded; setting
-`sources` replaces them (roles alone do not) and `[]` loads none. The all-families kit `gav0zux`
-(654 KB) is never a default, so the default h2 is Grtsk and buttons use the sans role. Further site keys: `h1` (`ink` default, or
+The default sources are `typekit:xht3uat` (Polymath Display and Polymath),
+`typekit:cna4jfp` (Sole) and `typekit:wck5koo` (Grtsk). Setting only roles keeps these
+sources. Setting `fonts.sources` replaces the list, and `[]` disables default font requests.
+
+Further site keys: `h1` (`ink` default, or
 `accent`: titles take the hue's text colour; a page that sets its own hue or preset always does
 unless it sets `h1: ink`; the plugin writes `data-fly-h1="accent"`), `links` (`inherit` default: article
 links keep the text colour and are underlined; `accent` sets `--fly-link-color` to `--fly-link`,

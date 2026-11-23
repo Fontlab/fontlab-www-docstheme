@@ -12,29 +12,29 @@ view. MkDocs sites do not need it; the `fly-january` package ships the same file
 
 Each release has its own directory, `fly/<version>/`, which does not change once
 published; `fly/latest/` always holds the newest release. Pin a version in production.
-This release is `0.1.1`.
+This release is `0.2.0`.
 
 | File | What it is |
 |---|---|
-| [`fly.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly.css) | the whole theme: tokens, base, layout, components, chrome |
-| [`fly-tokens.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-tokens.css) | the `--fly-*` tokens alone, no rules on elements |
-| [`fly-utilities.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-utilities.css) | every Tailwind utility with the `tw:` prefix, in layer `fly.utilities` |
-| [`fly.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly.js) | lightbox and sheet state |
-| [`fly-bridge.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-bridge.js) | global menu to MaterialX drawer and search, keyboard paging |
-| [`fly-debug.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-debug.js) | the preset switcher (`extra.fly.debug`) |
-| [`components.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/components.css) | Basecoat 1.0.2 and daisyUI 5.7.44 (`du-` prefix), scoped to `.fltheme-components` |
-| [`basecoat.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/basecoat.js) | Basecoat's interactive components |
-| [`licenses/`](https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/licenses/fly-january.txt) | the theme's licence and those of Basecoat, daisyUI and Tailwind CSS |
+| [`fly.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly.css) | the whole theme: tokens, base, layout, components, chrome |
+| [`fly-tokens.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-tokens.css) | the `--fly-*` tokens alone, no rules on elements |
+| [`fly-utilities.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-utilities.css) | every Tailwind utility with the `tw:` prefix, in layer `fly.utilities` |
+| [`fly.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly.js) | lightbox and sheet state |
+| [`fly-bridge.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-bridge.js) | global menu to MaterialX drawer and search, keyboard paging |
+| [`fly-debug.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-debug.js) | the preset switcher (`extra.fly.debug`) |
+| [`components.css`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/components.css) | Basecoat 1.0.2 and daisyUI 5.7.44 (`du-` prefix), scoped to `.fltheme-components` |
+| [`basecoat.js`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/basecoat.js) | Basecoat's interactive components |
+| [`licenses/`](https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/licenses/fly-january.txt) | the theme's licence and those of Basecoat, daisyUI and Tailwind CSS |
 
 [`manifest.json`](https://fontlab.dev/fontlab-www-docstheme/fly/manifest.json) lists every file of every release with its size
 and sha256, so a consumer can check what it loads:
 
 ```text
 {
-  "version": "0.1.1",
-  "latest": "0.1.1",
+  "version": "0.2.0",
+  "latest": "0.2.0",
   "files": {
-    "0.1.1/fly-tokens.css": { "size": <bytes>, "sha256": "<hex digest>" },
+    "0.2.0/fly-tokens.css": { "size": <bytes>, "sha256": "<hex digest>" },
     …
   }
 }
@@ -49,7 +49,7 @@ properties, light values on `:root` and dark values under
 a body line; it styles nothing else:
 
 ```html
-<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-tokens.css">
+<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-tokens.css">
 <style>
   .note { color: var(--fly-ink); background: var(--fly-cobalt-tint);
           font: var(--fly-body-weight) var(--fly-size-sm) / var(--fly-line) var(--fly-body-family); }
@@ -73,9 +73,9 @@ MaterialX's CSS from elsewhere does not get. Outside a fly-january build, use
 markup inside an element with the class `fltheme-components`:
 
 ```html
-<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/fly-tokens.css">
-<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/components.css">
-<script defer src="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.1/basecoat.js"></script>
+<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/fly-tokens.css">
+<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/components.css">
+<script defer src="https://fontlab.dev/fontlab-www-docstheme/fly/0.2.0/basecoat.js"></script>
 
 <div class="fltheme-components">
   <button class="btn">Basecoat button</button>

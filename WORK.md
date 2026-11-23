@@ -4,6 +4,18 @@ this_file: WORK.md
 
 # Work
 
+## Issue 502 part 1 — 0.2.0 unreleased
+
+The minimal fixture builds with Polymath Display for H1 and Polymath for H2.
+The lead follows H2, while H5 uses the Grtsk sans role. A second fixture build
+checks that a site can request the News Serif kit and set tracking independently
+for H1 and H2.
+
+`npm run build` succeeded. All 59 Node tests and 235 Python tests passed.
+`./build.sh` checked 6,696 links across 75 pages with zero broken. All 48 CDN
+manifest entries matched the local files, including both earlier releases.
+Browser verification is pending with the orchestrator.
+
 ## 0.1.0 release preparation
 
 T1–T6 delivered the package, tokens, renderer, plugin, browser fixtures and demo/CDN

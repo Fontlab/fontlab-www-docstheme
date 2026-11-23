@@ -147,3 +147,17 @@ README/CHANGELOG/AGENTS, commit, push.
 
 Update PLAN/TODO/CHANGELOG/README/AGENTS in every touched repo, run the final whole-branch
 review, and record evidence.
+
+## Task 15: Default design (issue 502)
+
+Source: /Users/adam/Developer/vcs3/PLAN/502.md. Change the theme's default design: body
+sans/serif pair, side-navigation font and h3/h4 (and lower) styles taken from
+Marketing.fly/src/whats-new-fontlab-9; H1 Polymath, weight 900, letter-spacing -0.01em; H2
+Polymath, weight 500, letter-spacing 0. Update DESIGN-TOKENS, tests and verify-fly; release a
+new minor version (CDN + PyPI) and rebuild every site that uses fly-january.
+
+## Task 16: Fold the .fly worktrees back (issue 502)
+
+For every repo with a `<repo>.fly` worktree: integrate branch fly-january and all its
+changes and additions into the original repo folder (preserving uncommitted owner edits),
+then remove the .fly worktree (`git worktree remove`) and the branch once merged.

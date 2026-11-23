@@ -66,14 +66,11 @@ INLINE_PROPS = {
 EM_STYLES = ("normal", "italic")
 LINKS = ("inherit", "accent")
 H1_COLOURS = ("ink", "accent")
-# The faces the default roles name (tokens/type.css): three small existing Typekit kits
-# (about 6 KB of CSS in all). Kit gav0zux is an all-families kit (654 KB, 920 @font-face
-# rules) and is never a default. A site that sets fonts.sources replaces these;
-# fonts.sources: [] loads none.
+# These kits supply the default roles in tokens/type.css. Site fonts.sources replaces them.
 DEFAULT_SOURCES = (
-    "typekit:cmv5add",  # News Serif Huge/Large/Text variable (h1)
+    "typekit:xht3uat",  # Polymath Display (h1) and Polymath (h2 and lead)
     "typekit:cna4jfp",  # Sole Serif Small/Titling variable (body)
-    "typekit:wck5koo",  # Grtsk variable (h2, lead, navigation, tables, inline sans, buttons)
+    "typekit:wck5koo",  # Grtsk variable (h3–h6, navigation, tables, inline sans, buttons)
 )
 ROLE_PROPS = (
     {r: BLOCK_PROPS for r in BLOCK_ROLES}

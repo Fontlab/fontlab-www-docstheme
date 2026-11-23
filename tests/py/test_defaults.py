@@ -137,12 +137,28 @@ def test_minimal_when_no_extra_fly_then_default_font_sources_loaded(minimal):
     from fly_january.config import DEFAULT_SOURCES
 
     html, _ = body_tag(minimal)
-    for kit in ("cmv5add", "cna4jfp", "wck5koo"):
+    for kit in ("xht3uat", "cna4jfp", "wck5koo"):
         assert f"https://use.typekit.net/{kit}.css" in html, kit
     assert "gav0zux" not in html and "Outfit" not in html, "no all-families kit, no Google font"
     for origin in ("https://use.typekit.net", "https://p.typekit.net"):
         assert f'<link rel="preconnect" href="{origin}" crossorigin>' in html, origin
     assert html.count("data-fly-font") == len(DEFAULT_SOURCES)
+
+
+def test_minimal_when_no_font_overrides_then_heading_tokens_in_built_stylesheet(minimal):
+    html = (minimal / "index.html").read_text()
+    assert "assets/fly/fly.css?" in html and "data-fly-roles" not in html
+    css = (minimal / "assets/fly/fly.css").read_text()
+    for role, family, weight, tracking in (
+        ("h1", "polymath-display", 900, "-0.01em"),
+        ("h2", "polymath", 500, "0"),
+    ):
+        assert f"--fly-{role}-family: '{family}', Arial, sans-serif;" in css
+        assert f"--fly-{role}-weight: {weight};" in css
+        assert f"--fly-{role}-tracking: {tracking};" in css
+        assert f"letter-spacing: var(--fly-{role}-tracking);" in css
+    assert "--fly-lead-family: var(--fly-h2-family);" in css
+    assert "--fly-h5-family: var(--fly-sans-family);" in css
 
 
 def test_fonts_sources_when_empty_list_then_no_font_stylesheets(tmp_path):
@@ -155,6 +171,23 @@ def test_fonts_sources_when_empty_list_then_no_font_stylesheets(tmp_path):
     result = build(config, tmp_path / "site")
     assert result.returncode == 0, result.stdout + result.stderr
     assert "data-fly-font" not in (tmp_path / "site/index.html").read_text()
+
+
+def test_minimal_when_site_sets_news_serif_and_heading_tracking_then_overrides_render(tmp_path):
+    config = tmp_path / "mkdocs.yml"
+    config.write_text(
+        f"INHERIT: {FIXTURE / 'mkdocs-minimal.yml'}\n"
+        f"docs_dir: {FIXTURE / 'docs-minimal'}\n"
+        "extra:\n  fly:\n    fonts:\n      sources: [typekit:cmv5add]\n"
+        "      roles:\n        h1: {family: newsserif-huge-variable, tracking: 0.01em}\n"
+        "        h2: {tracking: -0.03em}\n"
+    )
+    result = build(config, tmp_path / "site")
+    assert result.returncode == 0, result.stdout + result.stderr
+    html = (tmp_path / "site/index.html").read_text()
+    assert "https://use.typekit.net/cmv5add.css" in html and "xht3uat" not in html
+    assert "--fly-h1-family: newsserif-huge-variable;" in html
+    assert "--fly-h1-tracking: 0.01em;" in html and "--fly-h2-tracking: -0.03em;" in html
 
 
 @pytest.fixture(scope="module")

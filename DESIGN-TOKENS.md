@@ -103,11 +103,11 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each has nine varia
 
 | Role | family | weight | stretch | features | variation | size | leading | tracking |
 |---|---|---|---|---|---|---|---|---|
-| `h1` | `'newsserif-huge-variable', Georgia, serif` | `700` | `normal` | `normal` | `normal` | `calc(clamp(2.625rem, 6vw, 6rem) * var(--fly-h1-scale))` | `round(up, 0.8em, 1rem)` | `-0.01em` |
-| `h2` | `'grtsk-vf', Arial, sans-serif` | `300` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 3.75rem + 1vw, 3.375rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `-0.02em` |
+| `h1` | `'polymath-display', Arial, sans-serif` | `900` | `normal` | `normal` | `normal` | `calc(clamp(2.625rem, 6vw, 6rem) * var(--fly-h1-scale))` | `round(up, 0.8em, 1rem)` | `-0.01em` |
+| `h2` | `'polymath', Arial, sans-serif` | `500` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `0` |
 | `h3` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h3-scale))` | `round(up, 1.3em, 1rem)` | `0` |
 | `h4` | `var(--fly-nav-family)` | `300` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h4-scale))` | `round(up, 1.3em, 1rem)` | `0` |
-| `h5` | `var(--fly-h2-family)` | `400` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h5-scale))` | `round(up, 1.1em, 1rem)` | `0` |
+| `h5` | `var(--fly-sans-family)` | `400` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h5-scale))` | `round(up, 1.1em, 1rem)` | `0` |
 | `h6` | `var(--fly-sans-family)` | `500` | `var(--fly-sans-stretch)` | `normal` | `'slnt' 0` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h6-scale))` | `var(--fly-line)` | `0` |
 | `body` | `'sole-serif-small-variable', Georgia, serif` | `400` | `normal` | `normal` | `normal` | `calc(var(--fly-size-sm) * var(--fly-body-scale))` | `var(--fly-line)` | `0` |
 | `lead` | `var(--fly-h2-family)` | `500` | `normal` | `normal` | `normal` | `calc(var(--fly-size-md) * var(--fly-lead-scale))` | `var(--fly-line)` | `0` |
@@ -123,9 +123,10 @@ back to those unitless values where `round()` is missing. Tables keep the protot
 1.3 (the scroll wrapper still rounds the table block to whole lines); `nav`, `caption` and
 `code` are xs text; SPEC §4.1 lets tables and small text leave the grid. Below 60em h3
 and h4 move into the text column and switch to the sans at its 90% width, h3 at 600 and
-h4 at 500 (a media-query override of their role variables in `type.css`). Families are the prototype's: Sole Serif Small for text, News Serif
-Huge for h1, Grtsk for h2, h5 and the lead (the prototype's Quire Sans lives only in an all-families Typekit kit of 654 KB, so a site that wants it adds that kit and sets the h2 family), condensed Grtsk for navigation, h3, h4,
-tables and captions, Grtsk at 90% width for h6.
+h4 at 500 (a media-query override of their role variables in `type.css`).
+The default kits supply Polymath Display for H1 and Polymath for H2 and the lead
+(`xht3uat`), Sole Serif Small for body text (`cna4jfp`), and Grtsk for navigation,
+H3–H6, tables, captions and inline sans (`wck5koo`).
 
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
 multiplier that evens out x-heights when families are mixed (`--fly-strong-adjust`

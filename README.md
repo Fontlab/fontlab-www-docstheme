@@ -34,6 +34,8 @@ Create `docs/index.md` and run `properdocs build --strict`.
 
 ## Configuration
 
+Body paragraphs and lists use Sole Serif Small at weight 400. H1 uses Polymath Display at 900 with `-0.01em` letter-spacing. H2 uses Polymath at 500 with zero letter-spacing. The lead paragraph follows the H2 family. Navigation, H3–H6 and inline strong and emphasis use Grtsk. Use `extra.fly.fonts.roles` to override a role’s family, weight or heading tracking.
+
 `extra.fly` is optional. Site defaults include FontLab chrome that scrolls with the page, ink titles, inherited article link colour and a left margin. Set a site hue, define reusable font/hue presets, or override individual type roles. Pages select a preset with `fly.preset` in their front matter. Page settings take precedence over preset settings, which take precedence over site settings. A page hue colours its H1 unless the page sets `fly.h1: ink`.
 
 ```yaml
@@ -89,7 +91,7 @@ A reader’s browser sends its IP address to each host it contacts. These are th
 
 | Host | Resource and how to avoid the request |
 | --- | --- |
-| `use.typekit.net`, `p.typekit.net` | The default Adobe kits supply News Serif (`cmv5add`), Sole Serif Small (`cna4jfp`) and Grtsk (`wck5koo`). Set `extra.fly.fonts.sources: []` and omit Typekit sources from presets and pages to use system stacks or your own licensed fonts. Setting only roles keeps the kits. |
+| `use.typekit.net`, `p.typekit.net` | The default Adobe kits supply Polymath Display and Polymath (`xht3uat`), Sole Serif Small (`cna4jfp`) and Grtsk (`wck5koo`). Set `extra.fly.fonts.sources: []` and omit Typekit sources from presets and pages to use system stacks or your own licensed fonts. Setting only roles keeps the kits. |
 | `fonts.googleapis.com`, `fonts.gstatic.com` | Fly requests the Material Symbols stylesheet and font for arrows and the palette toggle. MaterialX can also request Roboto and Roboto Mono, and the brand menus request Work Sans. For a Google-free page, use `theme.font: false`, omit `google:` font sources, use `chrome: none` and override the symbols partial below. The native SVG icons remain available. |
 | `cdn.jsdelivr.net` | PhotoSwipe 5.4.4 supplies the lightbox stylesheet on every page. Its two scripts load on pages with `.md-content a.lightbox`. All three files have SHA-384 integrity checks and anonymous CORS. Override the PhotoSwipe partial below to use ordinary image links. |
 | `i.fontlab.com`, optionally `i.vexy.art` | The default FontLab chrome loads `/menu/fontlab.js` and brand assets. Vexy chrome selects `/menu/vexy.js` on the Vexy host and uses `res.cloudinary.com` for its logo. The unversioned menu scripts are trusted first-party code served without SRI. Use `chrome: none` or your own audited chrome to avoid these requests. |

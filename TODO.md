@@ -38,3 +38,5 @@ T11 after T9 and T10; T12; T13; T14.
 - [ ] T12 Release: merge, tag, PyPI, GitHub repos, Pages, live verification
 - [ ] T14 Docs in every touched repo, final review, evidence
 - [ ] Owner go-ahead before live rsync deploys of www.fontlab.com and www.vexy.art
+- [ ] Task 15: default design per issue 502 (whats-new fonts; H1 Polymath 900 -0.01em; H2 Polymath 500 0); release; rebuild all fly sites
+- [ ] Task 16: integrate every .fly worktree into its original repo folder, then remove the .fly folders

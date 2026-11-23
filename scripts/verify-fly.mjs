@@ -766,14 +766,16 @@ const verifyMinimal = async base => {
     await document.fonts.ready;
     const out = {roles: {}};
     const first = f => f.split(',')[0].trim().replace(/['"]/g, '');
-    const pairs = [['h1', getComputedStyle(document.querySelector('.md-typeset h1')).fontFamily],
-      ['h2', getComputedStyle(document.querySelector('.md-typeset h2')).fontFamily],
-      ['body', getComputedStyle(document.querySelector('.md-typeset p')).fontFamily],
-      ['nav', getComputedStyle(document.querySelector('.md-nav__link')).fontFamily],
-      ['button', getComputedStyle(document.documentElement).getPropertyValue('--fly-button-family')]];
-    for (const [k, f] of pairs) {
+    // Body is a paragraph after the first: the first paragraph is the lead, which follows H2.
+    // fonts.check() asks for the weight and style each element renders with.
+    const style = sel => { const c = getComputedStyle(document.querySelector(sel)); return [c.fontFamily, c.fontStyle + ' ' + c.fontWeight]; };
+    const root = getComputedStyle(document.documentElement);
+    const pairs = [['h1', ...style('.md-typeset h1')], ['h2', ...style('.md-typeset h2')], ['lead', ...style('.md-typeset > p')],
+      ['body', ...style('.md-typeset > p ~ p')], ['nav', ...style('.md-nav__link')],
+      ['button', root.getPropertyValue('--fly-button-family'), 'normal ' + (root.getPropertyValue('--fly-button-weight').trim() || '400')]];
+    for (const [k, f, face] of pairs) {
       const name = first(f);
-      out.roles[k] = {family: name, face: [...document.fonts].some(face => face.family.replace(/['"]/g, '') === name), loaded: [...document.fonts].some(face => face.status === 'loaded' && face.family.replace(/['"]/g, '') === name), check: document.fonts.check('16px "' + name + '"')};
+      out.roles[k] = {family: name, face: [...document.fonts].some(ff => ff.family.replace(/['"]/g, '') === name), loaded: [...document.fonts].some(ff => ff.status === 'loaded' && ff.family.replace(/['"]/g, '') === name), check: document.fonts.check(face + ' 16px "' + name + '"')};
     }
     out.sheets = document.querySelectorAll('link[data-fly-font]').length;
     out.kits = [...document.querySelectorAll('link[data-fly-font]')].map(l => l.href);
@@ -790,6 +792,11 @@ const verifyMinimal = async base => {
     if (!reachable) skip(`minimal.font.${k}`, 'no Typekit face loaded (use.typekit.net is unreachable)');
     else check(`minimal.font.${k}`, r.face && r.loaded && r.check, `${r.family}: declared ${r.face} loaded ${r.loaded} check() ${r.check}`);
   }
+  const hs = await ev(`JSON.stringify(['h1', 'h2'].map(t => { const c = getComputedStyle(document.querySelector('.md-typeset ' + t)); return {t, w: c.fontWeight, ls: parseFloat(c.letterSpacing) / parseFloat(c.fontSize) || 0}; }))`);
+  const hh = typeof hs === 'string' ? JSON.parse(hs) : hs;
+  const h1 = hh.find(h => h.t === 'h1'), h2 = hh.find(h => h.t === 'h2');
+  check('minimal.h1-default', h1.w === '900' && Math.abs(h1.ls + 0.01) < 0.001, `weight ${h1.w}, tracking ${h1.ls.toFixed(4)}em`);
+  check('minimal.h2-default', h2.w === '500' && Math.abs(h2.ls) < 0.001, `weight ${h2.w}, tracking ${h2.ls.toFixed(4)}em`);
   check('minimal.search-index-served', got.search, 'search/search_index.json answers 200 under the bare search plugin');
   await open(`${base}/minimal/guide/`, 1440);
   const w = await ev('document.documentElement.scrollWidth - innerWidth');
