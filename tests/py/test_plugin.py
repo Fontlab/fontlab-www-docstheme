@@ -82,7 +82,10 @@ def test_parse_site_when_no_fly_then_defaults():
             "chrome.header",
         ),
         ({"chrome": {"script": "https://x.test/a.js", "header": "a-b"}}, "chrome.footer"),
-        ({"chrome_options": {"site-url": "x"}}, "chrome_options: unknown key(s) site-url"),
+        ({"chrome_options": {"site-url": "x"}}, "chrome_options.site-url: must be an http(s) URL"),
+        ({"chrome_options": {"site-url": "//evil.test/"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": 'https://a.test/"x'}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": 5}}, "chrome_options.site-url: must be a string"),
         ({"chrome_options": {"site-label": 5}}, "chrome_options.site-label: must be a string"),
         ({"fonts": {"sources": ["adobe:abc"]}}, "fonts.sources[0]: font source must be"),
         ({"fonts": {"sources": "typekit:abc"}}, "fonts.sources: must be a list"),
@@ -389,6 +392,14 @@ def test_chrome_view_when_options_then_override_menu_attribute_defaults():
     }
     assert out.footer_attrs == {"mode": "dark"}
     assert chrome_view(site(), CONFIG).header_attrs["site-label"] == "Site", "defaults to site_name"
+
+
+@pytest.mark.parametrize("chrome", ["fontlab", "vexy"])
+@pytest.mark.parametrize("url", ["https://partners.example/docs/", "http://x.test", "/", "/docs/"])
+def test_chrome_view_when_site_url_option_then_overrides_site_url(chrome, url):
+    out = chrome_view(site(chrome=chrome, chrome_options={"site-url": url}), CONFIG)
+    assert out.header_attrs["site-url"] == url
+    assert chrome_view(site(chrome=chrome), CONFIG).header_attrs["site-url"] == "https://site.example/"
 
 
 def test_view_when_debug_then_json_lists_presets_and_is_script_safe():

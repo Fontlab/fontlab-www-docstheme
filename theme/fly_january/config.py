@@ -82,7 +82,9 @@ ROLE_PROPS = (
 )
 SIDES = ("left", "right")
 NAMED_CHROMES = ("fontlab", "vexy", "none")
-CHROME_OPTIONS = ("site-label", "mobile-menu", "mobile-search", "search-from", "sticky")
+CHROME_OPTIONS = ("site-label", "site-url", "mobile-menu", "mobile-search", "search-from", "sticky")
+# The menu's site-url: an absolute http(s) URL or a root-relative path, no quotes or markup.
+SITE_URL = re.compile(r"(?:https?://|/(?!/))[^\s\"'<>]*")
 SITE_KEYS = (
     "chrome",
     "chrome_options",
@@ -298,6 +300,12 @@ def parse_options(where: str, value: Any) -> tuple[dict[str, str], bool]:
     for key, text in options.items():
         if not isinstance(text, str):
             raise fail(f"{where}.{key}", f"must be a string, got {text!r}")
+    url = options.get("site-url")
+    if url is not None and not SITE_URL.fullmatch(url):
+        raise fail(
+            f"{where}.site-url",
+            f"must be an http(s) URL or a root-relative path, got {url!r}",
+        )
     return options, sticky
 
 

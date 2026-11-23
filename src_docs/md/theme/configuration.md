@@ -28,7 +28,7 @@ hook or a partial for additions.
 | Key | Default | Value |
 |---|---|---|
 | `chrome` | `fontlab` | `fontlab`, `vexy`, `none` or `{script, header, footer}`; see [chrome](chrome.md) |
-| `chrome_options` | none | menu attributes: `site-label`, `mobile-menu`, `mobile-search`, `search-from`, and `sticky` (true pins the bar to the top; default false) |
+| `chrome_options` | none | menu attributes: `site-label`, `site-url` (an absolute http(s) URL or a root-relative path; defaults to the site URL), `mobile-menu`, `mobile-search`, `search-from`, and `sticky` (true pins the bar to the top; default false) |
 | `hue` | none (accent `cobalt`) | the accent: `cherry`, `tangerine`, `amber`, `lime`, `emerald`, `teal`, `sky`, `cobalt`, `indigo`, `violet`, `magenta`, `rose` or `gray` |
 | `fonts.sources` | the theme's five (below) | stylesheets loaded on every page: `typekit:<kit>`, `google:<css2 family spec>` or an `https://` URL; setting it replaces the defaults, `[]` loads none |
 | `fonts.roles` | theme defaults | per-role overrides, `{<role>: {<property>: <value>}}`; see [tokens](tokens.md#type-roles) |
@@ -54,6 +54,7 @@ extra:
     chrome: fontlab
     chrome_options:
       site-label: Design system
+      site-url: https://design.example/
       mobile-menu: materialx
       mobile-search: materialx
       search-from: docstheme

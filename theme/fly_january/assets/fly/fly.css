@@ -1534,7 +1534,7 @@
     font-weight: inherit;
     line-height: inherit;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:is(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):not([data-fly-plain]) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])) {
     color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -1544,7 +1544,7 @@
     font-size: calc(var(--fly-sans-adjust) * 1em);
     line-height: 1;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:is(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):not([data-fly-plain]):is(:hover, :focus-visible) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])):is(:hover, :focus-visible) {
     color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) strong {
