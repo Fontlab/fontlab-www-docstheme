@@ -681,10 +681,10 @@ const verifyMinimal = async base => {
     const out = {};
     for (const [k, sel] of [['h1', '.md-typeset h1'], ['body', '.md-typeset p'], ['nav', '.md-nav__link']]) {
       const f = getComputedStyle(document.querySelector(sel)).fontFamily;
-      out[k] = {family: f, loaded: document.fonts.check('16px ' + f.split(',')[0].trim())};
+      out[k] = {family: f, loaded: [...document.fonts].some(face => face.status === 'loaded' && f.split(',')[0].trim().replace(/['"]/g, '') === face.family.replace(/['"]/g, ''))};
     }
     out.sheets = document.querySelectorAll('link[data-fly-font]').length;
-    out.search = !!document.querySelector('[data-md-component=search]');
+    out.search = (await fetch(new URL('search/search_index.json', document.baseURI))).ok;
     return JSON.stringify(out);
   })()`);
   const got = typeof t === 'string' ? JSON.parse(t) : t;
@@ -693,7 +693,7 @@ const verifyMinimal = async base => {
   for (const k of ['h1', 'body', 'nav']) {
     check(`minimal.font.${k}`, got[k].loaded || /(Arial|serif|sans-serif|system-ui)/.test(got[k].family), `${got[k].family} loaded ${got[k].loaded}`);
   }
-  check('minimal.search-present', got.search, 'MaterialX search form');
+  check('minimal.search-index-served', got.search, 'search/search_index.json answers 200 under the bare search plugin');
   await open(`${base}/minimal/guide/`, 1440);
   const w = await ev('document.documentElement.scrollWidth - innerWidth');
   check('minimal.no-overflow', w <= 0, `overflow ${w}px`);
@@ -712,7 +712,7 @@ const PROBE_BLOG_INDEX = `JSON.stringify((() => {
 })())`;
 
 const PROBE_POST = `JSON.stringify((() => {
-  const art = document.querySelector('.md-content__inner .md-typeset');
+  const art = document.querySelector('article.md-content__inner.md-typeset, .md-content__inner .md-typeset');
   const p = art.querySelector('p');
   const plain = art.querySelector('a:not([class])'), cta = art.querySelector('a.site-cta');
   const style = el => el && ({color: getComputedStyle(el).color, line: getComputedStyle(el).textDecorationLine});
@@ -733,9 +733,11 @@ const verifyBlog = async base => {
   check('blog.component-link-keeps-colour', post.cta.color === 'rgb(200, 26, 39)' && post.cta.line === 'none',
     `cta ${JSON.stringify(post.cta)}`);
   check('blog.classless-link-restyled', post.plain.color === post.body && post.plain.line !== 'none', `plain ${JSON.stringify(post.plain)} body ${post.body}`);
+  await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 1440);
+  const wideAt1440 = await ev(PROBE_POST);
   await open(`${base}/blog/`, 1440);
   const page = await ev(PROBE_POST);
-  check('blog.post-text-column', Math.abs(post.text - page.text) / page.text <= 0.1, `post ${post.text.toFixed(0)}px page ${page.text.toFixed(0)}px`);
+  check('blog.post-text-column', Math.abs(wideAt1440.text - page.text) / page.text <= 0.1, `post ${wideAt1440.text.toFixed(0)}px page ${page.text.toFixed(0)}px`);
   await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 390);
   const wide = await ev(PROBE_POST);
   check('blog.mobile-no-overflow', wide.overflow <= 0, `overflow ${wide.overflow}px at 390`);
