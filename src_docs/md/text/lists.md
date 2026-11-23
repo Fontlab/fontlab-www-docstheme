@@ -166,7 +166,7 @@ Task lists report progress; they are not interactive form controls:
 
 - [x] Source is tracked
 - [x] Specimen renders
-- [ ] Page is reviewed in every subtheme
+- [ ] Page is reviewed in light and dark mode
 
 
 ## Steps: authoring details

@@ -44,9 +44,9 @@ that block. See [Python-Markdown attribute lists](https://python-markdown.github
 | Compiled links and image URLs | A valid base URL for relative links |
 
 The copy is the initial compiled state. It does not record changes you make in
-a field, an open dialog or the runtime's internal widget state. After inserting
-Basecoat markup dynamically, call `FLTheme.refresh()` as documented in the
-shared theme. MaterialX widgets may need MaterialX's own page initialization;
+a field, an open dialog or the runtime's internal widget state. Basecoat markup
+inserted later is initialised by `basecoat.js` and follows the page's light or dark
+mode through the theme's `fly.js` ([setup](setup.md)). MaterialX widgets may need MaterialX's own page initialization;
 copying their HTML into an unrelated site does not install that runtime.
 
 ## Use Markdown where it fits
