@@ -251,7 +251,7 @@ requires-dist = [
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-materialx", specifier = ">=10.1.8,<11" },
     { name = "properdocs", specifier = ">=1.6.7" },
-    { name = "vexy-python-markdown-figure-groups", editable = "../../github.vexyart/vexy-python-markdown-figure-groups" },
+    { name = "vexy-python-markdown-figure-groups", specifier = ">=0.1.0,<0.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -1048,21 +1048,15 @@ wheels = [
 
 [[package]]
 name = "vexy-python-markdown-figure-groups"
-source = { editable = "../../github.vexyart/vexy-python-markdown-figure-groups" }
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "markdown", specifier = ">=3.5" },
-    { name = "mypy", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-cov", marker = "extra == 'dev'" },
-    { name = "ruff", marker = "extra == 'dev'" },
-    { name = "types-markdown", marker = "extra == 'dev'" },
+sdist = { url = "https://files.pythonhosted.org/packages/12/60/b2d7a64fe0859970ecca8f1b2ccfbecf5db73f343622b2220595f457bba3/vexy_python_markdown_figure_groups-0.1.0.tar.gz", hash = "sha256:7b7c506d9e792e387e57fffd0f55be918b93a5e0dc9a536967d5ce8f06d75b11", size = 15214, upload-time = "2026-11-23T21:16:35.527Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/9b/5a41e6a7efb428e7e945086eae47e081b551880d0d24b7b69114c9f343b3/vexy_python_markdown_figure_groups-0.1.0-py3-none-any.whl", hash = "sha256:9224022a735492d1aa25c669f12c44733ecd76c8c76921c90c45b81f0d628b8a", size = 11609, upload-time = "2026-11-23T21:16:34.565Z" },
 ]
-provides-extras = ["dev"]
 
 [[package]]
 name = "watchdog"

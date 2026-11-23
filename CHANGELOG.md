@@ -4,7 +4,7 @@ this_file: CHANGELOG.md
 
 # Changelog
 
-## Unreleased → 0.1.0
+## 0.1.0 — 2026-11-23
 
 - Added the `fly-january` MaterialX child theme and `fly` plugin. Sites can select
   chrome, page presets, font roles and hues. The package ships compiled CSS and JavaScript.
