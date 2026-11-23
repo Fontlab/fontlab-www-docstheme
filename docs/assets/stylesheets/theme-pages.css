@@ -1,0 +1,76 @@
+/* this_file: src_docs/md/assets/stylesheets/theme-pages.css */
+/* The token reference (theme/tokens.md): palette swatches, grey strips and type-role
+   specimens. Colours come from the --fly-* variables, so the panels show the values the
+   built CSS resolves; the dark panel carries data-md-color-scheme="slate". */
+.md-typeset .fly-demo-palette {
+  background: var(--fly-paper-3);
+  border: 1px solid var(--fly-edge);
+  border-radius: 0.5rem;
+  color: var(--fly-ink);
+  margin: 2rem 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+.md-typeset .fly-demo-swatches {
+  border-collapse: collapse;
+  display: table;
+  font-size: var(--fly-size-xs);
+  width: 100%;
+}
+.md-typeset .fly-demo-swatches th,
+.md-typeset .fly-demo-swatches td {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.md-typeset .fly-demo-swatches td {
+  width: 22%;
+}
+.md-typeset .fly-demo-grey code {
+  background: var(--fly-paper-3);
+  border-radius: 0.25rem;
+  color: var(--fly-ink);
+  font-size: 0.85em;
+  padding: 0 0.25rem;
+}
+.md-typeset .fly-demo-chip {
+  border: 1px solid var(--fly-edge);
+  border-radius: 0.25rem;
+  display: block;
+  height: 2rem;
+  min-width: 2.5rem;
+}
+.md-typeset .fly-demo-greys,
+.md-typeset .fly-demo-papers {
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  margin-top: 1rem;
+}
+.md-typeset .fly-demo-grey {
+  border: 1px solid var(--fly-edge);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  font-size: var(--fly-size-xs);
+  height: 4rem;
+  padding: 0.25rem 0.5rem;
+}
+.md-typeset .fly-demo-role {
+  align-items: baseline;
+  border-top: 1px solid var(--fly-edge);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 5rem minmax(0, 1fr);
+}
+.md-typeset .fly-demo-role > p {
+  margin: 0.5rem 0;
+  overflow-wrap: anywhere;
+}
+.md-typeset .fly-demo-sizes p {
+  margin: 0 0 1rem;
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-labelledby="title desc">
+  <title id="title">Overlapping FontLab colour shapes</title>
+  <desc id="desc">A blue circle, coral rectangle, and dark diagonal line on a warm background.</desc>
+  <rect width="320" height="200" fill="#f3eee8"/>
+  <circle cx="105" cy="100" r="68" fill="#3157c8"/>
+  <rect x="145" y="48" width="112" height="104" rx="18" fill="#e15b4f"/>
+  <path d="M52 157 266 42" stroke="#202534" stroke-width="18" stroke-linecap="round"/>
+</svg>

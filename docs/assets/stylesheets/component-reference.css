@@ -1,0 +1,110 @@
+/* this_file: src_docs/md/assets/stylesheets/component-reference.css */
+/* Override the legacy editorial .drawer display for closed native dialogs. */
+.md-typeset .fltheme-components dialog:not([open]) { display: none; }
+.md-typeset .fl-library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-block: 2rem 3rem;
+}
+.md-typeset .fl-library-grid > section { min-width: 0; }
+.md-typeset .fl-library-grid h2,
+.md-typeset .fl-library-grid h3 { margin: 0 0 .8rem; }
+.md-typeset .fl-library-grid p { margin: .75rem 0; text-indent: 0; }
+.md-typeset .fl-library-grid a:not([class]) { text-underline-offset: .2em; }
+.md-typeset .fl-demo {
+  padding: 1.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .35rem;
+  margin-block: 1rem;
+}
+.fl-demo form { display: grid; gap: 1rem; }
+.fl-demo .field { display: grid; gap: .4rem; }
+.fl-demo output { display: block; font-size: .85rem; }
+.fl-demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }
+.fl-demo .accordion { margin-top: 1.5rem; }
+.md-typeset .fltheme-components details {
+  background: transparent;
+  box-shadow: none;
+  border-inline: 0;
+  border-block: 0;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  color: inherit;
+}
+.md-typeset .fltheme-components summary {
+  background: transparent;
+  margin: 0;
+  color: inherit;
+}
+.md-typeset .fltheme-components summary::before {
+  display: none;
+  content: none;
+}
+.md-typeset .fltheme-components .accordion > details:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+.md-typeset .fltheme-components .accordion summary { padding: 1rem 0; }
+.md-typeset .fltheme-components .accordion summary::after { display: none; }
+.md-typeset .fltheme-components .accordion summary svg { width: 1rem; height: 1rem; }
+.md-typeset .fltheme-components .du-collapse > summary {
+  padding: 1rem 3rem 1rem 1rem;
+  background: var(--color-base-200);
+}
+.md-typeset .fltheme-components .du-collapse > summary::after { mask: none; background: none; }
+.fl-demo input:not([type=checkbox]), .fl-demo select { max-width: 100%; }
+.md-typeset:has(.fl-showcase-page) > h1 { font-size: clamp(2.2rem, 3.6vw, 3.25rem); font-weight: 550; }
+.md-typeset .fl-showcase-page { margin-top: 2.3rem; }
+.md-typeset .fl-showcase-feature {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr);
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-bottom: 3rem;
+}
+.md-typeset .fl-showcase-feature--reverse { grid-template-columns: minmax(0, 1.5fr) minmax(0, .8fr); }
+.md-typeset .fl-showcase-copy h2 { margin: 0 0 .8rem; font-size: clamp(1.7rem, 2.6vw, 2.4rem); font-weight: 550; }
+.md-typeset .fl-showcase-copy p { text-indent: 0; margin: .8rem 0; }
+.md-typeset .fl-showcase-copy a { text-decoration: underline; text-underline-offset: .2em; }
+.md-typeset .fl-showcase-visual { display: block; margin: 0; width: 100%; min-width: 0; }
+.md-typeset .fl-showcase-visual a { display: block; }
+.md-typeset .fl-showcase-visual img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1.9;
+  object-fit: contain;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .2rem;
+  box-shadow: none;
+  margin: 0;
+}
+.md-typeset .fl-showcase-visual--art img { object-fit: cover; }
+.md-typeset .fl-showcase-visual figcaption {
+  text-align: left;
+  font-style: normal;
+  font-size: .75rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: .5rem;
+}
+.md-typeset .fl-showcase-libraries { margin-top: 1.4rem; }
+.fl-showcase-libraries .fltheme-components { margin-block: 1rem; }
+.fl-showcase-libraries dialog > div { max-width: min(30rem, calc(100vw - 3rem)); }
+.md-typeset .fl-showcase-libraries .md-button { font-size: .875rem; padding: .6em 1em; border-width: 1px; border-radius: .35rem; }
+@media (max-width: 760px) {
+  .md-typeset .fl-library-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+  .md-typeset .fl-showcase-feature,
+  .md-typeset .fl-showcase-feature--reverse { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2.5rem; }
+  .fl-showcase-feature--reverse .fl-showcase-copy { order: -1; }
+  .md-typeset .fl-demo { padding: 1rem; }
+}
+
+/* Retro's shared mint link token has insufficient contrast on parchment. */
+html[data-fl-subtheme="retro"] .md-typeset a:not(.md-button):not(.btn):not([class*="du-"]) {
+  color: var(--md-default-fg-color);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
