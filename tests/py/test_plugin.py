@@ -552,3 +552,29 @@ def test_on_env_and_page_context_when_called_then_fly_variable_set():
     context = plugin.on_page_context({}, page, CONFIG)
     assert context["fly"].preset == "sitka" and context["fly"].hue == "magenta"
     assert isinstance(plugin.pages["g.md"], PageConfig)
+
+
+PAGE_SRC = SimpleNamespace(file=SimpleNamespace(src_uri="guide.md"))
+SMALL = '<figure class="img-small"><img/></figure>'
+
+
+def test_on_page_content_when_margin_figure_follows_paragraph_then_fly_aside_group():
+    html = f"<p>a</p>\n{SMALL}\n<p>b</p>\n<h2>H</h2>"
+    out = configured_plugin().on_page_content(html, page=PAGE_SRC)
+    assert out == (
+        f'<div class="fly-aside" style="--rows: 2"><p>a</p>\n{SMALL}\n<p>b</p></div>\n<h2>H</h2>'
+    ), out
+
+
+def test_on_page_content_when_cut_figure_then_fly_cut_group_with_figure_first():
+    cut = '<figure class="img-cut"><img/></figure>'
+    out = configured_plugin().on_page_content(f"<p>a</p>\n{cut}\n<p>b</p>", page=PAGE_SRC)
+    assert out.startswith(f'<div class="fly-aside fly-cut" style="--rows: 2">{cut}'), out
+
+
+def test_on_page_content_when_figure_inside_list_or_wide_then_unchanged():
+    for html in (
+        f"<ul><li><p>a</p>{SMALL}<p>b</p></li></ul>",
+        '<p>b</p><figure class="img-wide"><img/></figure>',
+    ):
+        assert configured_plugin().on_page_content(html, page=PAGE_SRC) == html

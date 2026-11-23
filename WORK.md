@@ -14,16 +14,18 @@ tests/py -q` 124 passed; `npm run build`; `npm test` 39 pass.
 
 ### Markdown-extension candidates
 
-Per SPEC 9, the ported functions that transform page content independently of the theme;
-they stay in the plugin until Task 8 decides:
+Per SPEC 9, the ported functions that transform page content independently of the theme.
+Outcome (Task 6, step 0):
 
-- `group_margin_figures` (markup.py): groups an `img-small`/`img-tall`/`img-cut` figure
-  with its paragraphs in a `<div class="fly-aside" style="--rows: N">` block. The grouping
-  is content structure; only the class names (`fly-aside`, `fly-cut`) are theme vocabulary
-  and would become extension options. Candidate.
-- `name_permalinks` (markup.py): adds `aria-label="Permanent link"` to toc `headerlink`
-  anchors. An accessibility fix to Python-Markdown's toc output, theme-independent.
-  Candidate (could equally be a toc option upstream).
+- Margin-figure grouping moved to the package `vexy-python-markdown-figure-groups`
+  (sibling checkout `../../github.vexyart/vexy-python-markdown-figure-groups`, editable
+  `[tool.uv.sources]` entry until release). The plugin calls
+  `group_figures(html, figure_classes=("img-small", "img-tall", "img-cut"),
+  cut_classes=("img-cut",), group_class="fly-aside", cut_class="fly-cut")` in
+  `on_page_content`; `group_margin_figures` and its helpers left markup.py, their unit
+  tests live in the package, three integration tests stay in tests/py/test_plugin.py.
+- `name_permalinks` (markup.py) stays in the plugin by decision: a one-line accessibility
+  fix to toc's `headerlink` anchors, not worth a package.
 
 Not candidates (theme-specific, stay in the plugin): `stray_attr_lists` (lints for the
 theme's `tw:` and `.goto` contracts), body/main/article classes (`page_classes`,

@@ -4,6 +4,11 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-11-23: CDN tree and demo site (Task 6)
+
+- Margin-figure grouping now comes from `vexy-python-markdown-figure-groups`
+  (`group_figures` with the `fly-aside`/`fly-cut` classes); the plugin's own copy is gone.
+
 ## 2026-11-23: fly plugin (Task 4)
 
 - `fly` plugin: validates `extra.fly` (chrome, chrome_options, hue, fonts, presets,

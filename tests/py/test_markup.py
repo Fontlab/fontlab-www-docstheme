@@ -10,8 +10,6 @@ import pytest
 from fly_january.markup import (
     add_classes,
     class_names,
-    depth_at,
-    group_margin_figures,
     name_permalinks,
     patch_tags,
     stray_attr_lists,
@@ -19,7 +17,6 @@ from fly_january.markup import (
 
 ROOT = Path(__file__).resolve().parents[2]
 PAGE = '<html><body dir="ltr"><main class="md-main"><article class="a">x</article></main></body>'
-SMALL = '<figure class="img-small"><img/></figure>'
 # Classes the image-sizes plugin emits and plugin-made classes the theme CSS must style.
 CONTRACT_CLASSES = (
     "img-wide",
@@ -110,99 +107,6 @@ def test_patch_tags_when_attribute_then_added_once_and_existing_kept():
     assert kept == '<body data-fly-hue="rose">'
     hidden = patch_tags("<!-- <body> --><body>", {}, {"body": {"data-fly-hue": "a&b"}})
     assert hidden == '<!-- <body> --><body data-fly-hue="a&amp;b">'
-
-
-def test_group_margin_figures_when_small_figure_follows_paragraph_then_wraps_text_first():
-    html = '<p>a</p>\n<p>b <em>x</em></p>\n<figure class="img-small"><img src="s.png"/></figure>\n<h2>H</h2>'
-    assert group_margin_figures(html) == (
-        '<p>a</p>\n<div class="fly-aside" style="--rows: 1"><p>b <em>x</em></p>\n'
-        '<figure class="img-small"><img src="s.png"/></figure></div>\n<h2>H</h2>'
-    )
-
-
-def test_group_margin_figures_when_paragraphs_follow_then_they_join_and_rows_count_them():
-    html = '<p>a</p><figure class="img-tall"><img/></figure>\n<p>b</p>\n<p>c</p><ul><li>x</li></ul>'
-    assert group_margin_figures(html) == (
-        '<div class="fly-aside" style="--rows: 3"><p>a</p><figure class="img-tall"><img/></figure>'
-        "\n<p>b</p>\n<p>c</p></div><ul><li>x</li></ul>"
-    )
-
-
-def test_group_margin_figures_when_wide_figure_then_unchanged():
-    html = '<p>b</p><figure class="img-wide"><img/></figure>'
-    assert group_margin_figures(html) == html
-
-
-def test_group_margin_figures_when_figure_follows_heading_then_unchanged():
-    html = '<h3>H</h3><figure class="img-small"><img/></figure>'
-    assert group_margin_figures(html) == html
-
-
-def test_group_margin_figures_when_next_paragraph_has_own_figure_then_two_groups():
-    html = (
-        '<p>a</p><figure class="img-small"><img/></figure><p>b</p><p>c</p>'
-        '<figure class="img-tall"><img/></figure><p>d</p>'
-    )
-    assert group_margin_figures(html) == (
-        '<div class="fly-aside" style="--rows: 2"><p>a</p><figure class="img-small"><img/></figure><p>b</p></div>'
-        '<div class="fly-aside" style="--rows: 2"><p>c</p><figure class="img-tall"><img/></figure><p>d</p></div>'
-    )
-
-
-def test_group_margin_figures_when_inside_list_or_admonition_then_untouched():
-    for html in (
-        f"<ul><li><p>a</p>{SMALL}<p>b</p></li></ul>",
-        f'<div class="admonition note"><p>a</p>{SMALL}</div>',
-        f"<details><summary>s</summary><p>a</p>{SMALL}</details>",
-    ):
-        assert group_margin_figures(html) == html, html
-    top = f"<ul><li>x</li></ul><p>a</p>{SMALL}"
-    assert group_margin_figures(top) == (
-        f'<ul><li>x</li></ul><div class="fly-aside" style="--rows: 1"><p>a</p>{SMALL}</div>'
-    )
-
-
-def test_group_margin_figures_when_figure_follows_heading_then_grouped_with_next_paragraphs():
-    fig = '<figure class="img-tall"><img/></figure>'
-    out = group_margin_figures(f"<h3>H</h3>\n{fig}\n<p>a</p>\n<p>b</p><h3>I</h3>")
-    assert out == (
-        f'<h3>H</h3>\n<div class="fly-aside" style="--rows: 2">{fig}\n<p>a</p>\n<p>b</p></div><h3>I</h3>'
-    )
-
-
-def test_group_margin_figures_when_figures_nested_then_unchanged():
-    html = '<p>a</p><figure class="img-small"><figure><img/></figure><figcaption>c</figcaption></figure>'
-    assert group_margin_figures(html) == html
-    inner = f"<figure><p>a</p>{SMALL}</figure>"
-    assert group_margin_figures(inner) == inner
-
-
-def test_group_margin_figures_when_in_table_comment_or_pre_then_unchanged():
-    for html in (
-        f"<table><tr><td><p>a</p>{SMALL}</td></tr></table>",
-        f"<!-- <p>a</p>{SMALL} -->",
-        f"<pre><p>a</p>{SMALL}</pre>",
-        f'<div class="admonition"><!-- </div> --><p>a</p>{SMALL}</div>',
-    ):
-        assert group_margin_figures(html) == html, html
-
-
-def test_group_margin_figures_when_cut_figure_follows_paragraph_then_figure_first_and_marked():
-    html = '<p>a</p>\n<figure class="img-cut"><img/></figure>\n<p>b</p>\n<h2>H</h2>'
-    assert group_margin_figures(html) == (
-        '<div class="fly-aside fly-cut" style="--rows: 2"><figure class="img-cut"><img/></figure>'
-        "\n<p>a</p>\n<p>b</p></div>\n<h2>H</h2>"
-    )
-
-
-def test_group_margin_figures_when_cut_figure_follows_heading_then_marked():
-    out = group_margin_figures('<h3>H</h3>\n<figure class="img-cut"><img/></figure>\n<p>b</p>')
-    assert '<div class="fly-aside fly-cut" style="--rows: 1"><figure class="img-cut">' in out, out
-
-
-def test_depth_at_when_markup_in_attributes_or_comments_then_ignored():
-    html = '<div data-x="a/>"><!-- <div> </li> --><script>"</div>"</script><p>'
-    assert depth_at(html, len(html)) == 1
 
 
 def test_name_permalinks_when_headerlink_then_aria_label_added_once():

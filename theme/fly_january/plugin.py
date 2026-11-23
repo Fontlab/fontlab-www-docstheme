@@ -20,11 +20,21 @@ from pathlib import Path
 from typing import Any
 
 from mkdocs.plugins import BasePlugin
+from vexy_markdown_figure_groups import group_figures
 
 from .assets import rescale_materialx, theme_versions, version_links
 from .config import PageConfig, SiteConfig, parse_page, parse_site
-from .markup import group_margin_figures, log, name_permalinks, patch_tags, stray_attr_lists
+from .markup import log, name_permalinks, patch_tags, stray_attr_lists
 from .view import body_attributes, page_classes, preset_look, view
+
+# Margin figures (img-small/img-tall/img-cut) and their paragraphs become one block in the
+# theme's vocabulary: <div class="fly-aside[ fly-cut]" style="--rows: N">.
+FIGURE_GROUPS = {
+    "figure_classes": ("img-small", "img-tall", "img-cut"),
+    "cut_classes": ("img-cut",),
+    "group_class": "fly-aside",
+    "cut_class": "fly-cut",
+}
 
 
 def src_of(page: Any) -> str:
@@ -71,7 +81,7 @@ class FlyPlugin(BasePlugin):
                 src_of(page),
                 hit,
             )
-        return name_permalinks(group_margin_figures(html))
+        return name_permalinks(group_figures(html, **FIGURE_GROUPS))
 
     def on_page_context(self, context: Any, page: Any, config: Any, **_: Any) -> Any:
         """The page's `fly` variable: fonts, hue, chrome, debug data."""

@@ -190,6 +190,7 @@ dependencies = [
     { name = "mkdocs" },
     { name = "mkdocs-materialx" },
     { name = "properdocs" },
+    { name = "vexy-python-markdown-figure-groups" },
 ]
 
 [package.dev-dependencies]
@@ -207,6 +208,7 @@ requires-dist = [
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-materialx", specifier = ">=10.1.8" },
     { name = "properdocs", specifier = ">=1.6.7" },
+    { name = "vexy-python-markdown-figure-groups", editable = "../../github.vexyart/vexy-python-markdown-figure-groups" },
 ]
 
 [package.metadata.requires-dev]
@@ -728,6 +730,24 @@ sdist = { url = "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909
 wheels = [
     { url = "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl", hash = "sha256:0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3", size = 135717, upload-time = "2026-09-15T19:29:34.577Z" },
 ]
+
+[[package]]
+name = "vexy-python-markdown-figure-groups"
+source = { editable = "../../github.vexyart/vexy-python-markdown-figure-groups" }
+dependencies = [
+    { name = "markdown" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "markdown", specifier = ">=3.5" },
+    { name = "mypy", marker = "extra == 'dev'" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
+    { name = "ruff", marker = "extra == 'dev'" },
+    { name = "types-markdown", marker = "extra == 'dev'" },
+]
+provides-extras = ["dev"]
 
 [[package]]
 name = "watchdog"

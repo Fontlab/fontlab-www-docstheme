@@ -13,6 +13,7 @@ dependencies = [
   "mkdocs>=1.6.1",
   "mkdocs-materialx>=10.1.8",
   "properdocs>=1.6.7",
+  "vexy-python-markdown-figure-groups",
 ]
 
 [project.entry-points."mkdocs.themes"]
@@ -30,6 +31,10 @@ dev = [
   "pytest>=8",
   "ruff",
 ]
+
+[tool.uv.sources]
+# Local checkout until the package is published; removed at release (Task 12).
+vexy-python-markdown-figure-groups = { path = "../../github.vexyart/vexy-python-markdown-figure-groups", editable = true }
 
 [tool.hatch.version]
 source = "vcs"

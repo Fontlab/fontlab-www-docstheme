@@ -1,4 +1,4 @@
-"""Rewrites of rendered HTML: tag classes and attributes, margin-figure groups, permalinks.
+"""Rewrites of rendered HTML: tag classes and attributes, permalinks.
 
 this_file: theme/fly_january/markup.py
 
@@ -126,67 +126,6 @@ def patch_tags(
 def add_classes(html: str, classes: dict[str, list[str]]) -> str:
     """Append classes to the first opening tag of each listed type, once each."""
     return patch_tags(html, classes)
-
-
-PARA = r"<p\b[^>]*>(?:(?!</p>).)*</p>"
-FIGURE = r"<figure\b[^>]*\bclass=\"[^\"]*\bimg-(?:small|tall|cut)\b[^\"]*\"[^>]*>.*?</figure>"
-FOLLOWING = (
-    rf"((?:\s*{PARA}(?!\s*{FIGURE}))*)"  # a paragraph with its own figure starts a new group
-)
-MARGIN_GROUP = re.compile(
-    rf"({PARA})(\s*)({FIGURE}){FOLLOWING}"
-    # Or a figure straight after a heading, followed by at least one paragraph.
-    rf"|(?<=</h[1-6]>)(\s*)({FIGURE})(?=\s*<p\b){FOLLOWING}",
-    re.IGNORECASE | re.DOTALL,
-)
-CUT = re.compile(r"^<figure\b[^>]*\bclass=\"[^\"]*\bimg-cut\b", re.IGNORECASE)
-# Containers inside the article: margin groups are made only outside them.
-NESTING = re.compile(
-    rf"<(/?)(li|ul|ol|dl|div|details|blockquote|table|figure)(?=[\s>/])({ATTRS})>", re.IGNORECASE
-)
-
-
-def depth_at(html: str, end: int) -> int:
-    """Count container elements still open at offset ``end`` (comments etc. ignored)."""
-    depth = 0
-    for m in NESTING.finditer(mask(html[:end])):
-        if not m[3].endswith("/"):
-            depth += -1 if m[1] else 1
-    return depth
-
-
-def group_margin_figures(html: str) -> str:
-    """Wrap a margin figure (img-small/img-tall/img-cut) with its paragraphs in one block.
-
-    The figure follows the paragraph it illustrates, and the paragraphs after it up to the
-    next non-paragraph (or the next paragraph with its own figure) join the group; a figure
-    straight after a heading groups with the paragraphs that follow it. Only top-level
-    article blocks are grouped, never inside lists, admonitions or ``<details>``. In three
-    columns the block is a grid whose figure spans every row in the margin column;
-    ``--rows`` tells the CSS how many rows that is.
-
-    An ``img-cut`` figure cuts into the text column, so the paragraph before it must wrap
-    around it: a float has to come first, so the block gets ``fly-cut`` and the figure
-    moves ahead of that paragraph. Where there is no margin the CSS puts it back after the
-    paragraph (flex ``order``).
-    """
-
-    def wrap(m: re.Match[str]) -> str:
-        figure = m[3] or m[6]
-        if (
-            depth_at(m.string, m.start())
-            or len(re.findall(r"<figure\b", figure, re.IGNORECASE)) != 1
-        ):
-            return m[0]  # nested, or a figure inside the figure: leave as written
-        cls = "fly-aside fly-cut" if CUT.search(figure) else "fly-aside"
-        if m[1] is None:  # figure after a heading: leading whitespace stays outside
-            rows = len(re.findall(r"<p\b", m[7], re.IGNORECASE))
-            return f'{m[5]}<div class="{cls}" style="--rows: {rows}">{m[6]}{m[7]}</div>'
-        rows = 1 + len(re.findall(r"<p\b", m[4], re.IGNORECASE))
-        inner = f"{m[3]}{m[2]}{m[1]}{m[4]}" if CUT.search(figure) else f"{m[1]}{m[2]}{m[3]}{m[4]}"
-        return f'<div class="{cls}" style="--rows: {rows}">{inner}</div>'
-
-    return sub_outside(MARGIN_GROUP, html, wrap)
 
 
 PERMALINK = re.compile(

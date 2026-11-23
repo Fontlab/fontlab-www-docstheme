@@ -17,7 +17,9 @@ Exact versions are pinned in package.json and package-lock.json.
 Python (pyproject.toml, uv.lock): the `fly-january` package depends on mkdocs (the
 plugin API it imports: `BasePlugin`, `PluginError`), properdocs and mkdocs-materialx.
 `extra.fly` is validated with standard-library dataclasses rather than pydantic, so
-consumer sites get no extra dependency.
+consumer sites get no extra dependency. vexy-python-markdown-figure-groups groups margin
+figures with their paragraphs (`fly-aside`/`fly-cut`); until it is published it installs
+from the sibling checkout through `[tool.uv.sources]` (removed at release).
 
 Redistributed Basecoat, daisyUI and Tailwind license notices ship with the CDN.
 The two legacy editorial vendor sheets are retained source artifacts from the
