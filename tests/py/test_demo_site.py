@@ -10,6 +10,7 @@ other title fails the test, so no example on those pages goes unchecked.
 """
 
 import importlib.util
+import json
 import re
 from pathlib import Path
 from types import SimpleNamespace
@@ -17,14 +18,20 @@ from types import SimpleNamespace
 import pytest
 import yaml
 from fly_january.config import (
+    BLOCK_PROPS,
+    BLOCK_ROLES,
     CHROME_OPTIONS,
     HUES,
+    INLINE_PROPS,
+    INLINE_ROLES,
     NAMED_CHROMES,
     PAGE_KEYS,
     SITE_KEYS,
+    SiteConfig,
     parse_page,
     parse_site,
 )
+from fly_january.view import chrome_view
 from mkdocs.exceptions import PluginError
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -115,7 +122,9 @@ def test_demo_site_config_when_parsed_then_valid_with_fly_theme():
 def test_tokens_page_when_rendered_then_every_hue_variant_and_grey_in_both_schemes():
     text = (SITE / "md/theme/tokens.md").read_text()
     light, dark = text.split("### Light")[1].split("### Dark")
-    assert 'data-md-color-scheme="slate"' in dark and "data-md-color-scheme" not in light
+    # Each panel pins its scheme, so it shows its values whichever scheme the page has.
+    assert 'class="fly-demo-palette" data-md-color-scheme="default"' in light
+    assert 'class="fly-demo-palette" data-md-color-scheme="slate"' in dark
     for panel in (light, dark):
         for hue in HUES:
             if hue == "gray":
@@ -131,6 +140,70 @@ def test_assets_page_when_rendered_then_names_the_built_version():
     text = (SITE / "md/theme/assets.md").read_text()
     urls = set(re.findall(r"fontlab-www-docstheme/fly/([^/\s)\"]+)/", text))
     assert urls == {version}, urls
+    assert f"This release is `{version}`" in text
+    assert f'"version": "{version}"' in text and f'"latest": "{version}"' in text
+    pins = json.loads((ROOT / "package.json").read_text())["devDependencies"]
+    libraries = {pins["basecoat-css"], pins["daisyui"]}
+    assert f"Basecoat {pins['basecoat-css']}" in text and f"daisyUI {pins['daisyui']}" in text
+    assert set(re.findall(r"\b\d+\.\d+\.\d+\b", text)) == {version} | libraries
+
+
+def ticks(text: str) -> list[str]:
+    """The backticked words of a Markdown fragment, in order."""
+    return re.findall(r"`([^`]+)`", text)
+
+
+def site_table() -> dict[str, tuple[str, str]]:
+    """The configuration page's site-keys table: key -> (default cell, value cell)."""
+    text = (SITE / "md/theme/configuration.md").read_text()
+    table = text.split("## Site keys")[1].split("A complete site block")[0]
+    rows = re.findall(r"^\| `([a-z_.]+)` \| (.*?) \| (.*?) \|$", table, re.MULTILINE)
+    return {key: (default, value) for key, default, value in rows}
+
+
+def test_configuration_table_when_compared_with_the_parser_then_keys_and_names_match():
+    table = site_table()
+    expected = [k for k in SITE_KEYS if k != "fonts"] + ["fonts.sources", "fonts.roles"]
+    assert sorted(table) == sorted(expected)
+    assert ticks(table["hue"][1]) == list(HUES)
+    assert ticks(table["chrome_options"][1]) == list(CHROME_OPTIONS)
+    assert ticks(table["chrome"][1])[:3] == list(NAMED_CHROMES)
+
+
+def test_configuration_table_when_compared_with_defaults_then_default_cells_match():
+    table, defaults = site_table(), SiteConfig()
+    assert ticks(table["chrome"][0]) == [defaults.chrome.kind]
+    assert ticks(table["margin_side"][0]) == [defaults.margin_side]
+    assert ticks(table["utilities"][0]) == [str(defaults.utilities).lower()]
+    assert ticks(table["debug"][0]) == [str(defaults.debug).lower()]
+    # No site hue by default; the accent then comes from semantic.css.
+    assert defaults.look.hue is None and table["hue"][0] == "none (accent `cobalt`)"
+    semantic = (ROOT / "src/fly/tokens/semantic.css").read_text()
+    assert re.search(r"--fly-accent: var\(--fly-([a-z]+)\)", semantic)[1] == "cobalt"
+
+
+def test_configuration_roles_when_compared_with_the_parser_then_roles_and_props_match():
+    text = (SITE / "md/theme/configuration.md").read_text()
+    sentence = text.split("Role properties:")[1].split("Values are plain CSS")[0]
+    block, inline = sentence.split("; inline roles")
+    roles, props = block.split(") take")
+    assert ticks(roles) == list(BLOCK_ROLES) and ticks(props) == list(BLOCK_PROPS)
+    roles, props = inline.split(") take")
+    assert ticks(roles) == list(INLINE_ROLES) and ticks(props) == list(INLINE_PROPS)
+
+
+def test_chrome_page_when_compared_with_the_view_then_menu_attributes_match():
+    text = (SITE / "md/theme/chrome.md").read_text()
+    config = {"site_name": "Site", "site_url": "https://example.com/"}
+    attrs = chrome_view(parse_site({"fly": {"chrome": "fontlab"}}), config).header_attrs
+    assert attrs["mode"] == "dark" and 'mode="dark"' in text
+    assert attrs["site-label"] == "Site" and "`site-label` (default: `site_name`)" in text
+    assert attrs["site-url"] == config["site_url"] and "`site-url`\n(`site_url`)" in text
+    for key in ("mobile-menu", "mobile-search"):
+        assert attrs[key] == "materialx" and f'`{key}="materialx"`' in text
+    view = chrome_view(parse_site({"fly": {"chrome": "vexy"}}), config)
+    assert (view.header, view.footer) == ("vexy-menu", "vexy-footer")
+    assert view.script in text and "<vexy-menu>" in text
 
 
 def page_scripts():

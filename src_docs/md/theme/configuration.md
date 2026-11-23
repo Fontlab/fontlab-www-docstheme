@@ -29,7 +29,7 @@ hook or a partial for additions.
 |---|---|---|
 | `chrome` | `fontlab` | `fontlab`, `vexy`, `none` or `{script, header, footer}`; see [chrome](chrome.md) |
 | `chrome_options` | none | menu attributes: `site-label`, `mobile-menu`, `mobile-search`, `search-from` |
-| `hue` | `cobalt` | the accent: `cherry`, `tangerine`, `amber`, `lime`, `emerald`, `teal`, `sky`, `cobalt`, `indigo`, `violet`, `magenta`, `rose` or `gray` |
+| `hue` | none (accent `cobalt`) | the accent: `cherry`, `tangerine`, `amber`, `lime`, `emerald`, `teal`, `sky`, `cobalt`, `indigo`, `violet`, `magenta`, `rose` or `gray` |
 | `fonts.sources` | none | stylesheets loaded on every page: `typekit:<kit>`, `google:<css2 family spec>` or an `https://` URL |
 | `fonts.roles` | theme defaults | per-role overrides, `{<role>: {<property>: <value>}}`; see [tokens](tokens.md#type-roles) |
 | `presets` | none | named `{fonts, hue}` bundles a page can pick |
@@ -84,8 +84,8 @@ extra:
         - google:Outfit:wght@100..900&family=REM:wght@100..900
 ```
 
-Role properties: block roles (`h1`–`h6`, `body`, `lead`, `nav`, `table`, `caption`,
-`code`) take `family`, `weight`, `stretch`, `features`, `variation`, `size`, `leading`,
+Role properties: block roles (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `body`, `lead`, `nav`,
+`table`, `caption`, `code`) take `family`, `weight`, `stretch`, `features`, `variation`, `size`, `leading`,
 `tracking` and `scale`; inline roles (`em`, `strong`, `mono`) take `family`, `weight`
 and `adjust`. Values are plain CSS: a value that could end its declaration (`;`, braces,
 `<`, a comment or an unbalanced quote) is rejected.

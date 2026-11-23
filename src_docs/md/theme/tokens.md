@@ -14,13 +14,13 @@ carries the same tokens for pages outside MkDocs.
 
 Twelve hues, each with a lead colour and a soft (lighter), deep (darker) and tint
 (surface wash) variant, nine greys and the paper surfaces. Light values apply to the
-default scheme, dark values to the slate scheme. Both are shown here, one after the other; the
-palette toggle switches the rest of the page. The columns are `--fly-<hue>`,
+default scheme, dark values to the slate scheme. Both panels keep their scheme whichever the palette toggle
+selects for the rest of the page. The columns are `--fly-<hue>`,
 `--fly-<hue>-soft`, `--fly-<hue>-deep` and `--fly-<hue>-tint`; hover a swatch for its name.
 
 ### Light
 
-<div class="fly-demo-palette" markdown="0">
+<div class="fly-demo-palette" data-md-color-scheme="default" markdown="0">
 <table class="fly-demo-swatches">
 <thead><tr><th scope="col">Hue</th><th scope="col">lead</th><th scope="col">soft</th><th scope="col">deep</th><th scope="col">tint</th></tr></thead>
 <tbody>

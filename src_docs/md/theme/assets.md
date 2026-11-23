@@ -44,7 +44,9 @@ and sha256, so a consumer can check what it loads:
 
 `fly-tokens.css` declares the palette, greys, type roles, sizes and grid as custom
 properties, light values on `:root` and dark values under
-`[data-md-color-scheme="slate"]`. It styles nothing by itself:
+`[data-md-color-scheme="slate"]`. The one rule it applies is the root size (`html` at
+90% of the browser's font size, 99% from 100em, 108% from 125em), which makes `1rem` half
+a body line; it styles nothing else:
 
 ```html
 <link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly-tokens.css">
@@ -61,15 +63,17 @@ The type roles name families from the FontLab Typekit kit; load the fonts as wel
 <link rel="stylesheet" href="https://use.typekit.net/gav0zux.css">
 ```
 
-## Use the full theme
+## fly.css and the components outside MkDocs
 
-`fly.css` is written for MaterialX's markup (`.md-typeset`, `.md-sidebar`, …): on a
-page with that markup it gives the same result as the MkDocs theme. Load the components
-bundle for Basecoat and daisyUI markup, inside an element with the class
-`fltheme-components`:
+`fly.css` is written for MaterialX's markup (`.md-typeset`, `.md-sidebar`, …) and sits on
+top of MaterialX's own stylesheets. A fly-january build also rescales MaterialX's rem
+lengths to the smaller root (the plugin's 20/14.4 post-build step), which a page loading
+MaterialX's CSS from elsewhere does not get. Outside a fly-january build, use
+`fly-tokens.css` with your own rules, and the components bundle for Basecoat and daisyUI
+markup inside an element with the class `fltheme-components`:
 
 ```html
-<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly.css">
+<link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly-tokens.css">
 <link rel="stylesheet" href="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/components.css">
 <script defer src="https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/basecoat.js"></script>
 
