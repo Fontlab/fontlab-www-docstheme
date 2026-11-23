@@ -1,4 +1,4 @@
-"""Theme package skeleton: discovery, inheritance and a strict fixture build.
+"""Theme package: discovery, inheritance and a strict fixture build.
 
 this_file: tests/py/test_theme_package.py
 """
@@ -79,16 +79,50 @@ def test_fixture_when_built_then_contains_materialx_markup(built_site):
     assert "md-header" in html and "md-content" in html, "MaterialX markup missing"
 
 
-def test_fixture_when_built_then_contains_child_main_html_marker(built_site):
+def test_missing_fly_plugin_names_the_required_configuration(tmp_path):
+    config = tmp_path / "mkdocs.yml"
+    config.write_text(
+        f"site_name: Missing plugin\ndocs_dir: {FIXTURE / 'docs-minimal'}\n"
+        "theme: {name: fly-january}\nplugins: []\n"
+    )
+    result = build(config, tmp_path / "site")
+    assert result.returncode != 0
+    assert "fly_january_requires_the_fly_plugin__add_fly_to_plugins" in result.stderr
+
+
+def test_fixture_when_built_then_pins_photoswipe_css(built_site):
     html = (built_site / "index.html").read_text()
-    assert '<meta name="fly-january" content="skeleton">' in html
+    assert re.search(
+        r'<link[^>]+href="https://cdn\.jsdelivr\.net/npm/photoswipe@5\.4\.4/dist/photoswipe\.css"'
+        r'\s+integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei\+Zx/1oA/0l8ysE"'
+        r' crossorigin="anonymous">',
+        html,
+    )
+
+
+def test_local_only_overrides_remove_external_theme_assets(tmp_path):
+    overrides = tmp_path / "overrides" / "partials"
+    overrides.mkdir(parents=True)
+    for name in ("fly-photoswipe", "fly-symbols"):
+        (overrides / f"{name}.html").touch()
+    config = tmp_path / "mkdocs.yml"
+    config.write_text(
+        f"site_name: Offline\ndocs_dir: {FIXTURE / 'docs-minimal'}\n"
+        "theme: {name: fly-january, custom_dir: overrides, font: false}\n"
+        "plugins: [search, fly]\nextra: {fly: {chrome: none, fonts: {sources: []}}}\n"
+    )
+    result = build(config, tmp_path / "site")
+    assert result.returncode == 0, result.stderr
+    html = (tmp_path / "site/index.html").read_text()
+    assert not re.search(r'<(?:link|script)\b[^>]+(?:href|src)="https://', html)
+    assert "data-fly-photoswipe" not in html
+    assert "assets/fly/fly.js" in html
 
 
 def test_fixture_when_built_then_ships_and_links_fly_assets(built_site):
     for name in (
         "fly.css",
         "fly-tokens.css",
-        "fly-utilities.css",
         "fly.js",
         "fly-bridge.js",
         "fly-debug.js",
@@ -104,6 +138,7 @@ def test_fixture_when_built_then_ships_and_links_fly_assets(built_site):
     assert any(
         re.search(rf'type="module" src="\.\./assets/fly/fly\.js{v}"', line) for line in links
     ), links
+    assert not (built_site / "assets/fly/fly-utilities.css").exists()
     assert "fly-utilities.css" not in html, "utilities load only with extra.fly.utilities: true"
     assert html.index("assets/stylesheets/main.") < html.index("assets/fly/fly.css"), (
         "fly.css loads after MaterialX"

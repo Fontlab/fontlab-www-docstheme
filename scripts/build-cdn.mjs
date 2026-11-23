@@ -72,11 +72,13 @@ export function publishedConflicts(published, version, fresh) {
  * else {resolved: true, manifest} (manifest null when origin/main has no docs/fly/ yet).
  */
 function publishedState() {
-  if (git('rev-parse', '--verify', '--quiet', 'origin/main^{commit}') === null) return { resolved: false };
-  const listed = git('ls-tree', '--name-only', 'origin/main', 'docs/fly/manifest.json');
+  if (git('fetch', '--quiet', 'origin', 'main') === null) return { resolved: false };
+  const main = git('rev-parse', '--verify', 'FETCH_HEAD^{commit}')?.trim();
+  if (!main) return { resolved: false };
+  const listed = git('ls-tree', '--name-only', main, 'docs/fly/manifest.json');
   if (listed === null) return { resolved: false };
   if (!listed.trim()) return { resolved: true, manifest: null };
-  const text = git('show', 'origin/main:docs/fly/manifest.json');
+  const text = git('show', `${main}:docs/fly/manifest.json`);
   return text === null ? { resolved: false } : { resolved: true, manifest: JSON.parse(text) };
 }
 

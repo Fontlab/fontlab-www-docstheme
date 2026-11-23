@@ -18,6 +18,7 @@ hooks:
   - hooks/page_scripts.py
 
 exclude_docs: |
+  /nav.yml
   includes/**
 
 not_in_nav: |

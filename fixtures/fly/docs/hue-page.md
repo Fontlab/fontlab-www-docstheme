@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs/hue-page.md
 fly:
   hue: rose
 ---

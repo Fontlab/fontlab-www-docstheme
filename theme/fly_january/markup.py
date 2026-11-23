@@ -9,12 +9,9 @@ on_post_page, on_post_template).
 
 from __future__ import annotations
 
-import logging
 import re
 from html import escape
 from typing import Any
-
-log = logging.getLogger("mkdocs.plugins.fly")
 
 # Attributes up to the tag's closing ">": quoted values may contain ">" or "/".
 ATTRS = r"""(?:[^>"']|"[^"]*"|'[^']*')*"""
@@ -27,8 +24,6 @@ OPAQUE = re.compile(
 CLASS = re.compile(
     r'(\sclass\s*=\s*)(?:(["\'])(.*?)\2|()([^\s"\'=<>`]+))', re.IGNORECASE | re.DOTALL
 )
-VALID = re.compile(r"[a-zA-Z_][a-zA-Z0-9_-]*\Z")
-TAGS = ("body", "main", "article")
 
 
 def mask(html: str) -> str:
@@ -48,40 +43,6 @@ def sub_outside(pattern: re.Pattern[str], html: str, repl: Any) -> str:
         out += [html[last : m.start()], repl(m) if text == m[0] else text]
         last = m.end()
     return "".join(out) + html[last:]
-
-
-def class_names(value: Any) -> list[str]:
-    """Valid class names from a space-separated string or a list; the rest warn and drop."""
-    if isinstance(value, str):
-        items = value.split()
-    elif isinstance(value, (list, tuple)):
-        items = [v for v in value if isinstance(v, str)]
-        if len(items) != len(value):
-            log.warning("fly: ignoring non-string class names in %r", value)
-    else:
-        if value is not None:
-            log.warning("fly: ignoring classes value %r (use a list or string)", value)
-        return []
-    good = [name for name in items if VALID.match(name)]
-    if len(good) != len(items):
-        log.warning("fly: ignoring invalid class names %s", sorted(set(items) - set(good)))
-    return good
-
-
-def frontmatter_classes(value: Any) -> dict[str, list[str]]:
-    """Parse ``classes:`` frontmatter; unknown shapes and tags warn and are ignored."""
-    if value is None:
-        return {}
-    if not isinstance(value, dict):
-        log.warning("fly: ignoring classes %r (expected body/main/article mapping)", value)
-        return {}
-    classes: dict[str, list[str]] = {}
-    for tag, names in value.items():
-        if str(tag).lower() not in TAGS:
-            log.warning("fly: ignoring classes for unknown tag %r", tag)
-            continue
-        classes[str(tag).lower()] = class_names(names)
-    return classes
 
 
 def merge_class(attrs: str, added: str) -> str:
@@ -121,11 +82,6 @@ def patch_tags(
         return f"<{match.group(1)}{attrs}>"
 
     return sub_outside(TAG, html, patch)
-
-
-def add_classes(html: str, classes: dict[str, list[str]]) -> str:
-    """Append classes to the first opening tag of each listed type, once each."""
-    return patch_tags(html, classes)
 
 
 PERMALINK = re.compile(

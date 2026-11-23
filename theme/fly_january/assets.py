@@ -9,11 +9,13 @@ assets, `rescale_materialx` at on_post_build.
 from __future__ import annotations
 
 import hashlib
+import logging
 import re
 from pathlib import Path
 from typing import Any
 
 from mkdocs.exceptions import PluginError
+from mkdocs.utils import get_theme_dir
 
 THEME_DIR = Path(__file__).parent
 THEME_ASSETS = ("fly.css", "fly-utilities.css", "fly.js", "fly-bridge.js", "fly-debug.js")
@@ -32,7 +34,8 @@ REM = re.compile(
 # Last line of a rescaled stylesheet: a second run (serve rebuilds) leaves it alone. At the
 # end, so MaterialX's leading @charset stays the first bytes of the file.
 RESCALED = "\n/* fly: MaterialX rem rescaled by 20/14.4 */"
-MATERIALX_CSS = ("assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css")
+STYLESHEETS = Path("assets/stylesheets")
+log = logging.getLogger(__name__)
 
 
 def asset_version(path: Path) -> str:
@@ -90,10 +93,17 @@ def rescale_rem(css: str, scale: float = REM_SCALE) -> str:
 
 def rescale_materialx(site: Path) -> None:
     """Rescale MaterialX's stylesheets in the built site to the 14.4px root, once each."""
-    files = [f for pattern in MATERIALX_CSS for f in site.glob(pattern)]
-    if len(files) != len(MATERIALX_CSS):
-        raise PluginError(f"fly: expected MaterialX main + palette CSS, found {files}")
-    for f in files:
-        css = f.read_text(encoding="utf-8")
+    source = Path(get_theme_dir("materialx")) / STYLESHEETS
+    shipped = {path.relative_to(source) for path in source.rglob("*.css")}
+    target = site / STYLESHEETS
+    built = {path.relative_to(target) for path in target.rglob("*.css")}
+    for path in sorted(built - shipped):
+        log.warning("fly: leaving third-party stylesheet %s unscaled", STYLESHEETS / path)
+    materialx = shipped & built
+    if not materialx:
+        raise PluginError(f"fly: no installed MaterialX stylesheets found in {target}")
+    for path in sorted(materialx):
+        stylesheet = target / path
+        css = stylesheet.read_text(encoding="utf-8")
         if not css.endswith(RESCALED):
-            f.write_text(rescale_rem(css) + RESCALED, encoding="utf-8")
+            stylesheet.write_text(rescale_rem(css) + RESCALED, encoding="utf-8")

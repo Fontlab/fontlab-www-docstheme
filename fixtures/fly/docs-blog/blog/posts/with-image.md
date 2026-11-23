@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs-blog/blog/posts/with-image.md
 date: 2024-02-02
 authors: [fixture]
 categories: [Images]

@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs-blog/blog/posts/plain.md
 date: 2024-01-01
 authors: [fixture]
 tags: [alpha]

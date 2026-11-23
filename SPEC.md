@@ -180,9 +180,14 @@ unless it sets `h1: ink`; the plugin writes `data-fly-h1="accent"`), `links` (`i
 links keep the text colour and are underlined; `accent` sets `--fly-link-color` to `--fly-link`,
 `data-fly-links="accent"`) and `chrome_options.sticky` (pins the bar; the rails and anchors then clear
 `--fly-bar-h`). Role properties: `em` also takes `style` (`normal`|`italic`) and `sans` (family, stretch,
-variation, adjust) sets the inline sans used by links, `mark` and h6. Article links only restyle
-classless links and the content classes `goto`, `lightbox`, `glightbox`, `footnote-ref`,
-`footnote-backref`; any other class is a component and keeps its own CSS; `a[data-fly-plain]` opts out.
+variation, adjust) sets the inline sans used by links, `mark` and h6. Fly styles every article link except a link with a class starting
+`md-`, a `.headerlink`, or a link with `data-fly-plain` on itself or an ancestor. Put
+`data-fly-plain` on site component links or their wrapper to style those links with ordinary
+site CSS. This opts out of the general article-link rule. Links inside theme cards,
+headings and tables also receive styles from those components. For theme styling,
+prefer site options, font roles, and `--fly-*` variables. For
+example, `.md-typeset h2 { --fly-h2-tracking: 2px; }` in `extra_css` sets the tracking
+where the heading consumes it. Section 6 covers direct property overrides.
 MaterialX plugins resolve by bare name (`search`, `blog`, `tags`, ...): the package registers
 `fly-january/<name>` entry points, which MkDocs prefers for a theme named `fly-january`.
 
@@ -201,6 +206,18 @@ attributes (`site-label`, `site-url`, `mobile-menu`, `mobile-search`, `search-fr
 "owner feedback" one-offs) with ordered cascade layers:
 
 `@layer fly.tokens, fly.base, fly.layout, fly.components, fly.chrome, fly.utilities;`
+
+The build flattens these layers so the theme can override MaterialX’s unlayered CSS.
+The generated `fly.css` has a maximum of 10 ID boosts per selector. For a direct property
+override in `extra_css`, match the theme rule’s ID weight and at least its remaining
+specificity. At equal specificity the later stylesheet wins. The following prefix covers
+the full generated boost and sets the alignment of article H2s:
+
+```css
+.md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h2 {
+  text-align: start;
+}
+```
 
 One directory per layer, one file per concern. `!important` is allowed only to beat
 MaterialX rules that are themselves `!important`, each with a comment naming the rule.

@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs-blog/blog/posts/wide-table.md
 date: 2024-03-03
 authors: [fixture]
 tags: [alpha]

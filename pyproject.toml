@@ -8,13 +8,28 @@ name = "fly-january"
 dynamic = ["version"]
 description = "FontLab/Vexy documentation theme for ProperDocs, extending MaterialX"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Framework :: MkDocs",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "License :: OSI Approved :: Apache Software License",
+]
 requires-python = ">=3.12"
 dependencies = [
   "mkdocs>=1.6.1",
-  "mkdocs-materialx>=10.1.8",
+  "mkdocs-materialx>=10.1.8,<11",
   "properdocs>=1.6.7",
-  "vexy-python-markdown-figure-groups",
+  "vexy-python-markdown-figure-groups>=0.1.0,<0.2",
 ]
+
+[project.urls]
+Homepage = "https://fontlab.dev/fontlab-www-docstheme/"
+Source = "https://github.com/Fontlab/fontlab-www-docstheme"
+Changelog = "https://github.com/Fontlab/fontlab-www-docstheme/blob/main/CHANGELOG.md"
 
 [project.entry-points."mkdocs.themes"]
 fly-january = "fly_january"
@@ -67,6 +82,11 @@ version-file = "theme/fly_january/__version__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["theme/fly_january"]
+
+[tool.hatch.build.targets.sdist]
+# Anchor the root files; a bare README.md also matches private review documents.
+include = ["theme/fly_january", "tests/py", "fixtures/fly", "/README.md", "/LICENSE", "/CHANGELOG.md", "/pyproject.toml"]
+skip-excluded-dirs = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests/py"]

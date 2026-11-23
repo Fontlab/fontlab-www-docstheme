@@ -248,25 +248,35 @@ test('flowing-text leadings are whole multiples of 1rem; tables keep the prototy
   }
 });
 
+function headingSize(level, width) {
+  const rem = width >= 2000 ? 17.28 : width >= 1600 ? 15.84 : 14.4;
+  const length = (expr) => expr.split('+').reduce((sum, term) => {
+    const value = parseFloat(term);
+    if (term.trim().endsWith('rem')) return sum + value * rem;
+    if (term.trim().endsWith('vw')) return sum + value * width / 100;
+    throw new Error('unexpected length ' + term);
+  }, 0);
+  const token = valueOf(rules['type.css'], ':root', `--fly-h${level}-size`);
+  const [min, preferred, max] = token.match(/clamp\(([^)]*)\)/)[1].split(',').map(length);
+  return Math.max(min, Math.min(preferred, max));
+}
+
+test('article heading sizes decrease from h1 through h4 at phone to desktop widths', () => {
+  for (const width of [320, 390, 768, 1024, 1440, 1920]) {
+    const sizes = [1, 2, 3, 4, 5, 6].map(level => headingSize(level, width));
+    const [h1, h2, h3, h4] = sizes;
+    assert.ok(h1 > h2 && h2 > h3 && h3 > h4, `${width}px: ${sizes.join(', ')}`);
+  }
+});
+
 test('the heading-size table in DESIGN-TOKENS.md matches the clamp() values', () => {
   const widths = [390, 1024, 1440, 1920];
-  const rootPx = (width) => (width >= 2000 ? 17.28 : width >= 1600 ? 15.84 : 14.4);
-  const length = (expr, width) =>
-    expr.split('+').reduce((sum, term) => {
-      const value = parseFloat(term);
-      if (term.trim().endsWith('rem')) return sum + value * rootPx(width);
-      if (term.trim().endsWith('vw')) return sum + (value * width) / 100;
-      throw new Error('unexpected length ' + term);
-    }, 0);
   for (let level = 1; level <= 6; level += 1) {
     const row = designDoc.match(new RegExp('^\\| h' + level + ' \\|(.*)$', 'm'));
     assert.ok(row, 'DESIGN-TOKENS.md has no size row for h' + level);
     const documented = row[1].split('|').slice(0, 4).map((cell) => parseFloat(cell));
-    const [floor, slope, ceiling] = valueOf(rules['type.css'], ':root', '--fly-h' + level + '-size')
-      .match(/clamp\(([^)]*)\)/)[1]
-      .split(',');
     widths.forEach((width, i) => {
-      const px = Math.min(length(ceiling, width), Math.max(length(floor, width), length(slope, width)));
+      const px = headingSize(level, width);
       assert.ok(Math.abs(px - documented[i]) <= SIZE_TOLERANCE_PX, 'h' + level + ' at ' + width + 'px: ' + px + ' vs ' + documented[i]);
     });
   }

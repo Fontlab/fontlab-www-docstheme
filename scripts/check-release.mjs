@@ -32,6 +32,10 @@ function pythonVersion() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  if (execFileSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' }).trim()) {
+    console.error('release check: the working tree must be clean, including untracked files');
+    process.exit(1);
+  }
   try {
     execFileSync('git', ['fetch', '--quiet', 'origin', 'main'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
   } catch {

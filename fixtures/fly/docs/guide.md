@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs/guide.md
 fly:
   preset: fl9-color
 hide: [toc]

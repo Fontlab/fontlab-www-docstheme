@@ -1,5 +1,7 @@
 # Home
 
+<!-- this_file: fixtures/fly/docs/index.md -->
+
 The fly-january fixture home page, set as a lead paragraph with **strong**, *emphasis* and a [link](guide.md).
 
 A body paragraph of ordinary running text, long enough to wrap onto a second line at the narrow

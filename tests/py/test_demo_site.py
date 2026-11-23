@@ -27,9 +27,9 @@ from fly_january.config import (
     HUES,
     INLINE_PROPS,
     INLINE_ROLES,
-    ROLE_PROPS,
     NAMED_CHROMES,
     PAGE_KEYS,
+    ROLE_PROPS,
     SITE_KEYS,
     SiteConfig,
     parse_page,
@@ -272,19 +272,37 @@ class Ids(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.ids: list[str] = []
+        self.example_panel_depth = 0
+        self.example_pre_ids: list[str] = []
 
     def handle_starttag(self, tag, attrs):
         self.ids += [value for name, value in attrs if name == "id" and value]
+        attrs = dict(attrs)
+        if tag == "div" and (
+            self.example_panel_depth or "fl-example-code" in attrs.get("class", "").split()
+        ):
+            self.example_panel_depth += 1
+        if tag == "pre" and self.example_panel_depth:
+            self.example_pre_ids.append(attrs.get("id", ""))
+
+    def handle_endtag(self, tag):
+        if tag == "div" and self.example_panel_depth:
+            self.example_panel_depth -= 1
 
 
-def test_demo_build_when_parsed_then_every_id_is_unique():
+def test_demo_build_when_parsed_then_ids_are_unique_and_example_blocks_are_named():
     pages = [p for p in sorted((ROOT / "docs").rglob("*.html")) if "fly" not in p.relative_to(ROOT / "docs").parts]
     assert len(pages) >= 70, len(pages)
+    block_count = 0
     for page in pages:
         parser = Ids()
         parser.feed(page.read_text())
+        for block_id in parser.example_pre_ids:
+            assert block_id.endswith("-block"), f"{page}: compiled example pre id {block_id!r}"
+        block_count += len(parser.example_pre_ids)
         dupes = {i: n for i, n in Counter(parser.ids).items() if n > 1}
         assert not dupes, f"docs/{page.relative_to(ROOT / 'docs')}: duplicate ids {dupes}"
+    assert block_count > 0, "no compiled examples found in the built demo"
     # The compiled examples' "HTML" listings quote the preview's ids as escaped text: a
     # text search counts those twice, the page has each element once.
     start = (ROOT / "docs/start/index.html").read_text()

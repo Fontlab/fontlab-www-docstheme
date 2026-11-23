@@ -13,9 +13,8 @@ import json
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
-from .config import SIDES, Look, PageConfig, SiteConfig, fail
+from .config import Look, PageConfig, SiteConfig
 from .fonts import Head, head, resolve
-from .markup import class_names, frontmatter_classes
 
 BRANDS = {
     "fontlab": ("https://i.fontlab.com/menu/fontlab.js", "fontlab-menu", "fontlab-footer"),
@@ -108,19 +107,16 @@ def view(site: SiteConfig, page: PageConfig | None, config: Any, versions: dict[
     )
 
 
-def page_classes(
-    meta: dict[str, Any], site: SiteConfig, page: PageConfig | None
-) -> dict[str, list[str]]:
+def page_classes(site: SiteConfig, page: PageConfig | None) -> dict[str, list[str]]:
     """Map tag name to the classes this page adds to it."""
-    classes = frontmatter_classes(meta.get("classes"))
+    page = page or PageConfig()
+    classes = {tag: list(names) for tag, names in page.classes.items()}
     body = classes.setdefault("body", [])
-    if "toc" in (meta.get("hide") or ()):  # MaterialX `hide: [toc]` removes L2
+    if "toc" in page.hide:
         body.append("fly-no-l2")
-    if page and page.preset:
-        body += class_names(f"subtheme-{page.preset}")
-    side = meta.get("margin_side") or site.margin_side
-    if side not in SIDES:
-        raise fail("margin_side", f"must be left or right, not {side!r}")
+    if page.preset:
+        body.append(f"subtheme-{page.preset}")
+    side = page.margin_side or site.margin_side
     if not any(name in MARGIN_CLASSES for name in body):
         body.append(f"fly-margin-{side}")
     body.append(f"fly-chrome-{site.chrome.kind}")

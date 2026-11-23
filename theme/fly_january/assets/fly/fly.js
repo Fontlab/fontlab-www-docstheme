@@ -3,17 +3,32 @@
 // plugin with data-pswp-width/height) in PhotoSwipe, latch the L2 sheet
 // position on mid-desktop screens, and keep the component bundle's dark mode in
 // step with the colour scheme. Loaded as a module.
-const CDN = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/";
+const photoStyles = document.querySelector("link[data-fly-photoswipe]");
+
+function loadPhotoScript(file, integrity) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = new URL(`umd/${file}.umd.min.js`, photoStyles.href).href;
+    script.integrity = integrity;
+    script.crossOrigin = "anonymous";
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(`Failed to load ${script.src}`));
+    document.head.append(script);
+  });
+}
 
 // Loaded on demand and allowed to fail: without PhotoSwipe the a.lightbox links
 // stay plain links to the full-size image, and the latch below still runs.
-if (document.querySelector(".md-content a.lightbox")) {
-  import(`${CDN}photoswipe-lightbox.esm.min.js`)
-    .then(({ default: PhotoSwipeLightbox }) => {
-      const lightbox = new PhotoSwipeLightbox({
+if (photoStyles && document.querySelector(".md-content a.lightbox")) {
+  Promise.all([
+    loadPhotoScript("photoswipe-lightbox", "sha384-IiBVbUz6+U+Tbm/ijO2P0XRwcVzNfrMzloNLkrqHkbi6w5H0v6ie4fI9BIO4SwdK"),
+    loadPhotoScript("photoswipe", "sha384-k8EKyYcONphQ7zH4cQ0888JapXwrLTXQl/Ue1/jYgjVYahln1NWpnt2S4IC56LNh"),
+  ])
+    .then(() => {
+      const lightbox = new window.PhotoSwipeLightbox({
         gallery: ".md-content",
         children: "a.lightbox",
-        pswpModule: () => import(`${CDN}photoswipe.esm.min.js`),
+        pswpModule: window.PhotoSwipe,
         bgOpacity: 0.92,
         showHideAnimationType: matchMedia("(prefers-reduced-motion: reduce)").matches ? "none" : "zoom",
       });

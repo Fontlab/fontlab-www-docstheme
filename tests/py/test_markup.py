@@ -8,8 +8,6 @@ from pathlib import Path
 
 import pytest
 from fly_january.markup import (
-    add_classes,
-    class_names,
     name_permalinks,
     patch_tags,
     stray_attr_lists,
@@ -35,69 +33,6 @@ CONTRACT_CLASSES = (
     "fly-chrome-fontlab",
     "fly-chrome-vexy",
 )
-
-
-def test_class_names_when_string_or_list_then_invalid_names_dropped():
-    assert class_names("one two") == ["one", "two"]
-    assert class_names(["ok", "9bad", "a<b", "_x-1"]) == ["ok", "_x-1"]
-    assert class_names(None) == []
-
-
-def test_add_classes_when_class_attr_exists_then_appended():
-    html = add_classes(PAGE, {"main": ["wide"], "article": ["x", "y"]})
-    assert '<main class="md-main wide">' in html
-    assert '<article class="a x y">' in html
-
-
-def test_add_classes_when_no_class_attr_then_added():
-    assert '<body dir="ltr" class="b">' in add_classes(PAGE, {"body": ["b"]})
-
-
-def test_add_classes_when_tag_repeats_then_only_first_patched():
-    html = add_classes("<article>1</article><article>2</article>", {"article": ["k"]})
-    assert html == '<article class="k">1</article><article>2</article>'
-
-
-def test_add_classes_when_custom_element_shares_prefix_then_not_patched():
-    html = add_classes('<main-x class="c"></main-x><main>', {"main": ["m"]})
-    assert html == '<main-x class="c"></main-x><main class="m">'
-
-
-def test_add_classes_when_class_unquoted_then_merged_into_one_attribute():
-    out = add_classes("<body class=foo data-x=1>", {"body": ["fly-margin-left"]})
-    assert out == '<body class="foo fly-margin-left" data-x=1>', out
-
-
-@pytest.mark.parametrize(
-    "head",
-    [
-        "<script>var s = '<body class=\"fake\"><main><article>';</script>",
-        '<style>/* <body> <main class="x"> <article> */</style>',
-        '<!-- <body class="x"> <main> <article> -->',
-    ],
-)
-def test_add_classes_when_tags_in_script_style_or_comment_then_real_tags_patched(head):
-    out = add_classes(head + PAGE, {"body": ["b"], "main": ["m"], "article": ["k"]})
-    expected = head + PAGE.replace('dir="ltr"', 'dir="ltr" class="b"').replace(
-        '"md-main"', '"md-main m"'
-    ).replace('class="a"', 'class="a k"')
-    assert out == expected, out
-
-
-def test_add_classes_when_content_has_literal_tags_then_content_untouched():
-    content = (
-        '<pre><code>&lt;body&gt; <article> <main class="x"></code></pre>'
-        '<main><article class="inner">raw</article></main>'
-    )
-    html = PAGE.replace(">x<", f">{content}<")
-    out = add_classes(html, {"body": ["b"], "main": ["m"], "article": ["k"]})
-    assert out.count('class="b"') == 1 and out.count('"md-main m"') == 1 and out.count('"a k"') == 1
-    assert content in out, out
-
-
-def test_add_classes_when_gt_inside_attribute_value_then_whole_tag_kept():
-    out = add_classes('<body data-x="a>b" class="c">', {"body": ["fly-margin-left"]})
-    assert out == '<body data-x="a>b" class="c fly-margin-left">', out
 
 
 def test_patch_tags_when_attribute_then_added_once_and_existing_kept():

@@ -16,16 +16,20 @@ data-fly-hue are patched into the rendered page. Page frontmatter read:
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
 from mkdocs.plugins import BasePlugin
+from mkdocs.structure.files import Files
 from vexy_markdown_figure_groups import group_figures
 
 from .assets import rescale_materialx, theme_versions, version_links
 from .config import PageConfig, SiteConfig, parse_page, parse_site
-from .markup import log, name_permalinks, patch_tags, stray_attr_lists
+from .markup import name_permalinks, patch_tags, stray_attr_lists
 from .view import body_attributes, h1_mode, page_classes, preset_look, view
+
+log = logging.getLogger("mkdocs.plugins.fly")
 
 # Margin figures (img-small/img-tall/img-cut) and their paragraphs become one block in the
 # theme's vocabulary: <div class="fly-aside[ fly-cut]" style="--rows: N">.
@@ -84,6 +88,14 @@ class FlyPlugin(BasePlugin):
         version_links(config)
         return config
 
+    def on_files(self, files: Files, **_: Any) -> Files:
+        """Leave the opt-in utility bundle out of the static files copied to the site."""
+        if not self.site.utilities:
+            bundle = files.get_file_from_path("assets/fly/fly-utilities.css")
+            if bundle is not None:
+                files.remove(bundle)
+        return files
+
     def on_env(self, env: Any, config: Any, **_: Any) -> Any:
         """Site-level `fly` for templates rendered without a page (404.html)."""
         env.globals["fly"] = view(self.site, None, config, self.versions)
@@ -116,7 +128,7 @@ class FlyPlugin(BasePlugin):
         """Body/main/article classes and data-fly-hue."""
         page_config = self.page_config(page)
         hue = preset_look(self.site, page_config).hue
-        classes = page_classes(page.meta or {}, self.site, page_config)
+        classes = page_classes(self.site, page_config)
         h1 = h1_mode(self.site, page_config)
         return patch_tags(output, classes, body_attributes(hue, h1, self.site.links))
 
@@ -125,7 +137,7 @@ class FlyPlugin(BasePlugin):
         if not template_name.endswith(".html"):
             return output_content
         hue = preset_look(self.site, None).hue
-        classes = page_classes({}, self.site, None)
+        classes = page_classes(self.site, None)
         h1 = h1_mode(self.site, None)
         return patch_tags(output_content, classes, body_attributes(hue, h1, self.site.links))
 

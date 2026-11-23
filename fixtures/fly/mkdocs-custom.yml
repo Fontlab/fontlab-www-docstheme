@@ -1,6 +1,7 @@
 # this_file: fixtures/fly/mkdocs-custom.yml
 # The fly fixture with chrome: custom.
 INHERIT: mkdocs.yml
+extra_css: [tracking.css]
 extra:
   fly:
     chrome:

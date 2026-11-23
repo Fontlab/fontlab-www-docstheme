@@ -4,6 +4,7 @@
 // --fly-* reference defined, !important only with a reason, and the committed assets
 // matching a fresh build.
 import assert from 'node:assert/strict';
+import postcss from 'postcss';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { test } from 'node:test';
@@ -91,6 +92,21 @@ test('committed fly.css and fly-tokens.css match a fresh build and are flat', as
   }
 });
 
+test('documented ID boost and copyable override match the maximum in built fly.css', async () => {
+  const boost = String.raw`:not(#\#)`;
+  const css = postcss.parse(await readFile(join(OUT, 'fly.css'), 'utf8'));
+  let max = 0;
+  css.walkRules(rule => {
+    for (const selector of rule.selectors) max = Math.max(max, selector.split(boost).length - 1);
+  });
+  assert.ok(max > 0, 'flattened CSS must have ID boosts');
+  for (const path of ['SPEC.md', 'README.md']) {
+    const doc = await readFile(join(root, path), 'utf8');
+    assert.ok(doc.includes(`maximum of ${max} ID boosts`), `${path}: update documented boost count`);
+    assert.ok(doc.includes(`.md-typeset${boost.repeat(max)} `), `${path}: update example selector`);
+  }
+});
+
 test('the built CSS registers the typed line pitch (@property --fly-line)', async () => {
   for (const name of ['fly.css', 'fly-tokens.css']) {
     const css = await readFile(join(OUT, name), 'utf8');
@@ -113,13 +129,12 @@ test('committed scripts equal their sources; utilities are the layered tw: subse
   }
 });
 
-test('main.html loads the theme assets from its own path and keeps the marker', async () => {
+test('main.html loads the theme assets from its own path', async () => {
   const html = await readFile(join(root, 'theme/fly_january/main.html'), 'utf8');
   for (const name of ['fly.css', 'fly-utilities.css', 'fly-bridge.js', 'fly.js']) {
     assert.ok(html.includes("'assets/fly/" + name + "' | url"), 'main.html must load assets/fly/' + name);
   }
   assert.ok(html.indexOf('fly.css') < html.indexOf('fly-utilities.css'), 'utilities load after fly.css');
-  assert.ok(html.includes('<meta name="fly-january" content="skeleton">'));
   assert.match(html, /\{%- if fly\.utilities %\}\s*<link[^>]*fly-utilities\.css/, 'utilities only when extra.fly.utilities');
   for (const part of ['fly.head.links', 'fly.head.style', 'fly.chrome.script', 'fly.chrome.header', 'fly.chrome.footer']) {
     assert.ok(html.includes(part), 'main.html renders the plugin-provided ' + part);

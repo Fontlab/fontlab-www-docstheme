@@ -3,6 +3,7 @@
 this_file: tests/py/test_defaults.py
 """
 
+import json
 import tomllib
 from importlib.metadata import entry_points
 
@@ -51,11 +52,22 @@ def minimal(tmp_path_factory):
 
 
 def test_minimal_when_search_bare_then_materialx_search_plugin_and_worker(minimal):
+    from material.plugins.search.config import SearchConfig
+
     assert list((minimal / "assets/javascripts/workers").glob("search.*.min.js")), (
         "MaterialX's search worker is shipped"
     )
     assert not (minimal / "search/worker.js").exists(), "MkDocs' own worker is not"
-    assert (minimal / "search/search_index.json").is_file()
+    search = minimal / "search"
+    provider = SearchConfig().get("provider", "lunr")
+    if provider == "pagefind":
+        assert "md-search-result--pagefind" in (minimal / "index.html").read_text()
+        manifest = json.loads((search / "pagefind-entry.json").read_text())
+        assert manifest["languages"]["en"]["page_count"] >= 2
+        assert list((search / "index").glob("en_*.pf_index"))
+    else:
+        assert provider == "lunr"
+        assert json.loads((search / "search_index.json").read_text())["docs"]
 
 
 def test_alias_when_bare_name_then_materialx_key_added_without_second_registration():

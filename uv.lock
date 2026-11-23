@@ -249,7 +249,7 @@ site = [
 [package.metadata]
 requires-dist = [
     { name = "mkdocs", specifier = ">=1.6.1" },
-    { name = "mkdocs-materialx", specifier = ">=10.1.8" },
+    { name = "mkdocs-materialx", specifier = ">=10.1.8,<11" },
     { name = "properdocs", specifier = ">=1.6.7" },
     { name = "vexy-python-markdown-figure-groups", editable = "../../github.vexyart/vexy-python-markdown-figure-groups" },
 ]

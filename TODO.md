@@ -2,23 +2,23 @@
 this_file: TODO.md
 ---
 
-# Open work — fly-january (issues/401.md)
+# Work — fly-january (issues/401.md)
 
 Spec: SPEC.md. Plan: PLAN.md. One implementer per task; a separate reviewer per task.
 Order: T1 → T2 → T3 → T4 → T5 → T6; T7 in parallel; T8 after T4; T9 after T7; T10 after T5;
 T11 after T9 and T10; T12; T13; T14.
 
 ## Theme implementer (this repo)
-- [ ] T1 Theme package skeleton, entry points, strict fixture build
-- [ ] T3 Port fltheme27 CSS/JS/templates into `src/fly/` layers; build into the package
-- [ ] T4 `fly` plugin: config, fonts, presets, hue, chrome, rem rescale; port hook tests
-- [ ] T5 Browser specs: grid, sizes, schemes, chrome, keyboard
+- [x] T1 Theme package skeleton, entry points, strict fixture build
+- [x] T3 Port fltheme27 CSS/JS/templates into `src/fly/` layers; build into the package
+- [x] T4 `fly` plugin: config, fonts, presets, hue, chrome, rem rescale; port hook tests
+- [x] T5 Browser specs: grid, sizes, schemes, chrome, keyboard
 
 ## Design-token implementer (this repo)
-- [ ] T2 `--fly-*` tokens: grid, sizes, roles, 12 hues, semantic map, MaterialX bridge; tests
+- [x] T2 `--fly-*` tokens: grid, sizes, roles, 12 hues, semantic map, MaterialX bridge; tests
 
 ## Site implementer (this repo)
-- [ ] T6 `docs/fly/<version>/` CDN tree, demo site in `src_docs/`, Marketing content migrated
+- [x] T6 `docs/fly/<version>/` CDN tree, demo site in `src_docs/`, Marketing content migrated
 
 ## Plugin implementer (github.vexyart, via Codex)
 - [ ] T7 `vexy-mkdocs-page-import` (import-url, webflow-import-url, copy-file)
@@ -26,8 +26,8 @@ T11 after T9 and T10; T12; T13; T14.
 - [ ] T9 `fontlab-www-toolkit` on the plugin and fly assets
 
 ## Migration implementers
-- [ ] T10 whats-new-fontlab-9 on fly-january with chapter hues; old/new screenshot parity
-- [ ] T11 www.fontlab.com, www.vexy.art, blog.fontlab.com rebuilt and browser-checked
+- [x] T10 whats-new-fontlab-9 on fly-january with chapter hues; old/new screenshot parity
+- [x] T11 www.fontlab.com, www.vexy.art, blog.fontlab.com rebuilt and browser-checked
 - [ ] T13a fontlab-scripting sites (16) + fontlabcom.github.io + getgo-fonts
 - [ ] T13b vfj spec, photofont spec, writing styleguide, Marketing minisite
 - [ ] T13c Vexy official: vexy-lines ×5

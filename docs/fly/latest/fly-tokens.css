@@ -43,7 +43,7 @@
     --fly-h2-stretch: normal;
     --fly-h2-features: normal;
     --fly-h2-variation: normal;
-    --fly-h2-size: calc(clamp(1.75rem, 3.75rem + 1vw, 3.375rem) * var(--fly-h2-scale));
+    --fly-h2-size: calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h2-scale));
     --fly-h2-leading: round(up, 1em, 1rem);
     --fly-h2-tracking: -0.02em;
     --fly-h2-scale: 1;
@@ -53,7 +53,7 @@
     --fly-h3-stretch: var(--fly-nav-stretch);
     --fly-h3-features: normal;
     --fly-h3-variation: var(--fly-nav-variation);
-    --fly-h3-size: calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h3-scale));
+    --fly-h3-size: calc(clamp(1.3125rem, 1.125rem + 0.5vw, 1.375rem) * var(--fly-h3-scale));
     --fly-h3-leading: round(up, 1.3em, 1rem);
     --fly-h3-tracking: 0;
     --fly-h3-scale: 1;

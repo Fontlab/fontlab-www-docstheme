@@ -76,22 +76,18 @@ per-role unitless multiplier of the gav0zux newspaper tool
 through custom properties; `site/shared/spacing.mjs` writes lengths as `em ± rem`, which
 the heading leadings below follow by rounding an em leading to rem steps).
 
-The starting points were the whats-new-fontlab-9 prototype's sizes, which were in em of the
-18px body and switched at fixed breakpoints: h1 37.8px (phones), 59.4px (60em–76.25em),
-86.4px (desktop); h2 48.6px at every width; h3, h4, h6 18px (17.1px below 60em); h5
-25.2–31.5px fluid. The clamps reproduce those values at 1440 and 1920px and between the old
-breakpoints. h2 keeps the prototype's `clamp(1.4em, 3em + 1vw, 2.7em)` written in rem
-(`clamp(1.75rem, 3.75rem + 1vw, 3.375rem)`), so it stays 48.6px at every width below 100em,
-as the prototype rendered it (Task 3 parity ruling). h1 is continuous where the prototype
-stepped (59.4px between 960 and 1219px, then 86.4px).
+The release-notes prototype describes its phone H1 as 1.5 times H2 and its H5 card
+titles as the same size as H2. Fly uses the prototype’s fluid card-title clamp for
+both H2 and H5. H1 grows continuously between the prototype’s phone and desktop sizes.
+H3 sits 0.125rem above H4 throughout the range. H5 keeps its separate card-title role.
 
 Computed sizes in CSS px (scale 1); the browser test asserts them within 0.5px:
 
 | Heading | 390px | 1024px | 1440px | 1920px | `clamp()` |
 |---|---|---|---|---|---|
 | h1 | 37.8 | 61.4 | 86.4 | 95.0 | `2.625rem, 6vw, 6rem` |
-| h2 | 48.6 | 48.6 | 48.6 | 53.5 | `1.75rem, 3.75rem + 1vw, 3.375rem` |
-| h3 | 17.1 | 18.0 | 18.0 | 19.8 | `1.1875rem, 1rem + 0.5vw, 1.25rem` |
+| h2 | 25.2 | 28.2 | 31.5 | 34.6 | `1.75rem, 1.25rem + 1vw, 2.1875rem` |
+| h3 | 18.9 | 19.8 | 19.8 | 21.8 | `1.3125rem, 1.125rem + 0.5vw, 1.375rem` |
 | h4 | 17.1 | 18.0 | 18.0 | 19.8 | `1.1875rem, 1rem + 0.5vw, 1.25rem` |
 | h5 | 25.2 | 28.2 | 31.5 | 34.6 | `1.75rem, 1.25rem + 1vw, 2.1875rem` |
 | h6 | 17.1 | 18.0 | 18.0 | 19.8 | `1.1875rem, 1rem + 0.5vw, 1.25rem` |

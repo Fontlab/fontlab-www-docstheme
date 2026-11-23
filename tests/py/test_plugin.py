@@ -297,7 +297,7 @@ def test_roles_css_when_roles_then_one_root_rule_in_token_order():
 
 def test_page_classes_when_preset_then_body_gets_subtheme_side_and_chrome():
     config = site()
-    assert page_classes({}, config, page({"subtheme": "sitka"}))["body"] == [
+    assert page_classes(config, page({"subtheme": "sitka"}))["body"] == [
         "subtheme-sitka",
         "fly-margin-left",
         "fly-chrome-fontlab",
@@ -305,55 +305,56 @@ def test_page_classes_when_preset_then_body_gets_subtheme_side_and_chrome():
 
 
 def test_page_classes_when_page_sets_side_then_it_wins():
-    assert page_classes({"margin_side": "right"}, site(), None)["body"][0] == "fly-margin-right"
-    assert page_classes({}, site(margin_side="right"), None)["body"][0] == "fly-margin-right"
+    assert page_classes(site(), page({"margin_side": "right"}))["body"][0] == "fly-margin-right"
+    assert page_classes(site(margin_side="right"), None)["body"][0] == "fly-margin-right"
 
 
 def test_page_classes_when_hide_toc_then_body_gets_no_l2():
     config = site()
-    assert page_classes({"hide": ["toc"]}, config, None)["body"][:2] == [
+    assert page_classes(config, page({"hide": ["toc"]}))["body"][:2] == [
         "fly-no-l2",
         "fly-margin-left",
     ]
-    assert page_classes({"hide": ["navigation"]}, config, None)["body"][0] == "fly-margin-left"
-    assert page_classes({"hide": None}, config, None)["body"][0] == "fly-margin-left"
+    assert page_classes(config, page({"hide": ["navigation"]}))["body"][0] == "fly-margin-left"
+    assert page_classes(config, page({"hide": None}))["body"][0] == "fly-margin-left"
     # Same test MaterialX's base.html uses to drop the L2 sidebar.
-    assert page_classes({"hide": "toc"}, config, None)["body"][0] == "fly-no-l2"
+    assert page_classes(config, page({"hide": "toc"}))["body"][0] == "fly-no-l2"
 
 
 def test_page_classes_when_bad_side_then_raises():
     with pytest.raises(PluginError, match="margin_side"):
-        page_classes({"margin_side": "top"}, site(), None)
+        page({"margin_side": "top"})
 
 
 @pytest.mark.parametrize("side", ["fly-margin-left", "fly-margin-right"])
 def test_page_classes_when_body_sets_margin_class_then_no_default_added(side):
-    assert page_classes({"classes": {"body": [side]}}, site(), None)["body"] == [
+    assert page_classes(site(), page({"classes": {"body": [side]}}))["body"] == [
         side,
         "fly-chrome-fontlab",
     ]
 
 
-@pytest.mark.parametrize("value", ["foo", 5, ["body"], True])
-def test_page_classes_when_classes_not_mapping_then_ignored_with_warning(value, caplog):
-    assert page_classes({"classes": value}, site(), None) == {
-        "body": ["fly-margin-left", "fly-chrome-fontlab"]
-    }
-    assert "fly: ignoring classes" in caplog.text
+@pytest.mark.parametrize(
+    "value",
+    [None, "foo", 5, ["body"], {"div": "x"}, {"main": 5}, {"article": ["9bad"]},
+     {"body": [False]}, {"main": ["a<b"]}],
+)
+def test_parse_page_when_classes_invalid_then_error_names_page_and_key(value):
+    with pytest.raises(PluginError, match=r"p\.md: classes"):
+        page({"classes": value})
 
 
-@pytest.mark.parametrize("names", [5, {"a": 1}, 3.5])
-def test_page_classes_when_tag_value_not_list_or_string_then_ignored(names, caplog):
-    classes = page_classes({"classes": {"body": names, "main": names}}, site(), None)
-    assert classes == {"body": ["fly-margin-left", "fly-chrome-fontlab"], "main": []}
-    assert "ignoring classes value" in caplog.text
+def test_parse_page_when_classes_valid_then_repeated_render_preserves_input():
+    parsed = page({"classes": {"BODY": "one two", "article": ["_x-1"]}, "hide": "toc"})
+    assert parsed.classes == {"body": ("one", "two"), "article": ("_x-1",)}
+    assert parsed.hide == ("toc",)
+    assert page_classes(site(), parsed) == page_classes(site(), parsed)
 
 
-def test_page_classes_when_unknown_tag_or_bad_names_then_warned(caplog):
-    classes = page_classes({"classes": {"div": ["x"], "main": ["ok", "9bad", 7]}}, site(), None)
-    assert classes == {"main": ["ok"], "body": ["fly-margin-left", "fly-chrome-fontlab"]}
-    assert "unknown tag 'div'" in caplog.text
-    assert "non-string" in caplog.text and "invalid class names" in caplog.text
+@pytest.mark.parametrize("hide", [True, 0, {}, ["toc", 7]])
+def test_parse_page_when_hide_invalid_then_error_names_page(hide):
+    with pytest.raises(PluginError, match=r"p\.md: hide"):
+        page({"hide": hide})
 
 
 @pytest.mark.parametrize(
@@ -467,28 +468,24 @@ def test_on_post_build_when_materialx_css_missing_then_raises(tmp_path):
         FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
 
 
-def test_on_post_build_when_materialx_css_present_then_rescaled(tmp_path):
-    d = tmp_path / "assets/stylesheets"
-    d.mkdir(parents=True)
-    (d / "main.abc.min.css").write_text("a{width:1rem}")
-    (d / "palette.def.min.css").write_text("b{top:2rem}")
-    FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
-    marker = assets.RESCALED
-    assert (d / "main.abc.min.css").read_text() == "a{width:1.3889rem}" + marker
-    assert (d / "palette.def.min.css").read_text() == "b{top:2.7778rem}" + marker
-    FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
-    assert (d / "main.abc.min.css").read_text() == "a{width:1.3889rem}" + marker, (
-        "second run: no-op"
-    )
-
-
-def test_on_post_build_when_charset_leads_then_it_stays_the_first_bytes(tmp_path):
-    d = tmp_path / "assets/stylesheets"
-    d.mkdir(parents=True)
-    (d / "main.abc.min.css").write_text('@charset "UTF-8";a{width:1rem}')
-    (d / "palette.def.min.css").write_text("b{top:2rem}")
-    FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
-    assert (d / "main.abc.min.css").read_text().startswith('@charset "UTF-8";')
+def test_on_post_build_when_materialx_adds_stylesheets_then_only_its_css_rescaled(
+    tmp_path, monkeypatch, caplog
+):
+    source = tmp_path / "installed/assets/stylesheets"
+    built = tmp_path / "site/assets/stylesheets"
+    monkeypatch.setattr(assets, "get_theme_dir", lambda name: tmp_path / "installed")
+    css = '@charset "UTF-8";a{width:1rem}'
+    for folder in (source, built):
+        (folder / "extras").mkdir(parents=True)
+        for name in ("any-future-name.css", "extras/grid.css"):
+            (folder / name).write_text(css)
+    (built / "plugin.css").write_text(css)
+    for _ in range(2):
+        FlyPlugin().on_post_build({"site_dir": str(tmp_path / "site")})
+        for name in ("any-future-name.css", "extras/grid.css"):
+            assert (built / name).read_text() == css.replace("1rem", "1.3889rem") + assets.RESCALED
+        assert (built / "plugin.css").read_text() == css
+    assert any(r.levelname == "WARNING" and "plugin.css" in r.message for r in caplog.records)
 
 
 def test_rescale_rem_when_data_uri_holds_paren_then_following_rems_scaled():

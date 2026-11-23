@@ -106,6 +106,7 @@ HTTPS = re.compile(r"https://[^\s\"'<>]+")
 CSS_VALUE = re.compile(r"[^<>{};\\\n\r]+")
 # A heading's maximum width: a plain length (ch, rem, em, px, %) or none.
 MEASURE = re.compile(r"none|0|\d*\.?\d+(?:ch|rem|em|px|%)")
+CLASS_NAME = re.compile(r"[a-zA-Z_][a-zA-Z0-9_-]*")
 NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
 # A quote inside an unquoted url( ) is a bad-url token that can swallow what follows.
 BAD_URL = re.compile(r"url\(\s*(?![\"'\s])[^)]*[\"']", re.IGNORECASE)
@@ -156,6 +157,9 @@ class PageConfig:
     preset: str | None = None
     look: Look = Look()
     h1: str | None = None
+    margin_side: str | None = None
+    classes: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    hide: tuple[str, ...] = ()
 
 
 def fail(where: str, message: str) -> PluginError:
@@ -343,6 +347,25 @@ def parse_site(extra: Any) -> SiteConfig:
     )
 
 
+def parse_classes(where: str, value: Any) -> dict[str, tuple[str, ...]]:
+    """Parse body, main and article classes from page front matter."""
+    if not isinstance(value, dict):
+        raise fail(where, "must be a mapping of tag names to classes")
+    classes = {}
+    for tag, names in value.items():
+        if not isinstance(tag, str) or tag.lower() not in ("body", "main", "article"):
+            raise fail(where, f"unknown tag {tag!r}; use body, main or article")
+        if isinstance(names, str):
+            names = names.split()
+        if not isinstance(names, (list, tuple)):
+            raise fail(f"{where}.{tag}", "must be a string or list of class names")
+        for name in names:
+            if not isinstance(name, str) or not CLASS_NAME.fullmatch(name):
+                raise fail(f"{where}.{tag}", f"invalid class name {name!r}")
+        classes[tag.lower()] = tuple(names)
+    return classes
+
+
 def parse_page(meta: dict[str, Any], site: SiteConfig, src: str) -> PageConfig:
     """Validate a page's `fly:` frontmatter (and the legacy `subtheme:` alias)."""
     where = f"{src}: fly"
@@ -354,12 +377,23 @@ def parse_page(meta: dict[str, Any], site: SiteConfig, src: str) -> PageConfig:
     if alias is not None and preset is not None and alias != preset:
         raise fail(where, f"subtheme {alias!r} and fly.preset {preset!r} disagree; keep one")
     preset = preset if preset is not None else alias
-    if meta.get("margin_side") is not None:
-        choice(f"{src}: margin_side", meta["margin_side"], SIDES)
     if preset is not None and preset not in site.presets:
         known = ", ".join(site.presets) or "none configured"
         raise fail(f"{where}.preset", f"unknown preset {preset!r} (known: {known})")
     h1 = None if raw.get("h1") is None else choice(f"{where}.h1", raw["h1"], H1_COLOURS)
+    hide = meta.get("hide")
+    if hide is None:
+        hide = []
+    elif isinstance(hide, str):
+        hide = [hide]
+    if not isinstance(hide, list) or not all(isinstance(item, str) for item in hide):
+        raise fail(f"{src}: hide", "must be a string or a list of strings")
+    side = meta.get("margin_side")
     return PageConfig(
-        preset=preset, look=parse_look(where, raw.get("fonts"), raw.get("hue")), h1=h1
+        preset=preset,
+        look=parse_look(where, raw.get("fonts"), raw.get("hue")),
+        h1=h1,
+        margin_side=None if side is None else choice(f"{src}: margin_side", side, SIDES),
+        hide=tuple(hide),
+        classes=parse_classes(f"{src}: classes", meta["classes"]) if "classes" in meta else {},
     )

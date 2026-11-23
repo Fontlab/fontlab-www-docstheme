@@ -1,4 +1,5 @@
 ---
+this_file: fixtures/fly/docs/reference.md
 subtheme: plain
 margin_side: right
 classes:

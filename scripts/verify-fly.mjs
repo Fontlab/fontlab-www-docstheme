@@ -500,6 +500,10 @@ const verifyChrome = async base => {
       else check(`chrome.${name}.defined`, d.defined, `<${menu}> customElements.get from ${d.src}`);
     }
     check(`chrome.${name}.header`, c.headerVisible === !hidden, `MaterialX header visible=${c.headerVisible}`);
+    if (name === 'custom') {
+      const tracking = await ev("getComputedStyle(document.querySelector('.md-typeset h2')).letterSpacing");
+      check('extra-css.h2-tracking', tracking === '2px', `${tracking} want 2px from tracking.css`);
+    }
     if (name === 'none' || name === 'custom') {
       check(`chrome.${name}.no-brand`, c.tags.every(t => name === 'custom' ? t.startsWith('acme-') : false) && c.brandIn.length === 0,
         `FontLab/Vexy text in ${c.brandIn}; elements [${c.tags}]`);

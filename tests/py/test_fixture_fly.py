@@ -4,11 +4,16 @@ this_file: tests/py/test_fixture_fly.py
 """
 
 import re
+import shutil
+import subprocess
+import sys
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
+from fly_january.assets import RESCALED, rescale_rem
+from mkdocs.utils import get_theme_dir
 from test_theme_package import FIXTURE, build
 
 CHROMES = ("mkdocs", "mkdocs-vexy", "mkdocs-none", "mkdocs-custom")
@@ -48,6 +53,22 @@ def test_site_page_when_no_frontmatter_then_site_fonts_roles_and_hue(sites):
     assert '<link rel="preconnect" href="https://use.typekit.net" crossorigin>' in html
     assert 'data-fly-hue="cobalt"' in body(html)
     assert "fly-margin-left" in body(html) and "fly-chrome-fontlab" in body(html)
+
+
+def test_extra_css_overrides_the_tracking_token_on_the_heading(sites):
+    site = sites["mkdocs-custom"]
+    html = (site / "index.html").read_text()
+    assert html.index("assets/fly/fly.css?") < html.index("tracking.css?")
+    css = (site / "assets/fly/fly.css").read_text()
+    # The heading normally inherits this token. A declaration on h2 wins over the root.
+    token = "--fly-h2-tracking"
+    definitions = re.findall(r"([^{}]*)\{[^{}]*?" + token + r"\s*:", css)
+    assert [selector.strip() for selector in definitions] == [":root"]
+    heading_rules = css.replace(r":not(#\#)", "")
+    assert re.search(
+        r"\.md-typeset h2\s*\{[^{}]*letter-spacing:\s*var\(" + token + r"\)", heading_rules
+    )
+    assert ".md-typeset h2 { --fly-h2-tracking: 2px; }" in (site / "tracking.css").read_text()
 
 
 def test_preset_page_when_fly_preset_then_preset_fonts_roles_hue_and_class(sites):
@@ -137,6 +158,7 @@ def test_chrome_custom_when_built_then_materialx_header_kept_beside_custom_bars(
 
 
 def test_utilities_and_debug_when_enabled_then_linked_and_switcher_data(sites):
+    assert (sites["mkdocs-custom"] / "assets/fly/fly-utilities.css").is_file()
     html = read(sites, "mkdocs-custom", "reference/index.html")
     assert re.search(r'href="\.\./assets/fly/fly-utilities\.css\?v=\w{10}"', html)
     assert html.index("assets/fly/fly.css") < html.index("assets/fly/fly-utilities.css")
@@ -147,9 +169,27 @@ def test_utilities_and_debug_when_enabled_then_linked_and_switcher_data(sites):
 
 
 def test_rescale_when_built_then_materialx_rems_scaled(sites):
-    (main,) = (sites["mkdocs"] / "assets/stylesheets").glob("main.*.min.css")
-    # MaterialX's root is 125% and its header is 2.4rem tall; scaled by 20/14.4.
-    assert "3.3333rem" in main.read_text()
+    source = Path(get_theme_dir("materialx")) / "assets/stylesheets"
+    target = sites["mkdocs"] / "assets/stylesheets"
+    shipped = {f.relative_to(source) for f in source.rglob("*.css")}
+    built = {f.relative_to(target) for f in target.rglob("*.css")}
+    rescaled = {path for path in built if (target / path).read_text().endswith(RESCALED)}
+    assert shipped and shipped <= built
+    assert rescaled == shipped
+    for path in shipped:
+        assert (target / path).read_text() == rescale_rem((source / path).read_text()) + RESCALED
+
+
+def test_build_when_page_classes_invalid_then_fails_even_without_strict(tmp_path):
+    fixture = tmp_path / "fixture"
+    shutil.copytree(FIXTURE, fixture)
+    (fixture / "docs/index.md").write_text("---\nclasses: {body: [3]}\n---\n# Home\n")
+    result = subprocess.run(
+        [sys.executable, "-m", "properdocs", "build", "-f", str(fixture / "mkdocs.yml")],
+        capture_output=True, text=True, check=False,
+    )
+    assert result.returncode != 0
+    assert "index.md: classes.body: invalid class name" in result.stderr + result.stdout
 
 
 def test_build_when_extra_fly_invalid_then_strict_build_fails_with_message(tmp_path):

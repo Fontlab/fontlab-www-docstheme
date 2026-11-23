@@ -11,7 +11,9 @@ Exact versions are pinned in package.json and package-lock.json.
 - Tailwind CSS and its CLI 4.3.3 compile both upstream component libraries.
 - PostCSS, postcss-prefix-selector and postcss-selector-parser scope styles,
   separate the conflicting border token and enumerate complete daisyUI classes.
-- Playwright runs real Chromium interaction and layout checks.
+- The legacy fltheme26 browser suite uses Playwright and is not run in this project.
+- `agent-browser` drives the local Chrome used by `npm run verify:fly` for theme
+  interaction and layout checks.
 - Node's built-in test runner verifies transformations and build artifacts.
 
 Python (pyproject.toml, uv.lock): the `fly-january` package depends on mkdocs (the
