@@ -50,7 +50,7 @@ The reference is now organized by what you want to build. These links preserve e
 
 <span id="__span-4-1"></span>
 
-[< aside class = "sidebar" id = "app-sidebar" >< nav aria-label = "Project" >< section >< a href = "/projects/" > Projects </ a ></ section ></ nav ></ aside >](../navigation/drawers.md#basecoat-sidebar)
+[< aside class = "sidebar" id = "app-sidebar" >< nav aria-label = "Project" >< section >< a href = "#projects" > Projects </ a ></ section ></ nav ></ aside >](../navigation/drawers.md#basecoat-sidebar)
 
 <span id="tabs"></span>
 
