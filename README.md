@@ -49,6 +49,20 @@ described below stays the published contract.
 [Publication evidence](review/documentation-publication.json) records the deployed
 guide, the 19-repository documentation rollout and verified baseline limitations.
 
+## Adopting fly-january in an existing MaterialX site
+
+1. `theme: {name: fly-january}`, plugins `fly` plus the ones you had (`search`, `blog`, `tags`, ... keep
+   their bare names), and nothing else is required: `extra.fly` is optional and the defaults
+   (fonts, ink titles, inherited link colour, scrolling bar) apply.
+2. Choose the chrome: `chrome: fontlab`, `vexy` or `none`; `chrome_options` takes `site-label`,
+   `site-url`, `search-from`, `sticky`.
+3. Delete what the theme now does: `custom_dir` overrides, fltheme26 CDN CSS and JS, rules that
+   set the sans, link colours or italic emphasis. Use `links: accent`, `h1: accent` and
+   `fonts.roles.em: {style: italic}` instead, and `.md-typeset .your-class` for component links.
+4. The root font size is 1rem = 14.4px (the grid is 20px): convert old rem values by 20/14.4
+   (about 1.39), or use em, px or `--fly-*` tokens.
+5. Utilities stay off until `utilities: true`.
+
 ## Build and verify
 
 ```sh

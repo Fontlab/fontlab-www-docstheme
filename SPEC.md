@@ -171,13 +171,27 @@ one `<style>` setting the role variables for that page. `typekit:<id>` expands t
 `https://use.typekit.net/<id>.css`; `google:<spec>` to a `css2?family=<spec>&display=swap`
 URL; anything starting `https://` is used as is. A hue sets `data-fly-hue` on `<body>`.
 
+Without `fonts.sources` a site gets the theme's defaults (the four Typekit kits `cmv5add`,
+`gav0zux`, `cna4jfp`, `wck5koo` and `google:Outfit:wght@100..900`), so every default role family is
+loaded; setting `sources` replaces them and `[]` loads none. Further site keys: `h1` (`ink` default, or
+`accent`: titles take the hue's text colour; a page that sets its own hue or preset always does
+unless it sets `h1: ink`; the plugin writes `data-fly-h1="accent"`), `links` (`inherit` default: article
+links keep the text colour and are underlined; `accent` sets `--fly-link-color` to `--fly-link`,
+`data-fly-links="accent"`) and `chrome_options.sticky` (pins the bar; the rails and anchors then clear
+`--fly-bar-h`). Role properties: `em` also takes `style` (`normal`|`italic`) and `sans` (family, stretch,
+variation, adjust) sets the inline sans used by links, `mark` and h6. Article links only restyle
+classless links and the content classes `goto`, `lightbox`, `glightbox`, `footnote-ref`,
+`footnote-backref`; any other class is a component and keeps its own CSS; `a[data-fly-plain]` opts out.
+MaterialX plugins resolve by bare name (`search`, `blog`, `tags`, ...): the package registers
+`fly-january/<name>` entry points, which MkDocs prefers for a theme named `fly-january`.
+
 ### 5.1 Global header and footer
 
 `chrome` picks the global bars: `fontlab` loads `https://i.fontlab.com/menu/fontlab.js` and
 renders `<fontlab-menu>`/`<fontlab-footer>`; `vexy` loads `https://i.vexy.art/menu/vexy.js`
 and renders `<vexy-menu>`/`<vexy-footer>`; `none` renders MaterialX's own header and footer
 with no company logo or name; a mapping names a custom script URL and element tags. Menu
-attributes (`site-label`, `mobile-menu`, `mobile-search`, `search-from`) are set under
+attributes (`site-label`, `site-url`, `mobile-menu`, `mobile-search`, `search-from`) are set under
 `extra.fly.chrome_options`. Unofficial sites use `none`.
 
 ## 6. CSS and JS structure (D2)
