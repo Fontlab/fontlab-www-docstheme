@@ -4,6 +4,8 @@ this_file: tests/py/test_fixture_fly.py
 """
 
 import re
+from collections import Counter
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
@@ -166,3 +168,29 @@ def test_debug_js_when_switching_then_reads_plugin_data_shape():
     assert "data.presets" in js and "data.own" in js
     assert 'querySelectorAll("link[data-fly-font], style[data-fly-roles]")' in js
     assert "dataset.flyHue" in js and "position: fixed" in js
+
+
+class Ids(HTMLParser):
+    """Every id attribute of a page, in order (script and template contents are not parsed
+    as markup by HTMLParser's CDATA handling of script/style)."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.ids: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        self.ids += [value for name, value in attrs if name == "id" and value]
+
+
+def test_built_pages_when_parsed_then_every_id_is_unique(sites):
+    checked = 0
+    for name, site in sites.items():
+        for page in sorted(site.rglob("*.html")):
+            parser = Ids()
+            parser.feed(page.read_text())
+            dupes = {i: n for i, n in Counter(parser.ids).items() if n > 1}
+            assert not dupes, f"{name}/{page.relative_to(site)}: duplicate ids {dupes}"
+            controls = [i for i in parser.ids if re.match(r"__(toc|nav|drawer|search)", i)]
+            assert "__drawer" in controls and "__search" in controls, page
+            checked += 1
+    assert checked >= 16
