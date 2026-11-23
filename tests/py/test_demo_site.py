@@ -234,3 +234,21 @@ def test_page_scripts_when_flags_then_loaders_in_head_and_chart_before_body_end(
     assert '<script src="../../assets/javascripts/mathjax.js"></script>' in head
     assert head.index("mathjax.js") < head.index(hook.MATHJAX), "configuration before MathJax"
     assert body.endswith(hook.CHART + "\n</body></html>")
+
+
+def test_page_scripts_when_body_tag_quoted_earlier_then_chart_goes_before_the_last():
+    hook = page_scripts()
+    html = "<html><head></head><body><pre>&lt;/body&gt;</pre><code></body></code></body></html>"
+    out = hook.on_post_page(html, page=SimpleNamespace(meta={"chart": True}, url="x/"))
+    assert out.count(hook.CHART) == 1
+    assert out.endswith(hook.CHART + "\n</body></html>")
+    assert "<code></body></code>" in out
+
+
+def test_page_scripts_when_pinned_then_every_cdn_tag_has_integrity_and_crossorigin():
+    hook = page_scripts()
+    tags = re.findall(r"<script [^>]*>", f"{hook.MERMAID}\n{hook.MATHJAX}\n{hook.CHART}")
+    assert len(tags) == 4
+    for tag in tags:
+        assert re.search(r'integrity="sha384-[A-Za-z0-9+/]{64}"', tag), tag
+        assert 'crossorigin="anonymous"' in tag and re.search(r"@\d+\.\d+\.\d+/", tag), tag

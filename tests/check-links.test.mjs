@@ -27,12 +27,13 @@ test('missing files, directories without index.html and srcset entries are broke
     await writeFile(
       join(root, 'a/index.html'),
       '<link href="../ok.css?v=1"><a href="../a/">self</a><a href="../empty/">e</a>' +
-        '<img srcset="../ok.css 1x, ../gone.png 2x"><pre><a href="../nope/">n</a></pre>',
+        '<img srcset="../ok.css 1x, ../gone.png 2x"><pre><a href="../nope/">n</a></pre>' +
+        '<a href="../bad%zz/">malformed</a>',
     );
     const { pages, links, broken } = await checkLinks(root);
     assert.equal(pages, 1);
-    assert.equal(links, 5);
-    assert.deepEqual(broken, ['a/index.html: ../empty/', 'a/index.html: ../gone.png']);
+    assert.equal(links, 6);
+    assert.deepEqual(broken, ['a/index.html: ../empty/', 'a/index.html: ../gone.png', 'a/index.html: ../bad%zz/ (malformed URL)']);
   } finally {
     await rm(root, { recursive: true, force: true });
   }

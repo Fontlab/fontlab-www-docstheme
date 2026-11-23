@@ -2,7 +2,8 @@
 // Link check over the built site: every internal href/src/srcset in every HTML file of
 // <dir> (default docs/) must name an existing file. Internal means relative, root-absolute
 // under the site path, or absolute under the site URL. Query strings (?v=) and fragments
-// are ignored; a directory URL needs its index.html. Exits 1 and lists the broken links.
+// are ignored; a directory URL needs its index.html; a malformed percent-escape is broken.
+// Exits 1 and lists the broken links.
 // Run by ../build.sh after the site build; usage: node scripts/check-links.mjs [dir].
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
@@ -44,7 +45,15 @@ export async function checkLinks(root) {
       const value = m[1] ?? m[2];
       const links = /srcset/i.test(m[0].split('=')[0]) ? value.split(',').map((part) => part.trim().split(/\s+/)[0]) : [value];
       for (const link of links) {
-        const path = target(root, page, link);
+        let path;
+        try {
+          path = target(root, page, link);
+        } catch (error) {
+          if (!(error instanceof URIError)) throw error;
+          count += 1;
+          broken.push(`${relative(root, page)}: ${link} (malformed URL)`);
+          continue;
+        }
         if (path === null) continue;
         count += 1;
         if (!(await exists(path))) broken.push(`${relative(root, page)}: ${link}`);
