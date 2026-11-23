@@ -1,0 +1,35 @@
+# this_file: fixtures/fly/mkdocs-rollout.yml
+site_name: fly-january rollout fixture
+site_url: https://fixture.example/rollout/
+docs_dir: docs-rollout
+theme:
+  name: fly-january
+  font: false
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+plugins:
+  - fly
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      line_spans: __span
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+extra:
+  fly:
+    chrome: none
+    fonts:
+      sources: []
+nav:
+  - Fixtures:
+      - In-page navigation: index.md
+      - Content tabs: tabs.md
+      - Code copy: code.md

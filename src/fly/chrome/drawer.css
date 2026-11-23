@@ -101,9 +101,13 @@
     }
 
     #__drawer:not(:checked) ~ .md-container .md-sidebar--primary,
-    #__search:not(:checked) ~ .md-header .md-search,
+    #__search:not(:checked) ~ .md-header .md-search {
+      visibility: hidden;
+    }
+
     #__toc:not(:checked) ~ .md-container .md-sidebar--secondary {
       visibility: hidden;
+      transition: visibility 0s 0.15s;
     }
   }
 }

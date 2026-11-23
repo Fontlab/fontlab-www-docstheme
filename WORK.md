@@ -4,6 +4,21 @@ this_file: WORK.md
 
 # Work
 
+## 0.2.1 rollout layout fixes
+
+The rollout fixture builds three pages for alternate-style tabs, the in-page
+navigation drawer and the code copy toolbar. The drawer panel slides inside a
+fixed clipping shell. The code toolbar sits in a gutter next to the scrollable
+code. The agent-browser assertions cover phone tabs, both drawer states,
+unclipped article ancestors and table scrolling, plus desktop TOC visibility and
+horizontal copy-toolbar clearance. The orchestrator owns the browser run.
+
+`npm run build` built 71 shared distribution files and a 60-file CDN manifest.
+All 59 Node tests and 235 Python tests passed. The strict fixture build passed.
+`./build.sh` checked 6,696 internal links across 75 pages with zero broken.
+The gates used a workspace-local uv cache. The demo rebuild used the
+unpublished-version override after remote main was checked for 0.2.1.
+
 ## Issue 502 part 1 — 0.2.0 unreleased
 
 The minimal fixture builds with Polymath Display for H1 and Polymath for H2.

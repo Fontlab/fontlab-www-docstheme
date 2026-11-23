@@ -186,6 +186,11 @@ Both measures are also the `measure` property of the `h1` and `h2` roles: a site
 sets `roles: {h1: {measure: 12ch}}` (a plain length in ch, rem, em, px or %, or `none`) and the fly plugin writes
 `--fly-h1-measure` on `:root` like the other role variables.
 
+On phones, alternate-style content tab labels scroll within the article column. The in-page
+navigation panel slides within a fixed shell clipped horizontally at the viewport edges.
+Code blocks with a toolbar reserve an inline-end gutter sized to the controls, so the code
+scrolls in its own column.
+
 ## Colour
 
 ### Sources studied

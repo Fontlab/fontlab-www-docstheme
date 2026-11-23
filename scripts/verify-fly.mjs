@@ -684,7 +684,83 @@ const verifyNoErrors = async base => {
 
 // --- task 11c: titles, links, em, sans, sticky, defaults, blog ------------------------------
 const EXTRA = {accent: 'mkdocs-accent.yml', sticky: 'mkdocs-sticky.yml', minimal: 'mkdocs-minimal.yml', blog: 'mkdocs-blog.yml',
-  search: 'mkdocs-search.yml', searchx: 'mkdocs-search-explicit.yml'};
+  search: 'mkdocs-search.yml', searchx: 'mkdocs-search-explicit.yml', rollout: 'mkdocs-rollout.yml'};
+
+const verifyRolloutLayout = async base => {
+  await open(`${base}/rollout/tabs/`, 390);
+  const tabs = await ev(`JSON.stringify((() => {
+    const row = document.querySelector('.md-content__inner > .tabbed-set .tabbed-labels');
+    const column = row.parentElement.getBoundingClientRect();
+    const bounds = row.getBoundingClientRect();
+    const start = row.scrollLeft;
+    row.scrollLeft = row.scrollWidth;
+    return {labels: row.querySelectorAll('label').length, left: bounds.left - column.left,
+      right: bounds.right - column.right, scrolled: row.scrollLeft > start,
+      overflow: document.documentElement.scrollWidth - innerWidth};
+  })())`);
+  check('rollout.tabs-scroll-inside-column@390',
+    tabs.labels >= 6 && tabs.left >= -0.5 && tabs.right <= 0.5 && tabs.scrolled && tabs.overflow <= 0,
+    JSON.stringify(tabs));
+
+  for (const width of [390, 1440]) {
+    await open(`${base}/rollout/`, width);
+    const toc = await ev(`JSON.stringify((() => {
+      const sidebar = document.querySelector('.md-sidebar--secondary');
+      const links = [...sidebar.querySelectorAll('.md-nav__link[href]')];
+      if (innerWidth === 390) links.forEach(link => link.focus({preventScroll: true}));
+      return {links: links.length, boxes: sidebar.getClientRects().length,
+        focused: sidebar.contains(document.activeElement),
+        visible: getComputedStyle(sidebar).visibility === 'visible',
+        overflow: document.documentElement.scrollWidth - innerWidth};
+    })())`);
+    check(`rollout.toc-rail@${width}`, toc.links >= 3 && toc.overflow <= 0 &&
+      (width === 390 ? !toc.visible && !toc.focused : toc.boxes > 0 && toc.visible), JSON.stringify(toc));
+    if (width === 390) {
+      const articleOverflow = await ev(`JSON.stringify([...document.querySelectorAll(
+        '.md-container, .md-main__inner, .md-content, article.md-typeset'
+      )].map(el => getComputedStyle(el).overflowX))`);
+      check('rollout.article-ancestors-unclipped@390', articleOverflow.length === 4 &&
+        articleOverflow.every(value => value === 'visible'), JSON.stringify(articleOverflow));
+      await ev("document.querySelector('#__toc').click(); 1");
+      await ab('wait', '300');
+      const opened = await ev(`JSON.stringify((() => {
+        const sidebar = document.querySelector('.md-sidebar--secondary');
+        const pane = sidebar.querySelector('.md-sidebar__scrollwrap');
+        const bounds = pane.getBoundingClientRect();
+        return {visible: getComputedStyle(pane).visibility === 'visible', boxes: pane.getClientRects().length,
+          left: bounds.left, right: bounds.right, shellRight: sidebar.getBoundingClientRect().right, width: innerWidth,
+          motionOK: matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            getComputedStyle(pane).transitionProperty.includes('transform'),
+          overflow: document.documentElement.scrollWidth - innerWidth};
+      })())`);
+      check('rollout.toc-opens-inside-viewport@390', opened.visible && opened.boxes > 0 && opened.motionOK &&
+        opened.left >= -0.5 && Math.max(opened.right, opened.shellRight) <= opened.width + 0.5 &&
+        opened.overflow <= 0, JSON.stringify(opened));
+    }
+  }
+
+  await open(`${base}/rollout/code/`, 1440);
+  await ab('wait', '.md-typeset pre button[data-clipboard-target]');
+  const copy = await ev(`JSON.stringify((() => {
+    const button = document.querySelector('.md-typeset pre button[data-clipboard-target]');
+    const code = button.closest('pre').querySelector('code');
+    const range = document.createRange();
+    range.selectNodeContents(code);
+    code.scrollLeft = 0;
+    const startBox = code.getBoundingClientRect();
+    const buttonBox = button.getBoundingClientRect();
+    const textUnderButton = [...range.getClientRects()].some(rect =>
+      Math.min(rect.right, startBox.right) > buttonBox.left && Math.max(rect.left, startBox.left) < buttonBox.right &&
+      rect.bottom > buttonBox.top && rect.top < buttonBox.bottom);
+    code.scrollLeft = code.scrollWidth;
+    return {buttonWidth: buttonBox.width, textUnderButton,
+      gap: button.getBoundingClientRect().left - code.getBoundingClientRect().right,
+      scroll: code.scrollLeft, maxScroll: code.scrollWidth - code.clientWidth};
+  })())`);
+  check('rollout.copy-toolbar-clears-code@1440',
+    copy.buttonWidth > 0 && !copy.textUnderButton && copy.gap > 0 && copy.scroll > 0 &&
+    Math.abs(copy.scroll - copy.maxScroll) <= 1, JSON.stringify(copy));
+};
 
 const probeAccent = () => `JSON.stringify((() => {${COLOUR_LIB}
   const art = document.querySelector('.md-content .md-typeset');
@@ -893,6 +969,12 @@ const verifyBlog = async base => {
   await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 390);
   const wide = await ev(PROBE_POST);
   check('blog.mobile-no-overflow', wide.overflow <= 0, `overflow ${wide.overflow}px at 390`);
+  const tableScroll = await ev(`(() => {
+    const wrapper = document.querySelector('article .md-typeset__scrollwrap');
+    wrapper.scrollLeft = wrapper.scrollWidth;
+    return wrapper.scrollLeft;
+  })()`);
+  check('blog.mobile-wide-table-scrolls', tableScroll > 0, `table scrolled ${tableScroll}px at 390`);
   // Features that need the blog and tags plugin keys: the post sidebar and the tag index.
   await open(`${base}/blog/blog/a-plain-post/`, 1440);
   check('blog.post-sidebar-rendered', await ev("!!document.querySelector('.md-sidebar--post .md-post__authors')"), 'blog plugin post sidebar with its author');
@@ -929,6 +1011,7 @@ try {
   await verifyAccent(base);
   await verifySticky(base);
   await verifyMinimal(base);
+  await verifyRolloutLayout(base);
   await verifyBlog(base);
   await verifySearch(base);
   await verifyButtons(base);
