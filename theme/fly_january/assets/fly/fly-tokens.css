@@ -1,5 +1,10 @@
 /* this_file: theme/fly_january/assets/fly/fly-tokens.css (built by scripts/build-fly.mjs from src/fly/tokens; do not edit) */
 
+  @property --fly-line {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0px;
+  }
   html {
     font-size: 90%;
   }

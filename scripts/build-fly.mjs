@@ -68,6 +68,7 @@ async function tailwindClasses() {
     const path = base + (id.replace(/^tailwindcss\/?/, '') || 'index.css');
     return { path, base, content: await readFile(path, 'utf8') };
   };
+  // __unstable__loadDesignSystem is a private Tailwind API; package-lock.json pins the version.
   const design = await tailwind.__unstable__loadDesignSystem(TAILWIND_CORE, { base, loadStylesheet });
   const names = design.getClassList().map(([name]) => name);
   if (!names.length) throw new Error('Tailwind class list is empty');

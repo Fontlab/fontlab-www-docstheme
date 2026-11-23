@@ -82,11 +82,19 @@ test('committed fly.css and fly-tokens.css match a fresh build and are flat', as
     assert.equal(await readFile(join(OUT, name), 'utf8'), css, name + ' is stale: run npm run build');
     assert.doesNotMatch(strip(css), /@layer|@import|&/, name + ' must be flattened and inlined');
   }
-  const tokens = strip(await readFile(join(OUT, 'fly-tokens.css'), 'utf8'));
+  // @property rules register token types; their descriptors are not declarations.
+  const tokens = strip(await readFile(join(OUT, 'fly-tokens.css'), 'utf8')).replace(/@property\s+--fly-[a-z0-9-]+\s*\{[^{}]*\}/g, '');
   for (const [, block] of tokens.matchAll(/\{([^{}]*)\}/g)) {
     for (const decl of block.split(';').map((d) => d.trim()).filter(Boolean)) {
       assert.match(decl, /^(--fly-|--md-|font-size:)/, 'fly-tokens.css holds tokens only: ' + decl);
     }
+  }
+});
+
+test('the built CSS registers the typed line pitch (@property --fly-line)', async () => {
+  for (const name of ['fly.css', 'fly-tokens.css']) {
+    const css = await readFile(join(OUT, name), 'utf8');
+    assert.match(css, /@property --fly-line \{\s*syntax: '<length>';\s*inherits: true;\s*initial-value: 0px;\s*\}/, name);
   }
 });
 

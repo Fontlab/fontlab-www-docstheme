@@ -20,6 +20,13 @@
     }
   }
 
+  /* Typed, so round(…, var(--fly-line)) and lh comparisons compute as lengths. */
+  @property --fly-line {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0px;
+  }
+
   :root {
     --fly-half: 1rem; /* half a line: the grid step for every vertical length */
     --fly-line: 2rem; /* the body line */
