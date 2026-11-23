@@ -1,0 +1,189 @@
+---
+this_file: src_docs/md/design/layout.md
+search:
+  exclude: true
+---
+
+# Layout — moved
+
+The reference is now organized by what you want to build. These links preserve earlier bookmarks. Start with the [field guide](../start/index.md).
+
+<span id="layout"></span>
+
+[Layout](../structure/grids.md#materialx-grids)
+
+<span id="materialx-grids"></span>
+
+[MaterialX grids](../structure/grids.md#materialx-grids)
+
+<span id="materialx-grids-using-card-grids"></span>
+
+[Using card grids](../structure/grids.md#materialx-grids-using-card-grids)
+
+<span id="materialx-grids-list-syntax"></span>
+
+[List syntax](../structure/grids.md#materialx-grids-list-syntax)
+
+<span id="materialx-grids-block-syntax"></span>
+
+[Block syntax](../structure/grids.md#materialx-grids-block-syntax)
+
+<span id="materialx-grids-using-generic-grids"></span>
+
+[Using generic grids](../structure/grids.md#materialx-grids-using-generic-grids)
+
+<span id="accordion"></span>
+
+[Accordion](../structure/disclosure.md#daisyui-accordion)
+
+<span id="accordion-closed"></span>
+
+[Closed](../structure/disclosure.md#daisyui-accordion)
+
+<span id="accordion-open"></span>
+
+[Open](../structure/disclosure.md#daisyui-accordion)
+
+<span id="aura"></span>
+
+[Aura](../structure/sections.md#daisyui-aura)
+
+<span id="aura-default"></span>
+
+[Default](../structure/sections.md#daisyui-aura)
+
+<span id="collapse"></span>
+
+[Collapse](../structure/disclosure.md#daisyui-collapse)
+
+<span id="collapse-closed"></span>
+
+[Closed](../structure/disclosure.md#daisyui-collapse)
+
+<span id="collapse-open"></span>
+
+[Open](../structure/disclosure.md#daisyui-collapse)
+
+<span id="collapse-focus"></span>
+
+[Focus](../structure/disclosure.md#daisyui-collapse)
+
+<span id="divider"></span>
+
+[Divider](../structure/sections.md#daisyui-divider)
+
+<span id="divider-horizontal"></span>
+
+[Horizontal](../structure/sections.md#daisyui-divider)
+
+<span id="divider-vertical"></span>
+
+[Vertical](../structure/sections.md#daisyui-divider)
+
+<span id="footer"></span>
+
+[Footer](../structure/sections.md#daisyui-footer)
+
+<span id="footer-default"></span>
+
+[Default](../structure/sections.md#daisyui-footer)
+
+<span id="footer-centered"></span>
+
+[Centered](../structure/sections.md#daisyui-footer)
+
+<span id="hero"></span>
+
+[Hero](../layouts/products.md#daisyui-hero)
+
+<span id="hero-default"></span>
+
+[Default](../layouts/products.md#daisyui-hero)
+
+<span id="layout-hero-title"></span>
+
+[Words, type, and vector craft.](../layouts/products.md#daisyui-hero)
+
+<span id="hero-overlay"></span>
+
+[Overlay](../layouts/products.md#daisyui-hero)
+
+<span id="layout-overlay-title"></span>
+
+[Let the sample support the claim.](../layouts/products.md#daisyui-hero)
+
+<span id="hover-3d"></span>
+
+[Hover 3D](../images/galleries.md#daisyui-hover-3d)
+
+<span id="hover-3d-rest"></span>
+
+[Rest](../images/galleries.md#daisyui-hover-3d)
+
+<span id="hover-3d-hover"></span>
+
+[Hover](../images/galleries.md#daisyui-hover-3d)
+
+<span id="hover-gallery"></span>
+
+[Hover gallery](../images/galleries.md#daisyui-hover-gallery)
+
+<span id="hover-gallery-rest"></span>
+
+[Rest](../images/galleries.md#daisyui-hover-gallery)
+
+<span id="hover-gallery-hover"></span>
+
+[Hover](../images/galleries.md#daisyui-hover-gallery)
+
+<span id="mask"></span>
+
+[Mask](../images/marks.md#daisyui-mask)
+
+<span id="mask-default"></span>
+
+[Default](../images/marks.md#daisyui-mask)
+
+<span id="stack"></span>
+
+[Stack](../structure/cards.md#daisyui-stack)
+
+<span id="stack-default"></span>
+
+[Default](../structure/cards.md#daisyui-stack)
+
+<span id="text-rotate"></span>
+
+[Text rotate](../data/states.md#daisyui-text-rotate)
+
+<span id="text-rotate-rest"></span>
+
+[Rest](../data/states.md#daisyui-text-rotate)
+
+<span id="text-rotate-rotating"></span>
+
+[Rotating](../data/states.md#daisyui-text-rotate)
+
+<span id="materialx-images"></span>
+
+[MaterialX images](../images/pictures.md#materialx-images)
+
+<span id="materialx-images-lightbox"></span>
+
+[Lightbox](../images/pictures.md#materialx-images-lightbox)
+
+<span id="materialx-images-image-alignment"></span>
+
+[Image alignment](../images/pictures.md#materialx-images-image-alignment)
+
+<span id="materialx-images-image-captions"></span>
+
+[Image captions](../images/pictures.md#materialx-images-image-captions)
+
+<span id="materialx-images-image-lazy-loading"></span>
+
+[Image lazy loading](../images/pictures.md#materialx-images-image-lazy-loading)
+
+<span id="materialx-images-light-and-dark-mode"></span>
+
+[Light and dark mode](../images/pictures.md#materialx-images-light-and-dark-mode)
