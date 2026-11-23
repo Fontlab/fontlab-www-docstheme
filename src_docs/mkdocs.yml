@@ -1,0 +1,115 @@
+# this_file: src_docs/mkdocs.yml
+# Migrated from Marketing/src_docs/mkdocs.yml (task 6a). Theme switches to fly-january in a later task.
+site_name: FontLab web design system
+site_description: Internal marketing and copywriting guidelines for FontLab.
+site_url: https://fontlab.dev/fontlab-www-docstheme/
+site_author: Fontlab Ltd.
+
+docs_dir: md
+site_dir: ../docs
+
+use_directory_urls: true
+
+hooks:
+  - hooks/compiled_examples.py
+
+exclude_docs: |
+  includes/**
+
+not_in_nav: |
+  renderer-capabilities.md
+
+theme:
+  name: materialx
+  custom_dir: overrides
+  font: false
+  code:
+    fold:
+      enabled: true
+  features:
+    - navigation.path
+    - navigation.tabs
+    - navigation.top
+    - toc.follow
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tabs.link
+    - content.footnote.tooltips
+    - content.tooltips
+  palette:
+    - scheme: default
+      primary: black
+      accent: red
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - tables
+  - toc:
+      permalink: true
+      title: Contents
+      toc_depth: 3
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      base_path:
+        - md
+      auto_append:
+        - includes/renderer-glossary.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.blocks.caption
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: false
+  - pymdownx.tilde
+  - material.extensions.code_download
+
+plugins:
+  - materialx/meta
+  - materialx/search:
+      enabled: true
+  - glightbox
+  - strip-number-prefix:
+      enabled: true
+      pattern: '^\d+-'
+  - awesome-nav:
+      filename: nav.yml
+
+extra_css:
+  - https://i.fontlab.com/fltheme26/1.0.0/components.css
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
+  - assets/stylesheets/component-reference.css
+  - assets/stylesheets/field-guide.css
+
+extra_javascript:
+  - https://i.fontlab.com/fltheme26/1.0.0/basecoat.js
+  - https://i.fontlab.com/fltheme26/1.0.0/theme.js
+  - assets/javascripts/component-reference.js
+  - assets/javascripts/compiled-examples.js
