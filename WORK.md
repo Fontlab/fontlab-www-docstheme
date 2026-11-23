@@ -4,6 +4,19 @@ this_file: WORK.md
 
 # Work
 
+## 2026-11-23 — CDN tree and demo site (Task 6)
+
+`./build.sh` = `npm run build` (dist/, theme assets, `docs/fly/`) + strict site build into a
+temp dir + rsync into `docs/` (keeps `docs/fly/`, `.nojekyll`) + link check (0 broken).
+Gates: `npm test` 47 pass; `uv run --python 3.13 pytest` 157 passed; `node scripts/verify-fly.mjs`
+all assertions ok. Screenshots (agent-browser) of home, theme/tokens, feedback/dialogs,
+data/statistics and brand-assets/fontlab-banners at 1440 light/dark and 390 light: details
+in .superpowers/sdd/PLAN/task-6-report.md.
+
+Open: the component bundle's dark mode is synced by the demo site's `component-mode.js`
+(fltheme26 theme.js did it before); a general version belongs in fly.js if other fly sites
+load the bundle.
+
 ## 2026-11-23 — fly plugin (Task 4)
 
 `theme/fly_january/plugin.py` replaces fltheme27's `hooks.py`, split into `config.py`

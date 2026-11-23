@@ -1,7 +1,12 @@
 # this_file: src_docs/md/nav.yml
 nav:
+  - Home: index.md
+  - Theme:
+      - Tokens: theme/tokens.md
+      - Configuration: theme/configuration.md
+      - Assets: theme/assets.md
+      - Chrome: theme/chrome.md
   - Showcase:
-      - Home: index.md
       - Overview: showcase/index.md
       - FontLab product imagery: showcase/fontlab.md
       - Vexy vector imagery: showcase/vexy-lines.md

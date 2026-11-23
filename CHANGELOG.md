@@ -8,6 +8,20 @@ this_file: CHANGELOG.md
 
 - Margin-figure grouping now comes from `vexy-python-markdown-figure-groups`
   (`group_figures` with the `fly-aside`/`fly-cut` classes); the plugin's own copy is gone.
+- Demo site `src_docs/`: the Marketing design-pattern pages (merged from fly-demo-content) on
+  `fly-january` with `extra.fly` (FontLab chrome "Design system", cobalt, the Marketing font
+  sources with Outfit/REM roles) and the light/dark palette toggle. The old `overrides/`
+  (menu/footer injection, five-subtheme switcher, pre-paint scripts) and the editorial CSS
+  are gone; `hooks/page_scripts.py` loads Mermaid, MathJax and Chart.js per front-matter flag;
+  `patterns.css` carries the few editorial layout classes the pages use, `component-mode.js`
+  puts the component bundle into dark mode with the slate scheme.
+- New theme pages: tokens (live palette, type roles, grid), configuration (every `extra.fly` and
+  page key; its YAML examples are validated by `tests/py/test_demo_site.py`), assets, chrome.
+- CDN tree `docs/fly/0.1.0/` and `docs/fly/latest/` (fly CSS/JS, Basecoat/daisyUI bundle,
+  licences) with `docs/fly/manifest.json` (size, sha256), written by `scripts/build-cdn.mjs`
+  from `npm run build`; `FLY_VERSION` there is the release to tag in Task 12.
+- `./build.sh` builds `docs/` in one step and link-checks it; the site's plugins are pinned
+  in the `site` dependency group (src_docs/tooling and src_docs/build.sh are gone).
 
 ## 2026-11-23: fly plugin (Task 4)
 

@@ -28,7 +28,12 @@ site and per page, and a choice of global header and footer (FontLab, Vexy or no
 | [PLAN.md](PLAN.md) | the fourteen tasks, in order |
 | [TODO.md](TODO.md) | open tasks by implementer |
 
-Planned layout: `theme/fly_january/` (Python package: theme and `fly` plugin),
+`./build.sh` builds everything GitHub Pages serves from `docs/`: `npm run build` (which also
+writes the CDN tree `docs/fly/<version>/`, `docs/fly/latest/` and `docs/fly/manifest.json`),
+then the demo site from `src_docs/` (strict, `uv run --group site`) synced into `docs/`
+around `docs/fly/`, then a link check (`scripts/check-links.mjs`).
+
+Layout: `theme/fly_january/` (Python package: theme and `fly` plugin),
 `src/fly/` (layered CSS and JS sources), `src_docs/` (demo site, Markdown in `src_docs/md/`),
 `docs/` (build output: demo site plus versioned assets under `docs/fly/<version>/`, served at
 https://fontlab.dev/fontlab-www-docstheme/). Until a site has moved, the fltheme26 bundle
