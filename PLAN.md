@@ -38,8 +38,7 @@ Create `pyproject.toml` (project `fly-january`, hatch-vcs, entry points per SPEC
 `theme/fly_january/` with `__init__.py`, `mkdocs_theme.yml` (`extends: materialx`),
 `main.html` extending `base.html`, and an empty `FlyPlugin` in `plugin.py`.
 Add `fixtures/fly/` (mkdocs.yml with `theme.name: fly-january`, `plugins: [fly]`, three
-pages) and `tests/py/test_theme_package.py` proving: the theme is discoverable under both
-entry-point groups, the fixture builds with `properdocs build --strict`, the output contains
+pages) and `tests/py/test_theme_package.py` proving: the theme is discoverable through the `mkdocs.themes` entry point (which ProperDocs reads), the fixture builds with `properdocs build --strict`, the output contains
 MaterialX's markup (inheritance works) and a marker emitted by the child `main.html`.
 Verify: `uv run --python 3.13 pytest tests/py -q`.
 
