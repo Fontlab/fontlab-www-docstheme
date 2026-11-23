@@ -1,0 +1,104 @@
+/* this_file: src/fly/layout/canvas.css */
+/* Column geometry of the canvas.
+   - One column (phones, and any canvas narrower than 66.6667rem = 960px): text keeps a
+     62-68 character measure (30em of the body size); wide images still span the sheet.
+   - Three columns: equal margins either side of the text column (layout/margins.css
+     places headings, admonitions and small images in them); H1 and H2 centred on the
+     canvas, even when wider than the text column.
+   - 60em to 76.25em (its own band): an asymmetric canvas with only the left margin. The
+     text column is capped at 31em; width beyond that is split between the outer left
+     margin and the right gutter (--rest). */
+@layer fly.layout {
+  .md-content__inner {
+    --pad: clamp(1.3889rem, 4cqi, 4.1667rem);
+    --pi: max(var(--pad), (100cqi - 30em) / 2);
+    margin: 0 auto;
+    padding: 2.7778rem var(--pi) 4.1667rem;
+  }
+
+  .md-content__inner::before {
+    display: none;
+  }
+
+  .md-typeset :is(h1, h2) {
+    clear: both;
+  }
+
+  .md-typeset h1 {
+    max-width: var(--fly-h1-measure);
+  }
+
+  @media screen and (min-width: 76.25em) {
+    .md-typeset :is(h1, h2) {
+      margin-inline: auto;
+    }
+
+    .md-typeset h2 {
+      max-width: var(--fly-h2-measure);
+    }
+  }
+
+  @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
+    @container fly-canvas (max-width: 66.6528rem) {
+      .md-typeset > :is(figure.img-wide, p:has(> img.img-wide:only-child)) {
+        margin-inline: calc(var(--pad) - var(--pi));
+      }
+    }
+
+    @container fly-canvas (min-width: 66.6667rem) {
+      .md-content__inner {
+        --m: clamp(11.1111rem, 20cqi, 20.8333rem);
+        --gap: clamp(1.3889rem, 2.5cqi, 2.7778rem);
+        --out: calc(var(--m) + var(--gap));
+        box-sizing: border-box;
+        max-width: calc(46rem + 2 * var(--out) + 8.3333rem);
+        padding-inline: calc(var(--out) + clamp(0.6944rem, 1.8cqi, 4.1667rem));
+      }
+
+      .md-typeset > figure.img-wide,
+      .md-typeset > p:has(> img.img-wide:only-child) {
+        clear: both;
+        margin-inline: calc(-1 * var(--out));
+      }
+
+      .md-typeset > :is(h1, h2) {
+        position: relative;
+        width: calc(100% + 2 * var(--out));
+        margin-inline: 0;
+        inset-inline-start: 50%;
+        translate: -50%;
+      }
+
+      .md-typeset > :is(h1, h2):dir(rtl) {
+        translate: 50%;
+      }
+
+      .md-typeset :is(.md-typeset__scrollwrap, .highlight):has(table, pre) {
+        clear: both;
+      }
+    }
+  }
+
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    .md-content__inner {
+      --m: clamp(8.3333rem, 16cqi, 12.5rem);
+      --gap: 1.3889rem;
+      --out: calc(var(--m) + var(--gap));
+      --rest: max(0px, (100cqi - var(--out) - 3.8889rem - 31em) / 2);
+      --pl: calc(var(--out) + 1.6667rem + var(--rest));
+      box-sizing: border-box;
+      max-width: none;
+      padding-inline: var(--pl) calc(2.2222rem + var(--rest));
+    }
+
+    .md-typeset > figure.img-wide,
+    .md-typeset > p:has(> img.img-wide:only-child) {
+      clear: both;
+      margin-inline: calc(-1 * var(--out)) 0;
+    }
+
+    .md-typeset :is(.md-typeset__scrollwrap, .highlight):has(table, pre) {
+      clear: both;
+    }
+  }
+}

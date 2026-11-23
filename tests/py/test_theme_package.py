@@ -68,3 +68,21 @@ def test_fixture_when_built_then_contains_materialx_markup(built_site):
 def test_fixture_when_built_then_contains_child_main_html_marker(built_site):
     html = (built_site / "index.html").read_text()
     assert '<meta name="fly-january" content="skeleton">' in html
+
+
+def test_fixture_when_built_then_ships_and_links_fly_assets(built_site):
+    for name in ("fly.css", "fly-tokens.css", "fly-utilities.css", "fly.js", "fly-bridge.js", "fly-debug.js"):
+        assert (built_site / "assets" / "fly" / name).is_file(), name
+    html = (built_site / "guide" / "index.html").read_text()
+    links = [line for line in html.splitlines() if "assets/fly/" in line]
+    assert any('href="../assets/fly/fly.css"' in line for line in links), links
+    assert any('href="../assets/fly/fly-utilities.css"' in line for line in links), links
+    assert any('src="../assets/fly/fly-bridge.js"' in line for line in links), links
+    assert any('type="module" src="../assets/fly/fly.js"' in line for line in links), links
+    assert html.index("assets/stylesheets/main.") < html.index("assets/fly/fly.css"), "fly.css loads after MaterialX"
+
+
+def test_fixture_when_built_then_renders_fontlab_chrome_and_fly_partials(built_site):
+    html = (built_site / "guide" / "index.html").read_text()
+    assert "<fontlab-menu " in html and "<fontlab-footer " in html
+    assert "fly-arrow" in html, "partials/footer.html previous/next arrows"

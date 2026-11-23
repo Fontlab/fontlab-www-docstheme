@@ -1,0 +1,113 @@
+// this_file: tests/fly-build.test.mjs
+// Checks the fly-january layer sources in src/fly and the built theme assets: the entry's
+// layer statement and import order, layer wrappers per directory, no old prefix, every
+// --fly-* reference defined, !important only with a reason, and the committed assets
+// matching a fresh build.
+import assert from 'node:assert/strict';
+import { readFile, readdir } from 'node:fs/promises';
+import { join, relative } from 'node:path';
+import { test } from 'node:test';
+import { LAYER_STATEMENT, LAYERS, OUT, SCRIPTS, buildFlyCss, entryImports } from '../scripts/build-fly.mjs';
+
+const root = new URL('..', import.meta.url).pathname;
+const src = join(root, 'src/fly');
+const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
+// Element-local working variables: declared and read per element in the layer files,
+// not tokens. Every other --fly-* reference must be declared in src/fly/tokens.
+const LOCALS = ['--fly-mt', '--fly-mb', '--fly-gbox', '--fly-gmb', '--fly-float-top', '--fly-float-mb'];
+
+async function files(dir, ext) {
+  const entries = await readdir(dir, { recursive: true, withFileTypes: true });
+  return entries.filter((e) => e.isFile() && e.name.endsWith(ext) && !e.parentPath.includes('__pycache__')).map((e) => join(e.parentPath, e.name));
+}
+
+const cssFiles = await files(src, '.css');
+const sources = Object.fromEntries(await Promise.all(cssFiles.map(async (path) => [relative(src, path), await readFile(path, 'utf8')])));
+
+test('the entry declares the six layers first, in SPEC 6 order', async () => {
+  const entry = strip(sources['fly.css']).trim();
+  assert.equal(LAYER_STATEMENT, '@layer fly.tokens, fly.base, fly.layout, fly.components, fly.chrome, fly.utilities;');
+  assert.ok(entry.startsWith(LAYER_STATEMENT), 'src/fly/fly.css must open with the layer statement');
+  assert.ok(sources['fly.css'].startsWith('/* this_file: src/fly/fly.css */'));
+});
+
+test('the entry imports every layer file once, grouped in layer order', async () => {
+  const imports = await entryImports();
+  const layerFiles = Object.keys(sources).filter((path) => path !== 'fly.css').sort();
+  assert.deepEqual([...imports].sort(), layerFiles, 'every CSS file under src/fly is imported exactly once');
+  const order = imports.map((path) => LAYERS.indexOf('fly.' + path.split('/')[0]));
+  assert.ok(order.every((index) => index >= 0), 'imports come from the layer directories');
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), 'imports follow the layer order');
+});
+
+test('each layer file carries this_file and is one block of its directory layer', () => {
+  for (const [path, css] of Object.entries(sources)) {
+    if (path === 'fly.css') continue;
+    assert.ok(css.startsWith('/* this_file: src/fly/' + path + ' */'), path + ' must start with its this_file record');
+    const layer = 'fly.' + path.split('/')[0];
+    assert.match(strip(css).trim(), new RegExp('^@layer ' + layer.replace('.', '\\.') + ' \\{[\\s\\S]*\\}$'), path + ' must be one @layer ' + layer + ' block');
+  }
+});
+
+test('no fl27 or fltheme27 in src/fly (except RENAMES.md), theme or the built assets', async () => {
+  const paths = [...(await files(src, '')).filter((p) => !p.endsWith('RENAMES.md')), ...(await files(join(root, 'theme'), ''))];
+  assert.ok(paths.some((p) => p.startsWith(OUT)), 'built assets are scanned');
+  for (const path of paths) assert.doesNotMatch(await readFile(path, 'utf8'), /fl27|fltheme27/i, path);
+});
+
+test('every var(--fly-*) used in src/fly is declared in the tokens', () => {
+  const tokens = new Set();
+  const locals = new Set();
+  for (const [path, css] of Object.entries(sources)) {
+    for (const [, name] of strip(css).matchAll(/(--fly-[a-z0-9-]+)\s*:/g)) (path.startsWith('tokens/') ? tokens : locals).add(name);
+  }
+  assert.deepEqual([...locals].filter((name) => !tokens.has(name)).sort(), [...LOCALS].sort(), 'only the listed working variables are declared outside tokens');
+  for (const [path, css] of Object.entries(sources)) {
+    for (const [, name] of strip(css).matchAll(/var\((--fly-[a-z0-9-]+)/g)) {
+      assert.ok(tokens.has(name) || LOCALS.includes(name), path + ' uses undefined ' + name);
+    }
+  }
+});
+
+test('!important appears only with a comment naming what it beats', () => {
+  for (const [path, css] of Object.entries(sources)) {
+    for (const line of css.split('\n').filter((l) => l.includes('!important'))) {
+      assert.match(line, /!important;\s*\/\*.*MaterialX/, path + ': ' + line.trim());
+    }
+  }
+});
+
+test('committed fly.css and fly-tokens.css match a fresh build and are flat', async () => {
+  for (const [name, css] of Object.entries(await buildFlyCss())) {
+    assert.equal(await readFile(join(OUT, name), 'utf8'), css, name + ' is stale: run npm run build');
+    assert.doesNotMatch(strip(css), /@layer|@import|&/, name + ' must be flattened and inlined');
+  }
+  const tokens = strip(await readFile(join(OUT, 'fly-tokens.css'), 'utf8'));
+  for (const [, block] of tokens.matchAll(/\{([^{}]*)\}/g)) {
+    for (const decl of block.split(';').map((d) => d.trim()).filter(Boolean)) {
+      assert.match(decl, /^(--fly-|--md-|font-size:)/, 'fly-tokens.css holds tokens only: ' + decl);
+    }
+  }
+});
+
+test('committed scripts equal their sources; utilities are the layered tw: subset', async () => {
+  for (const name of SCRIPTS) {
+    assert.equal(await readFile(join(OUT, name), 'utf8'), await readFile(join(src, 'js', name), 'utf8'), name);
+  }
+  const utilities = await readFile(join(OUT, 'fly-utilities.css'), 'utf8');
+  assert.match(utilities, /@layer fly\.utilities\{/);
+  assert.match(utilities, /\.tw\\:mt-8\{[^}]*!important/);
+  assert.match(utilities, /\.tw\\:p-4\{/);
+  assert.doesNotMatch(utilities, /\.tw\\:mask-/, 'mask-* utilities are left out');
+});
+
+test('main.html loads the theme assets from its own path and keeps the marker', async () => {
+  const html = await readFile(join(root, 'theme/fly_january/main.html'), 'utf8');
+  for (const name of ['fly.css', 'fly-utilities.css', 'fly-bridge.js', 'fly.js']) {
+    assert.ok(html.includes("'assets/fly/" + name + "' | url"), 'main.html must load assets/fly/' + name);
+  }
+  assert.ok(html.indexOf('fly.css') < html.indexOf('fly-utilities.css'), 'utilities load after fly.css');
+  assert.ok(html.includes('<meta name="fly-january" content="skeleton">'));
+  assert.ok(html.includes('fonts: provided by the fly plugin'));
+  assert.match(html, /<fontlab-menu [\s\S]*<fontlab-footer/);
+});

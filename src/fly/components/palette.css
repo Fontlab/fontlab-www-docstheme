@@ -1,0 +1,65 @@
+/* this_file: src/fly/components/palette.css */
+/* The palette toggle at the foot of L1 shows the scheme a click switches to (moon in
+   light, sun in dark), driven by the scheme on the label's own radio, so it is right on
+   first paint. The icon-font glyph replaces MaterialX's SVG only once the font has loaded
+   (html.fly-msym), so a slow font never shows the ligature words. The form hugs the
+   label, so the checked radio's focus box (chrome/focus.css) is the button; the hit area
+   is 32px, 44px on touch widths. */
+@layer fly.components {
+  [data-md-component='palette'] {
+    width: fit-content;
+    margin-left: calc(1.1111rem - 6px); /* the glyph on the links' text edge */
+  }
+
+  [data-md-component='palette'] label.md-header__button {
+    box-sizing: border-box;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 6px;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--fly-ink);
+  }
+
+  @media screen and (max-width: 59.984375em) {
+    [data-md-component='palette'] label.md-header__button {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 12px;
+    }
+
+    [data-md-component='palette'] {
+      margin-left: max(0px, 1.1111rem - 12px);
+    }
+  }
+
+  [data-md-component='palette'] label.md-header__button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .fly-msym [data-md-component='palette'] label.md-header__button svg {
+    display: none;
+  }
+
+  .fly-msym [data-md-component='palette'] label.md-header__button::before {
+    display: block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    font: 400 20px/1 var(--fly-icon-family);
+    font-feature-settings: 'liga';
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .fly-msym [data-md-component='palette'] [data-md-color-scheme='default'] + label::before {
+    content: 'dark_mode' / '';
+  }
+
+  .fly-msym [data-md-component='palette'] [data-md-color-scheme='slate'] + label::before {
+    content: 'light_mode' / '';
+  }
+}

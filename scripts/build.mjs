@@ -5,6 +5,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { scopeCSS } from './scope.mjs';
 import { compileCascade } from './cascade.mjs';
+import { buildFly } from './build-fly.mjs';
 import postcss from 'postcss';
 import selectorParser from 'postcss-selector-parser';
 
@@ -76,3 +77,5 @@ for (const path of (await readdir('dist', { recursive: true })).sort()) {
 }
 await writeFile('dist/manifest.json', `${JSON.stringify({ version: '1.0.0', files }, null, 2)}\n`);
 console.log(`Built ${Object.keys(files).length} files in dist/`);
+// The fly-january theme assets live in the package, not in dist/; dist/manifest.json is unchanged.
+await buildFly();

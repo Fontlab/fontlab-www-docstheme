@@ -10,7 +10,7 @@ import { test } from 'node:test';
 
 const root = new URL('..', import.meta.url).pathname;
 const tokensDir = join(root, 'src/fly/tokens');
-const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'materialx.css'];
+const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'layout.css', 'materialx.css'];
 const HUES = ['cherry', 'tangerine', 'amber', 'lime', 'emerald', 'teal', 'sky', 'cobalt', 'indigo', 'violet', 'magenta', 'rose'];
 const VARIANTS = ['', '-soft', '-deep', '-tint'];
 const ROLES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body', 'lead', 'nav', 'table', 'caption', 'code'];
@@ -166,12 +166,12 @@ test('token files carry this_file and declare every rule inside @layer fly.token
   }
 });
 
-test('no fl27 or fltheme27 name in src/fly, theme or DESIGN-TOKENS.md', async () => {
+test('no fl27 or fltheme27 name in src/fly (except RENAMES.md), theme or DESIGN-TOKENS.md', async () => {
   const files = [join(root, 'DESIGN-TOKENS.md')];
   for (const dir of ['src/fly', 'theme']) {
     const entries = await readdir(join(root, dir), { recursive: true, withFileTypes: true });
     for (const entry of entries) {
-      if (entry.isFile() && !entry.parentPath.includes('__pycache__')) files.push(join(entry.parentPath, entry.name));
+      if (entry.isFile() && !entry.parentPath.includes('__pycache__') && entry.name !== 'RENAMES.md') files.push(join(entry.parentPath, entry.name));
     }
   }
   for (const path of files) {
@@ -185,7 +185,7 @@ test('every token named in DESIGN-TOKENS.md is declared, and every colour token 
   );
   assert.ok(documented.size > 100, 'DESIGN-TOKENS.md documents too few tokens: ' + documented.size);
   for (const name of documented) assert.ok(declared.has(name), name + ' is documented but not declared');
-  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css']) {
+  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css', 'layout.css']) {
     for (const rule of rules[file]) {
       for (const name of Object.keys(rule.decls)) {
         if (name.startsWith('--fly-')) assert.ok(documented.has(name), name + ' (' + file + ') is not documented');
@@ -238,8 +238,9 @@ test('text roles use the three sizes; headings use clamp() times their scale', (
   }
 });
 
-test('flowing-text leadings are whole multiples of 1rem', () => {
-  for (const role of ['body', 'lead', 'table', 'h6']) {
+test('flowing-text leadings are whole multiples of 1rem; tables keep the prototype 1.3', () => {
+  assert.equal(valueOf(rules['type.css'], ':root', '--fly-table-leading'), '1.3', 'tables may leave the grid (SPEC 4.1)');
+  for (const role of ['body', 'lead', 'h6']) {
     assert.equal(valueOf(rules['type.css'], ':root', '--fly-' + role + '-leading'), 'var(--fly-line)');
   }
   for (const role of ['h1', 'h2', 'h3', 'h4', 'h5']) {

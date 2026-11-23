@@ -1,0 +1,41 @@
+/* this_file: src/fly/fly.css */
+/* fly-january stylesheet entry. One directory per cascade layer, one file per concern,
+   imported in layer order. scripts/build-fly.mjs inlines the imports in this order and
+   flattens the layers into selector weight (MaterialX's CSS is unlayered, so native
+   layers would lose to it) into theme/fly_january/assets/fly/fly.css. The Tailwind
+   utilities are built separately into fly-utilities.css (native layer fly.utilities). */
+@layer fly.tokens, fly.base, fly.layout, fly.components, fly.chrome, fly.utilities;
+
+@import 'tokens/grid.css';
+@import 'tokens/size.css';
+@import 'tokens/type.css';
+@import 'tokens/color.css';
+@import 'tokens/semantic.css';
+@import 'tokens/layout.css';
+@import 'tokens/materialx.css';
+@import 'base/root.css';
+@import 'base/typeset.css';
+@import 'layout/sheets.css';
+@import 'layout/rails.css';
+@import 'layout/grid.css';
+@import 'layout/figures.css';
+@import 'layout/canvas.css';
+@import 'layout/margins.css';
+@import 'layout/full-bleed.css';
+@import 'components/headings.css';
+@import 'components/inline.css';
+@import 'components/nav.css';
+@import 'components/figures.css';
+@import 'components/tables.css';
+@import 'components/admonitions.css';
+@import 'components/cards.css';
+@import 'components/buttons.css';
+@import 'components/keys.css';
+@import 'components/palette.css';
+@import 'components/footer.css';
+@import 'chrome/bars.css';
+@import 'chrome/drawer.css';
+@import 'chrome/search.css';
+@import 'chrome/focus.css';
+@import 'chrome/scrollbars.css';
+@import 'utilities/motion.css';

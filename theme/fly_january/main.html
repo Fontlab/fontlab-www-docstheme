@@ -1,7 +1,48 @@
 {#- this_file: theme/fly_january/main.html -#}
+{#- fly-january: MaterialX child theme. Sheets, canvas grid, type and the menu bridge are
+    CSS and JS in assets/fly/ (built from src/fly by scripts/build-fly.mjs); the fly plugin
+    adds the body classes, fonts and page hue. -#}
 {% extends "base.html" %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
+  <link rel="stylesheet" href="{{ 'assets/fly/fly.css' | url }}">
+  <link rel="stylesheet" href="{{ 'assets/fly/fly-utilities.css' | url }}">
+{% endblock %}
 
 {% block extrahead %}
   {{ super() }}
   <meta name="fly-january" content="skeleton">
+  {#- Restores the retracted L2 before first paint after navigating from an L1 link (fly.js). #}
+  <script>try{if(sessionStorage.getItem("fly-l2")==="in"){document.documentElement.dataset.flyL2="in";sessionStorage.removeItem("fly-l2")}}catch(e){}</script>
+  {#- fonts: provided by the fly plugin #}
+  {#- Palette toggle and arrow glyphs. A symbol replaces MaterialX's SVG only once the
+      font has loaded (html.fly-msym), so a slow or blocked font never shows the ligature
+      words; the SVGs (same meaning) remain the fallback. #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=arrow_back,arrow_forward,dark_mode,light_mode&display=block">
+  {#- fonts: provided by the fly plugin #}
+  <script>try{document.fonts.load('20px "Material Symbols Outlined"',"arrow_backarrow_forwarddark_modelight_mode").then(function(f){if(f.length)document.documentElement.classList.add("fly-msym")})}catch(e){}</script>
+  <script src="https://i.fontlab.com/menu/fontlab.js" defer></script>
+{% endblock %}
+
+{% block header %}
+  {#- mode="dark" in both schemes: the bars are dark in light mode too. #}
+  <fontlab-menu mode="dark" site-label="{{ config.site_name | e }}"
+                site-url="{{ config.site_url | e }}"
+                mobile-menu="materialx" mobile-search="materialx"></fontlab-menu>
+  {{ super() }}
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <fontlab-footer mode="dark"></fontlab-footer>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ 'assets/fly/fly-bridge.js' | url }}"></script>
+  <script type="module" src="{{ 'assets/fly/fly.js' | url }}"></script>
 {% endblock %}

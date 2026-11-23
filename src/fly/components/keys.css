@@ -1,0 +1,38 @@
+/* this_file: src/fly/components/keys.css */
+/* Key caps in the navigation face: a 1.7em box (border-box) with the label lowered
+   slightly. Negative block margins keep the cap's margin box inside the line box, so
+   lines stay on the grid. fly-bridge.js puts a symbol on named keys (data-fl-key-symbol). */
+@layer fly.components {
+  .md-typeset kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    min-width: 2.0833rem;
+    height: 1.7em;
+    margin-block: -0.3472rem;
+    padding: 0.2em 0.3em 0.1em;
+    gap: 0.2em;
+    font-family: var(--fly-nav-family);
+    font-size: var(--fly-nav-size);
+    font-weight: var(--fly-nav-weight);
+    font-stretch: var(--fly-nav-stretch);
+    font-variation-settings: var(--fly-nav-variation);
+    line-height: var(--fly-nav-leading);
+    letter-spacing: 0.01em;
+    color: var(--foreground, var(--fly-ink));
+    background: var(--muted, var(--fly-key));
+    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    border-radius: 0.5208rem;
+    box-shadow: none;
+  }
+
+  .md-typeset kbd[data-fl-key-symbol]::before {
+    content: attr(data-fl-key-symbol);
+    padding: 0;
+  }
+
+  .md-typeset kbd[data-fl-key-symbol]::after {
+    content: none;
+  }
+}

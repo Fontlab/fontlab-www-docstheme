@@ -2,6 +2,7 @@
 site_name: fly-january fixture
 theme:
   name: fly-january
+  features: [navigation.footer]
 plugins:
   - fly
 nav:

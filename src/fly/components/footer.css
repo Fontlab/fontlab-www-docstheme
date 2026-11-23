@@ -1,0 +1,51 @@
+/* this_file: src/fly/components/footer.css */
+/* Previous/next links (partials/footer.html): an arrow and the page title, set like a
+   resting L1 link. Both titles show at every width; each link may shrink and its title
+   ellipsizes (MaterialX hides the previous title on phones). Thin icon-font arrows
+   replace the SVGs once the font has loaded (html.fly-msym). */
+@layer fly.components {
+  .md-footer__title {
+    font-family: var(--fly-nav-family);
+    font-size: var(--fly-nav-size);
+    font-weight: var(--fly-nav-weight);
+    font-stretch: var(--fly-nav-stretch);
+    font-variation-settings: var(--fly-nav-variation);
+    line-height: var(--fly-nav-leading);
+    align-self: center;
+    margin-bottom: 0;
+  }
+
+  .md-footer__link {
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .md-footer__link--prev .md-footer__title {
+    display: block;
+  }
+
+  .fly-msym .fly-arrow svg {
+    display: none;
+  }
+
+  .fly-msym .fly-arrow::before {
+    display: block;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    font: 400 24px/1 var(--fly-icon-family);
+    font-feature-settings: 'liga';
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .fly-msym .fly-arrow--back::before {
+    content: 'arrow_back' / '';
+  }
+
+  .fly-msym .fly-arrow--forward::before {
+    content: 'arrow_forward' / '';
+  }
+}

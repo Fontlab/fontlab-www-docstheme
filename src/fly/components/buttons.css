@@ -1,0 +1,12 @@
+/* this_file: src/fly/components/buttons.css */
+/* MaterialX buttons in the button face, uppercase. */
+@layer fly.components {
+  .md-typeset .md-button {
+    font-family: var(--fly-button-family);
+    font-size: var(--fly-button-size);
+    font-weight: var(--fly-button-weight);
+    letter-spacing: var(--fly-button-tracking);
+    text-transform: uppercase;
+    padding: 0.7em 1.6em;
+  }
+}

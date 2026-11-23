@@ -1,0 +1,28 @@
+/* this_file: src/fly/chrome/bars.css */
+/* The global menu, the shared footer and MaterialX's previous/next strip are dark bars
+   in both colour schemes (the menu renders its dark ink: mode="dark" in main.html), with
+   dropdowns on the darker drop colour. Page rules beat the components' :host defaults;
+   z-index 3 sits over .md-footer (2) and the sheets. MaterialX's own header is hidden:
+   fly-bridge.js moves its search and palette out. */
+@layer fly.chrome {
+  :is(fontlab-menu, fontlab-footer) {
+    --fl-bg: var(--fly-bar);
+    --fl-dropdown-bg: var(--fly-bar-drop);
+    --fontlab-menu-z: 3;
+    --fontlab-footer-z: 3;
+  }
+
+  header.md-header {
+    display: none;
+  }
+
+  /* The strip casts its shadow up onto the paper; its focus ring reads on the bar. */
+  .md-footer {
+    position: relative;
+    z-index: 2;
+    background-color: var(--fly-bar);
+    box-shadow: var(--fly-shadow-up);
+    color: var(--md-footer-fg-color);
+    --fl-focus-color: var(--fly-accent-soft);
+  }
+}

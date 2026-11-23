@@ -1,0 +1,112 @@
+/* this_file: src/fly/layout/rails.css */
+/* The L1 and L2 rails beside the canvas.
+   - Phones: L1 is MaterialX's drawer (chrome/drawer.css), L2 is gone.
+   - 60em to 76.25em: no L2; L1 is the full rail. MaterialX makes L1 an off-screen drawer
+     at these widths; that is undone here.
+   - 76.25em to 100em: L1 is a sliver under L2. L2 rests extended (also without JS and on
+     touch screens) and retracts, sliding right under L3 so L1's labels show, while L1 is
+     hovered or focused, or when fly.js has latched html[data-fly-l2="in"]; "out" extends
+     it again. The z-order never changes.
+   - 100em and up: both rails at full width. */
+@layer fly.layout {
+  .md-sidebar {
+    padding: 2.0833rem 0;
+  }
+
+  @media screen and (min-width: 60em) {
+    .md-sidebar--secondary {
+      order: 1;
+      z-index: 2;
+      width: var(--fly-part-rail);
+    }
+
+    .md-content {
+      order: 2;
+    }
+
+    /* L1 spans the whole article, so its background is a target top to bottom; the nav
+       list inside stays sticky. */
+    .md-sidebar--primary {
+      align-self: stretch;
+      position: relative;
+      z-index: 0;
+      width: var(--fly-l1);
+      top: auto !important; /* MaterialX's sidebar script sets an inline top */
+      height: auto;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap {
+      position: sticky;
+      top: 0;
+      right: auto;
+      width: var(--fly-rail);
+    }
+  }
+
+  @media screen and (76.25em <= width < 100em) {
+    .md-main__inner.md-grid {
+      overflow-x: clip;
+    }
+
+    /* The rail is as wide as the reveal, so links and focus rings end before L2. */
+    .md-sidebar--primary .md-sidebar__scrollwrap {
+      width: var(--fly-l1-reveal);
+    }
+
+    .md-main__inner::before,
+    .md-sidebar--secondary {
+      transition: transform 200ms ease;
+    }
+
+    /* Spelled out: pseudo-elements cannot go inside :is(). */
+    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-main__inner::before,
+    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-sidebar--secondary,
+    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):has(
+        .md-sidebar--primary:is(:hover, :focus-within)
+      )
+      .md-main__inner::before,
+    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):has(
+        .md-sidebar--primary:is(:hover, :focus-within)
+      )
+      .md-sidebar--secondary {
+      /* Just far enough for the label; a strip of L2 stays. */
+      transform: translateX(calc(var(--fly-l1-reveal) - var(--fly-sliver)));
+    }
+  }
+
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    .md-main__inner::before,
+    .md-sidebar.md-sidebar--secondary,
+    .md-nav--primary :is(label[for='__toc'], .md-nav--secondary),
+    .md-nav--primary > .md-nav__title[for='__drawer'],
+    .md-header__button[for='__drawer'],
+    .md-overlay[for='__drawer'] {
+      display: none;
+    }
+
+    .md-sidebar.md-sidebar--primary {
+      left: auto;
+      transform: none;
+      transition: none;
+      overflow: visible;
+      border-radius: 0;
+      background-color: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap {
+      left: auto;
+      bottom: auto;
+    }
+
+    .md-nav--primary {
+      margin: 0;
+    }
+
+    .md-content > .md-content__inner {
+      margin-inline: 0;
+    }
+  }
+}

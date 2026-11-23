@@ -1,0 +1,15 @@
+/* this_file: src/fly/chrome/scrollbars.css */
+/* A faint neutral thumb on a clear track in both schemes, also on hover (MaterialX
+   colours them with the accent). The trailing :is(*, :hover) lifts the rule over
+   MaterialX's :hover and :focus-within rules. scrollbar-color inherits, so tables and
+   other scrollers follow html; the -webkit- thumbs are for browsers without it. */
+@layer fly.chrome {
+  :is(html, .md-sidebar__scrollwrap, .md-search__scrollwrap, .md-typeset pre > code, .md-tooltip2__inner):is(*, :hover) {
+    scrollbar-color: var(--fly-scrollbar) transparent;
+  }
+
+  :is(.md-sidebar__scrollwrap, .md-search__scrollwrap, .md-typeset pre > code, .md-tooltip2__inner):is(*, :hover)::-webkit-scrollbar-thumb,
+  :is(.md-sidebar__scrollwrap, .md-search__scrollwrap, .md-typeset pre > code, .md-tooltip2__inner):is(*, :hover)::-webkit-scrollbar-thumb:hover {
+    background-color: var(--fly-scrollbar);
+  }
+}

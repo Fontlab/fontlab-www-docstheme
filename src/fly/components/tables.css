@@ -1,0 +1,40 @@
+/* this_file: src/fly/components/tables.css */
+/* Tables in the table role (the rail face and width); header cells in the caption role.
+   Cell padding is half MaterialX's. Inline runs keep the cell's face, size and weight. */
+@layer fly.components {
+  .md-typeset table {
+    font-family: var(--fly-table-family);
+    font-size: var(--fly-table-size);
+    font-weight: var(--fly-table-weight);
+    font-stretch: var(--fly-table-stretch);
+    font-feature-settings: var(--fly-table-features);
+    font-variation-settings: var(--fly-table-variation);
+    line-height: var(--fly-table-leading); /* the scroll wrapper still rounds to whole lines */
+    letter-spacing: var(--fly-table-tracking);
+  }
+
+  .md-typeset table :is(td, th) {
+    padding: 0.4688em 0.625em;
+  }
+
+  .md-typeset table th {
+    font-family: var(--fly-caption-family);
+    font-size: var(--fly-caption-size);
+    font-weight: var(--fly-caption-weight);
+    font-stretch: var(--fly-caption-stretch);
+    font-feature-settings: var(--fly-caption-features);
+    font-variation-settings: var(--fly-caption-variation);
+    letter-spacing: var(--fly-caption-tracking);
+  }
+
+  .md-typeset table :is(td, th) :is(a, strong, mark) {
+    font-size: inherit;
+  }
+
+  .md-typeset table mark {
+    font-family: inherit;
+    font-stretch: inherit;
+    font-variation-settings: inherit;
+    font-weight: inherit;
+  }
+}

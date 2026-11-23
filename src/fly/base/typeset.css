@@ -1,0 +1,44 @@
+/* this_file: src/fly/base/typeset.css */
+/* The article text: the body role on .md-typeset, paragraphs on the body line, automatic
+   hyphenation in paragraphs (needs <html lang>), never inside inline runs, and images
+   that fit their column. */
+@layer fly.base {
+  .md-typeset {
+    font-family: var(--fly-body-family);
+    font-size: var(--fly-body-size);
+    font-weight: var(--fly-body-weight);
+    font-stretch: var(--fly-body-stretch);
+    font-feature-settings: var(--fly-body-features);
+    font-variation-settings: var(--fly-body-variation);
+    letter-spacing: var(--fly-body-tracking);
+    line-height: var(--fly-body-ratio);
+    color: var(--fly-ink);
+  }
+
+  .md-typeset > p {
+    line-height: var(--fly-body-leading);
+  }
+
+  /* At least 6 letters per word, 3 before and 3 after the break. */
+  .md-typeset p {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+  }
+
+  .md-typeset
+    p
+    :is(a, strong, b, em, i, mark, kbd, span, code, abbr, cite, q, sub, sup, small, samp, var, dfn, time) {
+    -webkit-hyphens: none;
+    hyphens: none;
+  }
+
+  .md-typeset img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .md-typeset img.img-tiny {
+    vertical-align: middle;
+  }
+}

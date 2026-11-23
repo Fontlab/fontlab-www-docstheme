@@ -1,0 +1,65 @@
+/* this_file: src/fly/layout/grid.css */
+/* Baseline grid (SPEC 4.1). Every top-level block starts and ends on the body line
+   (--fly-line), measured from the first paragraph, so the next paragraph's lines land on
+   the grid. Text blocks have no top margin and one line below (margins collapse to whole
+   lines). Headings: the one-line block (design margins + 1lh) is rounded to the nearest
+   line; the line box is rounded up to whole lines; the bottom margin is what is left of
+   (design bottom margin + 1lh) after that, so a heading stays close to its text. The
+   design margins are each heading's --fly-mt and --fly-mb (components/headings.css).
+   calc-size() rounds any block (multi-line headings, figures, tables, asides) up to whole
+   lines. Engines without calc-size() drop those declarations; there the heading's bottom
+   margin also absorbs its one-line rounding, so one-line headings stay on the grid and
+   taller blocks drift. */
+@layer fly.layout {
+  .md-typeset :is(h2, h3, h4, h5, h6) {
+    margin: var(--fly-mt) 0 var(--fly-mb);
+  }
+
+  .md-typeset h1 {
+    margin: var(--fly-half) 0 var(--fly-mb);
+  }
+
+  .md-typeset > :is(p, ul, ol, dl, blockquote),
+  .md-typeset > .fly-aside > p {
+    margin-block: 0 var(--fly-line);
+  }
+
+  .md-typeset > :is(ul, ol) :is(li, ul, ol) {
+    margin-block: 0;
+  }
+
+  .md-typeset > :is(h1, h2, h3, h4, h5, h6) {
+    --fly-gbox: round(up, 1lh, var(--fly-line));
+    --fly-gmb: max(0px, round(var(--fly-mb) + 1lh, var(--fly-line)) - var(--fly-gbox));
+  }
+
+  .md-typeset > :is(h2, h3, h4, h5, h6) {
+    margin-top: max(
+      0px,
+      round(var(--fly-mt) + 1lh + var(--fly-mb), var(--fly-line)) - var(--fly-gbox) - var(--fly-gmb)
+    );
+    margin-bottom: var(--fly-gmb);
+  }
+
+  .md-typeset > h1 {
+    margin-top: var(--fly-half);
+    margin-bottom: var(--fly-line);
+  }
+
+  @supports not (height: calc-size(auto, size)) {
+    .md-typeset > :is(h1, h2, h3, h4, h5, h6) {
+      margin-bottom: calc(var(--fly-gmb) + var(--fly-gbox) - 1lh);
+    }
+  }
+
+  .md-typeset
+    > :is(h1, h2, h3, h4, h5, h6, .fly-aside, .md-typeset__scrollwrap, .highlight, .admonition, details, .full-bleed),
+  .md-typeset > p:has(> img:not(.img-tiny)),
+  .md-typeset figure {
+    height: calc-size(auto, round(up, size, var(--fly-line)));
+  }
+
+  .md-typeset > :is(.md-typeset__scrollwrap, .highlight, .admonition, details) {
+    margin-block: var(--fly-line);
+  }
+}

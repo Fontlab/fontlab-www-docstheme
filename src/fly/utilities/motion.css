@@ -1,0 +1,14 @@
+/* this_file: src/fly/utilities/motion.css */
+/* Reduced motion: no transitions, animations or smooth scrolling. In the top layer, so it
+   outweighs every theme rule without needing to be important. */
+@layer fly.utilities {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition: none;
+      animation: none;
+      scroll-behavior: auto;
+    }
+  }
+}

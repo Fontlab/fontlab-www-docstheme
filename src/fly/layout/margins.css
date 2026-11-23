@@ -1,0 +1,244 @@
+/* this_file: src/fly/layout/margins.css */
+/* Margin placement on the canvas. H3, H4 and admonitions go into the margin on the page's
+   side (body.fly-margin-left or body.fly-margin-right, set by the fly plugin); tall and
+   small images into the opposite margin. .to-left, .to-right and .to-main move a single
+   block. Margin items are floats pulled out of the text column by a negative inline
+   margin, so there are no grid rows to misalign; a block before a heading clears the
+   previous margin heading, so headings in short sections never collide.
+   A margin heading starts on the body's baseline: an empty strut in the body face, size
+   and line (::before) sits on its first line, so that line's baseline lands where the
+   paragraph's first baseline does; later lines keep the heading's own leading. Its measure
+   is at most 13ch (in its own size), still flush against the text column.
+   .fly-aside (from the fly plugin) groups paragraphs with their margin figure: a grid whose
+   figure spans every row, so its top is level with the first paragraph; --rows is that
+   row count. .fly-cut figures cut into the text column by --cut and the text wraps them. */
+@layer fly.layout {
+  @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
+    @container fly-canvas (min-width: 66.6667rem) {
+      .md-typeset > :is(h3, h4, .admonition, details).to-main {
+        clear: both;
+        margin-inline: 0;
+      }
+
+      .fly-margin-left .md-typeset > :is(h3, h4, .admonition, details):not(.to-right, .to-main),
+      .md-typeset > :is(h3, h4, .admonition, details).to-left {
+        float: left;
+        clear: left;
+        width: var(--m);
+        margin: var(--fly-float-top, 0.2em) var(--gap) var(--fly-float-mb, 0.6em) calc(-1 * var(--out));
+      }
+
+      .fly-margin-right .md-typeset > :is(h3, h4, .admonition, details):not(.to-left, .to-main),
+      .md-typeset > :is(h3, h4, .admonition, details).to-right {
+        float: right;
+        clear: right;
+        width: var(--m);
+        margin: var(--fly-float-top, 0.2em) calc(-1 * var(--out)) var(--fly-float-mb, 0.6em) var(--gap);
+      }
+
+      .fly-margin-left .md-typeset > :is(h3, h4):not(.to-right, .to-main),
+      .fly-margin-right .md-typeset > :is(h3, h4):not(.to-left, .to-main),
+      .md-typeset > :is(h3, h4):is(.to-left, .to-right):not(.to-main) {
+        box-sizing: border-box;
+        --fly-float-top: 0;
+        --fly-float-mb: 0; /* the margin box ends on the line, so a clear lands on the grid */
+      }
+
+      .md-typeset > :is(h3, h4):not(.to-main)::before {
+        content: '\200b';
+        font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family);
+        font-variation-settings: normal;
+      }
+
+      .fly-margin-left .md-typeset > :is(h3, h4):not(.to-right, .to-main),
+      .md-typeset > :is(h3, h4).to-left {
+        padding-inline-start: max(0px, var(--m) - 13ch);
+        text-align: right;
+      }
+
+      .fly-margin-right .md-typeset > :is(h3, h4):not(.to-left, .to-main),
+      .md-typeset > :is(h3, h4).to-right {
+        padding-inline-end: max(0px, var(--m) - 13ch);
+        text-align: left;
+      }
+
+      .md-typeset :is(.admonition, details) {
+        font-size: var(--fly-size-xs);
+        text-align: start;
+      }
+
+      .md-typeset :is(.admonition, details):not(.to-main) {
+        text-wrap-style: balance;
+      }
+
+      .md-typeset > :not(.fly-aside):has(+ :is(h3, h4))::after {
+        content: '';
+        display: block;
+      }
+
+      .fly-margin-left .md-typeset > :not(.fly-aside):has(+ :is(h3, h4))::after {
+        clear: left;
+      }
+
+      .fly-margin-right .md-typeset > :not(.fly-aside):has(+ :is(h3, h4))::after {
+        clear: right;
+      }
+
+      /* Tall and small images: the margin opposite the headings. */
+      .fly-margin-left .md-typeset figure:is(.img-tall, .img-small):not(:has(img.to-left, img.to-main)),
+      .md-typeset figure:has(img.to-right) {
+        float: right;
+        clear: right;
+        width: var(--m);
+        margin: 0.3em calc(-1 * var(--out)) var(--fly-line) var(--gap);
+        height: calc-size(auto, round(up, size + 0.3em, var(--fly-line)) - 0.3em);
+      }
+
+      .fly-margin-right .md-typeset figure:is(.img-tall, .img-small):not(:has(img.to-right, img.to-main)),
+      .md-typeset figure:has(img.to-left) {
+        float: left;
+        clear: left;
+        width: var(--m);
+        margin: 0.3em var(--gap) var(--fly-line) calc(-1 * var(--out));
+        height: calc-size(auto, round(up, size + 0.3em, var(--fly-line)) - 0.3em);
+      }
+
+      .md-typeset figure:has(img.to-main) {
+        float: none;
+        width: auto;
+        margin-inline: 0;
+      }
+
+      /* :not(#\#) outweighs the margin-figure rules above. */
+      .md-typeset > .fly-aside {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--gap) var(--m);
+        /* The trailing 1fr row takes a tall figure's extra height, so the text rows keep
+           their own heights and stay on the grid. */
+        grid-template-rows: repeat(var(--rows, 1), auto) 1fr;
+        align-items: start;
+        margin: var(--fly-line) calc(-1 * var(--out)) var(--fly-line) 0;
+      }
+
+      .md-typeset > .fly-aside > p {
+        grid-column: 1;
+        margin: 0;
+      }
+
+      .md-typeset > .fly-aside > p ~ p {
+        margin-top: var(--fly-line);
+      }
+
+      .md-typeset > .fly-aside > figure:not(#\#) {
+        grid-column: 3;
+        grid-row: 1 / -1;
+        float: none;
+        width: auto;
+        margin: 0.3em 0 0;
+      }
+
+      .fly-margin-right .md-typeset > .fly-aside:not(:has(img.to-right)),
+      .md-typeset > .fly-aside:has(img.to-left) {
+        grid-template-columns: var(--m) var(--gap) minmax(0, 1fr);
+        margin: var(--fly-line) 0 var(--fly-line) calc(-1 * var(--out));
+      }
+
+      :is(.fly-margin-right .md-typeset > .fly-aside:not(:has(img.to-right)), .md-typeset > .fly-aside:has(img.to-left)) > p {
+        grid-column: 3;
+      }
+
+      :is(.fly-margin-right .md-typeset > .fly-aside:not(:has(img.to-right)), .md-typeset > .fly-aside:has(img.to-left))
+        > figure:not(#\#) {
+        grid-column: 1;
+      }
+
+      .md-typeset > .fly-aside:has(img.to-main) {
+        display: block;
+        margin: 0;
+      }
+
+      .md-typeset > .fly-aside:has(img.to-main) > p {
+        margin: 0 0 var(--fly-line);
+      }
+
+      /* img-cut: the block keeps the text column; the figure floats first, fills the margin
+         and its image edge cuts --cut into the column (at least one gap, at most 40% of the
+         column); the paragraphs wrap around it, one gap clear. The figure is never wider
+         than the image. Its height snaps to whole lines. */
+      .md-typeset > .fly-aside.fly-cut:not(#\#) {
+        --cut: clamp(var(--gap), 10vw, 40%);
+        display: flow-root;
+        margin: var(--fly-line) 0;
+      }
+
+      .md-typeset > .fly-cut > figure:not(#\#) {
+        float: right;
+        width: calc(var(--m) + var(--gap) + var(--cut));
+        max-width: max-content;
+        margin: 0.3em calc(-1 * var(--out)) var(--fly-line) var(--gap);
+        height: calc-size(auto, round(up, size + 0.3em, var(--fly-line)) - 0.3em);
+      }
+
+      :is(.fly-margin-right .md-typeset > .fly-cut:not(:has(img.to-right)), .md-typeset > .fly-cut:has(img.to-left))
+        > figure:not(#\#) {
+        float: left;
+        margin: 0.3em var(--gap) var(--fly-line) calc(-1 * var(--out));
+      }
+
+      .md-typeset > .fly-cut:has(img.to-main) > figure:not(#\#) {
+        float: none;
+        width: fit-content;
+        margin: 0 0 var(--fly-line);
+        height: auto;
+      }
+    }
+  }
+
+  /* 60em to 76.25em: only the left margin, for h3 and h4 (same float, strut and 13ch cap);
+     margin figures and asides stay in the text column at their source position. */
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    .md-typeset > :is(h3, h4, .admonition, details).to-main {
+      clear: both;
+      margin-inline: 0;
+    }
+
+    .fly-margin-left .md-typeset > :is(h3, h4, .admonition, details):not(.to-right, .to-main),
+    .md-typeset > :is(h3, h4, .admonition, details).to-left {
+      float: left;
+      clear: left;
+      width: var(--m);
+      margin: var(--fly-float-top, 0.2em) var(--gap) var(--fly-float-mb, 0.6em) calc(-1 * var(--out));
+    }
+
+    .fly-margin-left .md-typeset > :is(h3, h4):not(.to-right, .to-main),
+    .md-typeset > :is(h3, h4).to-left {
+      box-sizing: border-box;
+      --fly-float-top: 0;
+      --fly-float-mb: 0;
+      padding-inline-start: max(0px, var(--m) - 13ch);
+      text-align: right;
+    }
+
+    .fly-margin-left .md-typeset > :is(h3, h4):not(.to-right, .to-main)::before,
+    .md-typeset > :is(h3, h4).to-left::before {
+      content: '\200b';
+      font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family);
+      font-variation-settings: normal;
+    }
+
+    .md-typeset :is(.admonition, details) {
+      font-size: var(--fly-size-xs);
+      text-align: start;
+    }
+
+    .md-typeset > :not(.fly-aside):has(+ :is(h3, h4))::after {
+      content: '';
+      display: block;
+      clear: left;
+    }
+
+    .md-typeset figure:is(.img-tall, .img-small, .img-cut) {
+      margin-inline: 0;
+    }
+  }
+}

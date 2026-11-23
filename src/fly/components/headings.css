@@ -1,0 +1,166 @@
+/* this_file: src/fly/components/headings.css */
+/* Headings set from their roles (tokens/type.css). H1 and H2 are centred from 76.25em
+   and start on the text column's edge below it; h5 (card titles) is set like h2 but always
+   starts on the left; h3 and h4 use the navigation face. --fly-mt and --fly-mb are each
+   heading's design margins, read by layout/grid.css. A heading permalink is a notch in
+   the canvas's left edge: a solid ">" of L2 paper, one body em tall, level with the
+   heading's first line, shown while the heading is hovered or the link focused. */
+@layer fly.components {
+  .md-typeset h1 {
+    font-family: var(--fly-h1-family);
+    font-size: var(--fly-h1-size);
+    font-weight: var(--fly-h1-weight);
+    font-stretch: var(--fly-h1-stretch);
+    font-feature-settings: var(--fly-h1-features);
+    font-variation-settings: var(--fly-h1-variation);
+    line-height: var(--fly-h1-leading);
+    letter-spacing: var(--fly-h1-tracking);
+    --fly-mt: 0.5em;
+    --fly-mb: 0.6em;
+  }
+
+  .md-typeset h2 {
+    font-family: var(--fly-h2-family);
+    font-size: var(--fly-h2-size);
+    font-weight: var(--fly-h2-weight);
+    font-stretch: var(--fly-h2-stretch);
+    font-feature-settings: var(--fly-h2-features);
+    font-variation-settings: var(--fly-h2-variation);
+    line-height: var(--fly-h2-leading);
+    letter-spacing: var(--fly-h2-tracking);
+    text-wrap: balance;
+    --fly-mt: 4rem;
+    --fly-mb: 2rem;
+  }
+
+  .md-typeset :is(h1, h2) {
+    color: var(--fly-ink);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 76.234375em) {
+    .md-typeset :is(h1, h2) {
+      text-align: start;
+    }
+  }
+
+  .md-typeset :is(h3, h4) {
+    color: var(--fly-ink);
+    --fly-mt: 1.6em;
+    --fly-mb: 0.4em;
+  }
+
+  .md-typeset h3 {
+    font-family: var(--fly-h3-family);
+    font-size: var(--fly-h3-size);
+    font-weight: var(--fly-h3-weight);
+    font-stretch: var(--fly-h3-stretch);
+    font-feature-settings: var(--fly-h3-features);
+    font-variation-settings: var(--fly-h3-variation);
+    line-height: var(--fly-h3-leading);
+    letter-spacing: var(--fly-h3-tracking);
+  }
+
+  .md-typeset h4 {
+    font-family: var(--fly-h4-family);
+    font-size: var(--fly-h4-size);
+    font-weight: var(--fly-h4-weight);
+    font-stretch: var(--fly-h4-stretch);
+    font-feature-settings: var(--fly-h4-features);
+    font-variation-settings: var(--fly-h4-variation);
+    line-height: var(--fly-h4-leading);
+    letter-spacing: var(--fly-h4-tracking);
+  }
+
+  /* MaterialX's small, uppercase, muted h5 and h6 are undone. */
+  .md-typeset h5 {
+    font-family: var(--fly-h5-family);
+    font-size: var(--fly-h5-size);
+    font-weight: var(--fly-h5-weight);
+    font-stretch: var(--fly-h5-stretch);
+    font-feature-settings: var(--fly-h5-features);
+    font-variation-settings: var(--fly-h5-variation);
+    line-height: var(--fly-h5-leading);
+    letter-spacing: var(--fly-h5-tracking);
+    text-transform: none;
+    text-align: start;
+    text-wrap: balance;
+    color: var(--fly-ink);
+    --fly-mt: 1.6em;
+    --fly-mb: 0.5em;
+  }
+
+  .md-typeset h6 {
+    font-family: var(--fly-h6-family);
+    font-size: var(--fly-h6-size);
+    font-weight: var(--fly-h6-weight);
+    font-stretch: var(--fly-h6-stretch);
+    font-feature-settings: var(--fly-h6-features);
+    font-variation-settings: var(--fly-h6-variation);
+    line-height: var(--fly-h6-leading);
+    letter-spacing: var(--fly-h6-tracking);
+    text-transform: none;
+    color: var(--fly-ink);
+    --fly-mt: 1.6em;
+    --fly-mb: 0em;
+  }
+
+  /* The anchor is the 24px click target; ::before draws the notch; left -1px covers the
+     canvas border, so the notch reads as L2 showing through. */
+  .md-typeset .headerlink {
+    position: absolute;
+    left: -1px;
+    display: flex;
+    align-items: center;
+    width: 1.6667rem;
+    height: max(1.6667rem, var(--fly-notch));
+    margin: calc((1lh - max(1.6667rem, var(--fly-notch))) / 2) 0 0;
+    overflow: hidden;
+    color: transparent; /* hides the pilcrow, also on hover and focus */
+    user-select: none;
+    opacity: 1;
+    transition: none;
+  }
+
+  .md-typeset .headerlink::before {
+    content: '';
+    flex: none;
+    width: calc(var(--fly-notch) / 2);
+    height: var(--fly-notch);
+    background: transparent;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  .md-typeset :is(h1, h2, h3, h4, h5, h6):hover > .headerlink::before,
+  .md-typeset .headerlink:is(:hover, :focus-visible)::before {
+    background: var(--fly-paper-2);
+  }
+
+  /* Centred H1 and H2 are the notch's containing block; keep it on the canvas edge. */
+  @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
+    @container fly-canvas (min-width: 66.6667rem) {
+      .md-typeset > :is(h1, h2) > .headerlink {
+        left: calc(50% - 50cqi - 1px);
+      }
+    }
+  }
+
+  /* Links, strong and mark inside headings keep the heading's face; links carry no
+     underline in any state and shift colour on hover and focus. */
+  .md-typeset :is(h1, h2, h3, h4, h5, h6) a,
+  .md-typeset :is(h1, h2, h3, h4, h5, h6) a:is(:link, :visited, :hover, :focus, :active) {
+    text-decoration: none;
+  }
+
+  .md-typeset :is(h1, h2, h3, h4, h5, h6) a:not(.headerlink):is(:hover, :focus-visible) {
+    color: var(--fly-quiet);
+  }
+
+  .md-typeset :is(h1, h2, h3, h4, h5, h6) :is(a, strong, mark) {
+    font-family: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+}

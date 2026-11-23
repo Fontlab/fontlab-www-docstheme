@@ -73,15 +73,17 @@ The starting points were the whats-new-fontlab-9 prototype's sizes, which were i
 18px body and switched at fixed breakpoints: h1 37.8px (phones), 59.4px (60em–76.25em),
 86.4px (desktop); h2 48.6px at every width; h3, h4, h6 18px (17.1px below 60em); h5
 25.2–31.5px fluid. The clamps reproduce those values at 1440 and 1920px and between the old
-breakpoints; h2 now shrinks on phones (32.4px at 390px instead of 48.6px), the one
-deliberate change.
+breakpoints. h2 keeps the prototype's `clamp(1.4em, 3em + 1vw, 2.7em)` written in rem
+(`clamp(1.75rem, 3.75rem + 1vw, 3.375rem)`), so it stays 48.6px at every width below 100em,
+as the prototype rendered it (Task 3 parity ruling). h1 is continuous where the prototype
+stepped (59.4px between 960 and 1219px, then 86.4px).
 
 Computed sizes in CSS px (scale 1); the browser test asserts them within 0.5px:
 
 | Heading | 390px | 1024px | 1440px | 1920px | `clamp()` |
 |---|---|---|---|---|---|
 | h1 | 37.8 | 61.4 | 86.4 | 95.0 | `2.625rem, 6vw, 6rem` |
-| h2 | 32.4 | 42.1 | 48.6 | 53.5 | `2.25rem, 1.5rem + 2vw, 3.375rem` |
+| h2 | 48.6 | 48.6 | 48.6 | 53.5 | `1.75rem, 3.75rem + 1vw, 3.375rem` |
 | h3 | 17.1 | 18.0 | 18.0 | 19.8 | `1.1875rem, 1rem + 0.5vw, 1.25rem` |
 | h4 | 17.1 | 18.0 | 18.0 | 19.8 | `1.1875rem, 1rem + 0.5vw, 1.25rem` |
 | h5 | 25.2 | 28.2 | 31.5 | 34.6 | `1.75rem, 1.25rem + 1vw, 2.1875rem` |
@@ -99,36 +101,74 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each has nine varia
 | Role | family | weight | stretch | features | variation | size | leading | tracking |
 |---|---|---|---|---|---|---|---|---|
 | `h1` | `'newsserif-huge-variable', Georgia, serif` | `700` | `normal` | `normal` | `normal` | `calc(clamp(2.625rem, 6vw, 6rem) * var(--fly-h1-scale))` | `round(up, 0.8em, 1rem)` | `-0.01em` |
-| `h2` | `'quire-sans', Arial, sans-serif` | `300` | `normal` | `normal` | `normal` | `calc(clamp(2.25rem, 1.5rem + 2vw, 3.375rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `-0.02em` |
+| `h2` | `'quire-sans', Arial, sans-serif` | `300` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 3.75rem + 1vw, 3.375rem) * var(--fly-h2-scale))` | `round(up, 1em, 1rem)` | `-0.02em` |
 | `h3` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h3-scale))` | `round(up, 1.3em, 1rem)` | `0` |
 | `h4` | `var(--fly-nav-family)` | `300` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h4-scale))` | `round(up, 1.3em, 1rem)` | `0` |
 | `h5` | `var(--fly-h2-family)` | `400` | `normal` | `normal` | `normal` | `calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h5-scale))` | `round(up, 1.1em, 1rem)` | `0` |
-| `h6` | `'grtsk-vf', Arial, sans-serif` | `500` | `90%` | `normal` | `'slnt' 0` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h6-scale))` | `var(--fly-line)` | `0` |
+| `h6` | `var(--fly-sans-family)` | `500` | `var(--fly-sans-stretch)` | `normal` | `'slnt' 0` | `calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h6-scale))` | `var(--fly-line)` | `0` |
 | `body` | `'sole-serif-small-variable', Georgia, serif` | `400` | `normal` | `normal` | `normal` | `calc(var(--fly-size-sm) * var(--fly-body-scale))` | `var(--fly-line)` | `0` |
 | `lead` | `var(--fly-h2-family)` | `500` | `normal` | `normal` | `normal` | `calc(var(--fly-size-md) * var(--fly-lead-scale))` | `var(--fly-line)` | `0` |
 | `nav` | `'grtsk-vf', Arial, sans-serif` | `400` | `60%` | `normal` | `'wdth' 60, 'slnt' 0` | `calc(var(--fly-size-xs) * var(--fly-nav-scale))` | `1.25` | `0` |
-| `table` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(var(--fly-size-sm) * var(--fly-table-scale))` | `var(--fly-line)` | `0` |
+| `table` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(var(--fly-size-sm) * var(--fly-table-scale))` | `1.3` | `0` |
 | `caption` | `var(--fly-nav-family)` | `500` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(var(--fly-size-xs) * var(--fly-caption-scale))` | `1.35` | `0` |
 | `code` | `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace` | `400` | `normal` | `normal` | `normal` | `calc(var(--fly-size-xs) * var(--fly-code-scale))` | `1.5` | `0` |
 
 Every `-scale` is `1`. Leadings in flowing text are whole multiples of `1rem`: `body`,
-`lead`, `table` and `h6` take `var(--fly-line)`; `h1`–`h5` round their design leading
+`lead` and `h6` take `var(--fly-line)`; `h1`–`h5` round their design leading
 (0.8, 1, 1.3, 1.3 and 1.1 em, the prototype's) up to the next rem with `round()`, and fall
-back to those unitless values where `round()` is missing. Tables sit on the 2rem line
-(the prototype set them at 1.3); `nav`, `caption` and `code` are xs text, which SPEC §4.1
-lets leave the grid. Families are the prototype's: Sole Serif Small for text, News Serif
+back to those unitless values where `round()` is missing. Tables keep the prototype's
+1.3 (the scroll wrapper still rounds the table block to whole lines); `nav`, `caption` and
+`code` are xs text; SPEC §4.1 lets tables and small text leave the grid. Below 60em h3
+and h4 move into the text column and switch to the sans at its 90% width, h3 at 600 and
+h4 at 500 (a media-query override of their role variables in `type.css`). Families are the prototype's: Sole Serif Small for text, News Serif
 Huge for h1, Quire Sans for h2, h5 and the lead, condensed Grtsk for navigation, h3, h4,
 tables and captions, Grtsk at 90% width for h6.
 
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
 multiplier that evens out x-heights when families are mixed (`--fly-strong-adjust`
-`0.95`: Grtsk runs set inside the serif):
+`--fly-sans-adjust`, `0.95`: Grtsk runs set inside the serif). As in the prototype, `em`
+is set like `strong`: the sans at 550, upright:
 
 | Role | family | weight | adjust |
 |---|---|---|---|
-| `em` | `var(--fly-body-family)` | `400` | `1` |
-| `strong` | `'grtsk-vf', Arial, sans-serif` | `550` | `0.95` |
+| `em` | `var(--fly-sans-family)` | `550` | `0.95` |
+| `strong` | `var(--fly-sans-family)` | `550` | `0.95` |
 | `mono` | `var(--fly-code-family)` | `400` | `0.95` |
+
+Faces outside the roles, used by the rules in `src/fly/`:
+
+| Token | Value | Use |
+|---|---|---|
+| `--fly-body-ratio` | `1.6` | `.md-typeset` line-height as a ratio, inherited by smaller nested text (paragraphs get `--fly-body-leading`) |
+| `--fly-sans-family` | `'grtsk-vf', Arial, sans-serif` | inline sans runs (links, strong, em, mark), h6 |
+| `--fly-sans-stretch` | `90%` | width of the inline sans and of h6 |
+| `--fly-sans-variation` | `'slnt' 0` | the root's variation settings; h3/h4 below 60em |
+| `--fly-sans-adjust` | `0.95` | inline sans size relative to the text around it |
+| `--fly-button-family` | `'outfit', Arial, sans-serif` | MaterialX buttons |
+| `--fly-button-size` | `0.9em` | button label size |
+| `--fly-button-weight` | `500` | button label weight |
+| `--fly-button-tracking` | `0.06em` | button letter-spacing |
+| `--fly-ui-family` | `system-ui, sans-serif` | search results, drawer close button |
+| `--fly-icon-family` | `'Material Symbols Outlined'` | palette toggle, arrows |
+| `--fly-nav-current-weight` | `600` | the current page in L1, the page title over L2 |
+| `--fly-nav-section-weight` | `500` | the current section in L2 |
+
+## Layout
+
+`src/fly/tokens/layout.css` holds the sheet geometry the layout layer reads (the
+prototype's values):
+
+| Token | Value | Use |
+|---|---|---|
+| `--fly-rail` | `clamp(13.8889rem, 17vw, 25rem)` | full L1 rail; the L2 width from 100em |
+| `--fly-part-rail` | `clamp(12.5rem, 15vw, 19.4444rem)` | L2 rail |
+| `--fly-sliver` | `clamp(4.1667rem, 5vw, 6.9444rem)` | L1 under an extended L2 (76.25em–100em) |
+| `--fly-l1` | `var(--fly-rail)`; sliver, rail or `0.5208rem` per width | the L1 width L2 starts after |
+| `--fly-l1-label` | `10.0694rem` | longest L1 label at 1440px |
+| `--fly-l1-reveal` | `calc(1.1111rem + var(--fly-l1-label) + 1.3889rem)` at mid desktop | how far L2 retracts |
+| `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
+| `--fly-h1-measure` | `16ch` | H1 maximum width |
+| `--fly-h2-measure` | `20ch` | H2 maximum width from 76.25em |
 
 ## Colour
 
@@ -267,10 +307,24 @@ the dark scale runs from dark to light.
 | `--fly-quiet` | #5c5c58 | #a9a9a4 | secondary text |
 | `--fly-edge` | #19191729 | #000000a0 | sheet edges, rules |
 | `--fly-hover` | #0000000d | #ffffff12 | hover wash |
-| `--fly-shadow-ink` | rgb(0 0 0 / 12%) | rgb(0 0 0 / 40%) | sheet shadows |
+| `--fly-shadow-ink` | rgb(0 0 0 / 12%) | same | screenshot and strip shadows (the prototype's value in both schemes) |
 | `--fly-bar` | #24252a | same | global menu, footer, previous/next strip |
 | `--fly-bar-drop` | #1d1e1f | same | dropdowns on the bar |
-| `--fly-bar-ink` | #e9e9e6 | same | text on the bar and on primary fills |
+| `--fly-bar-ink` | #e9e9e6 | same | text on the bar and on dark primary fills (never on lime or amber) |
+| `--fly-key` | #f4f4f5 | #313137 | key cap fill |
+| `--fly-scrollbar` | rgb(128 128 128 / 30%) | same | scrollbar thumbs |
+| `--fly-scrim` | #00000088 | same | behind the search panel |
+| `--fly-scrim-strong` | #000000bb | same | under lightbox captions |
+
+Shadows are declared on `:root` and on every `[data-md-color-scheme]`, so their
+`--fly-shadow-ink` resolves per scheme:
+
+| Token | Value | Use |
+|---|---|---|
+| `--fly-shadow` | `-1px 0 3px rgb(0 0 0 / 8%)` | vertical sheet edges |
+| `--fly-shadow-down` | `0 2px 6px var(--fly-shadow-ink)` | light-edged screenshots |
+| `--fly-shadow-up` | `0 -2px 6px var(--fly-shadow-ink)` | previous/next strip, cast up |
+| `--fly-drawer-shadow` | `-2px 0 8px rgb(0 0 0 / 20%)` | phone navigation drawer |
 
 ### Semantic colours
 

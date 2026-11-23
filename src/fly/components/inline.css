@@ -1,0 +1,93 @@
+/* this_file: src/fly/components/inline.css */
+/* Inline runs in the article. Links, strong, em and mark are set in the sans at
+   --fly-sans-adjust of the text around them; nested runs inherit instead of compounding.
+   line-height 1 keeps the sans inline box inside the body strut, so lines stay on the
+   grid. Go-to links ([Text](page.md){ .goto }) get an arrow before the text, out of flow
+   in the link's start padding: no underline, never wrapped away from the first word,
+   silent for screen readers, a plain arrow until the icon font has loaded (html.fly-msym).
+   Marks are not highlighted: they are the sans at its regular weight. */
+@layer fly.components {
+  .md-typeset a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+    font-family: var(--fly-sans-family);
+    font-stretch: var(--fly-sans-stretch);
+    font-size: calc(var(--fly-sans-adjust) * 1em);
+    line-height: 1;
+  }
+
+  .md-typeset strong {
+    font-family: var(--fly-strong-family);
+    font-weight: var(--fly-strong-weight);
+    font-stretch: var(--fly-sans-stretch);
+    font-size: calc(var(--fly-strong-adjust) * 1em);
+    line-height: 1;
+  }
+
+  .md-typeset em {
+    font-family: var(--fly-em-family);
+    font-weight: var(--fly-em-weight);
+    font-stretch: var(--fly-sans-stretch);
+    font-size: calc(var(--fly-em-adjust) * 1em);
+    font-style: normal;
+    line-height: 1;
+  }
+
+  .md-typeset mark {
+    color: var(--fly-ink);
+    background: transparent;
+    font-family: var(--fly-sans-family);
+    font-stretch: var(--fly-sans-stretch);
+    font-size: calc(var(--fly-sans-adjust) * 1em);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .md-typeset :is(a, strong, mark) :is(a, strong, mark) {
+    font-size: inherit;
+  }
+
+  .md-typeset a.goto {
+    position: relative;
+    padding-inline-start: 1.2em;
+  }
+
+  .md-typeset a.goto::before {
+    content: '\2192' / '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.2em;
+    width: 1em;
+    line-height: inherit;
+    text-align: center;
+  }
+
+  .fly-msym .md-typeset a.goto::before {
+    content: 'arrow_forward' / '';
+    overflow: hidden;
+    font: 200 1em/1 var(--fly-icon-family);
+    font-feature-settings: 'liga';
+    top: 0.25em; /* centre the arrow on the x-height, not the em box */
+    white-space: nowrap;
+    direction: ltr;
+  }
+
+  /* The lead paragraph after the H1: the lead role on one line height. Inline runs at
+     the lead size would grow its line; a zero line-height keeps them inside it. */
+  .md-typeset h1 + p {
+    font-family: var(--fly-lead-family);
+    font-size: var(--fly-lead-size);
+    font-weight: var(--fly-lead-weight);
+    font-stretch: var(--fly-lead-stretch);
+    font-feature-settings: var(--fly-lead-features);
+    font-variation-settings: var(--fly-lead-variation);
+    line-height: var(--fly-lead-leading);
+    letter-spacing: var(--fly-lead-tracking);
+  }
+
+  .md-typeset h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
+    line-height: 0;
+  }
+}

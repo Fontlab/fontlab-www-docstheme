@@ -1,0 +1,69 @@
+/* this_file: src/fly/components/nav.css */
+/* Both rails in the navigation role: condensed Grtsk, quiet uppercase section labels; the
+   L2 heading is the page title (partials/toc.html), set like the current L1 link. */
+@layer fly.components {
+  .md-nav {
+    font-family: var(--fly-nav-family);
+    font-size: var(--fly-nav-size);
+    font-weight: var(--fly-nav-weight);
+    font-stretch: var(--fly-nav-stretch);
+    font-feature-settings: var(--fly-nav-features);
+    font-variation-settings: var(--fly-nav-variation);
+    line-height: var(--fly-nav-leading);
+    letter-spacing: var(--fly-nav-tracking);
+    color: var(--fly-ink);
+  }
+
+  .md-nav__title {
+    font-size: var(--fly-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--fly-quiet);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .md-nav--secondary .md-nav__title {
+    font-size: var(--fly-nav-size);
+    font-weight: var(--fly-nav-current-weight);
+    text-transform: none;
+    letter-spacing: var(--fly-nav-tracking);
+    color: var(--fly-ink);
+  }
+
+  .md-nav__link {
+    margin: 0;
+    padding: 0.4167rem 1.1111rem;
+    border-radius: 0.2778rem;
+  }
+
+  .md-nav__link:hover,
+  .md-nav__link--active {
+    background: var(--fly-hover);
+  }
+
+  .md-nav--primary .md-nav__link--active {
+    font-weight: var(--fly-nav-current-weight);
+  }
+
+  .md-nav--secondary .md-nav__link--active {
+    font-size: var(--fly-nav-size);
+    font-weight: var(--fly-nav-section-weight);
+  }
+
+  /* From 100em both rails' top-level rows use the in-page navigation's insets. */
+  @media screen and (min-width: 100em) {
+    body:not(.fly-no-l2) .md-sidebar .md-nav > .md-nav__list {
+      padding-inline-start: 0.2778rem;
+    }
+
+    body:not(.fly-no-l2) .md-sidebar .md-nav > .md-nav__list > .md-nav__item > .md-nav__link {
+      margin-inline: 0.2778rem;
+      padding-inline: 0.8333rem;
+    }
+
+    body:not(.fly-no-l2) .md-sidebar--secondary .md-nav__title {
+      padding-inline-start: 1.3889rem;
+    }
+  }
+}

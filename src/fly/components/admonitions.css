@@ -1,0 +1,15 @@
+/* this_file: src/fly/components/admonitions.css */
+/* Admonitions stay quiet: a hairline and the hover wash on the title; only the icon
+   keeps its type colour (tokens/materialx.css). */
+@layer fly.components {
+  .md-typeset :is(.admonition, details) {
+    border: 1px solid var(--fly-edge);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .md-typeset :is(.admonition-title, summary) {
+    background: var(--fly-hover);
+    color: var(--fly-ink);
+  }
+}
