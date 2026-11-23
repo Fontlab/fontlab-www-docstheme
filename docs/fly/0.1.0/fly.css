@@ -625,6 +625,7 @@
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
     --fly-h2-measure: 20ch;
+    --fly-post-bar: 16.8rem;
     --fly-bar-h: 3.8889rem;
   }
   @media screen and (min-width: 100em) {
@@ -975,6 +976,7 @@
     body.fly-sticky:not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap {
       top: var(--fly-bar-h);
     }
+
     body.fly-sticky:not(#\#):not(#\#):not(#\#) .md-sidebar--secondary {
       top: var(--fly-bar-h) !important;
     }
@@ -1365,9 +1367,6 @@
     .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) figure:is(.img-tall, .img-small, .img-cut) {
       margin-inline: 0;
     }
-  }
-  :root:not(#\#):not(#\#):not(#\#):not(#\#) {
-    --fly-post-bar: 16.8rem;
   }
   .md-content--post:not(#\#):not(#\#):not(#\#):not(#\#) > .md-content__inner {
     min-width: 0;

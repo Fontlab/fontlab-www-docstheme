@@ -10,10 +10,6 @@
      each of the two margins, so the text column matches the other pages' measure.
    - An excerpt starts at its top: the heading's page margin is dropped. */
 @layer fly.layout {
-  :root {
-    --fly-post-bar: 16.8rem; /* .md-sidebar--post, 242px at the default root */
-  }
-
   .md-content--post > .md-content__inner {
     min-width: 0;
     max-width: 100%;

@@ -625,6 +625,7 @@
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
     --fly-h2-measure: 20ch;
+    --fly-post-bar: 16.8rem;
     --fly-bar-h: 3.8889rem;
   }
   @media screen and (min-width: 100em) {

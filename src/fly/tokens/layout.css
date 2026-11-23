@@ -14,6 +14,7 @@
     --fly-notch: var(--fly-size-sm); /* heading permalink notch: one body em tall */
     --fly-h1-measure: 16ch; /* heading measures, in the heading's own units */
     --fly-h2-measure: 20ch;
+    --fly-post-bar: 16.8rem; /* the blog post sidebar (.md-sidebar--post), 242px at the default root */
     --fly-bar-h: 3.8889rem; /* the global bar's height (56px at the default root); see sticky */
   }
 

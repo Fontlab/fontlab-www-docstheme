@@ -13,9 +13,8 @@
       top: var(--fly-bar-h);
     }
 
-    /* !important beats the inline top MaterialX's sidebar script sets. */
     body.fly-sticky .md-sidebar--secondary {
-      top: var(--fly-bar-h) !important;
+      top: var(--fly-bar-h) !important; /* beats the inline top MaterialX's sidebar script sets */
     }
   }
 }
