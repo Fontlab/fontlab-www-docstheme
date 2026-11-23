@@ -241,7 +241,7 @@ const probeTitles = name => `JSON.stringify((() => {${COLOUR_LIB}
 
 // Buttons: fill, label, outline, underline and contrast of the primary and the outlined one.
 const probeButtons = name => `JSON.stringify((() => {${COLOUR_LIB}
-  const info = el => { const cs = getComputedStyle(el); return {bg: cs.backgroundColor, bgAlpha: rgba(cs.backgroundColor)[3], color: cs.color, border: cs.borderTopColor,
+  const info = el => { const cs = getComputedStyle(el); return {bg: cs.backgroundColor, bgAlpha: rgba(cs.backgroundColor)[3], color: cs.color, ring: cs.boxShadow,
     line: cs.textDecorationLine, ratio: measure(el), outline: cs.outlineStyle, outlineWidth: parseFloat(cs.outlineWidth)}; };
   return {ink: token('--fly-ink'), paper: token('--fly-paper-3'), quiet: token('--fly-quiet'), hue: document.body.dataset.flyHue || null,
     primary: info(document.querySelector('.md-typeset .md-button--primary')),
@@ -358,8 +358,8 @@ const verifyButtons = async base => {
     const b = await ev(probeButtons(name));
     check(`button.primary.paper-on-ink.${name}`, b.primary.bg === b.ink && b.primary.color === b.paper && b.primary.ratio >= 4.5,
       `hue ${b.hue}: bg ${b.primary.bg} want ink ${b.ink}, label ${b.primary.color} want ${b.paper}, ${b.primary.ratio.toFixed(1)}:1`);
-    check(`button.outlined.ink-outline.${name}`, b.outlined.bgAlpha === 0 && b.outlined.color === b.ink && b.outlined.border === b.ink && b.outlined.ratio >= 4.5,
-      `bg alpha ${b.outlined.bgAlpha} label ${b.outlined.color} border ${b.outlined.border} ink ${b.ink} ${b.outlined.ratio.toFixed(1)}:1`);
+    check(`button.outlined.ink-outline.${name}`, b.outlined.bgAlpha === 0 && b.outlined.color === b.ink && b.outlined.ring.includes(b.ink) && b.outlined.ring.includes('inset') && b.outlined.ratio >= 4.5,
+      `bg alpha ${b.outlined.bgAlpha} label ${b.outlined.color} ring ${b.outlined.ring} ink ${b.ink} ${b.outlined.ratio.toFixed(1)}:1`);
     check(`button.no-underline.${name}`, b.primary.line === 'none' && b.outlined.line === 'none', `primary ${b.primary.line} outlined ${b.outlined.line}`);
     await ab('hover', primary);
     await ab('wait', '600');

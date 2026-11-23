@@ -1,6 +1,6 @@
 /* this_file: src/fly/components/buttons.css */
 /* MaterialX buttons in the button face, uppercase. They are neutral: an outlined button is
-   ink on paper, a primary one paper on ink, so the page hue is an accent and never a fill
+   ink on paper with a 1px ink ring (MaterialX 10 has no border), a primary one paper on ink, so the page hue is an accent and never a fill
    (MaterialX would fill them from its link colour, which follows the hue). Hover and focus
    change the fill; the focus ring is chrome/focus.css. Labels are never underlined, unlike
    article links (components/inline.css). */
@@ -15,24 +15,24 @@
     padding: 0.7em 1.6em;
     color: var(--fly-ink);
     background: transparent;
-    border-color: var(--fly-ink);
+    box-shadow: inset 0 0 0 1px var(--fly-ink); /* the outline, outside the layout */
   }
 
   .md-typeset .md-button:is(:hover, :focus) {
     color: var(--fly-ink);
     background: var(--fly-hover);
-    border-color: var(--fly-ink);
+    box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
 
   .md-typeset .md-button--primary {
     color: var(--fly-paper-3);
     background: var(--fly-ink);
-    border-color: var(--fly-ink);
+    box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
 
   .md-typeset .md-button--primary:is(:hover, :focus) {
     color: var(--fly-paper-3);
     background: var(--fly-quiet);
-    border-color: var(--fly-quiet);
+    box-shadow: inset 0 0 0 1px var(--fly-quiet);
   }
 }
