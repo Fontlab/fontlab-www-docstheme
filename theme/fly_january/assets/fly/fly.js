@@ -73,7 +73,8 @@ addEventListener("click", ({ target: t }) => {
 // `dark` class on each .fltheme-components root. Each root follows the scheme of its
 // nearest [data-md-color-scheme] ancestor (MaterialX's palette toggle, including its
 // system-preference option, sets that on <body>); without one, the system preference.
-// data-fltheme-mode="light|dark" on a root pins it. Basecoat redraws charts on
+// data-fltheme-mode="light|dark" on a root pins it. Roots inserted later are picked up
+// too (Basecoat's own observer initialises their widgets). Basecoat redraws charts on
 // basecoat:themechange.
 const systemDark = matchMedia("(prefers-color-scheme: dark)");
 const syncComponents = () => {
@@ -93,6 +94,7 @@ const syncComponents = () => {
 new MutationObserver(syncComponents).observe(document.documentElement, {
   attributes: true,
   attributeFilter: ["data-md-color-scheme", "data-fltheme-mode"],
+  childList: true,
   subtree: true,
 });
 systemDark.addEventListener("change", syncComponents);
