@@ -149,6 +149,7 @@ def test_parse_page_when_subtheme_alias_then_read_as_preset():
         ({"fly": {"colour": "x"}}, "p.md: fly: unknown key(s) colour"),
         ({"fly": {"hue": "beige"}}, "p.md: fly.hue"),
         ({"fly": "sitka"}, "p.md: fly: must be a mapping"),
+        ({"margin_side": "top"}, "p.md: margin_side: must be one of left, right"),
     ],
 )
 def test_parse_page_when_invalid_then_plugin_error_names_page(meta, message):

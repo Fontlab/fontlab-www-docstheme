@@ -259,6 +259,8 @@ def parse_page(meta: dict[str, Any], site: SiteConfig, src: str) -> PageConfig:
     if alias is not None and preset is not None and alias != preset:
         raise fail(where, f"subtheme {alias!r} and fly.preset {preset!r} disagree; keep one")
     preset = preset if preset is not None else alias
+    if meta.get("margin_side") is not None:
+        choice(f"{src}: margin_side", meta["margin_side"], SIDES)
     if preset is not None and preset not in site.presets:
         known = ", ".join(site.presets) or "none configured"
         raise fail(f"{where}.preset", f"unknown preset {preset!r} (known: {known})")
