@@ -19,7 +19,9 @@
     text-transform: uppercase;
     letter-spacing: 0.09em;
     color: var(--fly-quiet);
-    background: transparent;
+    /* Nav titles (label.md-nav__title: the drawer title, the page title above the in-page
+       links) always sit on the L2 paper, also where MaterialX makes them sticky. */
+    background: var(--fly-paper-2);
     box-shadow: none;
   }
 
