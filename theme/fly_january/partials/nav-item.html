@@ -2,7 +2,9 @@
   this_file: theme/fly_january/partials/nav-item.html
   fly-january: mkdocs-materialx 10.1.8 partials/nav-item.html without the second
   <input id="__toc"> on the active page: its label reuses base.html's single __toc state
-  control, so every page has one element per id (tests/py/test_fixture_fly.py).
+  control, so every page has one element per id (tests/py/test_fixture_fly.py). Each
+  label carries its title in a title attribute: mid-desktop L1 cuts labels with an
+  ellipsis (layout/rails.css).
 -#}
 {% macro render_status(nav_item, type) %}
   {% set class = "md-status md-status--" ~ type %}
@@ -27,7 +29,7 @@
   {% if nav_item.meta and nav_item.meta.icon %}
     {% include ".icons/" ~ nav_item.meta.icon ~ ".svg" %}
   {% endif %}
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="{{ ref.title | striptags | trim }}">
     {{ render_title(ref) }}
     {% if nav_item.meta and nav_item.meta.subtitle %}
       <br>

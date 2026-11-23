@@ -7,7 +7,10 @@
      touch screens) and retracts, sliding right under L3 so L1's labels show, while L1 is
      hovered or focused, or when fly.js has latched html[data-fly-l2="in"]; "out" extends
      it again. The z-order never changes.
-   - 100em and up: both rails at full width. */
+   - 100em and up: both rails at full width.
+   Rails with no links do not paint blank sheets: with no page headings L2 goes, as with
+   body.fly-no-l2, and L1 becomes the full rail; with no section navigation (the active
+   tab is a single page) L1 shrinks to the sliver, which still holds the palette toggle. */
 @layer fly.layout {
   .md-sidebar {
     padding: 2.0833rem 0;
@@ -107,6 +110,52 @@
 
     .md-content > .md-content__inner {
       margin-inline: 0;
+    }
+  }
+
+  /* While L2 covers all but a sliver of L1, L1's labels end with an ellipsis at the
+     sliver's edge instead of being cut by L2's edge; retracting L2 shows them in full
+     (--fly-l1-reveal is sized for the longest label). Each link carries a title. */
+  @media screen and (76.25em <= width < 100em) {
+    .md-sidebar--primary .md-nav__link .md-ellipsis {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body:not(.fly-no-l2) .md-sidebar--primary .md-sidebar__scrollwrap {
+      width: calc(var(--fly-l1) - 0.5rem);
+    }
+
+    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-sidebar--primary .md-sidebar__scrollwrap,
+    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within))
+      .md-sidebar--primary:is(:hover, :focus-within)
+      .md-sidebar__scrollwrap {
+      width: var(--fly-l1-reveal);
+    }
+  }
+
+  /* No page headings: no L2 sheet; L1 is the full rail at every desktop width. */
+  @media screen and (min-width: 60em) {
+    body:not(:has(.md-sidebar--secondary .md-nav__link)) {
+      --fly-rail: inherit; /* the root's full rail, not the 100em L2 width */
+      --fly-l1: var(--fly-rail);
+      --fly-l1-reveal: var(--fly-rail);
+    }
+
+    body:not(:has(.md-sidebar--secondary .md-nav__link)) .md-main__inner::before,
+    body:not(:has(.md-sidebar--secondary .md-nav__link)) .md-sidebar--secondary {
+      display: none;
+    }
+  }
+
+  /* No section navigation (navigation.tabs, the active tab is one page): L1 is only as wide
+     as the palette toggle needs (the sliver's floor), and hovering it reveals nothing. */
+  @media screen and (min-width: 76.25em) {
+    body:has(.md-nav--primary.md-nav--lifted > .md-nav__list > .md-nav__item--active:not(.md-nav__item--nested)) {
+      --fly-l1: 4.1667rem;
+      --fly-l1-reveal: 4.1667rem;
     }
   }
 }

@@ -90,4 +90,14 @@
   .md-typeset h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
     line-height: 0;
   }
+
+  /* Inline code moves to the next line whole instead of breaking after a hyphen (--fly-*);
+     a token longer than the line still wraps, anywhere. Not in table cells (they wrap
+     inline) or the lead paragraph (zero line-height above). */
+  .md-typeset code:not(pre > code, :is(td, th) code, h1 + p code) {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
 }
