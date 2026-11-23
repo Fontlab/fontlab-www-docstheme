@@ -5,6 +5,8 @@ this_file: TODO.md
 # Open work — fly-january (issues/401.md)
 
 Spec: SPEC.md. Plan: PLAN.md. One implementer per task; a separate reviewer per task.
+Order: T1 → T2 → T3 → T4 → T5 → T6; T7 in parallel; T8 after T4; T9 after T7; T10 after T5;
+T11 after T9 and T10; T12; T13; T14.
 
 ## Theme implementer (this repo)
 - [ ] T1 Theme package skeleton, entry points, strict fixture build

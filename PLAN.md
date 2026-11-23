@@ -22,8 +22,12 @@ Spec: `SPEC.md` (binding). Brief: `issues/401.md`. Earlier initiatives (task422,
 - Every source file carries a `this_file:` record.
 - `docs/` in this repo is build output; never hand-edit it. `dist/` and
   `../img/docs/fltheme26` (the fltheme26 bundle) must keep building and passing their tests.
-- Never discard owner edits in any repo. Do not push, publish or deploy from an
-  implementation task; release is Task 12.
+- Never discard owner edits in any repo. Tasks 1–11 do not push, publish or deploy; release
+  is Task 12, and Task 13 pushes each site only after it.
+- Before Task 12, other repos install the theme and plugins from local paths (editable
+  installs); after it they pin the published versions.
+- Order: 1 → 2 → 3 → 4 → 5 → 6; 7 in parallel; 8 after 4; 9 after 7; 10 after 5; 11 after 9
+  and 10; 12 after all of these; 13 then 14.
 - Gates for this repo: `npm run build`, `npm test`, `uv run --python 3.13 pytest`,
   and `npm run test:browser` for CSS/JS changes.
 
@@ -43,7 +47,10 @@ Verify: `uv run --python 3.13 pytest tests/py -q`.
 Create `src/fly/tokens/` (`grid.css`, `size.css`, `type.css`, `color.css`, `semantic.css`,
 `materialx.css`) implementing SPEC §4 in layer `fly.tokens`, for light and dark schemes.
 Design the twelve hues in OKLCH (lead, soft, deep, tint) after studying current palette
-references; record the sources and the reasoning in `DESIGN-TOKENS.md`.
+references and the mood image named in SPEC §4.4; record the sources and the reasoning in
+`DESIGN-TOKENS.md`, together with the heading-size table of SPEC §4.2 (study
+`Marketing/src/gav0zux/site/newspaper/state.mjs`, `site/shared/spacing.mjs` and
+`Marketing/src/fontlab-9-zvx/**/fontlab-page/style.css` for the sizing techniques).
 Add `tests/fly-tokens.test.mjs`: every documented token exists; contrast and hue-spacing
 thresholds from SPEC §4.4 hold; no `fl27`; role variables exist for every role × property.
 Verify: `npm test`.

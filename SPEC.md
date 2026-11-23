@@ -52,7 +52,8 @@ components, navigation and keyboard bridges) keeps working unchanged until a sit
   `properdocs build --strict`. No Node at site build time: all CSS is prebuilt and shipped in
   the wheel (fltheme27 compiled Tailwind on every build; that goes away. Sites that need
   Tailwind utilities get a prebuilt utility file, see §7).
-- No hooks file in consumers. Everything `fltheme27/hooks.py` did moves into the `fly`
+- No hooks file is needed in consumers for theme behaviour (a site may still have hooks of
+  its own, as the demo site does for its specimen pages). Everything `fltheme27/hooks.py` did moves into the `fly`
   plugin or a D5 extension, with its tests.
 
 ## 4. Token system (`--fly-*`)
@@ -81,10 +82,11 @@ Continuous text and navigation use exactly three sizes:
 | `--fly-size-sm` | body text, tables |
 | `--fly-size-md` | lead paragraphs, blockquotes |
 
-Headings use fluid display sizes `--fly-size-h1` … `--fly-size-h6`, each a `clamp()` of a
-rem floor, a viewport-relative slope and a rem ceiling, multiplied by the role's unitless
-`--fly-<role>-scale` (default 1). A browser test asserts the computed sizes at 390, 1024,
-1440 and 1920 px. Techniques are taken from Marketing/src/gav0zux (per-role stepped scales set
+Headings use fluid display sizes held in the role's own `-size` variable (`--fly-h1-size` …
+`--fly-h6-size`), each a `clamp()` of a rem floor, a viewport-relative slope and a rem
+ceiling, multiplied by the role's unitless `--fly-<role>-scale` (default 1). The expected
+computed sizes at 390, 1024, 1440 and 1920 px are tabled in `DESIGN-TOKENS.md`; a browser
+test asserts that table within 0.5 px. The starting values are fltheme27's current sizes. Techniques are taken from Marketing/src/gav0zux (per-role stepped scales set
 by custom properties, `em ± rem` spacing) and fontlab-9-zvx (`clamp(floor, base + vw, ceil)`).
 
 ### 4.3 Typographic roles
@@ -96,7 +98,9 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each role has
 e.g. `--fly-h2-family`, `--fly-nav-stretch`, `--fly-table-features`. Inline roles
 `em strong mono` have `-family`, `-weight` and `-adjust`: a unitless em multiplier
 (e.g. 1.05 or 0.95) that compensates for a different x-height when families are mixed.
-Rules consume roles only through these variables.
+Rules consume roles only through these variables. `th` uses the `caption` role; table
+cells use `table`. The `-size` of `body`, `table` is `--fly-size-sm`; of `nav`, `caption`
+`--fly-size-xs`; of `lead` `--fly-size-md`.
 
 ### 4.4 Colour
 
@@ -109,6 +113,20 @@ Rules consume roles only through these variables.
 - Semantic tokens map strictly onto the hues: `--fly-accent` (page hue), `--fly-primary`,
   `--fly-link`, `--fly-success`, `--fly-warning`, `--fly-danger`, `--fly-info`, and one hue
   per admonition type. Primary buttons, alerts, marks and focus rings use semantic tokens only.
+
+  | Semantic | Hue | Admonitions |
+  |---|---|---|
+  | primary, link, info | accent (site default `cobalt`) / `cobalt` | note, info |
+  | success | `emerald` | tip, success |
+  | warning | `amber` | warning |
+  | danger | `cherry` | danger, failure, bug |
+  | — | `violet` | question |
+  | — | `indigo` | example |
+  | — | `teal` | abstract |
+  | — | grey | quote |
+
+- Visual reference for the mood: the vexy.art front page
+  (`https://res.cloudinary.com/fontlab/image/upload/c_limit,w_3000/f_auto,q_auto,dpr_auto/vw/6a3e97f80d8bed4238e52e97_vexy.art--front-4k.png`).
 - Lead colours must be saturated and modern, neither primary-school nor fashion-trend.
   Acceptance: text set in `-deep` on `--fly-paper-3` (light) and `-soft` on dark canvas
   reaches WCAG 4.5:1; adjacent hues differ by ΔE(OK) ≥ 0.08. A Node test checks both.
@@ -140,7 +158,8 @@ extra:
 ```
 
 Page frontmatter may set `fly: {preset:, hue:, fonts: {sources:, roles:}}`. Order of
-precedence: page `fonts`/`hue` > page `preset` > site. The legacy `subtheme: name` key is
+precedence: page `fonts`/`hue` > page `preset` > site. Sources accumulate (deduplicated);
+roles merge property by property. The legacy `subtheme: name` key is
 read as `fly.preset: name`.
 
 The plugin emits, in `<head>`: one `<link>` per distinct font source (with preconnects), and
@@ -187,6 +206,10 @@ documents the tokens (live palette, type roles, grid), every configuration key, 
 the design-pattern pages migrated from Marketing/src_docs (field guide, showcase, brand-asset
 pages, the `compiled_examples` specimen hook, includes, nav).
 
+Copied: every Markdown page, `includes/`, `nav.yml`, authored CSS/JS/SVG, the specimen hook.
+Design elements those pages rely on (field-guide and component-reference styles) move into
+`src/fly/components/` when they are general, and stay as demo-site CSS when they are not.
+
 Ruling: the 189 MB of brand-asset binaries (`md/assets/design-assets/`) stay in the Marketing
 repo at their current URLs; migrated pages link to them absolutely. Marketing/src_docs
 becomes a one-page minisite that keeps serving those files and points at the new site.
@@ -197,7 +220,7 @@ becomes a one-page minisite that keeps serving those files and points at the new
 
 | Key | Behaviour |
 |---|---|
-| `import-url: <url>` | fetch the URL; its HTML replaces the page's rendered output |
+| `import-url: <url>` | fetch the URL; its HTML replaces the page's whole output document (the theme does not wrap it) |
 | `webflow-import-url: <url>` | as above, then Webflow post-processing: remove the badge, split multi-family Google Fonts links, optional Cloudinary rewriting, `data-cfasync="false"` on scripts |
 | `copy-file: <path>` | copy a local precompiled HTML file (relative to the config file) in place of the page |
 
@@ -230,7 +253,9 @@ and exposes the `chrome` choice. Its CLI commands keep their names.
 - whats-new-fontlab-9: the previous build is kept as reference. Chapters 1–12 each get one
   hue as a subtle accent including the H1 colour; chapter 13 (Bug fixes) and the index use
   grey. Screenshots of old and new at 1440 and 390 px, light and dark, are compared page by
-  page; nothing may break.
+  page. Pass criteria per page: no horizontal overflow, no overlapping or clipped text, the
+  same headings, images and navigation entries present, menu/search/footer working, no
+  console errors. Pixel differences are reviewed, not thresholded.
 - www.fontlab.com, www.vexy.art and blog.fontlab.com are rebuilt locally and checked in a
   browser before anything is published.
 - Ruling: `razem-demo/vendor/pycrdt` is a vendored third-party checkout (`y-crdt/pycrdt`)
@@ -242,7 +267,8 @@ and exposes the `chrome` choice. Its CLI commands keep their names.
 
 - Python: pytest for plugin and theme (config validation, font-link emission, precedence,
   chrome selection, rem rescale, strict fixture build).
-- Node: token tests (contrast, hue spacing, no `fl27` anywhere, layer order), build manifest.
+- Node: token tests (contrast, hue spacing, layer order), build manifest, and no `fl27` in
+  `src/fly/`, `theme/`, `src_docs/` or `docs/fly/`.
 - Browser (Playwright): baseline grid (line-heights are multiples of 1rem in flowing
   content), the three text sizes, heading sizes per viewport, light/dark, chrome variants,
   keyboard paging, no page errors.
