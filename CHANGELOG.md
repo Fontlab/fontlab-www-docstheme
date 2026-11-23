@@ -4,6 +4,11 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.2.0 — unreleased
+
+- H1 now uses Polymath Display at weight 900 with `-0.01em` tracking. H2 uses Polymath at 500 with zero tracking. The lead follows the H2 family. H3–H6 keep Grtsk.
+- The default Typekit sources are `typekit:xht3uat` (Polymath), `typekit:cna4jfp` (Sole) and `typekit:wck5koo` (Grtsk). Sites can still request News Serif with `typekit:cmv5add`.
+
 ## 0.1.1 — 2026-11-23
 
 - Nav titles (`label.md-nav__title`: the drawer title and the page title above the

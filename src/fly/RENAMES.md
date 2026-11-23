@@ -53,7 +53,7 @@ global menu components and fltheme26 and stay.
 | `--fl27-lh` | `--fly-line` |
 | `--fl27-body` | `--fly-body-family` |
 | `--fl27-head`, `--fl27-h1-head` | `--fly-h1-family` |
-| `--fl27-h2-head` | `--fly-h2-family` (h5 and the lead follow it) |
+| `--fl27-h2-head` | `--fly-h2-family` (the lead follows it) |
 | `--fl27-h1-weight`, `--fl27-h2-weight` | `--fly-h1-weight`, `--fly-h2-weight` |
 | `--fl27-h1-tracking`, `--fl27-h2-tracking` | `--fly-h1-tracking`, `--fly-h2-tracking` |
 | `--fl27-h1-variation`, `--fl27-h2-variation` | `--fly-h1-variation`, `--fly-h2-variation` |

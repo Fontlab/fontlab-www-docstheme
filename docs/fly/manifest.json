@@ -1,6 +1,6 @@
 {
-  "version": "0.1.1",
-  "latest": "0.1.1",
+  "version": "0.2.0",
+  "latest": "0.2.0",
   "files": {
     "0.1.0/basecoat.js": {
       "size": 44399,
@@ -98,6 +98,54 @@
       "size": 1071,
       "sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985"
     },
+    "0.2.0/basecoat.js": {
+      "size": 44399,
+      "sha256": "076fda57db9ea612c0d3a832fb5e4e434be61845e82efa12e89602b0021f7f58"
+    },
+    "0.2.0/components.css": {
+      "size": 1045720,
+      "sha256": "dd583ffebaee900bd6c5148ce2bbc285f1a40abab96b0bde47480f555c2925c3"
+    },
+    "0.2.0/fly-bridge.js": {
+      "size": 14635,
+      "sha256": "86c9984233daffdc756f6abd1f08f34adf072934d02f5a1299491991ff95b108"
+    },
+    "0.2.0/fly-debug.js": {
+      "size": 3331,
+      "sha256": "d0238887f0703ec875b61bab4777774a157eacf851e19b96607b01335c6812f1"
+    },
+    "0.2.0/fly-tokens.css": {
+      "size": 27450,
+      "sha256": "83b42868dc8301fe0db0de26c9240f195821306370586307e54d92c1eae38391"
+    },
+    "0.2.0/fly-utilities.css": {
+      "size": 2225469,
+      "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
+    },
+    "0.2.0/fly.css": {
+      "size": 87784,
+      "sha256": "9c4bf0831554398b672631dc78a12189dae50cc183d86ed87ed7343aa9652f00"
+    },
+    "0.2.0/fly.js": {
+      "size": 5532,
+      "sha256": "f51ac225265c69c21d841259742588e1909fac4e761fb07bb36bb9f17b6a889c"
+    },
+    "0.2.0/licenses/basecoat-css.txt": {
+      "size": 1068,
+      "sha256": "160a6cea26ff1931297957499ab739e94c4bc79ecea18b490c9f533fa76ace78"
+    },
+    "0.2.0/licenses/daisyui.txt": {
+      "size": 1071,
+      "sha256": "8709e3ac65c84637c422dc8082b893d9997fce093751c77b2f1983bf29dbf9ea"
+    },
+    "0.2.0/licenses/fly-january.txt": {
+      "size": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "0.2.0/licenses/tailwindcss.txt": {
+      "size": 1071,
+      "sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985"
+    },
     "latest/basecoat.js": {
       "size": 44399,
       "sha256": "076fda57db9ea612c0d3a832fb5e4e434be61845e82efa12e89602b0021f7f58"
@@ -115,16 +163,16 @@
       "sha256": "d0238887f0703ec875b61bab4777774a157eacf851e19b96607b01335c6812f1"
     },
     "latest/fly-tokens.css": {
-      "size": 27458,
-      "sha256": "ba1aaf2de7ca7d95f0b53fceb42390d0228b14edfa89a6e57f40fdf66d8bad39"
+      "size": 27450,
+      "sha256": "83b42868dc8301fe0db0de26c9240f195821306370586307e54d92c1eae38391"
     },
     "latest/fly-utilities.css": {
       "size": 2225469,
       "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
     },
     "latest/fly.css": {
-      "size": 87792,
-      "sha256": "24c03d88bb3c3a3d4347a344f7be06b7561544075a3919af69991d3dd69a7f8d"
+      "size": 87784,
+      "sha256": "9c4bf0831554398b672631dc78a12189dae50cc183d86ed87ed7343aa9652f00"
     },
     "latest/fly.js": {
       "size": 5532,

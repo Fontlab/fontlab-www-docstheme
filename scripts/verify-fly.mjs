@@ -766,14 +766,16 @@ const verifyMinimal = async base => {
     await document.fonts.ready;
     const out = {roles: {}};
     const first = f => f.split(',')[0].trim().replace(/['"]/g, '');
-    const pairs = [['h1', getComputedStyle(document.querySelector('.md-typeset h1')).fontFamily],
-      ['h2', getComputedStyle(document.querySelector('.md-typeset h2')).fontFamily],
-      ['body', getComputedStyle(document.querySelector('.md-typeset p')).fontFamily],
-      ['nav', getComputedStyle(document.querySelector('.md-nav__link')).fontFamily],
-      ['button', getComputedStyle(document.documentElement).getPropertyValue('--fly-button-family')]];
-    for (const [k, f] of pairs) {
+    // Body is a paragraph after the first: the first paragraph is the lead, which follows H2.
+    // fonts.check() asks for the weight and style each element renders with.
+    const style = sel => { const c = getComputedStyle(document.querySelector(sel)); return [c.fontFamily, c.fontStyle + ' ' + c.fontWeight]; };
+    const root = getComputedStyle(document.documentElement);
+    const pairs = [['h1', ...style('.md-typeset h1')], ['h2', ...style('.md-typeset h2')], ['lead', ...style('.md-typeset > p')],
+      ['body', ...style('.md-typeset > p ~ p')], ['nav', ...style('.md-nav__link')],
+      ['button', root.getPropertyValue('--fly-button-family'), 'normal ' + (root.getPropertyValue('--fly-button-weight').trim() || '400')]];
+    for (const [k, f, face] of pairs) {
       const name = first(f);
-      out.roles[k] = {family: name, face: [...document.fonts].some(face => face.family.replace(/['"]/g, '') === name), loaded: [...document.fonts].some(face => face.status === 'loaded' && face.family.replace(/['"]/g, '') === name), check: document.fonts.check('16px "' + name + '"')};
+      out.roles[k] = {family: name, face: [...document.fonts].some(ff => ff.family.replace(/['"]/g, '') === name), loaded: [...document.fonts].some(ff => ff.status === 'loaded' && ff.family.replace(/['"]/g, '') === name), check: document.fonts.check(face + ' 16px "' + name + '"')};
     }
     out.sheets = document.querySelectorAll('link[data-fly-font]').length;
     out.kits = [...document.querySelectorAll('link[data-fly-font]')].map(l => l.href);

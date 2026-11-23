@@ -39,12 +39,11 @@ hook or a partial for additions.
 | `utilities` | `false` | `true` loads `fly-utilities.css`, every Tailwind utility with the `tw:` prefix (1.9 MB) |
 | `debug` | `false` | `true` adds a preset switcher (`fly-debug.js`) for trying looks in the browser |
 
-The default sources are three small Typekit kits, about 6 KB of CSS in all: `cmv5add` (News
-Serif, the h1), `cna4jfp` (Sole Serif Small, body) and `wck5koo` (Grtsk: h2, lead, navigation,
-tables, the inline sans and buttons). A site with no `extra.fly` is set in them. Rules, exactly:
-a site that sets `fonts.sources` gets only those sources, the defaults are not loaded, so it
-names every face its roles use; a site that sets `fonts.roles` without `fonts.sources` still gets
-the defaults; `fonts.sources: []` loads nothing and the roles fall back to their system stacks.
+The default Typekit sources are `xht3uat` for Polymath Display (H1) and Polymath (H2 and
+lead), `cna4jfp` for Sole Serif Small (body), and `wck5koo` for Grtsk (H3–H6, navigation,
+tables, inline sans and buttons). Setting `fonts.roles` alone keeps the default sources.
+Setting `fonts.sources` replaces the list, so include a source for each web font the site
+uses. Set `fonts.sources: []` to use the system fallbacks.
 The prototype's Quire Sans exists only in an all-families kit (`gav0zux`, 654 KB), which the
 theme never loads by default: add it to `sources` and set the `h2` family to use it.
 

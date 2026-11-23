@@ -693,10 +693,8 @@ def test_default_sources_when_roles_then_cover_every_default_family():
         for value in re.findall(r"--fly-(?:h1|h2|body|nav|sans)-family: ([^;]+);", css)
         for f in value.split(",")
     } - {"Georgia", "Arial", "serif", "sans-serif"}
-    assert families == {"newsserif-huge-variable", "sole-serif-small-variable", "grtsk-vf"}
-    assert set(DEFAULT_SOURCES) == {"typekit:cmv5add", "typekit:cna4jfp", "typekit:wck5koo"}, (
-        "three small kits; the 654 KB all-families kit gav0zux is never a default"
-    )
+    assert families == {"polymath-display", "polymath", "sole-serif-small-variable", "grtsk-vf"}
+    assert DEFAULT_SOURCES == ("typekit:xht3uat", "typekit:cna4jfp", "typekit:wck5koo")
 
 
 @pytest.mark.parametrize(
