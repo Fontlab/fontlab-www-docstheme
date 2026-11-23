@@ -12,4 +12,11 @@
     background: var(--fly-hover);
     color: var(--fly-ink);
   }
+
+  /* The title bar is one line (layout/grid.css); MaterialX places the icon for its own taller
+     bar, so centre it on this one. */
+  .md-typeset :is(.admonition-title, summary)::before {
+    top: 50%;
+    translate: 0 -50%;
+  }
 }

@@ -188,6 +188,37 @@ const probeDefined = tag => `(async () => {
   return JSON.stringify({reachable, src: script && script.src, defined: !!customElements.get('${tag}')});
 })()`;
 
+// The admonition icon is a ::before box: its centre (top + height / 2 + translate) against the
+// title bar's, and the bar being one line tall.
+const PROBE_ADMONITION = `JSON.stringify((() => {
+  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return {rem, bars: [...document.querySelectorAll('.md-typeset .admonition-title, .md-typeset summary')].map(el => {
+    const before = getComputedStyle(el, '::before');
+    const t = before.translate === 'none' ? '0px' : before.translate.split(' ')[1] || '0px';
+    const ty = t.endsWith('%') ? parseFloat(t) / 100 * parseFloat(before.height) : parseFloat(t);
+    return {bar: el.getBoundingClientRect().height, centre: parseFloat(before.top) + parseFloat(before.height) / 2 + ty,
+      aside: getComputedStyle(el.parentElement).float !== 'none'};
+  })};
+})())`;
+
+// Text colour against the nearest opaque background, translucent layers composited (WCAG ratio).
+const PROBE_FOOTER_CONTRAST = `JSON.stringify((() => {
+  const cv = document.createElement('canvas').getContext('2d', {willReadFrequently: true});
+  const rgba = c => { cv.clearRect(0, 0, 1, 1); cv.fillStyle = '#000'; cv.fillStyle = c; cv.fillRect(0, 0, 1, 1); const d = cv.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255]; };
+  const over = (top, under) => top.slice(0, 3).map((v, i) => v * top[3] + under[i] * (1 - top[3]));
+  const lum = ([r, g, b]) => [r, g, b].map(v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const measure = el => {
+    const layers = [];
+    for (let n = el; n; n = n.parentElement) { const c = rgba(getComputedStyle(n).backgroundColor); if (c[3] > 0) layers.push(c); if (c[3] >= 0.995) break; }
+    let bg = [255, 255, 255];
+    for (const layer of layers.reverse()) bg = over(layer, bg);
+    const fg = over(rgba(getComputedStyle(el).color), bg);
+    const [hi, lo] = [lum(fg), lum(bg)].sort((a, b) => b - a);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+  return [...document.querySelectorAll('.md-footer .md-copyright__highlight, .md-footer .md-footer__title')].map(el => ({text: el.textContent.trim(), ratio: measure(el)}));
+})())`;
+
 const PROBE_PRESET = `JSON.stringify((() => {
   const h1 = getComputedStyle(document.querySelector('.md-typeset h1'));
   return {
@@ -244,6 +275,27 @@ const verifyGrid = async (base, width) => {
 
 // Size token per element class (SPEC 4.2, 4.3). Asides (margin admonitions, wide screens only)
 // are xs; in the flow, admonitions are body text.
+const verifyAdmonitions = async (base, width) => {
+  await open(`${base}/fontlab/`, width);
+  const {rem, bars} = await ev(PROBE_ADMONITION);
+  const off = bars.filter(b => Math.abs(b.centre - b.bar / 2) > 1.5 || (!b.aside && Math.abs(b.bar - 2 * rem) > 0.5)); // a margin aside is xs text and off the grid (SPEC 4.1)
+  check(`admonition.icon-centred@${width}`, bars.length >= 2 && off.length === 0,
+    off.length ? off.map(b => `bar ${b.bar}px icon centre ${b.centre}px`).join('; ') : `${bars.length} title bars, ${2 * rem}px tall`);
+};
+
+const verifyFooterContrast = async base => {
+  for (const name of Object.keys(CONFIGS)) {
+    for (const scheme of ['default', 'slate']) {
+      await open(`${base}/${name}/guide/`, 1440);
+      await ev(`document.body.setAttribute('data-md-color-scheme', '${scheme}')`);
+      const got = await ev(PROBE_FOOTER_CONTRAST);
+      const low = got.filter(g => g.ratio < 4.5);
+      check(`footer.contrast.${name}.${scheme}`, got.length >= 3 && low.length === 0,
+        `${got.map(g => `${g.text}=${g.ratio.toFixed(1)}`).join(' ')}`);
+    }
+  }
+};
+
 const SIZE_OF = {th: 'xs', figcaption: 'xs', footer: 'xs', nav: 'xs', lead: 'md', quote: 'md',
   table: 'sm', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
 const WIDE_ONLY = new Set(['aside', 'aside-title']);
@@ -270,7 +322,6 @@ const verifySizes = async (base, width, site = 'fontlab') => {
   // Runs must be exercised in every context the ratio rules distinguish.
   const ctx = {cell: s.inline.some(r => r.inCell && r.tag !== 'code'), nested: s.inline.some(r => r.nested && r.tag !== 'code'), lead: s.inline.some(r => r.inLead), code: s.inline.some(r => r.tag === 'code')};
   check(`${at}.inline-contexts@${width}`, Object.values(ctx).every(Boolean), JSON.stringify(ctx));
-
 };
 
 // MaterialX's own footer (chrome none): previous and next titles and the copyright, all xs.
@@ -446,6 +497,8 @@ try {
   for (const width of [1440, 390]) await verifySizes(base, width);
   await verifySizes(base, 1440, 'none');
   await verifyFooterSizes(base);
+  for (const width of [1440, 390]) await verifyAdmonitions(base, width);
+  await verifyFooterContrast(base);
   await verifyHeadings(base, table);
   await verifySchemes(base);
   await verifyChrome(base);

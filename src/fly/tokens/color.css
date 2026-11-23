@@ -15,6 +15,7 @@
     --fly-ink: #191917;
     --fly-quiet: #5c5c58;
     --fly-edge: #19191729;
+    --fly-rule: #cececb; /* hairlines that must read on the canvas (hr): gray-3 */
     --fly-hover: #0000000d;
     --fly-shadow-ink: rgb(0 0 0 / 12%);
     /* Global bars (menu, footer, previous/next strip) are dark in both schemes. */
@@ -91,6 +92,7 @@
     --fly-ink: #e9e9e6;
     --fly-quiet: #a9a9a4;
     --fly-edge: #000000a0;
+    --fly-rule: #3e3d3b;
     --fly-hover: #ffffff12;
     --fly-shadow-ink: rgb(0 0 0 / 12%);
     --fly-key: #313137;

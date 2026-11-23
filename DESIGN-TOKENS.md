@@ -127,7 +127,10 @@ tables and captions, Grtsk at 90% width for h6.
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
 multiplier that evens out x-heights when families are mixed (`--fly-strong-adjust`
 `--fly-sans-adjust`, `0.95`: Grtsk runs set inside the serif). As in the prototype, `em`
-is set like `strong`: the sans at 550, upright:
+is set like `strong`: the sans at 550, upright. The multiplier applies once: `a`, `strong`, `em`
+and `mark` inside table cells inherit the cell's size (the cell is already set in the sans),
+and a run nested in another run (`a`, `strong`, `em`, `mark`) inherits instead of compounding
+the adjust. `mono` is always `--fly-mono-adjust` times the text around it:
 
 | Role | family | weight | adjust |
 |---|---|---|---|
@@ -305,7 +308,8 @@ the dark scale runs from dark to light.
 | `--fly-paper-3` | #fefefe | #1d1e1f | the reading canvas |
 | `--fly-ink` | #191917 | #e9e9e6 | text |
 | `--fly-quiet` | #5c5c58 | #a9a9a4 | secondary text |
-| `--fly-edge` | #19191729 | #000000a0 | sheet edges, rules |
+| `--fly-edge` | #19191729 | #000000a0 | sheet edges and borders |
+| `--fly-rule` | #cececb | #3e3d3b | hairlines drawn on the canvas (the hr); at least 1.3:1 against `--fly-paper-3` in both schemes, which `--fly-edge` is not in the dark one |
 | `--fly-hover` | #0000000d | #ffffff12 | hover wash |
 | `--fly-shadow-ink` | rgb(0 0 0 / 12%) | same | screenshot and strip shadows (the prototype's value in both schemes) |
 | `--fly-bar` | #24252a | same | global menu, footer, previous/next strip |
