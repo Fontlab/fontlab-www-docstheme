@@ -1,7 +1,8 @@
 // this_file: src/fly/js/fly.js
 // fly-january: open large screenshots (a.lightbox, written by the image-sizes
-// plugin with data-pswp-width/height) in PhotoSwipe, and latch the L2 sheet
-// position on mid-desktop screens. Loaded as a module.
+// plugin with data-pswp-width/height) in PhotoSwipe, latch the L2 sheet
+// position on mid-desktop screens, and keep the component bundle's dark mode in
+// step with the colour scheme. Loaded as a module.
 const CDN = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/";
 
 // Loaded on demand and allowed to fail: without PhotoSwipe the a.lightbox links
@@ -67,3 +68,33 @@ addEventListener("click", ({ target: t }) => {
   if (t.closest?.(".md-sidebar--primary a[href]")) try { sessionStorage.setItem("fly-l2", "in"); } catch {}
 });
 
+
+// Component bundle (Basecoat/daisyUI, components.css): it switches to dark colours with a
+// `dark` class on each .fltheme-components root. Each root follows the scheme of its
+// nearest [data-md-color-scheme] ancestor (MaterialX's palette toggle, including its
+// system-preference option, sets that on <body>); without one, the system preference.
+// data-fltheme-mode="light|dark" on a root pins it. Basecoat redraws charts on
+// basecoat:themechange.
+const systemDark = matchMedia("(prefers-color-scheme: dark)");
+const syncComponents = () => {
+  let changed = false;
+  for (const root of document.querySelectorAll(".fltheme-components")) {
+    const scheme = root.parentElement?.closest("[data-md-color-scheme]")?.getAttribute("data-md-color-scheme");
+    const dark = root.dataset.flthemeMode
+      ? root.dataset.flthemeMode === "dark"
+      : scheme ? scheme === "slate" : systemDark.matches;
+    if (root.classList.contains("dark") !== dark) {
+      root.classList.toggle("dark", dark);
+      changed = true;
+    }
+  }
+  if (changed) document.dispatchEvent(new Event("basecoat:themechange"));
+};
+new MutationObserver(syncComponents).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ["data-md-color-scheme", "data-fltheme-mode"],
+  subtree: true,
+});
+systemDark.addEventListener("change", syncComponents);
+if (typeof document$ !== "undefined") document$.subscribe(syncComponents);
+syncComponents();
