@@ -13,6 +13,26 @@ Start with the [complete setup guide](https://i.fontlab.com/fltheme26/) and
 They include a pinned Python environment, a complete YAML configuration,
 template overrides, component authoring, Webflow integration and troubleshooting.
 See [AGENTS.md](AGENTS.md) for source boundaries and verification requirements.
+
+## In progress: the fly-january theme
+
+This repository is becoming the home of `fly-january`, an installable ProperDocs theme
+that extends MaterialX and replaces both the per-site `custom_dir` overrides and the
+`fltheme27` prototype. It brings a `--fly-*` token system (baseline grid, three text sizes,
+per-role typography, twelve hues for light and dark), font sources and heading fonts set per
+site and per page, and a choice of global header and footer (FontLab, Vexy or none).
+
+| Read | For |
+|---|---|
+| [SPEC.md](SPEC.md) | what is being built and the rules it must meet |
+| [PLAN.md](PLAN.md) | the fourteen tasks, in order |
+| [TODO.md](TODO.md) | open tasks by implementer |
+
+Planned layout: `theme/fly_january/` (Python package: theme and `fly` plugin),
+`src/fly/` (layered CSS and JS sources), `src_docs/` (demo site, Markdown in `src_docs/md/`),
+`docs/` (build output: demo site plus versioned assets under `docs/fly/<version>/`, served at
+https://fontlab.dev/fontlab-www-docstheme/). Until a site has moved, the fltheme26 bundle
+described below stays the published contract.
 [Publication evidence](review/documentation-publication.json) records the deployed
 guide, the 19-repository documentation rollout and verified baseline limitations.
 

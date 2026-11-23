@@ -4,6 +4,16 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-11-23: planning for fly-january
+
+Added SPEC.md and rewrote PLAN.md and TODO.md for issues/401.md. Closed out the previous
+TODO list, all of whose items were verified complete in earlier entries and in `review/`:
+shared-theme audit and publication; README/AGENTS updates in the 19 affected repositories;
+the public setup and MaterialX integration guide; the from-scratch starter build and
+responsive checks; publication and live verification of documentation (task422, issues 212
+and 213; evidence in `review/documentation-publication.json`, `review/issue212-delivery.json`
+and `review/issue213-delivery.json`). No source or published asset changed.
+
 ## 2026-10-18: documentation plugin adoption
 
 Made MaterialX search explicit in starter/fixture and enabled native breadcrumbs. Added downloadable PLUGINS.md covering all 15 requested projects, actual compatibility limitations and profile inheritance. Updated the public copyable YAML to match the starter. `npm run build` and all 15 `npm test` checks pass. Extracted ZIP, installed pinned requirements in a fresh environment and built strictly. No shared CSS/runtime source changed.
