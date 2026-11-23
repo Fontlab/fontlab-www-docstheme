@@ -1,0 +1,21 @@
+/* this_file: src/fly/layout/full-bleed.css */
+/* <div class="full-bleed" markdown> at the top level of a page spans the canvas edge to
+   edge (the canvas is the fly-canvas container: 100cqi is its width, 50% - 50cqi its left
+   edge seen from the centred text column), with the canvas padding inside. It clears
+   margin items on both sides. In the 60em to 76.25em band the column is off-centre, so
+   it starts from the left padding instead. */
+@layer fly.layout {
+  .md-typeset > .full-bleed {
+    clear: both;
+    box-sizing: border-box;
+    width: 100cqi;
+    margin: var(--fly-line) 0 var(--fly-line) calc(50% - 50cqi);
+    padding-inline: clamp(1.3889rem, 4cqi, 4.1667rem);
+  }
+
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    .md-typeset > .full-bleed {
+      margin-left: calc(-1 * var(--pl));
+    }
+  }
+}

@@ -1,0 +1,45 @@
+# this_file: fixtures/fly/mkdocs.yml
+# The fly plugin fixture: FontLab chrome, site fonts and hue, two presets. Pages: index
+# (site look), guide (fly.preset), reference (legacy subtheme alias plus page overrides).
+# mkdocs-vexy.yml, mkdocs-none.yml and mkdocs-custom.yml inherit this file and change the
+# chrome (custom also turns on utilities and debug).
+site_name: fly-january fixture
+site_url: https://fixture.example/
+copyright: Fixture copyright 2026
+theme:
+  name: fly-january
+  features: [navigation.footer]
+plugins:
+  - fly
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+extra:
+  fly:
+    chrome: fontlab
+    chrome_options:
+      site-label: Fixture
+      search-from: fixture
+    hue: cobalt
+    fonts:
+      sources:
+        - typekit:gav0zux
+        - google:Outfit:wght@100..900
+      roles:
+        h1: {family: "'newsserif-huge-variable', serif", weight: 700}
+        h2: {family: "'quire-sans', sans-serif", weight: 300}
+    presets:
+      fl9-color:
+        fonts:
+          sources: [google:Blaka+Ink, typekit:gav0zux]
+          roles: {h1: {family: "'Blaka Ink'", weight: 400, scale: 1.1}}
+        hue: magenta
+      plain:
+        fonts: {sources: [https://fonts.example.com/plain.css]}
+nav:
+  - Home: index.md
+  - Guide: guide.md
+  - Reference: reference.md

@@ -2,15 +2,39 @@
 this_file: TODO.md
 ---
 
-# Open work
+# Work — fly-january (issues/401.md)
 
-- [x] Audit and publish all shared-theme changes from this thread; preserve unrelated edits.
-- [x] Update README.md and AGENTS.md in every affected repository with its role and integration contract.
-- [x] Expand the public landing page into a complete setup and MaterialX integration guide.
-- [x] Build and exercise the documented setup from scratch; verify responsive UI, examples and links.
-- [x] Publish all documentation and verify deployed assets, pages and repository commits.
+Spec: SPEC.md. Plan: PLAN.md. One implementer per task; a separate reviewer per task.
+Order: T1 → T2 → T3 → T4 → T5 → T6; T7 in parallel; T8 after T4; T9 after T7; T10 after T5;
+T11 after T9 and T10; T12; T13; T14.
 
-No open task422, issue212 or issue213 items. Shared mobile ownership, consumer publication,
-vanilla compatibility and live acceptance are recorded in CHANGELOG.md and
-review/issue212-delivery.json. Component harmony and its live acceptance are
-recorded in review/issue213-delivery.json.
+## Theme implementer (this repo)
+- [x] T1 Theme package skeleton, entry points, strict fixture build
+- [x] T3 Port fltheme27 CSS/JS/templates into `src/fly/` layers; build into the package
+- [x] T4 `fly` plugin: config, fonts, presets, hue, chrome, rem rescale; port hook tests
+- [x] T5 Browser specs: grid, sizes, schemes, chrome, keyboard
+
+## Design-token implementer (this repo)
+- [x] T2 `--fly-*` tokens: grid, sizes, roles, 12 hues, semantic map, MaterialX bridge; tests
+
+## Site implementer (this repo)
+- [x] T6 `docs/fly/<version>/` CDN tree, demo site in `src_docs/`, Marketing content migrated
+
+## Plugin implementer (github.vexyart, via Codex)
+- [ ] T7 `vexy-mkdocs-page-import` (import-url, webflow-import-url, copy-file)
+- [ ] T8 `vexy-python-markdown-*` extension(s) where SPEC §9 requires one
+- [ ] T9 `fontlab-www-toolkit` on the plugin and fly assets
+
+## Migration implementers
+- [x] T10 whats-new-fontlab-9 on fly-january with chapter hues; old/new screenshot parity
+- [x] T11 www.fontlab.com, www.vexy.art, blog.fontlab.com rebuilt and browser-checked
+- [ ] T13a fontlab-scripting sites (16) + fontlabcom.github.io + getgo-fonts
+- [ ] T13b vfj spec, photofont spec, writing styleguide, Marketing minisite
+- [ ] T13c Vexy official: vexy-lines ×5
+- [ ] T13d Vexy unofficial ×24 (no Vexy icon or name)
+- [ ] T13e FontLab unofficial: betabooks ×2 (no FontLab logo); pycrdt not modified (vendored)
+
+## Controller
+- [ ] T12 Release: merge, tag, PyPI, GitHub repos, Pages, live verification
+- [ ] T14 Docs in every touched repo, final review, evidence
+- [ ] Owner go-ahead before live rsync deploys of www.fontlab.com and www.vexy.art

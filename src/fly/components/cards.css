@@ -1,0 +1,50 @@
+/* this_file: src/fly/components/cards.css */
+/* MaterialX grid cards, three columns at most. Card titles (any heading level) start at
+   the card top on the left, with no permalink notch; a ## title is card-sized. Card links
+   are set in the body face, without underline. */
+@layer fly.components {
+  .md-typeset .grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19.4444rem, (100% - 3 * 0.5556rem) / 4 + 1px)), 1fr));
+  }
+
+  .md-typeset .card > :is(h1, h2, h3, h4, h5, h6) {
+    text-align: left;
+    margin-top: 0;
+  }
+
+  .md-typeset .card > h2 {
+    font-size: 1.35em;
+    line-height: 1.05;
+    margin-bottom: 0.6em;
+  }
+
+  .md-typeset .card > :is(h1, h2, h3, h4, h5, h6) > .headerlink {
+    display: none;
+  }
+
+  .md-typeset .card > :last-child {
+    margin-bottom: 0;
+  }
+
+  .md-typeset :is(.card, .cards) a {
+    font-family: var(--fly-body-family);
+    font-stretch: normal;
+    font-size: inherit;
+  }
+
+  .md-typeset :is(.card, .cards) a,
+  .md-typeset :is(.card, .cards) a:is(:link, :visited, :hover, :focus, :active) {
+    text-decoration: none;
+  }
+
+  .md-typeset :is(.card, .cards) a:not(.headerlink):is(:hover, :focus-visible) {
+    color: var(--fly-quiet);
+  }
+
+  .md-typeset :is(.card, .cards) :is(h1, h2, h3, h4, h5, h6) a {
+    font-family: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+}

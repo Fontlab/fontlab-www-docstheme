@@ -1,0 +1,6 @@
+# this_file: fixtures/fly/mkdocs-search-explicit.yml
+# The same as mkdocs-search.yml with the plugin spelled materialx/search.
+INHERIT: mkdocs-search.yml
+plugins:
+  - materialx/search
+  - fly

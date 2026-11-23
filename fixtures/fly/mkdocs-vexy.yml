@@ -1,0 +1,8 @@
+# this_file: fixtures/fly/mkdocs-vexy.yml
+# The fly fixture with chrome: vexy.
+INHERIT: mkdocs.yml
+extra:
+  fly:
+    chrome: vexy
+    chrome_options:
+      site-label: Vexy fixture

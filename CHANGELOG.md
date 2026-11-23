@@ -4,6 +4,80 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.1.0 — 2026-11-23
+
+- Added the `fly-january` MaterialX child theme and `fly` plugin. Sites can select
+  chrome, page presets, font roles and hues. The package ships compiled CSS and JavaScript.
+- Task 5 verified the baseline grid, type sizes, light and dark palettes, chrome,
+  keyboard navigation and page presets in Chromium through `agent-browser`.
+- The FontLab 9 migration added page-hue H1s, neutral buttons, responsive utilities
+  and a maximum measure for H1 and H2. The main sites and blog added the sans role,
+  italic emphasis, the article link colour option, sticky chrome and the menu site URL.
+- Bare MaterialX plugin names work with inherited templates. Three small Adobe kits
+  supply the default fonts. Blog posts use the article measure, wide tables scroll on
+  phones and component links can opt out of article styling.
+- Local consumer comparisons covered all 16 FontLab 9 pages, 60 main-site cases and
+  44 blog cases. The demo, versioned CDN assets and `latest/` alias build into `docs/`.
+  The build compares assets against the published version's manifest and refuses to
+  overwrite a published version with different files.
+- Restricted the source distribution to package sources, Python tests, fixtures and
+  project metadata. Added archive checks for private paths and complete wheel contents.
+- Restored fluid H2 sizing, documented CSS specificity and added integrity checks for
+  PhotoSwipe. The symbols and lightbox partials can be overridden for local-only sites.
+- Validated page classes, made missing-plugin errors actionable, and omitted disabled
+  utility CSS from site output. MaterialX stylesheet discovery follows the installed
+  version. CI exercises both the pinned engine and the newest compatible release.
+
+## 2026-11-23: CDN tree and demo site (Task 6)
+
+- Margin-figure grouping now comes from `vexy-python-markdown-figure-groups`
+  (`group_figures` with the `fly-aside`/`fly-cut` classes); the plugin's own copy is gone.
+- Demo site `src_docs/`: the Marketing design-pattern pages (merged from fly-demo-content) on
+  `fly-january` with `extra.fly` (FontLab chrome "Design system", cobalt, the Marketing font
+  sources with Outfit/REM roles) and the light/dark palette toggle. The old `overrides/`
+  (menu/footer injection, five-subtheme switcher, pre-paint scripts) and the editorial CSS
+  are gone; `hooks/page_scripts.py` loads Mermaid, MathJax and Chart.js per front-matter flag;
+  `patterns.css` carries the editorial layout classes the pages use. The theme runtime
+  keeps the component bundle in sync with the slate scheme.
+- New theme pages: tokens (live palette, type roles, grid), configuration (every `extra.fly` and
+  page key; its YAML examples are validated by `tests/py/test_demo_site.py`), assets, chrome.
+- CDN tree `docs/fly/0.1.0/` and `docs/fly/latest/` (fly CSS/JS, Basecoat/daisyUI bundle,
+  licences) with `docs/fly/manifest.json` (size, sha256), written by `scripts/build-cdn.mjs`
+  during `npm run build`. The version comes from the release tag or the next planned version.
+- `./build.sh` builds `docs/` in one step and link-checks it; the site's plugins are pinned
+  in the `site` dependency group (src_docs/tooling and src_docs/build.sh are gone).
+
+## 2026-11-23: fly plugin (Task 4)
+
+- `fly` plugin: validates `extra.fly` (chrome, chrome_options, hue, fonts, presets,
+  margin_side, utilities, debug) and page `fly:` frontmatter (legacy `subtheme:` = preset);
+  unknown keys or names fail the build with a `PluginError`.
+- Templates render plugin-provided font links, preconnects, one `<style data-fly-roles>` of
+  `--fly-<role>-<prop>` variables on `:root`, and the chosen chrome (fontlab, vexy, none or a
+  custom script/tags) with `chrome_options` attributes. `<body>` gets `data-fly-hue`,
+  `fly-chrome-<kind>`, `fly-margin-*`, `fly-no-l2` and `subtheme-<preset>`.
+- `fly-utilities.css` (1.9 MB) loads only with `extra.fly.utilities: true`.
+- Ported from fltheme27: margin-figure groups (`fly-aside`/`fly-cut`), permalink names,
+  unparsed attribute-list warnings, `?v=` cache-busting (now also the theme's own assets),
+  MaterialX rem rescale (20/14.4) on post-build. Tailwind compilation at build time is gone.
+- MaterialX's header is hidden only under the FontLab and Vexy bars; `chrome: none` and custom
+  chrome keep it (search, palette toggle, drawer).
+- The theme registers only under `mkdocs.themes` (ProperDocs reads both groups; two
+  registrations made every build warn about a duplicate provider).
+- fly-debug.js switches presets from the plugin's `{links, style, hue}` data.
+- `@property --fly-line` restored (Task 3 review fix).
+- Runtime dependency `mkdocs>=1.6.1` declared.
+
+## 2026-11-23: planning for fly-january
+
+Added SPEC.md and rewrote PLAN.md and TODO.md for issues/401.md. Closed out the previous
+TODO list, all of whose items were verified complete in earlier entries and in `review/`:
+shared-theme audit and publication; README/AGENTS updates in the 19 affected repositories;
+the public setup and MaterialX integration guide; the from-scratch starter build and
+responsive checks; publication and live verification of documentation (task422, issues 212
+and 213; evidence in `review/documentation-publication.json`, `review/issue212-delivery.json`
+and `review/issue213-delivery.json`). No source or published asset changed.
+
 ## 2026-10-18: documentation plugin adoption
 
 Made MaterialX search explicit in starter/fixture and enabled native breadcrumbs. Added downloadable PLUGINS.md covering all 15 requested projects, actual compatibility limitations and profile inheritance. Updated the public copyable YAML to match the starter. `npm run build` and all 15 `npm test` checks pass. Extracted ZIP, installed pinned requirements in a fresh environment and built strictly. No shared CSS/runtime source changed.

@@ -1,0 +1,289 @@
+/* this_file: src/fly/tokens/color.css */
+/* Colour tokens (SPEC 4.4). Twelve hues, each with a lead colour and soft (lighter),
+   deep (darker) and tint (surface wash) variants, nine greys and the paper surfaces.
+   Light values sit on :root and the default scheme, dark values on the slate scheme,
+   which MaterialX sets on <body>. The hues are OKLCH inside the sRGB gamut; browsers
+   without oklch() get the equivalent hex values from the @supports block at the end.
+   Values, sources and checks: DESIGN-TOKENS.md. tests/fly-tokens.test.mjs verifies
+   contrast, hue spacing and that each fallback matches its OKLCH value. */
+@layer fly.tokens {
+  :root,
+  [data-md-color-scheme='default'] {
+    --fly-paper-1: #e4e4e2; /* first sheet: site navigation */
+    --fly-paper-2: #f1f1ef; /* second sheet: page navigation */
+    --fly-paper-3: #fefefe; /* third sheet: the reading canvas */
+    --fly-ink: #191917;
+    --fly-quiet: #5c5c58;
+    --fly-edge: #19191729;
+    --fly-rule: #cececb; /* hairlines that must read on the canvas (hr): gray-3 */
+    --fly-hover: #0000000d;
+    --fly-shadow-ink: rgb(0 0 0 / 12%);
+    /* Global bars (menu, footer, previous/next strip) are dark in both schemes. */
+    --fly-bar: #24252a;
+    --fly-bar-drop: #1d1e1f;
+    --fly-bar-ink: #e9e9e6;
+    --fly-key: #f4f4f5; /* key caps */
+    --fly-scrollbar: rgb(128 128 128 / 30%); /* scrollbar thumbs, both schemes */
+    --fly-scrim: #00000088; /* behind the search panel */
+    --fly-scrim-strong: #000000bb; /* under lightbox captions */
+    --fly-gray-1: oklch(95.5% 0.004 95);
+    --fly-gray-2: oklch(91% 0.004 95);
+    --fly-gray-3: oklch(85% 0.004 95);
+    --fly-gray-4: oklch(77% 0.004 95);
+    --fly-gray-5: oklch(67% 0.004 95);
+    --fly-gray-6: oklch(57% 0.004 95);
+    --fly-gray-7: oklch(47% 0.004 95);
+    --fly-gray-8: oklch(37% 0.004 95);
+    --fly-gray-9: oklch(27% 0.004 95);
+    --fly-cherry: oklch(60% 0.231 25);
+    --fly-cherry-soft: oklch(72% 0.131 25);
+    --fly-cherry-deep: oklch(52% 0.194 25);
+    --fly-cherry-tint: oklch(96.5% 0.015 25);
+    --fly-tangerine: oklch(70% 0.181 48);
+    --fly-tangerine-soft: oklch(82% 0.083 48);
+    --fly-tangerine-deep: oklch(56.6% 0.142 48);
+    --fly-tangerine-tint: oklch(96.5% 0.017 48);
+    --fly-amber: oklch(80% 0.158 78);
+    --fly-amber-soft: oklch(92% 0.053 78);
+    --fly-amber-deep: oklch(55.7% 0.107 78);
+    --fly-amber-tint: oklch(96.5% 0.027 78);
+    --fly-lime: oklch(80% 0.199 128);
+    --fly-lime-soft: oklch(92% 0.14 128);
+    --fly-lime-deep: oklch(54.4% 0.131 128);
+    --fly-lime-tint: oklch(96.5% 0.03 128);
+    --fly-emerald: oklch(66% 0.142 160);
+    --fly-emerald-soft: oklch(78% 0.132 160);
+    --fly-emerald-deep: oklch(54% 0.112 160);
+    --fly-emerald-tint: oklch(96.5% 0.03 160);
+    --fly-teal: oklch(62% 0.101 195);
+    --fly-teal-soft: oklch(74% 0.095 195);
+    --fly-teal-deep: oklch(54% 0.085 195);
+    --fly-teal-tint: oklch(96.5% 0.03 195);
+    --fly-sky: oklch(68% 0.129 230);
+    --fly-sky-soft: oklch(80% 0.095 230);
+    --fly-sky-deep: oklch(54.7% 0.1 230);
+    --fly-sky-tint: oklch(96.5% 0.019 230);
+    --fly-cobalt: oklch(56% 0.197 258);
+    --fly-cobalt-soft: oklch(68% 0.128 258);
+    --fly-cobalt-deep: oklch(48% 0.164 258);
+    --fly-cobalt-tint: oklch(96.5% 0.015 258);
+    --fly-indigo: oklch(52% 0.259 278);
+    --fly-indigo-soft: oklch(64% 0.14 278);
+    --fly-indigo-deep: oklch(44% 0.2 278);
+    --fly-indigo-tint: oklch(96.5% 0.015 278);
+    --fly-violet: oklch(56% 0.27 305);
+    --fly-violet-soft: oklch(68% 0.14 305);
+    --fly-violet-deep: oklch(48% 0.2 305);
+    --fly-violet-tint: oklch(96.5% 0.019 305);
+    --fly-magenta: oklch(62% 0.256 340);
+    --fly-magenta-soft: oklch(74% 0.14 340);
+    --fly-magenta-deep: oklch(54% 0.2 340);
+    --fly-magenta-tint: oklch(96.5% 0.021 340);
+    --fly-rose: oklch(68% 0.21 5);
+    --fly-rose-soft: oklch(80% 0.09 5);
+    --fly-rose-deep: oklch(57.9% 0.2 5);
+    --fly-rose-tint: oklch(96.5% 0.016 5);
+  }
+
+  [data-md-color-scheme='slate'] {
+    --fly-paper-1: #24252a;
+    --fly-paper-2: #24252a;
+    --fly-paper-3: #1d1e1f;
+    --fly-ink: #e9e9e6;
+    --fly-quiet: #a9a9a4;
+    --fly-edge: #000000a0;
+    --fly-rule: #3e3d3b;
+    --fly-hover: #ffffff12;
+    --fly-shadow-ink: rgb(0 0 0 / 12%);
+    --fly-key: #313137;
+    --fly-gray-1: oklch(25% 0.004 95);
+    --fly-gray-2: oklch(30% 0.004 95);
+    --fly-gray-3: oklch(36% 0.004 95);
+    --fly-gray-4: oklch(44% 0.004 95);
+    --fly-gray-5: oklch(53% 0.004 95);
+    --fly-gray-6: oklch(62% 0.004 95);
+    --fly-gray-7: oklch(72% 0.004 95);
+    --fly-gray-8: oklch(82% 0.004 95);
+    --fly-gray-9: oklch(91% 0.004 95);
+    --fly-cherry: oklch(65% 0.212 25);
+    --fly-cherry-soft: oklch(80% 0.097 25);
+    --fly-cherry-deep: oklch(46% 0.168 25);
+    --fly-cherry-tint: oklch(30% 0.05 25);
+    --fly-tangerine: oklch(75% 0.147 48);
+    --fly-tangerine-soft: oklch(81% 0.1 48);
+    --fly-tangerine-deep: oklch(56% 0.137 48);
+    --fly-tangerine-tint: oklch(30% 0.05 48);
+    --fly-amber: oklch(85% 0.124 78);
+    --fly-amber-soft: oklch(91% 0.068 78);
+    --fly-amber-deep: oklch(66% 0.124 78);
+    --fly-amber-tint: oklch(30% 0.05 78);
+    --fly-lime: oklch(85% 0.2 128);
+    --fly-lime-soft: oklch(91% 0.17 128);
+    --fly-lime-deep: oklch(66% 0.155 128);
+    --fly-lime-tint: oklch(30% 0.05 128);
+    --fly-emerald: oklch(71% 0.145 160);
+    --fly-emerald-soft: oklch(80% 0.154 160);
+    --fly-emerald-deep: oklch(52% 0.106 160);
+    --fly-emerald-tint: oklch(30% 0.05 160);
+    --fly-teal: oklch(67% 0.103 195);
+    --fly-teal-soft: oklch(80% 0.116 195);
+    --fly-teal-deep: oklch(48% 0.074 195);
+    --fly-teal-tint: oklch(30% 0.046 195);
+    --fly-sky: oklch(73% 0.131 230);
+    --fly-sky-soft: oklch(80% 0.107 230);
+    --fly-sky-deep: oklch(54% 0.097 230);
+    --fly-sky-tint: oklch(30% 0.05 230);
+    --fly-cobalt: oklch(61% 0.192 258);
+    --fly-cobalt-soft: oklch(80% 0.086 258);
+    --fly-cobalt-deep: oklch(42% 0.14 258);
+    --fly-cobalt-tint: oklch(30% 0.05 258);
+    --fly-indigo: oklch(57% 0.216 278);
+    --fly-indigo-soft: oklch(80% 0.087 278);
+    --fly-indigo-deep: oklch(42% 0.2 278);
+    --fly-indigo-tint: oklch(30% 0.05 278);
+    --fly-violet: oklch(61% 0.24 305);
+    --fly-violet-soft: oklch(80% 0.107 305);
+    --fly-violet-deep: oklch(42% 0.197 305);
+    --fly-violet-tint: oklch(30% 0.05 305);
+    --fly-magenta: oklch(67% 0.25 340);
+    --fly-magenta-soft: oklch(80% 0.133 340);
+    --fly-magenta-deep: oklch(48% 0.188 340);
+    --fly-magenta-tint: oklch(30% 0.05 340);
+    --fly-rose: oklch(73% 0.158 5);
+    --fly-rose-soft: oklch(80% 0.102 5);
+    --fly-rose-deep: oklch(54% 0.195 5);
+    --fly-rose-tint: oklch(30% 0.05 5);
+  }
+
+  /* Shadows, declared wherever a scheme is set so --fly-shadow-ink resolves per scheme. */
+  :root,
+  [data-md-color-scheme] {
+    --fly-shadow: -1px 0 3px rgb(0 0 0 / 8%); /* vertical sheet edges */
+    --fly-shadow-down: 0 2px 6px var(--fly-shadow-ink); /* light-edged screenshots */
+    --fly-shadow-up: 0 -2px 6px var(--fly-shadow-ink); /* previous/next strip, cast up */
+    --fly-drawer-shadow: -2px 0 8px rgb(0 0 0 / 20%); /* phone navigation drawer */
+  }
+
+  @supports not (color: oklch(0% 0 0)) {
+    :root,
+    [data-md-color-scheme='default'] {
+      --fly-gray-1: #f1f0ed;
+      --fly-gray-2: #e2e1de;
+      --fly-gray-3: #cececb;
+      --fly-gray-4: #b5b4b1;
+      --fly-gray-5: #969592;
+      --fly-gray-6: #787775;
+      --fly-gray-7: #5b5b58;
+      --fly-gray-8: #40403d;
+      --fly-gray-9: #272624;
+      --fly-cherry: #ea1e2f;
+      --fly-cherry-soft: #eb827a;
+      --fly-cherry-deep: #bf1e28;
+      --fly-cherry-tint: #fef0ee;
+      --fly-tangerine: #f5741d;
+      --fly-tangerine-soft: #f1b495;
+      --fly-tangerine-deep: #b7571a;
+      --fly-tangerine-tint: #fef0ea;
+      --fly-amber: #f5af26;
+      --fly-amber-soft: #f8e1be;
+      --fly-amber-deep: #966b19;
+      --fly-amber-tint: #fef2e0;
+      --fly-lime: #98d425;
+      --fly-lime-soft: #caf68e;
+      --fly-lime-deep: #597d19;
+      --fly-lime-tint: #eef8e2;
+      --fly-emerald: #1eac73;
+      --fly-emerald-soft: #5fd19a;
+      --fly-emerald-deep: #1d8258;
+      --fly-emerald-tint: #e3faed;
+      --fly-teal: #1a9999;
+      --fly-teal-soft: #57bebd;
+      --fly-teal-deep: #1c7e7e;
+      --fly-teal-tint: #ddfafa;
+      --fly-sky: #1fa6d8;
+      --fly-sky-soft: #7ac9ef;
+      --fly-sky-deep: #1d7ba0;
+      --fly-sky-tint: #e7f6fe;
+      --fly-cobalt: #126ee5;
+      --fly-cobalt-soft: #6599e6;
+      --fly-cobalt-deep: #1259b8;
+      --fly-cobalt-tint: #edf4fe;
+      --fly-indigo: #543df8;
+      --fly-indigo-soft: #7981df;
+      --fly-indigo-deep: #4136bc;
+      --fly-indigo-tint: #f1f3fe;
+      --fly-violet: #9b23ef;
+      --fly-violet-soft: #ad80dd;
+      --fly-violet-deep: #792fb5;
+      --fly-violet-tint: #f6f0fe;
+      --fly-magenta: #e01eb5;
+      --fly-magenta-soft: #e486c6;
+      --fly-magenta-deep: #b42c92;
+      --fly-magenta-tint: #feeef8;
+      --fly-rose: #fb4f87;
+      --fly-rose-soft: #f0a6b6;
+      --fly-rose-deep: #d2306a;
+      --fly-rose-tint: #feeff2;
+    }
+
+    [data-md-color-scheme='slate'] {
+      --fly-gray-1: #22221f;
+      --fly-gray-2: #2e2e2c;
+      --fly-gray-3: #3e3d3b;
+      --fly-gray-4: #535250;
+      --fly-gray-5: #6c6c69;
+      --fly-gray-6: #878683;
+      --fly-gray-7: #a5a4a2;
+      --fly-gray-8: #c5c4c1;
+      --fly-gray-9: #e2e1de;
+      --fly-cherry: #f54647;
+      --fly-cherry-soft: #f6a59e;
+      --fly-cherry-deep: #a11b22;
+      --fly-cherry-tint: #442321;
+      --fly-tangerine: #f88e55;
+      --fly-tangerine-soft: #f7ad88;
+      --fly-tangerine-deep: #b3571e;
+      --fly-tangerine-tint: #422617;
+      --fly-amber: #fac36a;
+      --fly-amber-soft: #fbddaf;
+      --fly-amber-deep: #bb8727;
+      --fly-amber-tint: #3c2a0d;
+      --fly-lime: #a7e53d;
+      --fly-lime-soft: #c0f673;
+      --fly-lime-deep: #76a329;
+      --fly-lime-tint: #263316;
+      --fly-emerald: #33bc82;
+      --fly-emerald-soft: #4cdb9b;
+      --fly-emerald-deep: #1e7b53;
+      --fly-emerald-tint: #143525;
+      --fly-teal: #2fa9a9;
+      --fly-teal-soft: #4cd5d5;
+      --fly-teal-deep: #1a6a6a;
+      --fly-teal-tint: #083535;
+      --fly-sky: #34b6ea;
+      --fly-sky-soft: #6ecbf5;
+      --fly-sky-deep: #1f789c;
+      --fly-sky-tint: #0d3242;
+      --fly-cobalt: #2b7ff3;
+      --fly-cobalt-soft: #9bc0f5;
+      --fly-cobalt-deep: #104a97;
+      --fly-cobalt-tint: #1e2e47;
+      --fly-indigo: #615df2;
+      --fly-indigo-soft: #b0b9f6;
+      --fly-indigo-deep: #3d2fb6;
+      --fly-indigo-tint: #282b47;
+      --fly-violet: #a64bf3;
+      --fly-violet-soft: #ceacf5;
+      --fly-violet-deep: #6719a0;
+      --fly-violet-tint: #342742;
+      --fly-magenta: #f03cc4;
+      --fly-magenta-soft: #f69bd9;
+      --fly-magenta-deep: #9c1c7e;
+      --fly-magenta-tint: #3e2336;
+      --fly-rose: #f7799a;
+      --fly-rose-soft: #f6a2b5;
+      --fly-rose-deep: #c3245f;
+      --fly-rose-tint: #43232a;
+    }
+  }
+}

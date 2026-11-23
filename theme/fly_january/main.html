@@ -1,0 +1,64 @@
+{#- this_file: theme/fly_january/main.html -#}
+{#- fly-january: MaterialX child theme. Sheets, canvas grid, type and the menu bridge are
+    CSS and JS in assets/fly/ (built from src/fly by scripts/build-fly.mjs); the fly plugin
+    provides the `fly` variable (fonts, role variables, hue, chrome) and adds the body
+    classes and data-fly-hue. -#}
+{% extends "base.html" %}
+
+{% block styles %}
+  {%- if fly is not defined %}
+    {{ fly_january_requires_the_fly_plugin__add_fly_to_plugins() }}
+  {% endif %}
+  {{ super() }}
+  {% include "partials/fly-photoswipe.html" %}
+  <link rel="stylesheet" href="{{ 'assets/fly/fly.css' | url }}?v={{ fly.v['fly.css'] }}">
+  {%- if fly.utilities %}
+  <link rel="stylesheet" href="{{ 'assets/fly/fly-utilities.css' | url }}?v={{ fly.v['fly-utilities.css'] }}">
+  {%- endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {{ super() }}
+  {#- Restores the retracted L2 before first paint after navigating from an L1 link (fly.js). #}
+  <script>try{if(sessionStorage.getItem("fly-l2")==="in"){document.documentElement.dataset.flyL2="in";sessionStorage.removeItem("fly-l2")}}catch(e){}</script>
+{% include "partials/fly-symbols.html" %}
+  {#- Fonts and role variables for this page (site < preset < page), from the fly plugin.
+      data-fly-font / data-fly-roles mark what the debug switcher (fly-debug.js) replaces. #}
+  {%- for origin in fly.head.preconnects %}
+  <link rel="preconnect" href="{{ origin | e }}" crossorigin>
+  {%- endfor %}
+  {%- for href in fly.head.links %}
+  <link rel="stylesheet" href="{{ href | e }}" data-fly-font>
+  {%- endfor %}
+  {%- if fly.head.style %}
+  <style data-fly-roles>{{ fly.head.style | safe }}</style>
+  {%- endif %}
+  {%- if fly.debug %}
+  <script id="fly-debug-data" type="application/json">{{ fly.debug | safe }}</script>
+  <script src="{{ 'assets/fly/fly-debug.js' | url }}?v={{ fly.v['fly-debug.js'] }}" defer></script>
+  {%- endif %}
+  {%- if fly.chrome.script %}
+  <script src="{{ fly.chrome.script | e }}" defer></script>
+  {%- endif %}
+{% endblock %}
+
+{% block header %}
+  {#- The global menu (extra.fly.chrome); its attributes come from extra.fly.chrome_options. #}
+  {%- if fly.chrome.header %}
+  <{{ fly.chrome.header }}{% for name, value in fly.chrome.header_attrs.items() %} {{ name }}="{{ value | e }}"{% endfor %}></{{ fly.chrome.header }}>
+  {%- endif %}
+  {{ super() }}
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  {%- if fly.chrome.footer %}
+  <{{ fly.chrome.footer }}{% for name, value in fly.chrome.footer_attrs.items() %} {{ name }}="{{ value | e }}"{% endfor %}></{{ fly.chrome.footer }}>
+  {%- endif %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ 'assets/fly/fly-bridge.js' | url }}?v={{ fly.v['fly-bridge.js'] }}"></script>
+  <script type="module" src="{{ 'assets/fly/fly.js' | url }}?v={{ fly.v['fly.js'] }}"></script>
+{% endblock %}

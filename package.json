@@ -8,7 +8,9 @@
     "test": "node --test tests/*.test.mjs",
     "deploy": "node scripts/deploy.mjs",
     "test:browser": "playwright test",
-    "verify:live": "node scripts/verify-live.mjs"
+    "verify:fly": "node scripts/verify-fly.mjs && node scripts/verify-fly-components.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "check:release": "node scripts/check-release.mjs"
   },
   "devDependencies": {
     "@csstools/postcss-cascade-layers": "6.0.0",

@@ -1,0 +1,57 @@
+/* this_file: src/fly/layout/figures.css */
+/* Figure boxes in the text column. The image-sizes plugin classes each image (img-wide,
+   img-tall, img-small, img-cut, img-tiny). Space above images is whole lines, so the grid
+   holds: wide images get two extra lines, other figures one. Margin placement comes later
+   in layout/margins.css and overrides this. */
+@layer fly.layout {
+  .md-typeset figure {
+    margin: var(--fly-line) auto;
+  }
+
+  .md-typeset > figure.img-wide,
+  .md-typeset > p:has(> img.img-wide:only-child) {
+    margin-top: calc(var(--fly-line) + 2 * var(--fly-line));
+  }
+
+  .md-typeset figure:not(.img-wide) {
+    margin-top: calc(var(--fly-line) + var(--fly-line));
+  }
+
+  /* MaterialX figures are fit-content flex boxes; these size from the column. */
+  .md-typeset figure:is(.img-wide, .img-tall, .img-small, .img-cut) {
+    display: block;
+    width: auto;
+    max-width: none;
+  }
+
+  .md-typeset figure:is(.img-small, .img-cut) {
+    width: fit-content;
+  }
+
+  .md-typeset figure.img-wide img {
+    width: 100%;
+  }
+
+  /* img-cut: the fly plugin puts the figure ahead of the paragraph it follows (a float
+     must come first to be wrapped). Without the margin canvas, a flex column puts it back
+     after that paragraph, with the spacing block flow gave it (flex margins do not
+     collapse, so they are set here). */
+  .md-typeset > .fly-aside.fly-cut {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--fly-line);
+  }
+
+  .md-typeset > .fly-cut > p:first-of-type {
+    order: -1;
+  }
+
+  .md-typeset > .fly-cut > figure {
+    margin-top: var(--fly-line);
+  }
+
+  .md-typeset > .fly-cut > figure:not(:has(~ p ~ p)),
+  .md-typeset > .fly-cut > p:last-child:not(:first-of-type) {
+    margin-bottom: 0;
+  }
+}

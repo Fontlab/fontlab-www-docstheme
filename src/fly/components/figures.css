@@ -1,0 +1,55 @@
+/* this_file: src/fly/components/figures.css */
+/* Captions, light-edged screenshots, lightbox links and the PhotoSwipe caption. A
+   screenshot whose edges are light (edge-* classes from the image-sizes plugin) gets a
+   hairline and a downward shadow so it lifts off the paper. */
+@layer fly.components {
+  .md-typeset figcaption {
+    font-family: var(--fly-caption-family);
+    font-size: var(--fly-caption-size);
+    line-height: var(--fly-caption-leading);
+    color: var(--fly-quiet);
+    max-width: none;
+  }
+
+  .md-typeset img:is(.img-wide, .img-tall, .img-small, .img-cut):is(.edge-all-light, .edge-top-light.edge-left-light) {
+    box-shadow: var(--fly-shadow-down);
+    border: 1px solid var(--fly-edge);
+  }
+
+  .md-typeset a.lightbox {
+    display: block;
+    cursor: zoom-in;
+  }
+
+  @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
+    @container fly-canvas (min-width: 66.6667rem) {
+      .md-typeset figure.img-wide figcaption {
+        text-align: center;
+      }
+
+      .md-typeset figure:is(.img-tall, .img-small, .img-cut) figcaption {
+        text-align: start;
+      }
+    }
+  }
+
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    .md-typeset figure:is(.img-tall, .img-small, .img-cut) figcaption {
+      text-align: start;
+    }
+  }
+
+  .pswp__caption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 1.0417rem 1.3889rem;
+    font: var(--fly-size-sm) / 1.4 var(--fly-nav-family);
+    color: var(--fly-bar-ink);
+    background: var(--fly-scrim-strong);
+    text-align: center;
+  }
+
+  .pswp__caption:empty {
+    display: none;
+  }
+}

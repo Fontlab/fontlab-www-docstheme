@@ -1,0 +1,138 @@
+/* this_file: src_docs/md/assets/stylesheets/patterns.css */
+/* Layout classes and a few utilities the migrated pattern pages use, rewritten from the
+   Marketing site's editorial sheets (fontlab-layout.css, the Tailwind vendor sheet) onto
+   --fly-* tokens. Demo-site only: they describe these pages, not the theme. Vertical
+   lengths are multiples of 1rem (half a line). */
+
+/* Component sample containers (structure/sections "Contain a component sample"). */
+.md-typeset .fl-ui {
+  margin: var(--fly-line) 0;
+}
+.md-typeset .fl-ui-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.md-typeset .fl-ui-row + .fl-ui-row {
+  margin-top: 1rem;
+}
+.md-typeset .fl-ui-stack {
+  display: grid;
+  gap: 1rem;
+  max-width: 40rem;
+}
+
+/* A lead paragraph that is not the first after the H1 (the theme styles that one). */
+.md-typeset p.fl-lead {
+  color: var(--fly-quiet);
+  font-family: var(--fly-lead-family);
+  font-size: var(--fly-size-md);
+  font-weight: var(--fly-lead-weight);
+  line-height: var(--fly-line);
+}
+
+/* Cards and hero panels on the second sheet colour. */
+.md-typeset .fl-card,
+.md-typeset .fl-hero {
+  background: var(--fly-paper-2);
+  border-radius: 0.5rem;
+}
+.md-typeset .fl-card {
+  padding: 1rem 1.5rem;
+}
+.md-typeset .fl-card > :first-child {
+  margin-top: 0;
+}
+.md-typeset .fl-card > :last-child {
+  margin-bottom: 0;
+}
+.md-typeset .fl-hero {
+  padding: 2rem;
+  text-align: center;
+}
+.md-typeset .fl-hero p {
+  margin-inline: auto;
+  max-width: 34rem;
+}
+.md-typeset .fl-hero:has(.hero-overlay) .hero-content {
+  color: white;
+  position: relative;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 45%);
+}
+
+/* Showcase image grids. */
+.md-typeset .fl-showcase-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  margin: 2rem 0;
+}
+.md-typeset .fl-showcase-card img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Wide and floated pictures inside a paragraph. */
+.md-typeset p:has(> img.fl-wide, > a > img.fl-wide) {
+  max-width: min(100%, 60rem);
+}
+.md-typeset p:has(> img.fl-bleed, > a > img.fl-bleed) {
+  max-width: none;
+}
+@media (min-width: 76.25em) {
+  .md-typeset p:has(> img.fl-aside, > a > img.fl-aside) {
+    clear: right;
+    float: right;
+    margin: 0 0 1rem 2rem;
+    max-width: min(40%, 360px);
+  }
+}
+
+/* Tailwind utilities written in the component samples; colours from the component
+   bundle's daisyUI theme inside .fltheme-components, fly tokens elsewhere. */
+.md-typeset .overflow-x-auto {
+  overflow-x: auto;
+}
+.md-typeset .font-mono {
+  font-family: var(--fly-mono-family);
+}
+.md-typeset .text-4xl {
+  font-size: 2.25em;
+  line-height: 1;
+}
+.md-typeset .w-64 {
+  width: 16rem;
+}
+.md-typeset .bg-base-200 {
+  background-color: var(--color-base-200, var(--fly-paper-2));
+}
+.md-typeset .border-base-300 {
+  border-color: var(--color-base-300, var(--fly-edge));
+}
+.md-typeset .bg-primary {
+  background-color: var(--color-primary, var(--fly-accent));
+}
+.md-typeset .text-primary {
+  color: var(--color-primary, var(--fly-accent));
+}
+.md-typeset .bg-neutral {
+  background-color: var(--color-neutral, var(--fly-gray-8));
+}
+.md-typeset .text-neutral-content {
+  color: var(--color-neutral-content, var(--fly-gray-1));
+}
+.md-typeset .animate-spin {
+  animation: fl-spin 1s linear infinite;
+}
+@keyframes fl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .animate-spin {
+    animation: none;
+  }
+}

@@ -7,6 +7,22 @@ this_file: AGENTS.md
 Read README.md, WORK.md and CHANGELOG.md before editing. Work directly; do not
 delegate unless the current user asks for it. Preserve unrelated worktree edits.
 
+## Active initiative: fly-january (issues/401.md)
+
+SPEC.md is binding; PLAN.md lists the tasks; TODO.md assigns them. For this initiative the
+owner asked for delegation: one implementer per task, a separate reviewer per task, Codex
+for the plugin repositories. Rules that hold for every task:
+
+- CSS variables are `--fly-*`. Never introduce `fl27` or `fltheme27` names.
+- `1rem` is half a baseline line; body line-height is `2rem`; flowing text has three sizes.
+- New theme code lives in `theme/fly_january/` and `src/fly/`; the demo site in `src_docs/`.
+  `docs/` is build output for GitHub Pages; never hand-edit it.
+- The fltheme26 sources listed below must keep building and passing their tests.
+- Gates: `npm run build`, `npm test`, `uv run --python 3.13 pytest`, and
+  `npm run test:browser` for CSS or runtime changes.
+- Implementation tasks do not push, publish or deploy. Release is its own task.
+- Other repositories with uncommitted owner edits are changed in clean worktrees.
+
 ## Source and publication boundaries
 
 - `src/theme.css`, `src/harmony-forms.css`, `src/harmony-display.css`: shared CSS.
@@ -63,3 +79,9 @@ Update README.md, CHANGELOG.md and WORK.md when contracts change. Update the
 relevant consumer's integration notes for site-specific configuration changes.
 `consumers.json` and dated review records describe deployment scope; historical
 evidence is not a substitute for checking the current published state.
+
+## Browser rule (owner instruction)
+
+Playwright's headless Chromium (`chrome-headless-shell`) crashes on the owner's machine. Never run
+`npm run test:browser`, `playwright test`, `npx playwright …`, `tests/browser/*.spec.mjs`, or any Playwright /
+Puppeteer MCP tool or skill. Browser checks use the `agent-browser` CLI only (`npm run verify:fly`).

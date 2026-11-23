@@ -4,6 +4,75 @@ this_file: WORK.md
 
 # Work
 
+## 0.1.0 release preparation
+
+T1–T6 delivered the package, tokens, renderer, plugin, browser fixtures and demo/CDN
+build. The component bundle now follows the active scheme through the shared theme
+runtime, including components inserted after page load.
+
+T10 compared 16 FontLab 9 pages at two widths in both schemes. T11 compared 60
+main-site cases and 44 blog cases. The 13 FontLab and 9 Vexy imported pages were
+byte-identical to their baselines. These are local migration results. T12 covers
+publication and release verification, followed by the remaining site rollout and
+close-out in T13–T14. Live rsync for the two main sites requires owner approval.
+
+### Release review fixes and verification
+
+- The release-wave baseline passed 55 Node tests and 234 Python tests. After the fixes,
+  `npm ci`, `npm run build`, all 59 Node tests and all 233 Python tests passed on
+  Python 3.13. Obsolete markup-helper tests were removed along with the helper.
+- `./build.sh` checked 6,696 internal links across 75 pages with zero broken.
+  A second build reproduced all 251 files under `docs/`, `dist/` and the theme assets
+  byte for byte. The CDN guard fetched real remote main into a workspace-local Git
+  directory so that the linked worktree's shared Git metadata stayed read-only.
+- The 44 fixture checks passed with MaterialX 10.2.3 in a separate local environment.
+  The minimal site produced a Pagefind index on 10.2.3 and a Lunr index on the pinned
+  10.1.8. The workflow passed actionlint, and Ruff and `git diff --check` passed.
+- `uv build` produced a 236,592-byte sdist and a 225,724-byte wheel at the untagged
+  version `0.1.dev88`. Both passed the archive allowlist, private-path scan and strict
+  Twine check. The wheel contained 21 package files and five metadata files.
+  The npm audit reported one high-severity advisory against the locked transitive
+  build dependency `source-map-js` (GHSA-68fv-2mgg-jv7q).
+  `npm run check:release` correctly exited 1 on the dirty worktree.
+- The orchestrator owns the browser run for this wave. Hosted CI and publication are
+  pending release of the local figure-groups dependency and removal of its uv source.
+
+## 2026-11-23 — CDN tree and demo site (Task 6)
+
+`./build.sh` = `npm run build` (dist/, theme assets, `docs/fly/`) + strict site build into a
+temp dir + rsync into `docs/` (keeps `docs/fly/`, `.nojekyll`) + link check (0 broken).
+Gates: `npm test` 47 pass; `uv run --python 3.13 pytest` 157 passed; `node scripts/verify-fly.mjs`
+all assertions ok. Screenshots (agent-browser) of home, theme/tokens, feedback/dialogs,
+data/statistics and brand-assets/fontlab-banners at 1440 light/dark and 390 light: details
+in .superpowers/sdd/PLAN/task-6-report.md.
+
+## 2026-11-23 — fly plugin (Task 4)
+
+`theme/fly_january/plugin.py` replaces fltheme27's `hooks.py`, split into `config.py`
+(typed `extra.fly` / page frontmatter), `fonts.py` (sources, roles, precedence),
+`view.py` (template variable, body classes, chrome), `markup.py` (HTML rewrites) and
+`assets.py` (cache-busting, MaterialX rem rescale). Gates: `uv run --python 3.13 pytest
+tests/py -q` 124 passed; `npm run build`; `npm test` 39 pass.
+
+### Markdown-extension candidates
+
+Per SPEC 9, the ported functions that transform page content independently of the theme.
+Outcome (Task 6, step 0):
+
+- Margin-figure grouping moved to the package `vexy-python-markdown-figure-groups`
+  (sibling checkout `../../github.vexyart/vexy-python-markdown-figure-groups`, editable
+  `[tool.uv.sources]` entry until release). The plugin calls
+  `group_figures(html, figure_classes=("img-small", "img-tall", "img-cut"),
+  cut_classes=("img-cut",), group_class="fly-aside", cut_class="fly-cut")` in
+  `on_page_content`; `group_margin_figures` and its helpers left markup.py, their unit
+  tests live in the package, three integration tests stay in tests/py/test_plugin.py.
+- `name_permalinks` (markup.py) stays in the plugin by decision: a one-line accessibility
+  fix to toc's `headerlink` anchors, not worth a package.
+
+Not candidates (theme-specific, stay in the plugin): `stray_attr_lists` (lints for the
+theme's `tw:` and `.goto` contracts), body/main/article classes (`page_classes`,
+`patch_tags`), font/role/hue/chrome output, `version_links`, `rescale_materialx`.
+
 ## 2026-10-02 — marked text weight
 
 Added a computed-style regression for `font-weight: 500`; it failed at 400 before

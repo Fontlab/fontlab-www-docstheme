@@ -1,0 +1,183 @@
+/* this_file: src/fly/tokens/semantic.css */
+/* Semantic colours (SPEC 4.4). Each maps onto a hue from color.css through var(), never a
+   literal. The accent is the page hue: cobalt by default, another hue when an element
+   carries data-fly-hue (the fly plugin sets it on <body>, next to MaterialX's
+   data-md-color-scheme). primary and link follow the accent; info is always cobalt.
+   Every semantic colour has the four hue variants plus -text, the variant that reads as
+   text on the canvas: -deep in the light scheme, -soft in the dark one.
+   The base rule re-declares on every element that carries a scheme or a hue, so the
+   references resolve against that element's light or dark hue values. */
+@layer fly.tokens {
+  :where(:root, [data-md-color-scheme], [data-fly-hue]) {
+    --fly-accent: var(--fly-cobalt);
+    --fly-accent-soft: var(--fly-cobalt-soft);
+    --fly-accent-deep: var(--fly-cobalt-deep);
+    --fly-accent-tint: var(--fly-cobalt-tint);
+    --fly-info: var(--fly-cobalt);
+    --fly-info-soft: var(--fly-cobalt-soft);
+    --fly-info-deep: var(--fly-cobalt-deep);
+    --fly-info-tint: var(--fly-cobalt-tint);
+    --fly-success: var(--fly-emerald);
+    --fly-success-soft: var(--fly-emerald-soft);
+    --fly-success-deep: var(--fly-emerald-deep);
+    --fly-success-tint: var(--fly-emerald-tint);
+    --fly-warning: var(--fly-amber);
+    --fly-warning-soft: var(--fly-amber-soft);
+    --fly-warning-deep: var(--fly-amber-deep);
+    --fly-warning-tint: var(--fly-amber-tint);
+    --fly-danger: var(--fly-cherry);
+    --fly-danger-soft: var(--fly-cherry-soft);
+    --fly-danger-deep: var(--fly-cherry-deep);
+    --fly-danger-tint: var(--fly-cherry-tint);
+    --fly-primary: var(--fly-accent);
+    --fly-primary-soft: var(--fly-accent-soft);
+    --fly-primary-deep: var(--fly-accent-deep);
+    --fly-primary-tint: var(--fly-accent-tint);
+
+    --fly-accent-text: var(--fly-accent-deep);
+    --fly-primary-text: var(--fly-primary-deep);
+    --fly-info-text: var(--fly-info-deep);
+    --fly-success-text: var(--fly-success-deep);
+    --fly-warning-text: var(--fly-warning-deep);
+    --fly-danger-text: var(--fly-danger-deep);
+    --fly-link: var(--fly-accent-text);
+    --fly-focus: var(--fly-accent);
+    --fly-mark: var(--fly-accent-tint);
+    --fly-h1-color: var(--fly-ink); /* no page hue: the title stays ink */
+
+    --fly-admonition-note: var(--fly-info);
+    --fly-admonition-info: var(--fly-info);
+    --fly-admonition-tip: var(--fly-success);
+    --fly-admonition-success: var(--fly-success);
+    --fly-admonition-warning: var(--fly-warning);
+    --fly-admonition-danger: var(--fly-danger);
+    --fly-admonition-failure: var(--fly-danger);
+    --fly-admonition-bug: var(--fly-danger);
+    --fly-admonition-question: var(--fly-violet);
+    --fly-admonition-example: var(--fly-indigo);
+    --fly-admonition-abstract: var(--fly-teal);
+    --fly-admonition-quote: var(--fly-gray-5);
+  }
+
+  :where([data-md-color-scheme='slate'], [data-md-color-scheme='slate'] [data-fly-hue]) {
+    --fly-accent-text: var(--fly-accent-soft);
+    --fly-primary-text: var(--fly-primary-soft);
+    --fly-info-text: var(--fly-info-soft);
+    --fly-success-text: var(--fly-success-soft);
+    --fly-warning-text: var(--fly-warning-soft);
+    --fly-danger-text: var(--fly-danger-soft);
+  }
+
+  /* The title takes the accent's text variant (SPEC 11) where the plugin says so: a hue
+     from the page's own front matter or preset, or extra.fly.h1: accent. A site-wide hue
+     alone leaves it ink. */
+  :where([data-fly-h1='accent']) {
+    --fly-h1-color: var(--fly-accent-text);
+  }
+
+  /* extra.fly.links: accent. Declared here so it resolves against the element's own scheme
+     and hue; without it article links keep the text colour (components/inline.css). */
+  :where([data-fly-links='accent']) {
+    --fly-link-color: var(--fly-link);
+    --fly-link-hover-color: var(--fly-ink);
+  }
+
+  [data-fly-hue='cherry'] {
+      --fly-accent: var(--fly-cherry);
+      --fly-accent-soft: var(--fly-cherry-soft);
+      --fly-accent-deep: var(--fly-cherry-deep);
+      --fly-accent-tint: var(--fly-cherry-tint);
+  }
+
+  [data-fly-hue='tangerine'] {
+      --fly-accent: var(--fly-tangerine);
+      --fly-accent-soft: var(--fly-tangerine-soft);
+      --fly-accent-deep: var(--fly-tangerine-deep);
+      --fly-accent-tint: var(--fly-tangerine-tint);
+  }
+
+  [data-fly-hue='amber'] {
+      --fly-accent: var(--fly-amber);
+      --fly-accent-soft: var(--fly-amber-soft);
+      --fly-accent-deep: var(--fly-amber-deep);
+      --fly-accent-tint: var(--fly-amber-tint);
+  }
+
+  [data-fly-hue='lime'] {
+      --fly-accent: var(--fly-lime);
+      --fly-accent-soft: var(--fly-lime-soft);
+      --fly-accent-deep: var(--fly-lime-deep);
+      --fly-accent-tint: var(--fly-lime-tint);
+  }
+
+  [data-fly-hue='emerald'] {
+      --fly-accent: var(--fly-emerald);
+      --fly-accent-soft: var(--fly-emerald-soft);
+      --fly-accent-deep: var(--fly-emerald-deep);
+      --fly-accent-tint: var(--fly-emerald-tint);
+  }
+
+  [data-fly-hue='teal'] {
+      --fly-accent: var(--fly-teal);
+      --fly-accent-soft: var(--fly-teal-soft);
+      --fly-accent-deep: var(--fly-teal-deep);
+      --fly-accent-tint: var(--fly-teal-tint);
+  }
+
+  [data-fly-hue='sky'] {
+      --fly-accent: var(--fly-sky);
+      --fly-accent-soft: var(--fly-sky-soft);
+      --fly-accent-deep: var(--fly-sky-deep);
+      --fly-accent-tint: var(--fly-sky-tint);
+  }
+
+  [data-fly-hue='cobalt'] {
+      --fly-accent: var(--fly-cobalt);
+      --fly-accent-soft: var(--fly-cobalt-soft);
+      --fly-accent-deep: var(--fly-cobalt-deep);
+      --fly-accent-tint: var(--fly-cobalt-tint);
+  }
+
+  [data-fly-hue='indigo'] {
+      --fly-accent: var(--fly-indigo);
+      --fly-accent-soft: var(--fly-indigo-soft);
+      --fly-accent-deep: var(--fly-indigo-deep);
+      --fly-accent-tint: var(--fly-indigo-tint);
+  }
+
+  [data-fly-hue='violet'] {
+      --fly-accent: var(--fly-violet);
+      --fly-accent-soft: var(--fly-violet-soft);
+      --fly-accent-deep: var(--fly-violet-deep);
+      --fly-accent-tint: var(--fly-violet-tint);
+  }
+
+  [data-fly-hue='magenta'] {
+      --fly-accent: var(--fly-magenta);
+      --fly-accent-soft: var(--fly-magenta-soft);
+      --fly-accent-deep: var(--fly-magenta-deep);
+      --fly-accent-tint: var(--fly-magenta-tint);
+  }
+
+  [data-fly-hue='rose'] {
+      --fly-accent: var(--fly-rose);
+      --fly-accent-soft: var(--fly-rose-soft);
+      --fly-accent-deep: var(--fly-rose-deep);
+      --fly-accent-tint: var(--fly-rose-tint);
+  }
+
+  /* Neutral pages (index and bug-fix chapters): the accent is grey. The dark grey scale
+     runs from dark to light, so soft and deep swap steps. */
+  [data-fly-hue='gray'] {
+    --fly-accent: var(--fly-gray-6);
+    --fly-accent-soft: var(--fly-gray-4);
+    --fly-accent-deep: var(--fly-gray-8);
+    --fly-accent-tint: var(--fly-gray-1);
+  }
+
+  [data-md-color-scheme='slate'][data-fly-hue='gray'],
+  [data-md-color-scheme='slate'] [data-fly-hue='gray'] {
+    --fly-accent-soft: var(--fly-gray-8);
+    --fly-accent-deep: var(--fly-gray-4);
+  }
+}

@@ -1,0 +1,27 @@
+{#- this_file: theme/fly_january/partials/toc.html -#}
+{#- fly-january: MaterialX toc partial; the visible L2 heading is the page title
+    (H1), the nav keeps the toc title ("On this page") as its accessible name. -#}
+{% set title = lang.t("toc") %}
+{% if config.mdx_configs.toc and config.mdx_configs.toc.title %}
+  {% set title = config.mdx_configs.toc.title %}
+{% endif %}
+<nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+  {% set toc = page.toc %}
+  {% set first = toc | first %}
+  {% set heading = page.title | e %}
+  {% if first and first.level == 1 %}
+    {% set toc = first.children %}
+    {% set heading = first.title %}
+  {% endif %}
+  {% if toc %}
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      {{ heading }}
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      {% for toc_item in toc %}
+        {% include "partials/toc-item.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</nav>

@@ -1,0 +1,7 @@
+# this_file: fixtures/fly/mkdocs-sticky.yml
+# The fly fixture with a sticky global bar.
+INHERIT: mkdocs.yml
+extra:
+  fly:
+    chrome_options:
+      sticky: true

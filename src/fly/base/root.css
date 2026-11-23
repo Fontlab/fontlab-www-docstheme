@@ -1,0 +1,42 @@
+/* this_file: src/fly/base/root.css */
+/* Document defaults: variable fonts upright, pretty wrapping for all text and balanced
+   wrapping for headings, captions and both rails (the longhand leaves code blocks' own
+   wrap mode alone), smooth scrolling for in-page links. */
+@layer fly.base {
+  :root {
+    font-variation-settings: var(--fly-sans-variation);
+  }
+
+  body {
+    text-wrap-style: pretty;
+  }
+
+  .md-typeset :is(h1, h2, h3, h4, h5, h6, figcaption),
+  .md-nav {
+    text-wrap-style: balance;
+  }
+
+  /* fly.js sets the class for one frame after a click on an L2 link. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.fly-toc-scroll {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Tailwind offsets (tw:top-4 and the like) need a positioned box. This is the lowest
+     content layer, so any position the theme sets wins. */
+  :where(
+    [class*='tw:top-'],
+    [class*='tw:-top-'],
+    [class*='tw:bottom-'],
+    [class*='tw:-bottom-'],
+    [class*='tw:left-'],
+    [class*='tw:-left-'],
+    [class*='tw:right-'],
+    [class*='tw:-right-'],
+    [class*='tw:inset-'],
+    [class*='tw:-inset-']
+  ) {
+    position: relative;
+  }
+}

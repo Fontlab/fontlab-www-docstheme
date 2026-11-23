@@ -1,0 +1,12 @@
+# this_file: fixtures/fly/mkdocs-accent.yml
+# The fly fixture with the accent options: accent links and titles, an italic em, and a
+# sans role set to a system face at adjust 1.
+INHERIT: mkdocs.yml
+extra:
+  fly:
+    h1: accent
+    links: accent
+    fonts:
+      roles:
+        em: {style: italic}
+        sans: {family: "system-ui, sans-serif", stretch: normal, variation: normal, adjust: 1}

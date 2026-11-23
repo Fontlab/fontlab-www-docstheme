@@ -1,0 +1,40 @@
+# this_file: .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: npm run build
+      - run: git diff --exit-code
+      - run: test -z "$(git status --porcelain)"
+      - run: npm test
+      - run: uv sync --locked
+      - run: uv run pytest tests/py -q
+
+  materialx-latest:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.13'
+      - run: uv sync --locked
+      - run: uv pip install --upgrade 'mkdocs-materialx>=10.1.8,<11'
+      - run: uv run --no-sync pytest tests/py/test_theme_package.py tests/py/test_fixture_fly.py tests/py/test_defaults.py -q

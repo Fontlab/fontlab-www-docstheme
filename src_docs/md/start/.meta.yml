@@ -1,0 +1,4 @@
+# this_file: src_docs/md/start/.meta.yml
+# Prefer setup guidance when searches also match many component specimens.
+search:
+  boost: 1.5

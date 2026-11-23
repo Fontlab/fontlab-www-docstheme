@@ -1,0 +1,58 @@
+/* this_file: src/fly/layout/sheets.css */
+/* Three stacked paper sheets: L1 (site navigation) is .md-main's background, L2 (page
+   navigation) is a pseudo-element from the end of the L1 rail to the right edge, L3 is
+   the canvas (.md-content), a container named fly-canvas for the column rules. */
+@layer fly.layout {
+  .md-main {
+    background: var(--fly-paper-1);
+  }
+
+  .md-main__inner.md-grid {
+    position: relative;
+    isolation: isolate;
+    max-width: none;
+    margin: 0;
+  }
+
+  /* On phones L1 is the fixed drawer over the overlay; an isolated parent would trap it. */
+  @media screen and (max-width: 59.984375em) {
+    .md-main__inner.md-grid {
+      isolation: auto;
+    }
+  }
+
+  .md-main__inner::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 0 var(--fly-l1);
+    z-index: 1;
+    background: var(--fly-paper-2);
+    border-left: 1px solid var(--fly-edge);
+    box-shadow: var(--fly-shadow);
+  }
+
+  .md-content {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    background: var(--fly-paper-3);
+    border-left: 1px solid var(--fly-edge);
+    box-shadow: var(--fly-shadow);
+    container: fly-canvas / inline-size;
+  }
+
+  /* Pages without L2 (hide: [toc]; the fly plugin adds body.fly-no-l2): no L2 paper, no
+     L2 sidebar and no in-page entry in L1. L3 follows L1 directly. */
+  .fly-no-l2 .md-main__inner::before,
+  .fly-no-l2 .md-sidebar--secondary,
+  .fly-no-l2 .md-nav--primary :is(label[for='__toc'], .md-nav--secondary) {
+    display: none;
+  }
+
+  /* Phones: both lower sheets become edges. */
+  @media screen and (max-width: 59.984375em) {
+    .md-main__inner {
+      padding-left: 1.0417rem;
+    }
+  }
+}

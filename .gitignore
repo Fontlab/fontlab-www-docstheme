@@ -221,6 +221,7 @@ __version__.py
 
 
 # Theme build and browser artifacts
+src_docs/site/
 node_modules/
 test-results/
 playwright-report/

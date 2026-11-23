@@ -1,0 +1,56 @@
+/* this_file: src/fly/tokens/layout.css */
+/* Sheet and canvas geometry. A page is three stacked sheets: L1 (site navigation) under
+   L2 (page navigation) under L3 (the canvas). --fly-l1 is the width L1 shows beside L2;
+   it changes with the viewport and on pages without L2 (body.fly-no-l2, set by the fly
+   plugin). Layout rules in fly.layout read these; the values are the prototype's. */
+@layer fly.tokens {
+  :root {
+    --fly-rail: clamp(13.8889rem, 17vw, 25rem); /* full L1 rail */
+    --fly-part-rail: clamp(12.5rem, 15vw, 19.4444rem); /* L2 rail; L1 too from 100em */
+    --fly-sliver: clamp(4.1667rem, 5vw, 6.9444rem); /* L1 under an extended L2 */
+    --fly-l1: var(--fly-rail);
+    --fly-l1-label: 10.0694rem; /* longest L1 label at 1440px */
+    --fly-l1-reveal: var(--fly-rail); /* how far L2 retracts to show L1's labels */
+    --fly-notch: var(--fly-size-sm); /* heading permalink notch: one body em tall */
+    --fly-h1-measure: 16ch; /* heading measures, in the heading's own units */
+    --fly-h2-measure: 20ch;
+    --fly-margin-col: clamp(11.1111rem, 20cqi, 20.8333rem); /* the margin column (--m) at desktop; cqi is the canvas */
+    --fly-post-bar: 16.8rem; /* the blog post sidebar (.md-sidebar--post), 242px at the default root */
+    --fly-bar-h: 3.8889rem; /* the global bar's height (56px at the default root); see sticky */
+  }
+
+  /* From 100em both rails are the L2 width. */
+  @media screen and (min-width: 100em) {
+    body:not(.fly-no-l2) {
+      --fly-rail: var(--fly-part-rail);
+      --fly-l1: var(--fly-rail);
+    }
+  }
+
+  /* Mid desktop: L1 is a sliver under L2 until L2 retracts. */
+  @media screen and (76.25em <= width < 100em) {
+    :root {
+      --fly-l1: var(--fly-sliver);
+      --fly-l1-reveal: calc(1.1111rem + var(--fly-l1-label) + 1.3889rem);
+    }
+
+    .fly-no-l2 {
+      --fly-l1: var(--fly-rail);
+      --fly-l1-reveal: var(--fly-rail);
+    }
+  }
+
+  /* Mid width: no L2, L1 is the full rail. */
+  @media screen and (min-width: 60em) and (max-width: 76.234375em) {
+    :root {
+      --fly-l1: var(--fly-rail);
+    }
+  }
+
+  /* Phones: the lower sheets are edges. */
+  @media screen and (max-width: 59.984375em) {
+    :root {
+      --fly-l1: 0.5208rem;
+    }
+  }
+}

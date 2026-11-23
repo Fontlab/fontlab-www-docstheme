@@ -1,193 +1,127 @@
----
-this_file: README.md
----
+<!-- this_file: README.md -->
+# fly-january
 
-# FontLab theme 2026
+fly-january is a ProperDocs/MkDocs theme built on MaterialX. It adds a baseline grid, per-page typography and colour, margin figures, and a choice of FontLab, Vexy or native MaterialX navigation. The Python package includes the compiled CSS and JavaScript. A documentation site can build with Python alone.
 
-Shared customizations for ProperDocs + MaterialX and FontLab/Vexy hybrid sites.
-Source for `https://i.fontlab.com/fltheme26/`; deployment files are staged in
-the sibling `img/docs/fltheme26/` repository.
+## Installation
 
-Start with the [complete setup guide](https://i.fontlab.com/fltheme26/) and
-[downloadable MaterialX starter](https://i.fontlab.com/fltheme26/starter.zip).
-They include a pinned Python environment, a complete YAML configuration,
-template overrides, component authoring, Webflow integration and troubleshooting.
-See [AGENTS.md](AGENTS.md) for source boundaries and verification requirements.
-[Publication evidence](review/documentation-publication.json) records the deployed
-guide, the 19-repository documentation rollout and verified baseline limitations.
+With Python 3.12 or later, install the package using either command.
 
-## Build and verify
+```sh
+pip install fly-january
+# or
+uv add fly-january
+```
+
+A minimal `mkdocs.yml` enables both the theme and its plugin.
+
+```yaml
+site_name: My documentation
+theme:
+  name: fly-january
+plugins: [search, fly]
+```
+
+Create `docs/index.md` and run `properdocs build --strict`.
+
+## Adopting fly-january in an existing MaterialX site
+
+1. Change `theme.name` to `fly-january` and add `fly` to your plugin list. Keep your existing features and bare plugin names such as `search`, `blog` and `tags`. The theme registers MaterialX’s implementations and makes them available to its templates.
+2. Remove old menu/footer overrides and fltheme26 styles or scripts that duplicate the new theme. Keep site-specific templates. Choose `extra.fly.chrome` and set the control ownership described below.
+3. Move site typography and colours into roles and options. Use `links: accent` for coloured article links, `h1: accent` for site-wide accent titles, and `fonts.roles.em: {style: italic}` for italic emphasis. See **Customising** for component links and direct CSS overrides.
+4. Check your own rem lengths. The default MaterialX root is 20px. Fly’s normal root is 14.4px and grows on wide displays. The plugin rescales the CSS shipped by the installed MaterialX theme by 20/14.4. Site and third-party plugin stylesheets keep their original values. The plugin logs the names of other CSS files it finds under `assets/stylesheets/`. To preserve the old dimensions at the normal root, multiply your rem values by 20/14.4.
+5. Enable `extra.fly.utilities: true` if your markup uses the prebuilt `tw:` utilities. With the default `false`, the consumer site omits the utility sheet.
+
+## Configuration
+
+`extra.fly` is optional. Site defaults include FontLab chrome that scrolls with the page, ink titles, inherited article link colour and a left margin. Set a site hue, define reusable font/hue presets, or override individual type roles. Pages select a preset with `fly.preset` in their front matter. Page settings take precedence over preset settings, which take precedence over site settings. A page hue colours its H1 unless the page sets `fly.h1: ink`.
+
+```yaml
+extra:
+  fly:
+    chrome: fontlab
+    chrome_options:
+      site-label: Product manual
+      site-url: /manual/
+      mobile-menu: materialx
+      mobile-search: materialx
+      sticky: false
+    hue: cobalt
+    links: accent
+    fonts:
+      roles:
+        em: {style: italic}
+```
+
+| Chrome option | Behaviour |
+| --- | --- |
+| `site-label`, `site-url` | Menu label and destination. Defaults come from `site_name` and `site_url`. Supply an absolute HTTP(S) URL or a root-relative path. |
+| `mobile-menu` | `materialx` (default) opens the documentation drawer. `global` selects the brand menu. |
+| `mobile-search` | `materialx` (default) opens the local documentation search. `global` selects the brand search. This setting also applies on desktop. |
+| `search-from` | Identifies the originating site to the brand search. |
+| `sticky` | A YAML boolean. `true` pins the brand bar. Defaults to `false`. |
+
+Use `chrome: vexy` for Vexy branding or `chrome: none` for MaterialX’s native header and footer. A custom chrome takes an HTTPS `script` URL and `header` and `footer` custom-element names. The demo documents every site and page key with examples. [Configuration](https://fontlab.dev/fontlab-www-docstheme/theme/configuration/) · [Chrome](https://fontlab.dev/fontlab-www-docstheme/theme/chrome/)
+
+## Customising
+
+Prefer `extra.fly` options and `fonts.roles`, or set a `--fly-*` variable on the element that consumes it. For example, add a stylesheet to `extra_css` and adjust heading tracking with an ordinary selector.
+
+```css
+.md-typeset h2 { --fly-h2-tracking: 0.02em; }
+```
+
+Fly applies its general article-link rule to every link except links with a class starting with `md-`, links with `.headerlink`, and links with `data-fly-plain` on themselves or an ancestor. Put `data-fly-plain` on a site-owned component to style its links with ordinary CSS such as `.md-typeset .signup-link`. Theme cards, headings and tables also supply their own contextual styles. To override those properties inside a theme component, use its tokens or the selector technique below.
+
+For direct overrides of fly-styled properties, source order alone is insufficient. The build flattens cascade layers to beat MaterialX’s unlayered rules. Each generated selector has a maximum of 10 ID boosts. Copy this prefix into your site stylesheet and change the target and declaration as needed.
+
+```css
+.md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h2 {
+  text-align: center;
+}
+```
+
+Match the competing rule’s ID specificity and at least its remaining specificity. At equal specificity the later declaration wins. Normal declarations still yield to `!important`. [Design tokens](https://github.com/Fontlab/fontlab-www-docstheme/blob/main/DESIGN-TOKENS.md) · [Theme specification](https://github.com/Fontlab/fontlab-www-docstheme/blob/main/SPEC.md)
+
+## Privacy and external assets
+
+A reader’s browser sends its IP address to each host it contacts. These are the theme’s external resources and the controls for serving a local-only site.
+
+| Host | Resource and how to avoid the request |
+| --- | --- |
+| `use.typekit.net`, `p.typekit.net` | The default Adobe kits supply News Serif (`cmv5add`), Sole Serif Small (`cna4jfp`) and Grtsk (`wck5koo`). Set `extra.fly.fonts.sources: []` and omit Typekit sources from presets and pages to use system stacks or your own licensed fonts. Setting only roles keeps the kits. |
+| `fonts.googleapis.com`, `fonts.gstatic.com` | Fly requests the Material Symbols stylesheet and font for arrows and the palette toggle. MaterialX can also request Roboto and Roboto Mono, and the brand menus request Work Sans. For a Google-free page, use `theme.font: false`, omit `google:` font sources, use `chrome: none` and override the symbols partial below. The native SVG icons remain available. |
+| `cdn.jsdelivr.net` | PhotoSwipe 5.4.4 supplies the lightbox stylesheet on every page. Its two scripts load on pages with `.md-content a.lightbox`. All three files have SHA-384 integrity checks and anonymous CORS. Override the PhotoSwipe partial below to use ordinary image links. |
+| `i.fontlab.com`, optionally `i.vexy.art` | The default FontLab chrome loads `/menu/fontlab.js` and brand assets. Vexy chrome selects `/menu/vexy.js` on the Vexy host and uses `res.cloudinary.com` for its logo. The unversioned menu scripts are trusted first-party code served without SRI. Use `chrome: none` or your own audited chrome to avoid these requests. |
+
+To omit Material Symbols or PhotoSwipe, set `theme.custom_dir: overrides` and create an empty `overrides/partials/fly-symbols.html` or `overrides/partials/fly-photoswipe.html`, respectively. Site-authored embeds, plugins and additional font sources can introduce other hosts.
+
+## Development
+
+The package sources are in `theme/fly_january/`. Edit CSS and browser code in `src/fly/`. The demo sources are in `src_docs/`.
 
 ```sh
 npm ci
 npm run build
 npm test
-npx playwright install chromium
-npm run test:browser
-npm run deploy
+uv run --python 3.13 pytest tests/py
+./build.sh
+npm run verify:fly
 ```
 
-`deploy` stages and hash-verifies the CDN tree; publishing requires committing
-and pushing `img`, then checking its Pages deployment and live asset hashes.
-It does not publish consumer sites. `consumers.json` tracks the full rollout.
+The browser check uses the agent-browser CLI and a locally installed Chrome. The strict demo build checks internal links and writes the Pages site, its versioned CDN directories and their SHA-256 manifest under `docs/`. [Demo](https://fontlab.dev/fontlab-www-docstheme/) · [CDN asset reference](https://fontlab.dev/fontlab-www-docstheme/theme/assets/)
 
-The `1.0.0/` CDN path receives compatible fixes in place. It is not an immutable
-snapshot: consumers receive fixes after caches refresh. For frozen deployments,
-retain a complete downloaded asset set and its manifest. Licences are published
-under `1.0.0/licenses/`.
+## Release
 
-The starter and native build fixture enable PyMdown Keys (`++ctrl+s++`), Mark
-(`==marked text==`), Details, Highlight, InlineHilite, SuperFences, Tabbed and
-Tasklist, plus tables and footnotes. PyMdown Extensions is pinned to 11.0.1.
-Copy the starter's `markdown_extensions` into existing site configurations;
-these run during the Python build. CDN assets provide the shared styling.
-`mark` uses black text and `--md-typeset-mark-color: transparent`; `.md-typeset mark`
-uses font weight 500, including
-the optional editorial layer and dark palettes.
+1. Set `NEXT_VERSION` in `scripts/build-cdn.mjs`. Publish the required figure-groups dependency first, remove its local uv source, and refresh the lock. Run `./build.sh` and the test gates.
+2. Commit the verified sources and generated `docs/` (including `docs/fly/<version>/`, `latest/` and `manifest.json`).
+3. Tag **that commit** `vX.Y.Z`, using the same version as `NEXT_VERSION`.
+4. Run `npm run check:release`. It requires a clean worktree, fetches main, and checks the tag, package version and CDN tree.
+5. From the tagged commit, choose an empty output directory, for example `release-dist`. Run `uv build --out-dir release-dist` and `uvx twine check --strict release-dist/*`.
+6. Publish the checked distributions, push the release commit and tag, then verify Pages and the public manifest hashes.
 
-Closed mobile navigation/TOC drawers and search panels are excluded from keyboard focus;
-native desktop search keeps its visible field and excludes closed results.
-Visible native navigation/search labels support Tab, Enter and Space, expose
-button semantics and restore opener focus on Escape. Search, buttons and palette
-controls show keyboard focus rings. The active native palette radio is checked
-on initialization so its focus box is available before the first theme switch.
-The shared slate
-palette raises indigo text accents, secondary text and code tokens above 4.5:1
-on the standard MaterialX dark surfaces; light text colours stay unchanged.
+The CDN builder fetches main before writing. A version already published there must match its manifest byte for byte. If publication state is unknown, rebuilding an existing version directory requires confirmation that it was never published (`FLY_CDN_ALLOW_UNPUBLISHED=1`). Bump `NEXT_VERSION` to prepare the next release.
 
-## Add components to a site
+## Legacy fltheme26 bundle
 
-Keep `theme.name: materialx` and any site-specific template overrides. Add:
-
-```yaml
-extra_css:
-  - https://i.fontlab.com/fltheme26/1.0.0/components.css
-  - https://i.fontlab.com/fltheme26/1.0.0/theme.css
-extra_javascript:
-  - https://i.fontlab.com/fltheme26/1.0.0/basecoat.js
-  - https://i.fontlab.com/fltheme26/1.0.0/theme.js
-```
-
-For static/Webflow HTML, use stylesheet links and deferred scripts in that order.
-The shared toolkit must inject them after all overlays, including cached pages.
-
-Wrap component markup in `.fltheme-components`:
-
-```html
-<div class="fltheme-components">
-  <button class="btn">Basecoat button</button>
-  <button class="du-btn du-btn-primary">daisyUI button</button>
-</div>
-```
-
-Use [Basecoat 1.0 markup](https://basecoatui.com/installation/) and
-[daisyUI markup](https://daisyui.com/components/) with every daisyUI component
-class prefixed `du-`. Both libraries and the reset are scoped to that wrapper.
-The bundle includes all daisyUI component classes, not just specimen classes.
-It includes utilities used by the specimen, not every possible Tailwind utility;
-use your own CSS for page layout or add deliberate sources in the shared build.
-
-The Basecoat runtime uses its public registration API to scope discovery and
-leave other `.tabs`, `.select` and `.accordion` elements alone. Chart is optional
-upstream and is not bundled: it also needs Chart.js. Do not load another copy of
-Basecoat on the same page. MaterialX instant navigation is supported; call
-`FLTheme.refresh()` after manually inserting or restoring component containers.
-
-The host remains responsible for theme choice and persistence. Component colors
-follow MaterialX's scheme or the host's dark appearance. Override one component
-area with `data-fltheme-mode="light"` or `"dark"`, then call `FLTheme.refresh()`.
-Component overrides belong in `src/theme.css`, `src/harmony-forms.css` and
-`src/harmony-display.css` (or the specimen stylesheet),
-then run the shared build. The build transforms all three stylesheets together
-to preserve layer precedence against unlayered MaterialX/Webflow CSS; editing
-the generated stylesheets independently bypasses that contract.
-
-The generated daisyUI stylesheet renames its border-width token to `--du-border`
-because Basecoat's `--border` token is a color. Countdown values use the familiar
-`--value` and `--digits` properties; the theme maps them to daisyUI's prefixed tokens.
-The shared styles harmonize fields, choices, tabs, frames, hints and data displays.
-MaterialX keycaps, captions, admonitions and tooltips use the same scale. Admonitions
-have no border or background: icon, heading and body share a semantic color, with
-body text aligned to the heading. No artificial end-of-article padding is added. Standard MaterialX, Basecoat and daisyUI buttons
-share height, padding, font size, weight and line height. Explicit size and shape
-variants stay native. Key labels retain their text alongside keyboard symbols.
-Changing the host's light/dark mode also refreshes optional Basecoat charts.
-
-## Responsive navigation
-
-MaterialX pages default to local navigation and local search. The global bar
-shows one search icon immediately left of one hamburger. The local drawer
-opens on the right, with the theme switcher at the bottom. Below 76.25em the
-branding scrolls away; the compact controls stay at the top right while either
-control serves the local site. Escape closes an open panel and restores focus.
-
-Choose each control independently, using the same API for both brands:
-
-```html
-<fontlab-menu mobile-menu="materialx" mobile-search="materialx"></fontlab-menu>
-<vexy-menu mobile-menu="global" mobile-search="global"></vexy-menu>
-```
-
-JavaScript `.config` accepts `mobileMenu` and `mobileSearch` with the same
-values; explicit attributes take precedence. Keep existing configuration fields
-when updating it. FontLab and Vexy auxiliary pages select `global` for both.
-Plain Webflow pages without a MaterialX drawer retain the global controls.
-If a requested local target is absent, its global equivalent remains available.
-
-Load the menu script together with the shared `theme.css` and `theme.js` above.
-Keep MaterialX's native `#__drawer`, `.md-sidebar--primary`, `#__search` and
-`.md-search` markup; enable its search plugin. Older search-only custom headers
-are supported. Desktop restores the palette position; the global loupe opens
-the selected search at every width. Local search uses the native MaterialX index
-in a centered desktop dialog and a full-screen mobile panel. Despite the legacy
-`mobile-search` / `mobileSearch` names, that search choice now applies at all sizes.
-Local ownership also restores the loupe on legacy `no-search` pages.
-
-The menu exposes `mobileControls` and emits cancelable
-`fontlab-menu:mobile-control` / `vexy-menu:mobile-control` events with
-`{control, owner, trigger}`. Search events fire from the desktop loupe too.
-The shared adapter handles local controls by
-preventing the default global action. Re-render events reconnect accessibility
-state after configuration or brand changes. Internal `data-*` flags are owned
-by the adapter; consumers configure only the public attributes or `.config`.
-
-The [MaterialX integration specimen](https://i.fontlab.com/fltheme26/materialx/)
-uses the vanilla template and provides both ownership selectors. The build uses
-`uv`, Python 3.13, ProperDocs 1.6.7 and MaterialX 10.1.8 to compile this fixture.
-Run `node scripts/verify-mobile-navigation.mjs --local` to test candidate assets
-on published sites; omit `--local` to check the published CDN.
-
-## Keyboard navigation
-
-While reading a page, **Right** or **Alt+Right** opens the next page in the
-documentation navigation; **Alt+Left** opens the previous page. **Left** goes
-back in browser history. Next/previous use ProperDocs' generated `rel` links,
-with the primary navigation as a fallback. At either end, they do not wrap.
-The CDN component and authoring pages provide the same controls.
-
-Standalone HTML opts in with `data-fl-page-navigation` on the body and
-`<link rel="next" href="...">` / `<link rel="prev" href="...">` in the head.
-
-Search, editable fields, interactive widgets, open dialogs, selected text and
-other modifier combinations retain their normal keyboard behavior. Held keys
-do not repeatedly navigate. Plain Webflow pages are unaffected.
-
-## Existing customizations
-
-`src/chrome/` centralizes the existing FontLab chrome. `src/editorial/` contains
-the shared Marketing/styleguide typography, layout and theme controls, plus the
-small styleguide variant. The legacy vendor CSS preserves existing unprefixed
-authoring on those two sites; new component examples use the isolated Basecoat
-and prefixed daisyUI bundle. `provenance.json` records the original source hashes.
-Site-specific content, fonts, menu configuration and templates stay with their
-sites. Shared design changes belong here.
-
-Run the specimen with `python3 -m http.server --directory dist 8422`, then open
-`http://localhost:8422/`. The form demonstrates in-memory state only.
-
-## Release evidence
-
-See `PLAN.md`, `TODO.md`, `WORK.md`, `CHANGELOG.md` and `review/`. Task422 is complete: 33 consumer configurations (including ornotto), 18 live browser checks and
-an independent review score of 96/100. Run `npm run verify:live` to refresh
-the desktop/mobile screenshots and published-site checks. The existing fldoc
-tooltipster error is documented in `review/baseline-limitations.json`.
+`npm run build` also produces the fltheme26 bundle in `dist/` for existing consumers. Its legacy Playwright suite is retained and is not run in this project. [Legacy setup guide and starter](https://i.fontlab.com/fltheme26/)
