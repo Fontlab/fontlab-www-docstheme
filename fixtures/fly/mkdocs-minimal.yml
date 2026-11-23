@@ -1,0 +1,14 @@
+# this_file: fixtures/fly/mkdocs-minimal.yml
+# The smallest consumer: the theme, search and the fly plugin, no extra.fly. It must build
+# strict and look finished with the theme's own defaults.
+site_name: fly-january minimal
+site_url: https://fixture.example/
+docs_dir: docs-minimal
+theme:
+  name: fly-january
+plugins:
+  - search
+  - fly
+nav:
+  - Home: index.md
+  - Guide: guide.md

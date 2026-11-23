@@ -24,7 +24,8 @@ extra:
 
 The menu gets `mode="dark"`, `site-label` (default: `site_name`), `site-url`
 (`site_url`), `mobile-menu="materialx"` and `mobile-search="materialx"`, then the
-`chrome_options` you set. `search-from` names the site in searches sent to
+`chrome_options` you set. `site-url` there takes an absolute http(s) URL or a root-relative
+path such as `/docs/`, for a label that links somewhere other than `site_url`. `search-from` names the site in searches sent to
 search.fontlab.com.
 
 ## Vexy

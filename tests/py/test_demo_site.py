@@ -27,6 +27,7 @@ from fly_january.config import (
     HUES,
     INLINE_PROPS,
     INLINE_ROLES,
+    ROLE_PROPS,
     NAMED_CHROMES,
     PAGE_KEYS,
     SITE_KEYS,
@@ -163,7 +164,7 @@ def site_table() -> dict[str, tuple[str, str]]:
     """The configuration page's site-keys table: key -> (default cell, value cell)."""
     text = (SITE / "md/theme/configuration.md").read_text()
     table = text.split("## Site keys")[1].split("A complete site block")[0]
-    rows = re.findall(r"^\| `([a-z_.]+)` \| (.*?) \| (.*?) \|$", table, re.MULTILINE)
+    rows = re.findall(r"^\| `([a-z0-9_.]+)` \| (.*?) \| (.*?) \|$", table, re.MULTILINE)
     return {key: (default, value) for key, default, value in rows}
 
 
@@ -192,10 +193,18 @@ def test_configuration_roles_when_compared_with_the_parser_then_roles_and_props_
     text = (SITE / "md/theme/configuration.md").read_text()
     sentence = text.split("Role properties:")[1].split("Values are plain CSS")[0]
     block, inline = sentence.split("; inline roles")
+    block, measure_clause = block.split("; `h1` and `h2` also take")
     roles, props = block.split(") take")
     assert ticks(roles) == list(BLOCK_ROLES) and ticks(props) == list(BLOCK_PROPS)
-    roles, props = inline.split(") take")
-    assert ticks(roles) == list(INLINE_ROLES) and ticks(props) == list(INLINE_PROPS)
+    assert ticks(measure_clause)[0] == "measure" and "measure" in ROLE_PROPS["h1"]
+    # Inline roles: one clause per property list, "`em` takes ...; `strong` and `mono` take ...".
+    documented = {}
+    for clause in inline.split(":", 1)[1].split(";"):
+        names, _, props = re.split(r"\b(takes?)\b", clause, maxsplit=1)
+        for role in ticks(names):
+            documented[role] = tuple(p for p in ticks(props) if p != "normal" and p != "italic")
+    documented = {role: props for role, props in documented.items() if role in INLINE_ROLES}
+    assert documented == INLINE_PROPS
 
 
 def test_chrome_page_when_compared_with_the_view_then_menu_attributes_match():

@@ -152,6 +152,7 @@
     --fly-em-family: var(--fly-sans-family);
     --fly-em-weight: 550;
     --fly-em-adjust: 0.95;
+    --fly-em-style: normal;
 
     --fly-strong-family: var(--fly-sans-family);
     --fly-strong-weight: 550;
@@ -524,8 +525,12 @@
     --fly-warning-text: var(--fly-warning-soft);
     --fly-danger-text: var(--fly-danger-soft);
   }
-  :where([data-fly-hue]) {
+  :where([data-fly-h1='accent']) {
     --fly-h1-color: var(--fly-accent-text);
+  }
+  :where([data-fly-links='accent']) {
+    --fly-link-color: var(--fly-link);
+    --fly-link-hover-color: var(--fly-ink);
   }
   [data-fly-hue='cherry'] {
       --fly-accent: var(--fly-cherry);
@@ -620,6 +625,8 @@
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
     --fly-h2-measure: 20ch;
+    --fly-post-bar: 16.8rem;
+    --fly-bar-h: 3.8889rem;
   }
   @media screen and (min-width: 100em) {
     body:not(.fly-no-l2) {

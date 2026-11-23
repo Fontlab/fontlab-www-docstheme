@@ -10,10 +10,18 @@ from types import SimpleNamespace
 
 import pytest
 from fly_january import assets
-from fly_january.config import HUES, ROLE_PROPS, Look, PageConfig, parse_page, parse_site
+from fly_january.config import (
+    DEFAULT_SOURCES,
+    HUES,
+    ROLE_PROPS,
+    Look,
+    PageConfig,
+    parse_page,
+    parse_site,
+)
 from fly_january.fonts import head, merge_roles, resolve, roles_css, source_url
 from fly_january.plugin import FlyPlugin
-from fly_january.view import chrome_view, page_classes, view
+from fly_january.view import body_attributes, chrome_view, h1_mode, page_classes, view
 from mkdocs.exceptions import PluginError
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -54,7 +62,9 @@ def page(meta):
 def test_parse_site_when_no_fly_then_defaults():
     config = parse_site({})
     assert config.chrome.kind == "fontlab" and not config.utilities and not config.debug
-    assert config.margin_side == "left" and config.look == Look() and config.presets == {}
+    assert config.margin_side == "left" and config.presets == {}
+    assert config.look == Look(sources=DEFAULT_SOURCES), "a bare site gets the default font sources"
+    assert (config.h1, config.links, config.sticky) == ("ink", "inherit", False)
 
 
 @pytest.mark.parametrize(
@@ -72,7 +82,10 @@ def test_parse_site_when_no_fly_then_defaults():
             "chrome.header",
         ),
         ({"chrome": {"script": "https://x.test/a.js", "header": "a-b"}}, "chrome.footer"),
-        ({"chrome_options": {"site-url": "x"}}, "chrome_options: unknown key(s) site-url"),
+        ({"chrome_options": {"site-url": "x"}}, "chrome_options.site-url: must be an http(s) URL"),
+        ({"chrome_options": {"site-url": "//evil.test/"}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": 'https://a.test/"x'}}, "chrome_options.site-url: must be"),
+        ({"chrome_options": {"site-url": 5}}, "chrome_options.site-url: must be a string"),
         ({"chrome_options": {"site-label": 5}}, "chrome_options.site-label: must be a string"),
         ({"fonts": {"sources": ["adobe:abc"]}}, "fonts.sources[0]: font source must be"),
         ({"fonts": {"sources": "typekit:abc"}}, "fonts.sources: must be a list"),
@@ -381,6 +394,14 @@ def test_chrome_view_when_options_then_override_menu_attribute_defaults():
     assert chrome_view(site(), CONFIG).header_attrs["site-label"] == "Site", "defaults to site_name"
 
 
+@pytest.mark.parametrize("chrome", ["fontlab", "vexy"])
+@pytest.mark.parametrize("url", ["https://partners.example/docs/", "http://x.test", "/", "/docs/"])
+def test_chrome_view_when_site_url_option_then_overrides_site_url(chrome, url):
+    out = chrome_view(site(chrome=chrome, chrome_options={"site-url": url}), CONFIG)
+    assert out.header_attrs["site-url"] == url
+    assert chrome_view(site(chrome=chrome), CONFIG).header_attrs["site-url"] == "https://site.example/"
+
+
 def test_view_when_debug_then_json_lists_presets_and_is_script_safe():
     config = site(debug=True)
     out = view(config, page({"fly": {"preset": "sitka", "hue": "teal"}}), CONFIG, {})
@@ -554,7 +575,8 @@ def test_on_post_page_when_frontmatter_then_classes_and_hue_patched():
         '<html><body dir="ltr"><main class="md-main"><article>x</article></main></body>', page, {}
     )
     assert (
-        '<body dir="ltr" class="p subtheme-sitka fly-margin-left fly-chrome-fontlab" data-fly-hue="magenta">'
+        '<body dir="ltr" class="p subtheme-sitka fly-margin-left fly-chrome-fontlab" '
+        'data-fly-hue="magenta" data-fly-h1="accent">'
         in html
     )
     assert '<main class="md-main m">' in html
@@ -602,3 +624,114 @@ def test_on_page_content_when_figure_inside_list_or_wide_then_unchanged():
         '<p>b</p><figure class="img-wide"><img/></figure>',
     ):
         assert configured_plugin().on_page_content(html, page=PAGE_SRC) == html
+
+
+# --- sans and em roles, links, h1, sticky, default sources ------------------------------
+
+
+def test_roles_when_sans_then_family_stretch_variation_adjust_emitted():
+    config = site(
+        fonts={
+            "roles": {
+                "sans": {"family": "system-ui", "stretch": "normal", "variation": "normal", "adjust": 1}
+            }
+        }
+    )
+    css = roles_css(config.look.roles)
+    for name, value in (("family", "system-ui"), ("stretch", "normal"), ("adjust", "1")):
+        assert f"--fly-sans-{name}: {value};" in css, css
+    assert "--fly-sans-variation: normal;" in css
+
+
+@pytest.mark.parametrize("style", ["normal", "italic"])
+def test_roles_when_em_style_valid_then_emitted(style):
+    css = roles_css(site(fonts={"roles": {"em": {"style": style}}}).look.roles)
+    assert f"--fly-em-style: {style};" in css
+
+
+@pytest.mark.parametrize(
+    ("roles", "message"),
+    [
+        ({"em": {"style": "oblique"}}, "fonts.roles.em.style: must be one of normal, italic"),
+        ({"strong": {"style": "italic"}}, "fonts.roles.strong: unknown key(s) style"),
+        ({"sans": {"weight": 400}}, "fonts.roles.sans: unknown key(s) weight"),
+    ],
+)
+def test_roles_when_invalid_sans_or_style_then_error_names_key(roles, message):
+    with pytest.raises(PluginError, match=re.escape(message)):
+        site(fonts={"roles": roles})
+
+
+def test_parse_site_when_links_then_inherit_or_accent():
+    assert site().links == "inherit"
+    assert site(links="accent").links == "accent"
+    with pytest.raises(PluginError, match=re.escape("extra.fly.links: must be one of inherit, accent")):
+        site(links="blue")
+
+
+def test_parse_site_when_sticky_then_bool_and_menu_attribute():
+    config = site()
+    assert not config.sticky and "sticky" not in chrome_view(config, CONFIG).header_attrs
+    config = site(chrome_options={"site-label": "X", "sticky": True})
+    assert config.sticky and "sticky" not in config.chrome_options
+    assert chrome_view(config, CONFIG).header_attrs["sticky"] == ""
+    with pytest.raises(PluginError, match=re.escape("extra.fly.chrome_options.sticky: must be true")):
+        site(chrome_options={"sticky": "yes"})
+
+
+def test_parse_site_when_fonts_sources_empty_then_explicit_opt_out_of_defaults():
+    assert site(fonts={"sources": []}).look.sources == ()
+    assert site(fonts={"roles": {}}).look.sources == DEFAULT_SOURCES
+    assert site(fonts={"sources": ["typekit:abc1def"]}).look.sources == ("typekit:abc1def",)
+
+
+def test_default_sources_when_roles_then_cover_every_default_family():
+    css = (ROOT / "src/fly/tokens/type.css").read_text()
+    families = {
+        f.strip("'\" ")
+        for value in re.findall(r"--fly-(?:h1|h2|body|nav|sans)-family: ([^;]+);", css)
+        for f in value.split(",")
+    } - {"Georgia", "Arial", "serif", "sans-serif"}
+    families |= {"outfit"}
+    assert {"newsserif-huge-variable", "quire-sans", "sole-serif-small-variable", "grtsk-vf"} <= families
+    assert {s for s in DEFAULT_SOURCES} == {
+        "typekit:cmv5add",
+        "typekit:gav0zux",
+        "typekit:cna4jfp",
+        "typekit:wck5koo",
+        "google:Outfit:wght@100..900",
+    }
+
+
+@pytest.mark.parametrize(
+    ("fly", "meta", "expected"),
+    [
+        ({}, {}, "ink"),  # a site hue alone does not colour titles
+        ({}, {"fly": {"hue": "teal"}}, "accent"),  # a page hue does
+        ({}, {"fly": {"preset": "sitka"}}, "accent"),  # so does a preset's hue
+        ({}, {"fly": {"preset": "bare"}}, "ink"),  # a preset without a hue does not
+        ({"h1": "accent"}, {}, "accent"),  # the site opts in
+        ({}, {"fly": {"hue": "teal", "h1": "ink"}}, "ink"),  # the page opts out
+        ({"h1": "accent"}, {"fly": {"h1": "ink"}}, "ink"),
+        ({}, {"fly": {"h1": "accent"}}, "accent"),
+    ],
+)
+def test_h1_mode_when_site_page_hue_then_rule(fly, meta, expected):
+    config = site(**fly)
+    assert h1_mode(config, parse_page(meta, config, "p.md")) == expected
+    assert h1_mode(config, None) == config.h1, "static templates follow the site"
+
+
+def test_body_attributes_when_h1_and_links_accent_then_data_attributes():
+    assert body_attributes("cobalt") == {"body": {"data-fly-hue": "cobalt"}}
+    assert body_attributes("cobalt", "accent", "accent") == {
+        "body": {"data-fly-hue": "cobalt", "data-fly-h1": "accent", "data-fly-links": "accent"}
+    }
+    assert body_attributes(None, "accent", "inherit") == {"body": {"data-fly-h1": "accent"}}
+    assert body_attributes(None) == {}
+
+
+@pytest.mark.parametrize("bad", ["blue", True, 1])
+def test_parse_site_when_h1_invalid_then_error(bad):
+    with pytest.raises(PluginError, match="extra.fly.h1"):
+        site(h1=bad)

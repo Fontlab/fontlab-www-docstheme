@@ -137,7 +137,9 @@ multiplier that evens out x-heights when families are mixed (`--fly-strong-adjus
 is set like `strong`: the sans at 550, upright. The multiplier applies once: `a`, `strong`, `em`
 and `mark` inside table cells inherit the cell's size (the cell is already set in the sans),
 and a run nested in another run (`a`, `strong`, `em`, `mark`) inherits instead of compounding
-the adjust. `mono` is always `--fly-mono-adjust` times the text around it:
+the adjust. `mono` is always `--fly-mono-adjust` times the text around it. `--fly-em-style` (`normal`) is the
+`em` font-style; the `em` role's `style` property sets it (`italic`). The `sans` role sets the
+values of `--fly-sans-family`, `-stretch`, `-variation` and `-adjust`:
 
 | Role | family | weight | adjust |
 |---|---|---|---|
@@ -177,6 +179,8 @@ prototype's values):
 | `--fly-l1-label` | `10.0694rem` | longest L1 label at 1440px |
 | `--fly-l1-reveal` | `calc(1.1111rem + var(--fly-l1-label) + 1.3889rem)` at mid desktop | how far L2 retracts |
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
+| `--fly-bar-h` | `3.8889rem` | the global bar's height (56px at the default root); sticky rails and anchors clear it |
+| `--fly-post-bar` | `16.8rem` | the blog post sidebar's width; half comes off each margin so the post's text column matches other pages |
 | `--fly-h1-measure` | `16ch` | H1 maximum width |
 | `--fly-h2-measure` | `20ch` | H2 maximum width from 76.25em |
 
@@ -355,12 +359,16 @@ and focus rings use these, never a hue directly.
 | `--fly-warning` `--fly-warning-soft` `--fly-warning-deep` `--fly-warning-tint` `--fly-warning-text` | amber |
 | `--fly-danger` `--fly-danger-soft` `--fly-danger-deep` `--fly-danger-tint` `--fly-danger-text` | cherry |
 | `--fly-link` | `--fly-accent-text` |
-| `--fly-h1-color` | `--fly-ink`; on an element carrying `data-fly-hue`, `--fly-accent-text` |
+| `--fly-link-color` | undefined (article links inherit); `--fly-link` under `data-fly-links="accent"` (`extra.fly.links: accent`) |
+| `--fly-link-hover-color` | undefined; `--fly-ink` under `data-fly-links="accent"` |
+| `--fly-h1-color` | `--fly-ink`; `--fly-accent-text` under `data-fly-h1="accent"` (page-level hue, or `h1: accent`) |
 | `--fly-focus` | `--fly-accent` |
 | `--fly-mark` | `--fly-accent-tint` |
 
-The H1 is set in `--fly-h1-color` (`.md-typeset h1`; the H2 stays ink). With no hue it is ink; a
-page with a hue gets that hue's `-text` variant, which reaches 4.5:1 on the canvas in both
+The H1 is set in `--fly-h1-color` (`.md-typeset h1`; the H2 stays ink). It is ink unless the plugin
+puts `data-fly-h1="accent"` on the body: a page that sets its own hue (front matter or preset) does,
+as does a site with `h1: accent`; a site hue alone does not, and a page's `h1: ink` wins. The
+hue's `-text` variant is used, which reaches 4.5:1 on the canvas in both
 schemes (`gray` gives a dark grey). A site that wants another title colour sets the token on
 `.md-typeset h1`, not `--fly-ink`. Buttons are neutral and take no hue: `.md-button` is ink on paper
 with an ink outline, `.md-button--primary` is paper (`--fly-paper-3`) on ink, hover and focus

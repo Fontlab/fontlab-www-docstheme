@@ -7,8 +7,14 @@
    silent for screen readers, a plain arrow until the icon font has loaded (html.fly-msym).
    Marks are not highlighted: they are the sans at its regular weight. */
 @layer fly.components {
-  .md-typeset a {
-    color: inherit;
+  /* Article links: only plain ones. A link that carries a class of its own is a component
+     (a button, a tag, a post link, a site's CTA) and keeps what its own CSS says; the
+     content classes below, and no class at all, get the article look. a[data-fly-plain]
+     opts a bare link out. The conditions sit in :where() so the rule weighs no more than the
+     nested-run rule below, which must win for a link inside strong or em. The colour is --fly-link-color (extra.fly.links: accent sets it
+     to --fly-link), else the text colour. */
+  .md-typeset a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])) {
+    color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.15em;
@@ -16,6 +22,10 @@
     font-stretch: var(--fly-sans-stretch);
     font-size: calc(var(--fly-sans-adjust) * 1em);
     line-height: 1;
+  }
+
+  .md-typeset a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])):is(:hover, :focus-visible) {
+    color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
 
   .md-typeset strong {
@@ -31,7 +41,7 @@
     font-weight: var(--fly-em-weight);
     font-stretch: var(--fly-sans-stretch);
     font-size: calc(var(--fly-em-adjust) * 1em);
-    font-style: normal;
+    font-style: var(--fly-em-style);
     line-height: 1;
   }
 

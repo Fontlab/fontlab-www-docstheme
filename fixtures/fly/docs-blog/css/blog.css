@@ -1,0 +1,23 @@
+/* this_file: fixtures/fly/docs-blog/css/blog.css */
+/* What a blog site adds: a thumbnail at the top right of the excerpt, the title wrapping beside it. */
+.md-post--excerpt .md-post__content:has(.thumb) {
+  position: relative;
+  padding-right: 14rem;
+  min-height: 13rem;
+}
+
+.md-post--excerpt .md-typeset .thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12rem;
+  height: 12rem;
+  background: #ccc;
+  margin: 0;
+}
+
+/* As against MaterialX's own .md-typeset a: a site's component link carries that much weight. */
+.md-typeset .site-cta {
+  color: rgb(200, 26, 39);
+  text-decoration: none;
+}

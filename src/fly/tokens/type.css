@@ -135,6 +135,7 @@
     --fly-em-family: var(--fly-sans-family);
     --fly-em-weight: 550;
     --fly-em-adjust: 0.95;
+    --fly-em-style: normal;
 
     --fly-strong-family: var(--fly-sans-family);
     --fly-strong-weight: 550;

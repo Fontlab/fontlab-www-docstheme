@@ -152,6 +152,7 @@
     --fly-em-family: var(--fly-sans-family);
     --fly-em-weight: 550;
     --fly-em-adjust: 0.95;
+    --fly-em-style: normal;
 
     --fly-strong-family: var(--fly-sans-family);
     --fly-strong-weight: 550;
@@ -524,8 +525,12 @@
     --fly-warning-text: var(--fly-warning-soft);
     --fly-danger-text: var(--fly-danger-soft);
   }
-  :where([data-fly-hue]) {
+  :where([data-fly-h1='accent']) {
     --fly-h1-color: var(--fly-accent-text);
+  }
+  :where([data-fly-links='accent']) {
+    --fly-link-color: var(--fly-link);
+    --fly-link-hover-color: var(--fly-ink);
   }
   [data-fly-hue='cherry'] {
       --fly-accent: var(--fly-cherry);
@@ -620,6 +625,8 @@
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
     --fly-h2-measure: 20ch;
+    --fly-post-bar: 16.8rem;
+    --fly-bar-h: 3.8889rem;
   }
   @media screen and (min-width: 100em) {
     body:not(.fly-no-l2) {
@@ -948,6 +955,18 @@
       --fly-l1-reveal: 4.1667rem;
     }
   }
+  html:has(body.fly-sticky):not(#\#):not(#\#):not(#\#):not(#\#) {
+    scroll-padding-top: calc(var(--fly-bar-h) + var(--fly-line));
+  }
+  @media screen and (min-width: 60em) {
+    body.fly-sticky:not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap {
+      top: var(--fly-bar-h);
+    }
+
+    body.fly-sticky:not(#\#):not(#\#):not(#\#) .md-sidebar--secondary {
+      top: var(--fly-bar-h) !important;
+    }
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(h2, h3, h4, h5, h6) {
     margin: var(--fly-mt) 0 var(--fly-mb);
   }
@@ -1049,15 +1068,15 @@
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
     clear: both;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) h1 {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) h1:not(.md-post__content *) {
     max-width: var(--fly-h1-measure);
   }
   @media screen and (min-width: 76.25em) {
-    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
+    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2):not(.md-post__content *) {
       margin-inline: auto;
     }
 
-    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) h2 {
+    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) h2:not(.md-post__content *) {
       max-width: var(--fly-h2-measure);
     }
   }
@@ -1084,7 +1103,7 @@
         margin-inline: calc(-1 * var(--out));
       }
 
-      .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2) {
+      .md-typeset:not(.md-post__content):not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2) {
         position: relative;
         width: calc(100% + 2 * var(--out));
         margin-inline: 0;
@@ -1092,7 +1111,7 @@
         translate: -50%;
       }
 
-      .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2):dir(rtl) {
+      .md-typeset:not(.md-post__content):not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2):dir(rtl) {
         translate: 50%;
       }
 
@@ -1335,6 +1354,18 @@
       margin-inline: 0;
     }
   }
+  .md-content--post:not(#\#):not(#\#):not(#\#):not(#\#) > .md-content__inner {
+    min-width: 0;
+    max-width: 100%;
+  }
+  @media screen and (min-width: 76.25em) {
+    .md-content--post:not(#\#):not(#\#):not(#\#):not(#\#) > .md-content__inner {
+      --m: calc(clamp(11.1111rem, 20cqi, 20.8333rem) - var(--fly-post-bar) / 2);
+    }
+  }
+  .md-post__content:not(#\#):not(#\#):not(#\#):not(#\#) > :is(h1, h2):first-child {
+    margin-top: 0;
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) > .full-bleed {
     clear: both;
     box-sizing: border-box;
@@ -1378,11 +1409,11 @@
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h2 {
     color: var(--fly-ink);
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2):not(.md-post__content *) {
     text-align: center;
   }
   @media screen and (max-width: 76.234375em) {
-    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
+    .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2):not(.md-post__content *) {
       text-align: start;
     }
   }
@@ -1476,6 +1507,9 @@
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2, h3, h4, h5, h6) a, .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2, h3, h4, h5, h6) a:is(:link, :visited, :hover, :focus, :active) {
     text-decoration: none;
   }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2, h3, h4, h5, h6) a:not(.headerlink) {
+    color: inherit;
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2, h3, h4, h5, h6) a:not(.headerlink):is(:hover, :focus-visible) {
     color: var(--fly-quiet);
   }
@@ -1486,8 +1520,8 @@
     font-weight: inherit;
     line-height: inherit;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a {
-    color: inherit;
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])) {
+    color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.15em;
@@ -1495,6 +1529,9 @@
     font-stretch: var(--fly-sans-stretch);
     font-size: calc(var(--fly-sans-adjust) * 1em);
     line-height: 1;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class]), .goto, .lightbox, .glightbox, .footnote-ref, .footnote-backref):where(:not([data-fly-plain])):is(:hover, :focus-visible) {
+    color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) strong {
     font-family: var(--fly-strong-family);
@@ -1508,7 +1545,7 @@
     font-weight: var(--fly-em-weight);
     font-stretch: var(--fly-sans-stretch);
     font-size: calc(var(--fly-em-adjust) * 1em);
-    font-style: normal;
+    font-style: var(--fly-em-style);
     line-height: 1;
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) mark {

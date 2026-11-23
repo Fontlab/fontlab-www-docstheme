@@ -66,6 +66,8 @@ def chrome_view(site: SiteConfig, config: Any) -> ChromeView:
         "mobile-menu": "materialx",
         "mobile-search": "materialx",
     } | site.chrome_options
+    if site.sticky:
+        header_attrs["sticky"] = ""  # the menu components pin themselves on [sticky]
     return ChromeView(chrome.kind, script, header, footer, header_attrs, {"mode": "dark"})
 
 
@@ -122,9 +124,36 @@ def page_classes(
     if not any(name in MARGIN_CLASSES for name in body):
         body.append(f"fly-margin-{side}")
     body.append(f"fly-chrome-{site.chrome.kind}")
+    if site.sticky:
+        body.append("fly-sticky")
     return classes
 
 
-def body_attributes(look_hue: str | None) -> dict[str, dict[str, str]]:
-    """data-fly-hue on <body> when a hue applies."""
-    return {"body": {"data-fly-hue": look_hue}} if look_hue else {}
+def h1_mode(site: SiteConfig, page: PageConfig | None) -> str:
+    """`accent` when the page's H1 takes the hue's text colour, else `ink`.
+
+    A page's own `h1` wins; then a hue that comes from the page (its front matter or its
+    preset); then the site's `h1`. A site-wide hue alone leaves titles ink.
+    """
+    if page is None:
+        return site.h1
+    if page.h1:
+        return page.h1
+    preset = site.presets.get(page.preset) if page.preset else None
+    if page.look.hue or (preset and preset.hue):
+        return "accent"
+    return site.h1
+
+
+def body_attributes(
+    look_hue: str | None, h1: str = "ink", links: str = "inherit"
+) -> dict[str, dict[str, str]]:
+    """data-fly-hue, and data-fly-h1 / data-fly-links when they are `accent`, on <body>."""
+    attrs = {}
+    if look_hue:
+        attrs["data-fly-hue"] = look_hue
+    if h1 == "accent":
+        attrs["data-fly-h1"] = "accent"
+    if links == "accent":
+        attrs["data-fly-links"] = "accent"
+    return {"body": attrs} if attrs else {}

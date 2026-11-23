@@ -41,12 +41,14 @@
     color: var(--fly-ink);
   }
 
-  .md-typeset :is(h1, h2) {
+  /* Page titles are centred; a nested .md-typeset root (a blog excerpt) lays its headings
+     out as plain left-aligned ones. */
+  .md-typeset :is(h1, h2):not(.md-post__content *) {
     text-align: center;
   }
 
   @media screen and (max-width: 76.234375em) {
-    .md-typeset :is(h1, h2) {
+    .md-typeset :is(h1, h2):not(.md-post__content *) {
       text-align: start;
     }
   }
@@ -157,6 +159,11 @@
   .md-typeset :is(h1, h2, h3, h4, h5, h6) a,
   .md-typeset :is(h1, h2, h3, h4, h5, h6) a:is(:link, :visited, :hover, :focus, :active) {
     text-decoration: none;
+  }
+
+  /* A heading's links, classed ones (a blog excerpt title) too, keep the heading's colour. */
+  .md-typeset :is(h1, h2, h3, h4, h5, h6) a:not(.headerlink) {
+    color: inherit;
   }
 
   .md-typeset :is(h1, h2, h3, h4, h5, h6) a:not(.headerlink):is(:hover, :focus-visible) {

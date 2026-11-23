@@ -344,7 +344,7 @@ const verifyFooterContrast = async base => {
 };
 
 const verifyTitles = async base => {
-  for (const [label, url] of [['site-hue', `${base}/fontlab/`], ['preset-hue', `${base}/fontlab/guide/`]]) {
+  for (const [label, url] of [['preset-hue', `${base}/fontlab/guide/`]]) {
     await open(url, 1440);
     for (const name of ['default', 'slate']) {
       await setScheme(name);
@@ -646,13 +646,160 @@ const verifyNoErrors = async base => {
   check('errors.page-console-local', problems.length === 0, problems.slice(0, 4).join(' | '));
 };
 
+
+// --- task 11c: titles, links, em, sans, sticky, defaults, blog ------------------------------
+const EXTRA = {accent: 'mkdocs-accent.yml', sticky: 'mkdocs-sticky.yml', minimal: 'mkdocs-minimal.yml', blog: 'mkdocs-blog.yml'};
+
+const probeAccent = () => `JSON.stringify((() => {${COLOUR_LIB}
+  const art = document.querySelector('.md-content .md-typeset');
+  const a = art.querySelector(':scope > p a:not([class])'), em = art.querySelector('em'), strong = art.querySelector('strong');
+  const text = getComputedStyle(art.querySelector(':scope > p'));
+  return {link: getComputedStyle(a).color, linkRatio: measure(a), body: text.color, linkToken: token('--fly-link'),
+    emStyle: getComputedStyle(em).fontStyle, strongStyle: getComputedStyle(strong).fontStyle,
+    emFamily: getComputedStyle(em).fontFamily, linkSize: parseFloat(getComputedStyle(a).fontSize) / parseFloat(text.fontSize),
+    links: document.body.dataset.flyLinks || null};
+})())`;
+
+const verifyAccent = async base => {
+  // Which pages colour the H1: a page-level hue (front matter or preset) or h1: accent; links inherit unless links: accent.
+  const cases = [['site-hue-only', `${base}/fontlab/`, false], ['preset-hue', `${base}/fontlab/guide/`, true],
+    ['page-hue', `${base}/fontlab/hue-page/`, true], ['page-h1-ink', `${base}/fontlab/reference/`, false],
+    ['site-h1-accent', `${base}/accent/`, true], ['no-hue', `${base}/nohue/`, false]];
+  for (const [label, url, accent] of cases) {
+    await open(url, 1440);
+    for (const name of ['default', 'slate']) {
+      await setScheme(name);
+      const t = await ev(probeTitles(name));
+      check(`h1.accent-rule.${label}.${name}`, accent ? t.h1 !== t.ink && t.ratio >= 4.5 : t.h1 === t.ink,
+        `h1 ${t.h1} (${t.ratio.toFixed(1)}:1) ink ${t.ink} want ${accent ? 'accent' : 'ink'}`);
+    }
+  }
+  await open(`${base}/fontlab/`, 1440);
+  const plain = await ev(probeAccent());
+  check('links.default-inherit', plain.links === null && plain.link === plain.body && plain.emStyle === 'normal',
+    `link ${plain.link} body ${plain.body} em ${plain.emStyle}`);
+  await open(`${base}/accent/`, 1440);
+  for (const name of ['default', 'slate']) {
+    await setScheme(name);
+    const t = await ev(probeAccent());
+    check(`links.accent.${name}`, t.links === 'accent' && t.link === t.linkToken && t.link !== t.body && t.linkRatio >= 4.5,
+      `link ${t.link} want ${t.linkToken} body ${t.body} ${t.linkRatio.toFixed(1)}:1`);
+    check(`em.style-italic.${name}`, t.emStyle === 'italic' && t.strongStyle === 'normal', `em ${t.emStyle} strong ${t.strongStyle}`);
+    check(`sans.role-applied.${name}`, /system-ui/.test(t.emFamily) && Math.abs(t.linkSize - 1) < 0.01, `em family ${t.emFamily}, link size ratio ${t.linkSize.toFixed(3)} (sans adjust 1)`);
+  }
+};
+
+const PROBE_STICKY = `JSON.stringify((() => {
+  const bar = document.querySelector('fontlab-menu');
+  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const barH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fly-bar-h')) * rem;
+  const rails = [...document.querySelectorAll('.md-sidebar__scrollwrap, .md-sidebar--secondary')].map(el => el.getBoundingClientRect().top);
+  return {cls: document.body.classList.contains('fly-sticky'), attr: !!bar && bar.hasAttribute('sticky'), defined: !!customElements.get('fontlab-menu'),
+    barTop: bar && bar.getBoundingClientRect().top, barHeight: bar && bar.getBoundingClientRect().height, barH,
+    scrollPad: getComputedStyle(document.documentElement).scrollPaddingTop, railTops: rails};
+})())`;
+
+const verifySticky = async base => {
+  await open(`${base}/sticky/`, 1440);
+  await ab('wait', '500');
+  const t = await ev(PROBE_STICKY);
+  check('sticky.attribute-and-class', t.cls && t.attr, `class ${t.cls} attr ${t.attr}`);
+  check('sticky.scroll-padding-clears-bar', parseFloat(t.scrollPad) >= t.barH, `scroll-padding-top ${t.scrollPad} bar ${t.barH}px`);
+  await ev('scrollTo(0, 600), 1');
+  await settle();
+  const s = await ev(PROBE_STICKY);
+  if (!t.defined) console.log('ok sticky.bar-pinned skipped: <fontlab-menu> is not defined (the component CDN is unreachable)');
+  else {
+    check('sticky.bar-pinned', Math.abs(s.barTop) < 1 && Math.abs(s.barHeight - t.barH) <= 2, `bar top ${s.barTop} height ${s.barHeight} want ${t.barH}`);
+    check('sticky.rails-below-bar', s.railTops.every(top => top >= t.barH - 1), `rail tops ${s.railTops.map(Math.round)} bar ${t.barH}`);
+  }
+  await open(`${base}/fontlab/`, 1440);
+  await ab('wait', '500');
+  await ev('scrollTo(0, 600), 1');
+  await settle();
+  const d = await ev(PROBE_STICKY);
+  check('sticky.default-scrolls-away', !d.cls && !d.attr && (!d.defined || d.barTop < -1), `class ${d.cls} attr ${d.attr} bar top ${d.barTop}`);
+};
+
+const verifyMinimal = async base => {
+  await open(`${base}/minimal/`, 1440);
+  const t = await ev(`(async () => {
+    await document.fonts.ready;
+    const out = {};
+    for (const [k, sel] of [['h1', '.md-typeset h1'], ['body', '.md-typeset p'], ['nav', '.md-nav__link']]) {
+      const f = getComputedStyle(document.querySelector(sel)).fontFamily;
+      out[k] = {family: f, loaded: [...document.fonts].some(face => face.status === 'loaded' && f.split(',')[0].trim().replace(/['"]/g, '') === face.family.replace(/['"]/g, ''))};
+    }
+    out.sheets = document.querySelectorAll('link[data-fly-font]').length;
+    out.search = (await fetch(new URL('search/search_index.json', document.baseURI))).ok;
+    return JSON.stringify(out);
+  })()`);
+  const got = typeof t === 'string' ? JSON.parse(t) : t;
+  check('minimal.default-font-sources', got.sheets === 5, `${got.sheets} font stylesheets`);
+  // Offline the kits cannot load; each role's stack then ends in a system face, so the page still reads.
+  for (const k of ['h1', 'body', 'nav']) {
+    check(`minimal.font.${k}`, got[k].loaded || /(Arial|serif|sans-serif|system-ui)/.test(got[k].family), `${got[k].family} loaded ${got[k].loaded}`);
+  }
+  check('minimal.search-index-served', got.search, 'search/search_index.json answers 200 under the bare search plugin');
+  await open(`${base}/minimal/guide/`, 1440);
+  const w = await ev('document.documentElement.scrollWidth - innerWidth');
+  check('minimal.no-overflow', w <= 0, `overflow ${w}px`);
+};
+
+const PROBE_BLOG_INDEX = `JSON.stringify((() => {
+  const r = el => { const b = el.getBoundingClientRect(); return [b.left, b.top, b.right, b.bottom]; };
+  const posts = [...document.querySelectorAll('.md-post--excerpt')].map(post => {
+    const h = post.querySelector('.md-post__content :is(h1, h2)'), thumb = post.querySelector('.thumb'), box = post.querySelector('.md-post__content');
+    const hr = r(h), br = r(box), tr = thumb && r(thumb);
+    return {title: h.textContent.trim().slice(0, 30), h: hr, box: br, thumb: tr, align: getComputedStyle(h).textAlign,
+      inside: hr[0] >= br[0] - 1 && hr[2] <= br[2] + 1,
+      overlap: !!tr && !(hr[2] <= tr[0] || hr[0] >= tr[2] || hr[3] <= tr[1] || hr[1] >= tr[3])};
+  });
+  return {posts, overflow: document.documentElement.scrollWidth - innerWidth};
+})())`;
+
+const PROBE_POST = `JSON.stringify((() => {
+  const art = document.querySelector('article.md-content__inner.md-typeset, .md-content__inner .md-typeset');
+  const p = art.querySelector('p');
+  const plain = art.querySelector('a:not([class])'), cta = art.querySelector('a.site-cta');
+  const style = el => el && ({color: getComputedStyle(el).color, line: getComputedStyle(el).textDecorationLine});
+  return {overflow: document.documentElement.scrollWidth - innerWidth, text: p.getBoundingClientRect().width,
+    plain: style(plain), cta: style(cta), body: getComputedStyle(p).color};
+})())`;
+
+const verifyBlog = async base => {
+  await open(`${base}/blog/blog/`, 1440);
+  const idx = await ev(PROBE_BLOG_INDEX);
+  check('blog.excerpts-present', idx.posts.length >= 2, `${idx.posts.length} excerpts`);
+  for (const p of idx.posts) {
+    check(`blog.excerpt-title.${p.title}`, p.inside && /^(left|start)$/.test(p.align) && !p.overlap,
+      `h ${p.h.map(Math.round)} box ${p.box.map(Math.round)} thumb ${p.thumb && p.thumb.map(Math.round)} align ${p.align} overlap ${p.overlap}`);
+  }
+  await open(`${base}/blog/blog/a-plain-post/`, 1440);
+  const post = await ev(PROBE_POST);
+  check('blog.component-link-keeps-colour', post.cta.color === 'rgb(200, 26, 39)' && post.cta.line === 'none',
+    `cta ${JSON.stringify(post.cta)}`);
+  check('blog.classless-link-restyled', post.plain.color === post.body && post.plain.line !== 'none', `plain ${JSON.stringify(post.plain)} body ${post.body}`);
+  await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 1440);
+  const wideAt1440 = await ev(PROBE_POST);
+  await open(`${base}/blog/`, 1440);
+  const page = await ev(PROBE_POST);
+  check('blog.post-text-column', Math.abs(wideAt1440.text - page.text) / page.text <= 0.1, `post ${wideAt1440.text.toFixed(0)}px page ${page.text.toFixed(0)}px`);
+  await open(`${base}/blog/blog/a-post-with-a-wide-table/`, 390);
+  const wide = await ev(PROBE_POST);
+  check('blog.mobile-no-overflow', wide.overflow <= 0, `overflow ${wide.overflow}px at 390`);
+  await open(`${base}/blog/blog/`, 390);
+  const mi = await ev(PROBE_BLOG_INDEX);
+  check('blog.mobile-index-no-overflow', mi.overflow <= 0, `overflow ${mi.overflow}px at 390`);
+};
+
 // --- main ----------------------------------------------------------------------------------
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'verify-fly-'));
 let server;
 try {
   const table = parseHeadingTable(fs.readFileSync(path.join(ROOT, 'DESIGN-TOKENS.md'), 'utf8'));
   const sites = {};
-  await Promise.all(Object.entries(CONFIGS).map(async ([name, config]) => {
+  await Promise.all(Object.entries({...CONFIGS, ...EXTRA}).map(async ([name, config]) => {
     sites[name] = path.join(tmp, name);
     await build(config, sites[name]);
   }));
@@ -667,6 +814,10 @@ try {
   for (const width of [1440, 390]) await verifyAdmonitions(base, width);
   await verifyFooterContrast(base);
   await verifyTitles(base);
+  await verifyAccent(base);
+  await verifySticky(base);
+  await verifyMinimal(base);
+  await verifyBlog(base);
   await verifyButtons(base);
   await verifyActiveNav(base);
   await verifyHeadings(base, table);

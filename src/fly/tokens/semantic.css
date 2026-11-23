@@ -68,9 +68,18 @@
     --fly-danger-text: var(--fly-danger-soft);
   }
 
-  /* A page with a hue (SPEC 11) sets its title in the accent's text variant. */
-  :where([data-fly-hue]) {
+  /* The title takes the accent's text variant (SPEC 11) where the plugin says so: a hue
+     from the page's own front matter or preset, or extra.fly.h1: accent. A site-wide hue
+     alone leaves it ink. */
+  :where([data-fly-h1='accent']) {
     --fly-h1-color: var(--fly-accent-text);
+  }
+
+  /* extra.fly.links: accent. Declared here so it resolves against the element's own scheme
+     and hue; without it article links keep the text colour (components/inline.css). */
+  :where([data-fly-links='accent']) {
+    --fly-link-color: var(--fly-link);
+    --fly-link-hover-color: var(--fly-ink);
   }
 
   [data-fly-hue='cherry'] {

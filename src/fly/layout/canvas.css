@@ -24,16 +24,18 @@
     clear: both;
   }
 
-  .md-typeset h1 {
+  .md-typeset h1:not(.md-post__content *) {
     max-width: var(--fly-h1-measure);
   }
 
+  /* The page's own titles are centred with a measure; the headings of a nested .md-typeset
+     root, the blog excerpt (.md-post__content), are plain ones. */
   @media screen and (min-width: 76.25em) {
-    .md-typeset :is(h1, h2) {
+    .md-typeset :is(h1, h2):not(.md-post__content *) {
       margin-inline: auto;
     }
 
-    .md-typeset h2 {
+    .md-typeset h2:not(.md-post__content *) {
       max-width: var(--fly-h2-measure);
     }
   }
@@ -61,7 +63,7 @@
         margin-inline: calc(-1 * var(--out));
       }
 
-      .md-typeset > :is(h1, h2) {
+      .md-typeset:not(.md-post__content) > :is(h1, h2) {
         position: relative;
         width: calc(100% + 2 * var(--out));
         margin-inline: 0;
@@ -69,7 +71,7 @@
         translate: -50%;
       }
 
-      .md-typeset > :is(h1, h2):dir(rtl) {
+      .md-typeset:not(.md-post__content) > :is(h1, h2):dir(rtl) {
         translate: 50%;
       }
 

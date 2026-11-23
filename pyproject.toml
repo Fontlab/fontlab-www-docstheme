@@ -21,6 +21,19 @@ fly-january = "fly_january"
 
 [project.entry-points."mkdocs.plugins"]
 fly = "fly_january.plugin:FlyPlugin"
+# MkDocs prefers "<theme name>/<plugin>" over the bare name, which is how MaterialX makes a
+# bare "search" mean its own search. fly-january extends MaterialX, so it repeats them
+# (tests/py/test_defaults.py keeps this list equal to the installed mkdocs-materialx).
+"fly-january/blog" = "material.plugins.blog.plugin:BlogPlugin"
+"fly-january/group" = "material.plugins.group.plugin:GroupPlugin"
+"fly-january/info" = "material.plugins.info.plugin:InfoPlugin"
+"fly-january/meta" = "material.plugins.meta.plugin:MetaPlugin"
+"fly-january/offline" = "material.plugins.offline.plugin:OfflinePlugin"
+"fly-january/optimize" = "material.plugins.optimize.plugin:OptimizePlugin"
+"fly-january/privacy" = "material.plugins.privacy.plugin:PrivacyPlugin"
+"fly-january/search" = "material.plugins.search.plugin:SearchPlugin"
+"fly-january/social" = "material.plugins.social.plugin:SocialPlugin"
+"fly-january/tags" = "material.plugins.tags.plugin:TagsPlugin"
 
 [dependency-groups]
 dev = [

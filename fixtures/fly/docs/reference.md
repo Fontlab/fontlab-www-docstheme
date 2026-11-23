@@ -5,6 +5,7 @@ classes:
   main: [ref-main]
 fly:
   hue: teal
+  h1: ink
   fonts:
     sources: [typekit:abc1def]
     roles:

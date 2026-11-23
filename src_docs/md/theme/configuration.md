@@ -28,14 +28,23 @@ hook or a partial for additions.
 | Key | Default | Value |
 |---|---|---|
 | `chrome` | `fontlab` | `fontlab`, `vexy`, `none` or `{script, header, footer}`; see [chrome](chrome.md) |
-| `chrome_options` | none | menu attributes: `site-label`, `mobile-menu`, `mobile-search`, `search-from` |
+| `chrome_options` | none | menu attributes: `site-label`, `site-url` (an absolute http(s) URL or a root-relative path; defaults to the site URL), `mobile-menu`, `mobile-search`, `search-from`, and `sticky` (true pins the bar to the top; default false) |
 | `hue` | none (accent `cobalt`) | the accent: `cherry`, `tangerine`, `amber`, `lime`, `emerald`, `teal`, `sky`, `cobalt`, `indigo`, `violet`, `magenta`, `rose` or `gray` |
-| `fonts.sources` | none | stylesheets loaded on every page: `typekit:<kit>`, `google:<css2 family spec>` or an `https://` URL |
+| `fonts.sources` | the theme's five (below) | stylesheets loaded on every page: `typekit:<kit>`, `google:<css2 family spec>` or an `https://` URL; setting it replaces the defaults, `[]` loads none |
 | `fonts.roles` | theme defaults | per-role overrides, `{<role>: {<property>: <value>}}`; see [tokens](tokens.md#type-roles) |
+| `h1` | `ink` | `ink` or `accent`: whether every page title takes the hue's text colour; a page whose hue comes from its own front matter or preset always does, unless it sets `h1: ink` |
+| `links` | `inherit` | `inherit` or `accent`: article links keep the text colour, or take the accent's text colour (contrast-safe in both schemes) |
 | `presets` | none | named `{fonts, hue}` bundles a page can pick |
 | `margin_side` | `left` | where margin figures sit: `left` or `right` |
 | `utilities` | `false` | `true` loads `fly-utilities.css`, every Tailwind utility with the `tw:` prefix (1.9 MB) |
 | `debug` | `false` | `true` adds a preset switcher (`fly-debug.js`) for trying looks in the browser |
+
+The default sources are the Typekit kits `cmv5add` (News Serif, the h1), `gav0zux` (Quire Sans,
+h2 and lead), `cna4jfp` (Sole Serif Small, body) and `wck5koo` (Grtsk, navigation, tables and
+the inline sans), and Google's Outfit (buttons): one for each face the default roles name, so a
+site with no `extra.fly` is set in them. A site that sets `fonts.sources` replaces the list,
+so it names every face its roles use; `fonts.sources: []` loads nothing and the roles fall back
+to their system stacks.
 
 A complete site block:
 
@@ -45,10 +54,14 @@ extra:
     chrome: fontlab
     chrome_options:
       site-label: Design system
+      site-url: https://design.example/
       mobile-menu: materialx
       mobile-search: materialx
       search-from: docstheme
+      sticky: false
     hue: cobalt
+    h1: ink
+    links: inherit
     fonts:
       sources:
         - typekit:gav0zux
@@ -59,6 +72,8 @@ extra:
         h2: {family: "'quire-sans', sans-serif", weight: 300, scale: 1.1}
         body: {family: "'Outfit', sans-serif", features: '"onum" 1'}
         strong: {weight: 600}
+        em: {style: italic}
+        sans: {family: "'Outfit', sans-serif", stretch: normal, variation: normal, adjust: 1}
     presets:
       fl9-color:
         fonts:
@@ -86,8 +101,8 @@ extra:
 
 Role properties: block roles (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `body`, `lead`, `nav`,
 `table`, `caption`, `code`) take `family`, `weight`, `stretch`, `features`, `variation`, `size`, `leading`,
-`tracking` and `scale`; inline roles (`em`, `strong`, `mono`) take `family`, `weight`
-and `adjust`. Values are plain CSS: a value that could end its declaration (`;`, braces,
+`tracking` and `scale`; `h1` and `h2` also take `measure` (a length in `ch`, `rem`, `em`, `px` or `%`, or `none`); inline roles: `em` takes `family`, `weight`, `adjust` and `style` (`normal` or `italic`); `strong` and `mono` take `family`, `weight`
+and `adjust`; `sans` (the face of links, marks and h6) takes `family`, `stretch`, `variation` and `adjust`. Values are plain CSS: a value that could end its declaration (`;`, braces,
 `<`, a comment or an unbalanced quote) is rejected.
 
 These blocks fail the build:
@@ -134,6 +149,7 @@ fly:
 fly:
   preset: plain
   hue: teal
+  h1: ink
   fonts:
     sources: [typekit:abc1def]
     roles:

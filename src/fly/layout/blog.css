@@ -1,0 +1,27 @@
+/* this_file: src/fly/layout/blog.css */
+/* MaterialX's blog plugin. A post page puts the post sidebar (.md-sidebar--post: author,
+   date, categories) beside the article inside .md-content--post; an index page lists
+   excerpts, each a nested .md-typeset root (.md-post__content) whose headings are plain
+   (layout/canvas.css, components/headings.css exempt it from the page-title rules).
+   - Below 76.25em the post is a flex column that takes the max-content width of a wide
+     table; the article is held to the viewport and the table scrolls in its wrapper.
+   - From 76.25em the sidebar takes room from the canvas, but --m (the margin column, which
+     sets the text column) is still sized from the whole canvas: half the sidebar comes off
+     each of the two margins, so the text column matches the other pages' measure.
+   - An excerpt starts at its top: the heading's page margin is dropped. */
+@layer fly.layout {
+  .md-content--post > .md-content__inner {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 76.25em) {
+    .md-content--post > .md-content__inner {
+      --m: calc(clamp(11.1111rem, 20cqi, 20.8333rem) - var(--fly-post-bar) / 2);
+    }
+  }
+
+  .md-post__content > :is(h1, h2):first-child {
+    margin-top: 0;
+  }
+}
