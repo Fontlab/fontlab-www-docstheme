@@ -106,12 +106,21 @@
   /* Inline code moves to the next line whole instead of breaking after a hyphen (--fly-*);
      a token longer than the line still wraps, anywhere. Not in table cells (they wrap
      inline) or the lead paragraph (zero line-height above). The box has its own tight
-     line-height so it stays inside the body strut and the paragraph keeps its grid pitch. */
+     line-height so it stays inside the body strut and the paragraph keeps its grid pitch.
+     Known limit (DESIGN-TOKENS.md, Grid): a token wider than the line wraps inside the box
+     at that tight pitch, so that paragraph leaves the grid; the box never overflows. */
   .md-typeset code:not(pre > code, :is(td, th) code, h1 + p code) {
     display: inline-block;
     max-width: 100%;
     line-height: 1.2;
     overflow-wrap: anywhere;
     word-break: normal;
+  }
+
+  /* An atomic inline box does not receive its link's underline, and links are told apart
+     by the underline alone (color: inherit; WCAG 1.4.1): linked code takes the link's own
+     decoration, so links without one (go-to links, buttons) stay without. */
+  .md-typeset a > code {
+    text-decoration: inherit;
   }
 }

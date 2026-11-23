@@ -50,6 +50,13 @@ the heading table below matches the CSS, and the contrast and hue-spacing limits
 before. Percentages keep the reader's own font-size setting. MaterialX's own rem values
 are rescaled by the plugin (SPEC §4.1).
 
+Inline code in running text is an atomic inline box (components/inline.css) with a tight
+line-height of its own, so a short token moves to the next line whole and a one-line token
+keeps the paragraph on the grid. Known limit: a token wider than the whole line wraps
+inside its box at that tight pitch, so that one paragraph leaves the grid. The box never
+overflows the text column (verify-fly `code.long-token-contained`); break such a token
+in the source or put it in a code block.
+
 ## Sizes
 
 Continuous text and navigation use exactly three sizes:
