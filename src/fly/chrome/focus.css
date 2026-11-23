@@ -11,6 +11,13 @@
     outline-offset: -1px;
   }
 
+  /* Buttons sit on the page (paper) or fill themselves, so their ring is outside, 2px wide and
+     ink: at least 3:1 against the page in both schemes. */
+  .md-typeset .md-button:focus-visible {
+    outline: 2px solid var(--fly-ink);
+    outline-offset: 2px;
+  }
+
   .md-header {
     --fl-focus-color: var(--fly-bar-ink);
   }

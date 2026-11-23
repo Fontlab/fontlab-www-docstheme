@@ -107,7 +107,7 @@ test('committed scripts equal their sources; utilities are the layered tw: subse
   assert.match(utilities, /\.tw\\:mt-8\{[^}]*!important/);
   assert.match(utilities, /\.tw\\:p-4\{/);
   assert.doesNotMatch(utilities, /\.tw\\:mask-/, 'mask-* utilities are left out');
-  for (const name of ['sm:flex-row', 'sm:w-auto', 'sm:items-start', 'sm:justify-start', 'sm:text-left', 'md:flex-row']) {
+  for (const name of ['sm:flex-row', 'sm:w-auto', 'sm:items-start', 'sm:justify-start', 'sm:text-left', 'md:flex-row', 'md:w-auto', 'md:justify-start']) {
     const escaped = 'tw\\:' + name.replace(':', '\\:');
     assert.ok(utilities.includes('.' + escaped + '{'), 'responsive utility .' + escaped + ' is generated');
   }

@@ -228,8 +228,11 @@ const PROBE_FOOTER_CONTRAST = `JSON.stringify((() => {${COLOUR_LIB}
   return [...document.querySelectorAll('.md-footer .md-copyright__highlight, .md-footer .md-footer__title')].map(el => ({text: el.textContent.trim(), ratio: measure(el)}));
 })())`;
 
-// Switch the palette and wait out MaterialX's colour transitions before reading colours.
-const setScheme = async name => { await ev(`document.body.setAttribute('data-md-color-scheme', '${name}'); 1`); await ab('wait', '600'); };
+// Switch the palette (motion off first) before reading colours.
+// Transitions and animations are switched off on the probe page, so colours are read settled.
+const NO_MOTION = `(() => { if (!document.getElementById('verify-no-motion')) { const s = document.createElement('style'); s.id = 'verify-no-motion'; s.textContent = '*{transition:none!important;animation:none!important}'; document.head.append(s); } return 1; })()`;
+const settle = async () => { await ev(NO_MOTION); await ab('wait', '150'); };
+const setScheme = async name => { await ev(NO_MOTION); await ev(`document.body.setAttribute('data-md-color-scheme', '${name}'); 1`); await ab('wait', '150'); };
 
 // Titles: h1 colour, its contrast on the canvas, ink, h2 colour, and a mark inside the h1.
 const probeTitles = name => `JSON.stringify((() => {${COLOUR_LIB}
@@ -246,6 +249,15 @@ const probeButtons = name => `JSON.stringify((() => {${COLOUR_LIB}
   return {ink: token('--fly-ink'), paper: token('--fly-paper-3'), quiet: token('--fly-quiet'), hue: document.body.dataset.flyHue || null,
     primary: info(document.querySelector('.md-typeset .md-button--primary')),
     outlined: info(document.querySelector('.md-typeset .md-button:not(.md-button--primary)'))};
+})())`;
+
+// Keyboard focus on a button: the ring (outline) and its contrast against the page behind the button.
+const probeFocus = selector => `JSON.stringify((() => {${COLOUR_LIB}
+  const el = document.activeElement, cs = getComputedStyle(el);
+  const ring = rgba(cs.outlineColor), page = backdrop(el.parentElement);
+  const [hi, lo] = [lum(over(ring, page)), lum(page)].sort((a, b) => b - a);
+  return {on: el.matches('${selector}'), visible: el.matches(':focus-visible'), outline: cs.outlineStyle, width: parseFloat(cs.outlineWidth),
+    offset: parseFloat(cs.outlineOffset), ringRatio: (hi + 0.05) / (lo + 0.05), bg: cs.backgroundColor};
 })())`;
 
 // Active navigation links (L1 and the in-page list) against their own row background.
@@ -339,7 +351,7 @@ const verifyTitles = async base => {
       const t = await ev(probeTitles(name));
       check(`h1.${label}.${name}`, t.h1 !== t.ink && t.ratio >= 4.5 && t.h2 === t.ink,
         `hue ${t.hue}: h1 ${t.h1} (${t.ratio.toFixed(1)}:1) ink ${t.ink} h2 ${t.h2}`);
-      if (t.mark) check(`mark.inherits.${name}`, t.mark === t.h1, `mark ${t.mark} h1 ${t.h1}`);
+      if (label === 'preset-hue') check(`mark.inherits.${name}`, t.mark !== null && t.mark === t.h1, `mark ${t.mark} h1 ${t.h1}`); // the guide page has a <mark> in its h1
     }
   }
   await open(`${base}/nohue/`, 1440);
@@ -353,8 +365,11 @@ const verifyTitles = async base => {
 const verifyButtons = async base => {
   await open(`${base}/fontlab/`, 1440);
   const primary = '.md-typeset .md-button--primary';
+  const outlined = '.md-typeset .md-button:not(.md-button--primary)';
+  const park = () => ab('mouse', 'move', '5', '5');
   for (const name of ['default', 'slate']) {
     await setScheme(name);
+    await park();
     const b = await ev(probeButtons(name));
     check(`button.primary.paper-on-ink.${name}`, b.primary.bg === b.ink && b.primary.color === b.paper && b.primary.ratio >= 4.5,
       `hue ${b.hue}: bg ${b.primary.bg} want ink ${b.ink}, label ${b.primary.color} want ${b.paper}, ${b.primary.ratio.toFixed(1)}:1`);
@@ -362,25 +377,42 @@ const verifyButtons = async base => {
       `bg alpha ${b.outlined.bgAlpha} label ${b.outlined.color} ring ${b.outlined.ring} ink ${b.ink} ${b.outlined.ratio.toFixed(1)}:1`);
     check(`button.no-underline.${name}`, b.primary.line === 'none' && b.outlined.line === 'none', `primary ${b.primary.line} outlined ${b.outlined.line}`);
     await ab('hover', primary);
-    await ab('wait', '600');
-    const hover = (await ev(probeButtons(name))).primary;
-    check(`button.primary.hover.${name}`, hover.bg !== b.primary.bg && hover.bg === b.quiet && hover.ratio >= 4.5, `bg ${hover.bg} want quiet ${b.quiet}, ${hover.ratio.toFixed(1)}:1`);
-    await ab('mouse', 'move', '5', '5');
+    await settle();
+    const hp = (await ev(probeButtons(name))).primary;
+    check(`button.primary.hover.${name}`, hp.bg !== b.primary.bg && hp.bg === b.quiet && hp.ratio >= 4.5, `bg ${hp.bg} want quiet ${b.quiet}, ${hp.ratio.toFixed(1)}:1`);
+    await ab('hover', outlined);
+    await settle();
+    const ho = (await ev(probeButtons(name))).outlined;
+    check(`button.outlined.hover.${name}`, ho.bgAlpha > 0 && ho.bg !== b.outlined.bg && ho.color === b.ink && ho.ratio >= 4.5, `bg ${ho.bg} (was ${b.outlined.bg}) label ${ho.color} ${ho.ratio.toFixed(1)}:1`);
+    await park();
+    // Keyboard focus: Tab from a button placed just before the target. The ring is outside
+    // (offset 2px, 2px wide), at least 3:1 against the page, and focus is not the hover look.
+    for (const [label, selector, rest] of [['primary', primary, b.primary.bg], ['outlined', outlined, b.outlined.bg]]) {
+      await ev(`(() => { document.getElementById('verify-pre')?.remove(); const t = document.querySelector('${selector}'); const pre = document.createElement('button'); pre.id = 'verify-pre'; pre.textContent = 'pre'; t.before(pre); pre.focus(); return 1; })()`);
+      await ab('press', 'Tab');
+      await settle();
+      const f = await ev(probeFocus(selector));
+      check(`button.${label}.focus-ring.${name}`, f.on && f.visible && f.outline === 'solid' && f.width >= 2 && f.offset >= 2 && f.ringRatio >= 3,
+        `focused ${f.on} visible ${f.visible} outline ${f.outline} ${f.width}px offset ${f.offset}px ring ${f.ringRatio.toFixed(1)}:1`);
+      check(`button.${label}.focus-not-hover.${name}`, f.bg === rest, `focused fill ${f.bg} resting fill ${rest} (hover fills, focus rings)`);
+    }
+    // A pointer focus (not :focus-visible) leaves no ring and no fill.
+    const stuck = await ev(`JSON.stringify((() => { const el = document.querySelector('${primary}'); el.focus({focusVisible: false}); const cs = getComputedStyle(el); return {visible: el.matches(':focus-visible'), outline: cs.outlineStyle, bg: cs.backgroundColor}; })())`);
+    check(`button.primary.pointer-focus.${name}`, !stuck.visible && stuck.outline === 'none' && stuck.bg === b.primary.bg, `visible ${stuck.visible} outline ${stuck.outline} bg ${stuck.bg}`);
   }
-  // Keyboard focus: Tab from the element before the button; the ring and the fill must show.
-  await ev(`(() => { const b = document.querySelector('${primary}'); const pre = document.createElement('button'); pre.id = 'verify-pre'; pre.textContent = 'pre'; b.before(pre); pre.focus(); return 1; })()`);
-  await ab('press', 'Tab');
-  const f = await ev(`JSON.stringify((() => { const el = document.activeElement; const cs = getComputedStyle(el); return {on: el.matches('${primary}'), outline: cs.outlineStyle, width: parseFloat(cs.outlineWidth), bg: cs.backgroundColor}; })())`);
-  check('button.primary.focus-ring', f.on && f.outline !== 'none' && f.width >= 1, `focused ${f.on} outline ${f.outline} ${f.width}px bg ${f.bg}`);
 };
 
+// The current page's link on the rails (and in the phone drawer, opened here), every chrome.
 const verifyActiveNav = async base => {
-  await open(`${base}/fontlab/`, 1440);
-  for (const name of ['default', 'slate']) {
-    await setScheme(name);
-    const links = await ev(probeActiveNav(name));
-    const low = links.filter(l => l.ratio < 4.5);
-    check(`nav.active-contrast.${name}`, links.length >= 1 && low.length === 0, links.map(l => `${l.text}=${l.ratio.toFixed(1)}`).join(' '));
+  for (const [site, width] of [['fontlab', 1440], ['vexy', 1440], ['none', 1440], ['fontlab', 390], ['vexy', 390], ['none', 390]]) {
+    await open(`${base}/${site}/`, width);
+    if (width < 1000) await ev("(() => { const d = document.getElementById('__drawer'); d.checked = true; d.dispatchEvent(new Event('change', {bubbles: true})); return 1; })()");
+    for (const name of ['default', 'slate']) {
+      await setScheme(name);
+      const links = await ev(probeActiveNav(name));
+      const low = links.filter(l => l.ratio < 4.5);
+      check(`nav.active-contrast.${site}.${name}@${width}`, links.length >= 1 && low.length === 0, links.map(l => `${l.text}=${l.ratio.toFixed(1)}`).join(' '));
+    }
   }
 };
 

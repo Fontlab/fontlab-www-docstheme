@@ -174,7 +174,7 @@ prototype's values):
 | `--fly-h2-measure` | `20ch` | H2 maximum width from 76.25em |
 
 Both measures are also the `measure` property of the `h1` and `h2` roles: a site, preset or page
-sets `roles: {h1: {measure: 12ch}}` (a CSS length or `none`) and the fly plugin writes
+sets `roles: {h1: {measure: 12ch}}` (a plain length in ch, rem, em, px or %, or `none`) and the fly plugin writes
 `--fly-h1-measure` on `:root` like the other role variables.
 
 ## Colour

@@ -82,8 +82,8 @@ TYPEKIT = re.compile(r"typekit:([a-z0-9]+)")
 GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+(?:&family=[A-Za-z0-9+:@.,;_-]+)*)")
 HTTPS = re.compile(r"https://[^\s\"'<>]+")
 CSS_VALUE = re.compile(r"[^<>{};\\\n\r]+")
-# A heading's maximum width: one length (ch, em, rem, px, ...) or none.
-MEASURE = re.compile(r"none|0|\d*\.?\d+(?:ch|em|rem|ex|px|vw|vh|cm|mm|in|pt|%)")
+# A heading's maximum width: a plain length (ch, rem, em, px, %) or none.
+MEASURE = re.compile(r"none|0|\d*\.?\d+(?:ch|rem|em|px|%)")
 NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
 # A quote inside an unquoted url( ) is a bad-url token that can swallow what follows.
 BAD_URL = re.compile(r"url\(\s*(?![\"'\s])[^)]*[\"']", re.IGNORECASE)

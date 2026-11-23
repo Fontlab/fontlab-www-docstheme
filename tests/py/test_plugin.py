@@ -95,6 +95,7 @@ def test_parse_site_when_no_fly_then_defaults():
         ({"fonts": {"roles": {"h1": {"measure": "12 ch"}}}}, "must be a CSS length"),
         ({"fonts": {"roles": {"h1": {"measure": "wide"}}}}, "must be a CSS length"),
         ({"fonts": {"roles": {"h2": {"measure": 12}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h2": {"measure": "10vw"}}}}, "must be a CSS length"),
         ({"fonts": {"roles": {"h2": {"measure": "calc(1ch)"}}}}, "must be a CSS length"),
         ({"fonts": {"roles": {"h3": {"measure": "12ch"}}}}, "fonts.roles.h3: unknown key(s) measure"),
         ({"fonts": {"roles": {"body": {"measure": "12ch"}}}}, "unknown key(s) measure"),
