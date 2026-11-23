@@ -28,8 +28,9 @@ Spec: `SPEC.md` (binding). Brief: `issues/401.md`. Earlier initiatives (task422,
   installs); after it they pin the published versions.
 - Order: 1 → 2 → 3 → 4 → 5 → 6; 7 in parallel; 8 after 4; 9 after 7; 10 after 5; 11 after 9
   and 10; 12 after all of these; 13 then 14.
-- Gates for this repo: `npm run build`, `npm test`, `uv run --python 3.13 pytest`,
-  and `npm run test:browser` for CSS/JS changes.
+- Gates for this repo: `npm run build`, `npm test`, `uv run --python 3.13 pytest`, and
+  `node scripts/verify-fly.mjs` (agent-browser) for fly CSS/JS changes. Do not launch
+  Playwright's headless Chromium in this initiative; it crashes on the owner's machine.
 
 ## Task 1: Theme package skeleton
 
@@ -78,10 +79,13 @@ then. Verify: `uv run --python 3.13 pytest tests/py -q`.
 
 ## Task 5: Browser verification of grid, sizes and chrome
 
-Add Playwright specs against the built fixture: baseline grid, three text sizes, heading
+Browser tool: `agent-browser` (own named session), not Playwright — headless Chromium via
+Playwright crashes on the owner's machine. Add `scripts/verify-fly.mjs`, a Node script that
+serves the built fixture and drives `agent-browser` (`open`, `set viewport`, `eval`,
+`screenshot`) to assert, against the built fixture: baseline grid, three text sizes, heading
 sizes at 390/1024/1440/1920, light/dark token bridging, the three chrome variants, keyboard
 paging, preset fonts on a page, no page errors. Fix what they find.
-Verify: `npm run test:browser`.
+Verify: `node scripts/verify-fly.mjs` exits 0 and prints one line per assertion.
 
 ## Task 6: CDN tree and demo site
 
