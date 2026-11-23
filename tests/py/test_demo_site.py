@@ -13,6 +13,8 @@ import importlib.util
 import json
 import re
 import subprocess
+from collections import Counter
+from html.parser import HTMLParser
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -252,3 +254,38 @@ def test_page_scripts_when_pinned_then_every_cdn_tag_has_integrity_and_crossorig
     for tag in tags:
         assert re.search(r'integrity="sha384-[A-Za-z0-9+/]{64}"', tag), tag
         assert 'crossorigin="anonymous"' in tag and re.search(r"@\d+\.\d+\.\d+/", tag), tag
+
+
+class Ids(HTMLParser):
+    """The id attributes of a page's elements; ids quoted as text in code listings are not
+    elements, so they do not count."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.ids: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        self.ids += [value for name, value in attrs if name == "id" and value]
+
+
+def test_demo_build_when_parsed_then_every_id_is_unique():
+    pages = [p for p in sorted((ROOT / "docs").rglob("*.html")) if "fly" not in p.relative_to(ROOT / "docs").parts]
+    assert len(pages) >= 70, len(pages)
+    for page in pages:
+        parser = Ids()
+        parser.feed(page.read_text())
+        dupes = {i: n for i, n in Counter(parser.ids).items() if n > 1}
+        assert not dupes, f"docs/{page.relative_to(ROOT / 'docs')}: duplicate ids {dupes}"
+    # The compiled examples' "HTML" listings quote the preview's ids as escaped text: a
+    # text search counts those twice, the page has each element once.
+    start = (ROOT / "docs/start/index.html").read_text()
+    assert start.count('id="keep-the-family-together"') == 2
+    assert start.count('&lt;h3 id="keep-the-family-together"') == 1
+
+
+def test_demo_build_when_rendered_then_only_rail_labels_carry_titles():
+    # navigation.tabs: the top level is the tab bar, the rail's first level is the second
+    # nav level; only that level's links carry a title (partials/nav-item.html).
+    html = (ROOT / "docs/theme/configuration/index.html").read_text()
+    assert '<span class="md-ellipsis" title="Configuration">' in html
+    assert 'title="Theme"' not in html and 'title="Home"' not in html

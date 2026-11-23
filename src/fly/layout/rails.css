@@ -113,26 +113,12 @@
     }
   }
 
-  /* While L2 covers all but a sliver of L1, L1's labels end with an ellipsis at the
-     sliver's edge instead of being cut by L2's edge; retracting L2 shows them in full
-     (--fly-l1-reveal is sized for the longest label). Each link carries a title. */
+  /* While L2 covers all but a sliver of L1, L1's labels keep their full line and run
+     under the L2 sheet, which cuts them at its edge (no ellipsis: MaterialX's own
+     .md-ellipsis would add one); retracting L2 shows them whole. Rail links carry a title. */
   @media screen and (76.25em <= width < 100em) {
     .md-sidebar--primary .md-nav__link .md-ellipsis {
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    body:not(.fly-no-l2) .md-sidebar--primary .md-sidebar__scrollwrap {
-      width: calc(var(--fly-l1) - 0.5rem);
-    }
-
-    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-sidebar--primary .md-sidebar__scrollwrap,
-    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within))
-      .md-sidebar--primary:is(:hover, :focus-within)
-      .md-sidebar__scrollwrap {
-      width: var(--fly-l1-reveal);
+      text-overflow: clip;
     }
   }
 

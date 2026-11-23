@@ -3,8 +3,10 @@
   fly-january: mkdocs-materialx 10.1.8 partials/nav-item.html without the second
   <input id="__toc"> on the active page: its label reuses base.html's single __toc state
   control, so every page has one element per id (tests/py/test_fixture_fly.py). Each
-  label carries its title in a title attribute: mid-desktop L1 cuts labels with an
-  ellipsis (layout/rails.css).
+  link at the L1 rail's first level carries its title in a title attribute: between
+  76.25em and 100em the L2 sheet covers most of L1's labels (layout/rails.css). With
+  navigation.tabs the rail's first level is the second nav level (the top level is the
+  tab bar); nested items get no title.
 -#}
 {% macro render_status(nav_item, type) %}
   {% set class = "md-status md-status--" ~ type %}
@@ -24,12 +26,12 @@
     {{ nav_item.title }}
   {% endif %}
 {% endmacro %}
-{% macro render_content(nav_item, ref) %}
+{% macro render_content(nav_item, ref, titled) %}
   {% set ref = ref or nav_item %}
   {% if nav_item.meta and nav_item.meta.icon %}
     {% include ".icons/" ~ nav_item.meta.icon ~ ".svg" %}
   {% endif %}
-  <span class="md-ellipsis" title="{{ ref.title | striptags | trim }}">
+  <span class="md-ellipsis"{% if titled %} title="{{ ref.title | striptags | trim }}"{% endif %}>
     {{ render_title(ref) }}
     {% if nav_item.meta and nav_item.meta.subtitle %}
       <br>
@@ -43,14 +45,14 @@
     {{ render_status(nav_item, nav_item.meta.status) }}
   {% endif %}
 {% endmacro %}
-{% macro render_pruned(nav_item, ref) %}
+{% macro render_pruned(nav_item, ref, titled) %}
   {% set ref = ref or nav_item %}
   {% set first = nav_item.children | first %}
   {% if first and first.children %}
-    {{ render_pruned(first, ref) }}
+    {{ render_pruned(first, ref, titled) }}
   {% else %}
     <a href="{{ first.url | url }}" class="md-nav__link">
-      {{ render_content(ref) }}
+      {{ render_content(ref, none, titled) }}
       {% if nav_item.children | length > 0 %}
         <span class="md-nav__icon md-icon"></span>
       {% endif %}
@@ -58,6 +60,7 @@
   {% endif %}
 {% endmacro %}
 {% macro render(nav_item, path, level, parent) %}
+  {% set titled = level == (2 if "navigation.tabs" in features else 1) %}
   {% set class = "md-nav__item" %}
   {% if nav_item.active %}
     {% set class = class ~ " md-nav__item--active" %}
@@ -110,14 +113,14 @@
         {% if not index %}
           {% set tabindex = "0" if not is_section %}
           <label class="md-nav__link" for="{{ path }}" id="{{ path }}_label" tabindex="{{ tabindex }}">
-            {{ render_content(nav_item) }}
+            {{ render_content(nav_item, none, titled) }}
             <span class="md-nav__icon md-icon"></span>
           </label>
         {% else %}
           {% set class = "md-nav__link--active" if index == page %}
           <div class="md-nav__link md-nav__container">
             <a href="{{ index.url | url }}" class="md-nav__link {{ class }}">
-              {{ render_content(index, nav_item) }}
+              {{ render_content(index, nav_item, titled) }}
             </a>
             {% if nav_item.children | length > 1 %}
               {% set tabindex = "0" if not is_section %}
@@ -141,7 +144,7 @@
           </ul>
         </nav>
       {% else %}
-        {{ render_pruned(nav_item) }}
+        {{ render_pruned(nav_item, none, titled) }}
       {% endif %}
     </li>
   {% elif nav_item == page %}
@@ -153,12 +156,12 @@
       {% endif %}
       {% if toc %}
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          {{ render_content(nav_item) }}
+          {{ render_content(nav_item, none, titled) }}
           <span class="md-nav__icon md-icon"></span>
         </label>
       {% endif %}
       <a href="{{ nav_item.url | url }}" class="md-nav__link md-nav__link--active">
-        {{ render_content(nav_item) }}
+        {{ render_content(nav_item, none, titled) }}
       </a>
       {% if toc %}
         {% include "partials/toc.html" %}
@@ -167,7 +170,7 @@
   {% else %}
     <li class="{{ class }}">
       <a href="{{ nav_item.url | url }}" class="md-nav__link">
-        {{ render_content(nav_item) }}
+        {{ render_content(nav_item, none, titled) }}
       </a>
     </li>
   {% endif %}

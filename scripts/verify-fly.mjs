@@ -575,6 +575,53 @@ const collect = async () => {
   return {errors, logged: real, failed};
 };
 
+// Inline code (components/inline.css) is an atomic box: code inside a link still shows the
+// link's underline (links differ from text by the underline alone), and a token wider than
+// the line wraps inside the column instead of overflowing it (DESIGN-TOKENS.md, Grid).
+const PROBE_INLINE_CODE = `JSON.stringify((() => {
+  const linked = [...document.querySelectorAll('.md-typeset a > code')].map(c => {
+    const s = getComputedStyle(c);
+    return {text: c.textContent, line: s.textDecorationLine, thickness: s.textDecorationThickness, display: s.display};
+  });
+  const long = [...document.querySelectorAll('.md-typeset p code')].filter(c => c.textContent.length > 100).map(c => {
+    const box = c.getBoundingClientRect(), column = c.closest('p').getBoundingClientRect();
+    return {left: box.left - column.left, right: column.right - box.right, height: box.height,
+      lh: parseFloat(getComputedStyle(c).lineHeight)};
+  });
+  return {linked, long, scroll: document.scrollingElement.scrollWidth - innerWidth};
+})())`;
+
+const verifyInlineCode = async (base, width) => {
+  await open(`${base}/fontlab/reference/`, width);
+  const {linked, long, scroll} = await ev(PROBE_INLINE_CODE);
+  const plain = linked.filter(c => !c.line.includes('underline') || c.thickness !== '1px');
+  check(`code.linked-underline@${width}`, linked.length >= 2 && plain.length === 0 && linked.every(c => c.display === 'inline-block'),
+    JSON.stringify(plain.length ? plain : linked.map(c => c.line)));
+  const out = long.filter(c => c.left < -0.5 || c.right < -0.5);
+  check(`code.long-token-contained@${width}`, long.length === 1 && out.length === 0 && long[0].height > 1.5 * long[0].lh && scroll <= 0,
+    JSON.stringify({long, scroll}));
+};
+
+// Between 76.25em and 100em the L2 sheet covers most of L1: L1's labels keep their full
+// line and run under the sheet (text-overflow clip, no narrowed box), so a label still shows
+// at least 48px of text before the sheet's edge; rail links carry their title.
+const PROBE_RAIL_LABELS = `JSON.stringify((() => {
+  const sheet = document.querySelector('.md-sidebar--secondary').getBoundingClientRect();
+  return [...document.querySelectorAll('.md-sidebar--primary .md-nav__link .md-ellipsis')].filter(s => s.getClientRects().length).map(s => {
+    const box = s.getBoundingClientRect();
+    return {text: s.textContent.trim(), title: s.title, overflow: getComputedStyle(s).textOverflow,
+      visible: Math.round(Math.min(box.left + s.scrollWidth, sheet.left) - box.left), cut: s.scrollWidth > s.clientWidth};
+  });
+})())`;
+
+const verifyRailLabels = async base => {
+  await open(`${base}/fontlab/`, 1440);
+  const labels = await ev(PROBE_RAIL_LABELS);
+  const widest = labels.reduce((a, b) => (b.visible > (a?.visible ?? -1) ? b : a), null);
+  check('rail.l1-label-clip@1440', labels.length >= 3 && labels.every(l => l.overflow === 'clip' && !l.cut && l.title === l.text) && widest.visible >= 48,
+    JSON.stringify(labels));
+};
+
 const CANARY = 'verify-fly-canary';
 const verifyNoErrors = async base => {
   // Prove the capture works: a console error, an uncaught exception and a local 404 fetch.
@@ -627,6 +674,8 @@ try {
   await verifyChrome(base);
   await verifyPresets(base);
   await verifyKeyboard(base);
+  for (const width of [1440, 390]) await verifyInlineCode(base, width);
+  await verifyRailLabels(base);
   await verifyNoErrors(base);
 } catch (error) {
   check('verify-fly.run', false, String(error?.stack || error).split('\n').slice(0, 4).join(' / '));
