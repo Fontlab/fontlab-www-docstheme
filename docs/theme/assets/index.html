@@ -624,10 +624,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-the-full-theme" class="md-nav__link">
+  <a href="#flycss-and-the-components-outside-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use the full theme
+        fly.css and the components outside MkDocs
       
     </span>
   </a>
@@ -2826,10 +2826,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-the-full-theme" class="md-nav__link">
+  <a href="#flycss-and-the-components-outside-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use the full theme
+        fly.css and the components outside MkDocs
       
     </span>
   </a>
@@ -2967,7 +2967,9 @@ and sha256, so a consumer can check what it loads:</p>
 <h2 id="use-the-tokens-on-any-page">Use the tokens on any page<a aria-label="Permanent link" class="headerlink" href="#use-the-tokens-on-any-page" title="Permanent link">¶</a></h2>
 <p><code>fly-tokens.css</code> declares the palette, greys, type roles, sizes and grid as custom
 properties, light values on <code>:root</code> and dark values under
-<code>[data-md-color-scheme="slate"]</code>. It styles nothing by itself:</p>
+<code>[data-md-color-scheme="slate"]</code>. The one rule it applies is the root size (<code>html</code> at
+90% of the browser's font size, 99% from 100em, 108% from 125em), which makes <code>1rem</code> half
+a body line; it styles nothing else:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly-tokens.css"</span><span class="p">&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">note</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--fly-ink</span><span class="p">);</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--fly-cobalt-tint</span><span class="p">);</span>
@@ -2978,12 +2980,14 @@ properties, light values on <code>:root</code> and dark values under
 <p>The type roles name families from the FontLab Typekit kit; load the fonts as well:</p>
 <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://use.typekit.net/gav0zux.css"</span><span class="p">&gt;</span>
 </span></code></pre></div>
-<h2 id="use-the-full-theme">Use the full theme<a aria-label="Permanent link" class="headerlink" href="#use-the-full-theme" title="Permanent link">¶</a></h2>
-<p><code>fly.css</code> is written for MaterialX's markup (<code>.md-typeset</code>, <code>.md-sidebar</code>, …): on a
-page with that markup it gives the same result as the MkDocs theme. Load the components
-bundle for Basecoat and daisyUI markup, inside an element with the class
-<code>fltheme-components</code>:</p>
-<div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly.css"</span><span class="p">&gt;</span>
+<h2 id="flycss-and-the-components-outside-mkdocs">fly.css and the components outside MkDocs<a aria-label="Permanent link" class="headerlink" href="#flycss-and-the-components-outside-mkdocs" title="Permanent link">¶</a></h2>
+<p><code>fly.css</code> is written for MaterialX's markup (<code>.md-typeset</code>, <code>.md-sidebar</code>, …) and sits on
+top of MaterialX's own stylesheets. A fly-january build also rescales MaterialX's rem
+lengths to the smaller root (the plugin's 20/14.4 post-build step), which a page loading
+MaterialX's CSS from elsewhere does not get. Outside a fly-january build, use
+<code>fly-tokens.css</code> with your own rules, and the components bundle for Basecoat and daisyUI
+markup inside an element with the class <code>fltheme-components</code>:</p>
+<div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/fly-tokens.css"</span><span class="p">&gt;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/components.css"</span><span class="p">&gt;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">defer</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://fontlab.dev/fontlab-www-docstheme/fly/0.1.0/basecoat.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
