@@ -20,6 +20,26 @@
     display: none;
   }
 
+  /* MaterialX's mobile full-bleed tabs assume a viewport-wide article. */
+  @media screen and (max-width: 44.984375em) {
+    .md-content__inner > .tabbed-set .tabbed-labels {
+      margin-inline: 0;
+      max-width: 100%;
+      padding-inline: 0;
+      scroll-padding-inline-start: 0;
+    }
+
+    .md-content__inner > .tabbed-set .tabbed-labels::after {
+      padding-inline: 0;
+    }
+
+    .md-content__inner > .tabbed-set .tabbed-labels ~ .tabbed-control {
+      margin-inline: 0;
+      padding-inline: 0;
+      width: 1.2rem;
+    }
+  }
+
   .md-typeset :is(h1, h2) {
     clear: both;
   }

@@ -4,6 +4,12 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.2.1 — 2026-11-24
+
+- On phones, the alternate-style tab label row stays inside the article column and scrolls horizontally.
+- The in-page navigation drawer slides open on phones without widening the document.
+- Code blocks reserve an inline-end gutter for the copy toolbar, leaving the code independently scrollable.
+
 ## 0.2.0 — 2026-11-24
 
 - h5 now takes its family from the `sans` role (Grtsk), no longer from H2, so it stays a sans

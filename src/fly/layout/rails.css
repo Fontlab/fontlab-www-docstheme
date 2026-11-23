@@ -1,6 +1,6 @@
 /* this_file: src/fly/layout/rails.css */
 /* The L1 and L2 rails beside the canvas.
-   - Phones: L1 is MaterialX's drawer (chrome/drawer.css), L2 is gone.
+   - Phones: L1 is MaterialX's drawer (chrome/drawer.css), L2 opens on demand as a drawer.
    - 60em to 76.25em: no L2; L1 is the full rail. MaterialX makes L1 an off-screen drawer
      at these widths; that is undone here.
    - 76.25em to 100em: L1 is a sliver under L2. L2 rests extended (also without JS and on
@@ -14,6 +14,43 @@
 @layer fly.layout {
   .md-sidebar {
     padding: 2.0833rem 0;
+  }
+
+  @media screen and (max-width: 59.984375em) {
+    /* Clip the moving panel in its fixed shell so article popovers can still overflow. */
+    .md-sidebar--secondary {
+      inset-inline: 0;
+      width: auto;
+      overflow-x: clip;
+      overflow-y: visible;
+      pointer-events: none;
+      background: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .md-sidebar--secondary .md-sidebar__scrollwrap {
+      inset-inline: auto var(--md-sidebar-drawer-offset);
+      width: var(--md-sidebar-primary-width);
+      border-radius: inherit;
+      background-color: var(--md-default-bg-color--light);
+      -webkit-backdrop-filter: blur(0.5556rem);
+      backdrop-filter: blur(0.5556rem);
+      transform: translateX(calc(var(--mx-dir) * (var(--md-sidebar-primary-width) + var(--md-sidebar-drawer-offset))));
+      transition: transform 0.15s cubic-bezier(0.5, 0, 0.5, 0), box-shadow 0.15s;
+    }
+
+    #__toc:checked ~ .md-container .md-sidebar--secondary {
+      transform: none;
+      box-shadow: none;
+    }
+
+    #__toc:checked ~ .md-container .md-sidebar--secondary .md-sidebar__scrollwrap {
+      pointer-events: auto;
+      transform: none;
+      box-shadow: var(--md-shadow-z3);
+      transition: transform 0.2s cubic-bezier(0.7, 0, 0.1, 1), box-shadow 0.2s;
+    }
   }
 
   @media screen and (min-width: 60em) {

@@ -114,6 +114,33 @@
     font-size: calc(var(--fly-mono-adjust) * 1em);
   }
 
+  /* Size the gutter to the controls and paint both columns as one code block. */
+  @media screen {
+    .md-typeset pre:has(> :is(.md-code__nav, .md-clipboard)) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      background-color: var(--md-code-bg-color);
+      border-radius: 0.5556rem;
+    }
+
+    .md-typeset .filename + pre:has(> :is(.md-code__nav, .md-clipboard)) {
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+
+    .md-typeset pre > :is(.md-code__nav, .md-clipboard) {
+      position: relative;
+      inset: auto;
+      grid-area: 1 / 2;
+      align-self: start;
+      margin: 0.25em;
+    }
+
+    .md-typeset pre:has(> :is(.md-code__nav, .md-clipboard)) > code {
+      grid-area: 1 / 1;
+    }
+  }
+
   .md-typeset h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
     line-height: 0;
   }
