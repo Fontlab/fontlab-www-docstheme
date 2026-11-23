@@ -496,7 +496,7 @@ const verifyChrome = async base => {
     if (menu && name !== 'custom') {
       const d = await ev(probeDefined(menu));
       if (typeof d !== 'object') check(`chrome.${name}.defined`, false, `probe returned ${String(d).slice(0, 80)}`);
-      else if (!d.reachable) console.log(`skipped chrome.${name}.defined: CDN unreachable (${d.src})`);
+      else if (!d.reachable) skip(`chrome.${name}.defined`, `CDN unreachable (${d.src})`);
       else check(`chrome.${name}.defined`, d.defined, `<${menu}> customElements.get from ${d.src}`);
     }
     check(`chrome.${name}.header`, c.headerVisible === !hidden, `MaterialX header visible=${c.headerVisible}`);
