@@ -1,0 +1,21 @@
+/* this_file: src/fly/layout/sticky.css */
+/* extra.fly.chrome_options.sticky: true pins the global bar to the top (the menu components
+   do that themselves on [sticky]) and the plugin adds body.fly-sticky. Nothing may then
+   hide under the bar: the rails start below it (--fly-bar-h) and anchors scroll to just
+   under it, one line clear. Without it the bar scrolls away, as in the prototype. */
+@layer fly.layout {
+  html:has(body.fly-sticky) {
+    scroll-padding-top: calc(var(--fly-bar-h) + var(--fly-line));
+  }
+
+  @media screen and (min-width: 60em) {
+    body.fly-sticky .md-sidebar--primary .md-sidebar__scrollwrap {
+      top: var(--fly-bar-h);
+    }
+
+    /* !important beats the inline top MaterialX's sidebar script sets. */
+    body.fly-sticky .md-sidebar--secondary {
+      top: var(--fly-bar-h) !important;
+    }
+  }
+}

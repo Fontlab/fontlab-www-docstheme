@@ -17,10 +17,12 @@
 @import 'base/typeset.css';
 @import 'layout/sheets.css';
 @import 'layout/rails.css';
+@import 'layout/sticky.css';
 @import 'layout/grid.css';
 @import 'layout/figures.css';
 @import 'layout/canvas.css';
 @import 'layout/margins.css';
+@import 'layout/blog.css';
 @import 'layout/full-bleed.css';
 @import 'components/headings.css';
 @import 'components/inline.css';

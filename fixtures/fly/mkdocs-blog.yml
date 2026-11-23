@@ -1,0 +1,28 @@
+# this_file: fixtures/fly/mkdocs-blog.yml
+# A blog through MaterialX's blog plugin ("blog" resolves to MaterialX's through the
+# fly-january/blog entry point): three short posts, excerpts, two index pages.
+site_name: fly-january blog fixture
+site_url: https://fixture.example/
+docs_dir: docs-blog
+theme:
+  name: fly-january
+plugins:
+  - blog:
+      post_excerpt: required
+      pagination_per_page: 2
+      post_url_format: "{slug}"
+  - fly
+extra_css:
+  - css/blog.css
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+extra:
+  fly:
+    chrome: none
+    hue: teal
+nav:
+  - Home: index.md
+  - Blog: blog/index.md
