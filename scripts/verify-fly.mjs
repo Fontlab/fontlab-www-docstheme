@@ -349,6 +349,31 @@ const verifyFooterContrast = async base => {
   }
 };
 
+// Every nav title (label.md-nav__title: drawer title, page title above the in-page links) is
+// painted with the L2 paper, in both schemes and at desktop and phone widths.
+const PROBE_NAV_TITLES = `JSON.stringify((() => {
+  const probe = document.createElement('div');
+  probe.style.background = 'var(--fly-paper-2)';
+  document.body.append(probe);
+  const paper = getComputedStyle(probe).backgroundColor;
+  probe.remove();
+  const titles = [...document.querySelectorAll('label.md-nav__title')].map(l => getComputedStyle(l).backgroundColor);
+  return {paper, titles};
+})())`;
+
+const verifyNavTitles = async base => {
+  for (const width of [1440, 390]) {
+    await open(`${base}/fontlab/guide/`, width);
+    for (const name of ['default', 'slate']) {
+      await setScheme(name);
+      const t = await ev(PROBE_NAV_TITLES);
+      const off = t.titles.filter(c => c !== t.paper);
+      check(`nav.title-paper.${width}.${name}`, t.titles.length >= 1 && off.length === 0,
+        `${t.titles.length} titles, paper-2 ${t.paper}${off.length ? ', off: ' + off.join(' ') : ''}`);
+    }
+  }
+};
+
 const verifyTitles = async base => {
   for (const [label, url] of [['preset-hue', `${base}/fontlab/guide/`]]) {
     await open(url, 1440);
@@ -893,6 +918,7 @@ try {
   for (const width of [1440, 390]) await verifyAdmonitions(base, width);
   await verifyFooterContrast(base);
   await verifyTitles(base);
+  await verifyNavTitles(base);
   await verifyAccent(base);
   await verifySticky(base);
   await verifyMinimal(base);

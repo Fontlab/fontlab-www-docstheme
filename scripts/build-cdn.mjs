@@ -25,7 +25,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 // vX.Y.Z when HEAD carries exactly one, else NEXT_VERSION, the release being prepared. This
 // constant is the one place to bump after a release (README "Release"); npm run
 // check:release verifies tag, package and CDN agree.
-export const NEXT_VERSION = '0.1.0';
+export const NEXT_VERSION = '0.1.1';
 const RELEASE_TAG = /^v(\d+\.\d+\.\d+)$/;
 
 /** X.Y.Z from the release tags on HEAD (none: null; several: an error). */

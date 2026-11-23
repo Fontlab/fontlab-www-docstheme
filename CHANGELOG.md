@@ -4,6 +4,12 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.1.1 — 2026-11-23
+
+- Nav titles (`label.md-nav__title`: the drawer title and the page title above the
+  in-page links) always have the L2 rail's background, `--fly-paper-2`, in both schemes.
+  `npm run verify:fly` checks it at 1440 and 390 px.
+
 ## 0.1.0 — 2026-11-23
 
 - Added the `fly-january` MaterialX child theme and `fly` plugin. Sites can select
