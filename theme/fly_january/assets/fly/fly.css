@@ -501,6 +501,7 @@
     --fly-link: var(--fly-accent-text);
     --fly-focus: var(--fly-accent);
     --fly-mark: var(--fly-accent-tint);
+    --fly-h1-color: var(--fly-ink);
 
     --fly-admonition-note: var(--fly-info);
     --fly-admonition-info: var(--fly-info);
@@ -522,6 +523,9 @@
     --fly-success-text: var(--fly-success-soft);
     --fly-warning-text: var(--fly-warning-soft);
     --fly-danger-text: var(--fly-danger-soft);
+  }
+  :where([data-fly-hue]) {
+    --fly-h1-color: var(--fly-accent-text);
   }
   [data-fly-hue='cherry'] {
       --fly-accent: var(--fly-cherry);
@@ -1345,8 +1349,13 @@
     --fly-mt: 4rem;
     --fly-mb: 2rem;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h1 {
+    color: var(--fly-h1-color);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h2 {
     color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(h1, h2) {
     text-align: center;
   }
   @media screen and (max-width: 76.234375em) {
@@ -1480,7 +1489,7 @@
     line-height: 1;
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) mark {
-    color: var(--fly-ink);
+    color: inherit;
     background: transparent;
     font-family: var(--fly-sans-family);
     font-stretch: var(--fly-sans-stretch);
@@ -1567,6 +1576,9 @@
   .md-nav__link:hover:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#),
   .md-nav__link--active:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
     background: var(--fly-hover);
+  }
+  .md-nav__link--active:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+    color: var(--fly-ink);
   }
   .md-nav--primary:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-nav__link--active {
     font-weight: var(--fly-nav-current-weight);
@@ -1717,7 +1729,26 @@
     font-weight: var(--fly-button-weight);
     letter-spacing: var(--fly-button-tracking);
     text-transform: uppercase;
+    text-decoration: none;
     padding: 0.7em 1.6em;
+    color: var(--fly-ink);
+    background: transparent;
+    border-color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button:is(:hover, :focus) {
+    color: var(--fly-ink);
+    background: var(--fly-hover);
+    border-color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button--primary {
+    color: var(--fly-paper-3);
+    background: var(--fly-ink);
+    border-color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button--primary:is(:hover, :focus) {
+    color: var(--fly-paper-3);
+    background: var(--fly-quiet);
+    border-color: var(--fly-quiet);
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) kbd {
     display: inline-flex;

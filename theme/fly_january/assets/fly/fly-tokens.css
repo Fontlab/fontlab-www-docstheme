@@ -501,6 +501,7 @@
     --fly-link: var(--fly-accent-text);
     --fly-focus: var(--fly-accent);
     --fly-mark: var(--fly-accent-tint);
+    --fly-h1-color: var(--fly-ink);
 
     --fly-admonition-note: var(--fly-info);
     --fly-admonition-info: var(--fly-info);
@@ -522,6 +523,9 @@
     --fly-success-text: var(--fly-success-soft);
     --fly-warning-text: var(--fly-warning-soft);
     --fly-danger-text: var(--fly-danger-soft);
+  }
+  :where([data-fly-hue]) {
+    --fly-h1-color: var(--fly-accent-text);
   }
   [data-fly-hue='cherry'] {
       --fly-accent: var(--fly-cherry);

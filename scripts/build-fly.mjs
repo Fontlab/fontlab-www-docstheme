@@ -23,6 +23,11 @@ export const LAYER_STATEMENT = `@layer ${LAYERS.join(', ')};`;
 export const SCRIPTS = ['fly.js', 'fly-bridge.js', 'fly-debug.js'];
 const IMPORT = /^@import '([^']+)';$/gm;
 const TAILWIND_SKIP = ['mask-', '-mask-'];
+// Responsive variants (tw:sm:flex-row, tw:md:w-auto) for the layout families the page
+// prototypes used: display, flex and grid, sizing, alignment, text alignment, spacing, order.
+// Every utility at every breakpoint would triple the file.
+export const VARIANTS = ['sm', 'md'];
+export const VARIANT_FAMILIES = /^(?:-?(?:m|p)[trblxyse]?-|(?:block|inline|inline-block|inline-flex|flex|grid|hidden|contents|flow-root|table)$|flex-|grid-|col-|row-|gap-|space-[xy]-|w-|h-|min-w-|max-w-|min-h-|max-h-|size-|items-|justify-|content-|self-|place-|order-|grow|shrink|basis-|text-(?:left|center|right|justify|start|end)$|float-|clear-|overflow-)/;
 export const TAILWIND_CORE = `@import "tailwindcss/theme.css" prefix(tw);
 @import "tailwindcss/utilities.css" layer(fly.utilities) important source(none) prefix(tw);
 @custom-variant dark (&:where([data-md-color-scheme=slate], [data-md-color-scheme=slate] *));
@@ -72,7 +77,9 @@ async function tailwindClasses() {
   const design = await tailwind.__unstable__loadDesignSystem(TAILWIND_CORE, { base, loadStylesheet });
   const names = design.getClassList().map(([name]) => name);
   if (!names.length) throw new Error('Tailwind class list is empty');
-  return names.filter((name) => !TAILWIND_SKIP.some((skip) => name.startsWith(skip))).map((name) => `tw:${name}`);
+  const kept = names.filter((name) => !TAILWIND_SKIP.some((skip) => name.startsWith(skip)));
+  const responsive = kept.filter((name) => VARIANT_FAMILIES.test(name)).flatMap((name) => VARIANTS.map((variant) => `${variant}:${name}`));
+  return [...kept, ...responsive].map((name) => `tw:${name}`);
 }
 
 async function buildUtilities() {

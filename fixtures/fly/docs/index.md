@@ -58,3 +58,5 @@ A paragraph between the two lists.
     An admonition kept in the text column.
 
     A second paragraph inside it.
+
+[Primary button](guide.md){ .md-button .md-button--primary } [Outlined button](reference.md){ .md-button }

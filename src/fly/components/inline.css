@@ -36,7 +36,7 @@
   }
 
   .md-typeset mark {
-    color: var(--fly-ink);
+    color: inherit; /* in a coloured context (a hue title, a link) the mark keeps its colour */
     background: transparent;
     font-family: var(--fly-sans-family);
     font-stretch: var(--fly-sans-stretch);

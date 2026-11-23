@@ -15,7 +15,7 @@ import {fileURLToPath} from 'node:url';
 // Async execFile only: a sync call would block the event loop that serves the pages.
 const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CONFIGS = {fontlab: 'mkdocs.yml', vexy: 'mkdocs-vexy.yml', none: 'mkdocs-none.yml', custom: 'mkdocs-custom.yml'};
+const CONFIGS = {fontlab: 'mkdocs.yml', vexy: 'mkdocs-vexy.yml', none: 'mkdocs-none.yml', custom: 'mkdocs-custom.yml', nohue: 'mkdocs-nohue.yml'};
 const WIDTHS = [390, 1024, 1440, 1920];
 const GRID_TOLERANCE = 0.5; // px
 const MIME = {'.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml',
@@ -118,7 +118,7 @@ const PROBE_SIZES = `JSON.stringify((() => {
   const token = name => { const p = document.createElement('i'); p.style.fontSize = 'var(' + name + ')'; document.body.append(p); const v = parseFloat(getComputedStyle(p).fontSize); p.remove(); return v; };
   const rootVar = n => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n));
   // .fl-nav-close is the drawer's x glyph button, an icon control rather than text.
-  const SKIP = 'h1, h2, h3, h4, h5, h6, code, pre, kbd, sup, sub, small, svg, script, style, .headerlink, .md-nav__icon, .fl-nav-close';
+  const SKIP = 'h1, h2, h3, h4, h5, h6, code, pre, kbd, sup, sub, small, svg, script, style, .headerlink, .md-nav__icon, .fl-nav-close, .md-button'; // buttons have their own face and size (--fly-button-size)
   // An admonition floated into the margin is an aside (SPEC 4.1: asides are xs text); in the
   // flow it is body text.
   const aside = el => { const a = el.closest('.admonition, details'); return a && getComputedStyle(a).float !== 'none'; };
@@ -141,7 +141,7 @@ const PROBE_SIZES = `JSON.stringify((() => {
   const scope = document.querySelectorAll('.md-content *, .md-sidebar *, .md-footer *');
   for (const el of scope) {
     const inArticle = !!el.closest('.md-content .md-typeset');
-    const isInline = inArticle && (el.tagName in INLINE || (el.tagName === 'CODE' && !el.closest('pre') && !el.closest('h1, h2, h3, h4, h5, h6')));
+    const isInline = inArticle && !el.closest('.md-button') && (el.tagName in INLINE || (el.tagName === 'CODE' && !el.closest('pre') && !el.closest('h1, h2, h3, h4, h5, h6')));
     if (isInline && !el.closest('.headerlink')) {
       const parent = el.parentElement;
       const adjust = el.tagName === 'CODE' ? rootVar('--fly-mono-adjust') : rootVar(INLINE[el.tagName]);
@@ -201,22 +201,57 @@ const PROBE_ADMONITION = `JSON.stringify((() => {
   })};
 })())`;
 
-// Text colour against the nearest opaque background, translucent layers composited (WCAG ratio).
-const PROBE_FOOTER_CONTRAST = `JSON.stringify((() => {
+// Colour helpers shared by the contrast probes: text over the nearest opaque background,
+// translucent layers composited (WCAG ratio).
+const COLOUR_LIB = `
   const cv = document.createElement('canvas').getContext('2d', {willReadFrequently: true});
   const rgba = c => { cv.clearRect(0, 0, 1, 1); cv.fillStyle = '#000'; cv.fillStyle = c; cv.fillRect(0, 0, 1, 1); const d = cv.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255]; };
   const over = (top, under) => top.slice(0, 3).map((v, i) => v * top[3] + under[i] * (1 - top[3]));
   const lum = ([r, g, b]) => [r, g, b].map(v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0);
-  const measure = el => {
+  const backdrop = el => {
     const layers = [];
     for (let n = el; n; n = n.parentElement) { const c = rgba(getComputedStyle(n).backgroundColor); if (c[3] > 0) layers.push(c); if (c[3] >= 0.995) break; }
     let bg = [255, 255, 255];
     for (const layer of layers.reverse()) bg = over(layer, bg);
+    return bg;
+  };
+  const measure = el => {
+    const bg = backdrop(el);
     const fg = over(rgba(getComputedStyle(el).color), bg);
     const [hi, lo] = [lum(fg), lum(bg)].sort((a, b) => b - a);
     return (hi + 0.05) / (lo + 0.05);
   };
+  const token = name => { const p = document.createElement('i'); p.style.color = 'var(' + name + ')'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; };
+`;
+
+const PROBE_FOOTER_CONTRAST = `JSON.stringify((() => {${COLOUR_LIB}
   return [...document.querySelectorAll('.md-footer .md-copyright__highlight, .md-footer .md-footer__title')].map(el => ({text: el.textContent.trim(), ratio: measure(el)}));
+})())`;
+
+// Switch the palette and wait out MaterialX's colour transitions before reading colours.
+const setScheme = async name => { await ev(`document.body.setAttribute('data-md-color-scheme', '${name}'); 1`); await ab('wait', '600'); };
+
+// Titles: h1 colour, its contrast on the canvas, ink, h2 colour, and a mark inside the h1.
+const probeTitles = name => `JSON.stringify((() => {${COLOUR_LIB}
+  const h1 = document.querySelector('.md-typeset h1'), h2 = document.querySelector('.md-typeset h2');
+  const mark = h1.querySelector('mark');
+  return {h1: getComputedStyle(h1).color, ratio: measure(h1), ink: token('--fly-ink'), h2: h2 && getComputedStyle(h2).color,
+    mark: mark && getComputedStyle(mark).color, hue: document.body.dataset.flyHue || null};
+})())`;
+
+// Buttons: fill, label, outline, underline and contrast of the primary and the outlined one.
+const probeButtons = name => `JSON.stringify((() => {${COLOUR_LIB}
+  const info = el => { const cs = getComputedStyle(el); return {bg: cs.backgroundColor, bgAlpha: rgba(cs.backgroundColor)[3], color: cs.color, border: cs.borderTopColor,
+    line: cs.textDecorationLine, ratio: measure(el), outline: cs.outlineStyle, outlineWidth: parseFloat(cs.outlineWidth)}; };
+  return {ink: token('--fly-ink'), paper: token('--fly-paper-3'), quiet: token('--fly-quiet'), hue: document.body.dataset.flyHue || null,
+    primary: info(document.querySelector('.md-typeset .md-button--primary')),
+    outlined: info(document.querySelector('.md-typeset .md-button:not(.md-button--primary)'))};
+})())`;
+
+// Active navigation links (L1 and the in-page list) against their own row background.
+const probeActiveNav = name => `JSON.stringify((() => {${COLOUR_LIB}
+  return [...document.querySelectorAll('.md-nav__link--active')].filter(el => el.getBoundingClientRect().width > 0)
+    .map(el => ({text: el.textContent.trim().slice(0, 20), ratio: measure(el)}));
 })())`;
 
 const PROBE_PRESET = `JSON.stringify((() => {
@@ -287,12 +322,65 @@ const verifyFooterContrast = async base => {
   for (const name of Object.keys(CONFIGS)) {
     for (const scheme of ['default', 'slate']) {
       await open(`${base}/${name}/guide/`, 1440);
-      await ev(`document.body.setAttribute('data-md-color-scheme', '${scheme}')`);
+      await setScheme(scheme);
       const got = await ev(PROBE_FOOTER_CONTRAST);
       const low = got.filter(g => g.ratio < 4.5);
       check(`footer.contrast.${name}.${scheme}`, got.length >= 3 && low.length === 0,
         `${got.map(g => `${g.text}=${g.ratio.toFixed(1)}`).join(' ')}`);
     }
+  }
+};
+
+const verifyTitles = async base => {
+  for (const [label, url] of [['site-hue', `${base}/fontlab/`], ['preset-hue', `${base}/fontlab/guide/`]]) {
+    await open(url, 1440);
+    for (const name of ['default', 'slate']) {
+      await setScheme(name);
+      const t = await ev(probeTitles(name));
+      check(`h1.${label}.${name}`, t.h1 !== t.ink && t.ratio >= 4.5 && t.h2 === t.ink,
+        `hue ${t.hue}: h1 ${t.h1} (${t.ratio.toFixed(1)}:1) ink ${t.ink} h2 ${t.h2}`);
+      if (t.mark) check(`mark.inherits.${name}`, t.mark === t.h1, `mark ${t.mark} h1 ${t.h1}`);
+    }
+  }
+  await open(`${base}/nohue/`, 1440);
+  for (const name of ['default', 'slate']) {
+    await setScheme(name);
+    const t = await ev(probeTitles(name));
+    check(`h1.no-hue.${name}`, t.hue === null && t.h1 === t.ink, `hue ${t.hue}: h1 ${t.h1} ink ${t.ink}`);
+  }
+};
+
+const verifyButtons = async base => {
+  await open(`${base}/fontlab/`, 1440);
+  const primary = '.md-typeset .md-button--primary';
+  for (const name of ['default', 'slate']) {
+    await setScheme(name);
+    const b = await ev(probeButtons(name));
+    check(`button.primary.paper-on-ink.${name}`, b.primary.bg === b.ink && b.primary.color === b.paper && b.primary.ratio >= 4.5,
+      `hue ${b.hue}: bg ${b.primary.bg} want ink ${b.ink}, label ${b.primary.color} want ${b.paper}, ${b.primary.ratio.toFixed(1)}:1`);
+    check(`button.outlined.ink-outline.${name}`, b.outlined.bgAlpha === 0 && b.outlined.color === b.ink && b.outlined.border === b.ink && b.outlined.ratio >= 4.5,
+      `bg alpha ${b.outlined.bgAlpha} label ${b.outlined.color} border ${b.outlined.border} ink ${b.ink} ${b.outlined.ratio.toFixed(1)}:1`);
+    check(`button.no-underline.${name}`, b.primary.line === 'none' && b.outlined.line === 'none', `primary ${b.primary.line} outlined ${b.outlined.line}`);
+    await ab('hover', primary);
+    await ab('wait', '600');
+    const hover = (await ev(probeButtons(name))).primary;
+    check(`button.primary.hover.${name}`, hover.bg !== b.primary.bg && hover.bg === b.quiet && hover.ratio >= 4.5, `bg ${hover.bg} want quiet ${b.quiet}, ${hover.ratio.toFixed(1)}:1`);
+    await ab('mouse', 'move', '5', '5');
+  }
+  // Keyboard focus: Tab from the element before the button; the ring and the fill must show.
+  await ev(`(() => { const b = document.querySelector('${primary}'); const pre = document.createElement('button'); pre.id = 'verify-pre'; pre.textContent = 'pre'; b.before(pre); pre.focus(); return 1; })()`);
+  await ab('press', 'Tab');
+  const f = await ev(`JSON.stringify((() => { const el = document.activeElement; const cs = getComputedStyle(el); return {on: el.matches('${primary}'), outline: cs.outlineStyle, width: parseFloat(cs.outlineWidth), bg: cs.backgroundColor}; })())`);
+  check('button.primary.focus-ring', f.on && f.outline !== 'none' && f.width >= 1, `focused ${f.on} outline ${f.outline} ${f.width}px bg ${f.bg}`);
+};
+
+const verifyActiveNav = async base => {
+  await open(`${base}/fontlab/`, 1440);
+  for (const name of ['default', 'slate']) {
+    await setScheme(name);
+    const links = await ev(probeActiveNav(name));
+    const low = links.filter(l => l.ratio < 4.5);
+    check(`nav.active-contrast.${name}`, links.length >= 1 && low.length === 0, links.map(l => `${l.text}=${l.ratio.toFixed(1)}`).join(' '));
   }
 };
 
@@ -499,6 +587,9 @@ try {
   await verifyFooterSizes(base);
   for (const width of [1440, 390]) await verifyAdmonitions(base, width);
   await verifyFooterContrast(base);
+  await verifyTitles(base);
+  await verifyButtons(base);
+  await verifyActiveNav(base);
   await verifyHeadings(base, table);
   await verifySchemes(base);
   await verifyChrome(base);

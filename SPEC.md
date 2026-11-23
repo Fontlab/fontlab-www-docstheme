@@ -97,7 +97,8 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each role has
 
 `-family -weight -stretch -features -variation -size -leading -tracking -scale`
 
-e.g. `--fly-h2-family`, `--fly-nav-stretch`, `--fly-table-features`. Inline roles
+e.g. `--fly-h2-family`, `--fly-nav-stretch`, `--fly-table-features`. `h1` and `h2` also have
+`-measure` (their maximum width: a CSS length such as `12ch`, or `none`). Inline roles
 `em strong mono` have `-family`, `-weight` and `-adjust`: a unitless em multiplier
 (e.g. 1.05 or 0.95) that compensates for a different x-height when families are mixed.
 Rules consume roles only through these variables. `th` uses the `caption` role; table
@@ -161,7 +162,8 @@ extra:
 
 Page frontmatter may set `fly: {preset:, hue:, fonts: {sources:, roles:}}`. Order of
 precedence: page `fonts`/`hue` > page `preset` > site. Sources accumulate (deduplicated);
-roles merge property by property. The legacy `subtheme: name` key is
+roles merge property by property (§4.3 lists the role properties; `h1` and `h2` take `measure`, e.g.
+`h1: {measure: 12ch}`, which sets `--fly-h1-measure`). The legacy `subtheme: name` key is
 read as `fly.preset: name`.
 
 The plugin emits, in `<head>`: one `<link>` per distinct font source (with preconnects), and

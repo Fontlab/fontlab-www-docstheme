@@ -4,7 +4,7 @@ fly:
 hide: [toc]
 ---
 
-# Guide
+# Guide <mark>marked</mark>
 
 A second page with a [link home](index.md).
 

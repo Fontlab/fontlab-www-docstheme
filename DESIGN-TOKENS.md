@@ -173,6 +173,10 @@ prototype's values):
 | `--fly-h1-measure` | `16ch` | H1 maximum width |
 | `--fly-h2-measure` | `20ch` | H2 maximum width from 76.25em |
 
+Both measures are also the `measure` property of the `h1` and `h2` roles: a site, preset or page
+sets `roles: {h1: {measure: 12ch}}` (a CSS length or `none`) and the fly plugin writes
+`--fly-h1-measure` on `:root` like the other role variables.
+
 ## Colour
 
 ### Sources studied
@@ -344,8 +348,16 @@ and focus rings use these, never a hue directly.
 | `--fly-warning` `--fly-warning-soft` `--fly-warning-deep` `--fly-warning-tint` `--fly-warning-text` | amber |
 | `--fly-danger` `--fly-danger-soft` `--fly-danger-deep` `--fly-danger-tint` `--fly-danger-text` | cherry |
 | `--fly-link` | `--fly-accent-text` |
+| `--fly-h1-color` | `--fly-ink`; on an element carrying `data-fly-hue`, `--fly-accent-text` |
 | `--fly-focus` | `--fly-accent` |
 | `--fly-mark` | `--fly-accent-tint` |
+
+The H1 is set in `--fly-h1-color` (`.md-typeset h1`; the H2 stays ink). With no hue it is ink; a
+page with a hue gets that hue's `-text` variant, which reaches 4.5:1 on the canvas in both
+schemes (`gray` gives a dark grey). A site that wants another title colour sets the token on
+`.md-typeset h1`, not `--fly-ink`. Buttons are neutral and take no hue: `.md-button` is ink on paper
+with an ink outline, `.md-button--primary` is paper (`--fly-paper-3`) on ink, hover and focus
+fill with `--fly-hover` or `--fly-quiet`; labels are never underlined. `mark` inherits its colour.
 
 `-text` is the variant that reads as text on the canvas: `-deep` in the light scheme,
 `-soft` in the dark one. SPEC §4.4's table is read as: primary and link follow the accent

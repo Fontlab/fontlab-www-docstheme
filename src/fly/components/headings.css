@@ -33,8 +33,15 @@
     --fly-mb: 2rem;
   }
 
-  .md-typeset :is(h1, h2) {
+  .md-typeset h1 {
+    color: var(--fly-h1-color);
+  }
+
+  .md-typeset h2 {
     color: var(--fly-ink);
+  }
+
+  .md-typeset :is(h1, h2) {
     text-align: center;
   }
 
