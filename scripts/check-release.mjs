@@ -2,7 +2,9 @@
 // Release check (npm run check:release; README "Release"): on a tagged release commit the
 // git tag, the Python package version (hatch-vcs, read with setuptools-scm as hatch-vcs does,
 // no local part), NEXT_VERSION and the built CDN tree (docs/fly/manifest.json and
-// docs/fly/<version>/) must all name the same X.Y.Z. Exits 1 and lists every mismatch.
+// docs/fly/<version>/) must all name the same X.Y.Z. It first runs git fetch origin main and
+// refuses when that fails, since the CDN guard (build-cdn.mjs) compares against origin/main.
+// Exits 1 and lists every mismatch.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -30,6 +32,12 @@ function pythonVersion() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  try {
+    execFileSync('git', ['fetch', '--quiet', 'origin', 'main'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
+  } catch {
+    console.error('release check: git fetch origin main failed; origin/main must be current to release');
+    process.exit(1);
+  }
   const tags = execFileSync('git', ['tag', '--points-at', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).split('\n');
   const tag = tagVersion(tags);
   const manifestPath = join(CDN, 'manifest.json');

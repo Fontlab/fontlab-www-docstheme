@@ -37,8 +37,11 @@ CDN versions: `docs/fly/<version>/` takes its version from the git tag `vX.Y.Z` 
 same tag hatch-vcs gives the Python package), otherwise from `NEXT_VERSION` in
 `scripts/build-cdn.mjs`, the one place that names the release being prepared. A version
 published on `origin/main` never changes: the build stops if `docs/fly/<version>/` would
-differ from the manifest there. Release steps: tag `v<NEXT_VERSION>` on a clean commit,
-run `./build.sh` and `npm run check:release` (tag, package, `NEXT_VERSION` and CDN must agree),
+differ from the manifest there, and when `origin/main` cannot be read it does not rewrite an
+existing `docs/fly/<version>/` unless `FLY_CDN_ALLOW_UNPUBLISHED=1` is set (only for a version
+never published). Release steps: tag `v<NEXT_VERSION>` on a clean commit,
+run `./build.sh` and `npm run check:release` (fetches `origin main` first; tag, package,
+`NEXT_VERSION` and CDN must agree),
 commit `docs/`, then bump `NEXT_VERSION` for the next release.
 
 Layout: `theme/fly_january/` (Python package: theme and `fly` plugin),

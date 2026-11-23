@@ -7,11 +7,14 @@
 // Other version directories already in docs/fly/ are left as they are. A published version
 // directory never changes: before writing, the new <FLY_VERSION>/ files are compared with the
 // manifest on origin/main (what GitHub Pages serves), and the build stops if that version is
-// published there with different files. latest/ is rewritten every time. Also writes
+// published there with different files. The guard fails closed: when origin/main cannot be
+// read (no such ref, a git error), an existing docs/fly/<FLY_VERSION>/ is not rewritten
+// unless FLY_CDN_ALLOW_UNPUBLISHED=1 says it was never published. latest/ is rewritten every time. Also writes
 // docs/.nojekyll. Run by build.mjs after buildFly(); ../build.sh then syncs the demo site
 // around docs/fly/.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
 import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -64,10 +67,38 @@ export function publishedConflicts(published, version, fresh) {
   });
 }
 
-/** The manifest GitHub Pages serves (origin/main:docs/fly/manifest.json), or null. */
-function publishedManifest() {
+/**
+ * What origin/main publishes: {resolved: false} when the ref or its manifest cannot be read,
+ * else {resolved: true, manifest} (manifest null when origin/main has no docs/fly/ yet).
+ */
+function publishedState() {
+  if (git('rev-parse', '--verify', '--quiet', 'origin/main^{commit}') === null) return { resolved: false };
+  const listed = git('ls-tree', '--name-only', 'origin/main', 'docs/fly/manifest.json');
+  if (listed === null) return { resolved: false };
+  if (!listed.trim()) return { resolved: true, manifest: null };
   const text = git('show', 'origin/main:docs/fly/manifest.json');
-  return text ? JSON.parse(text) : null;
+  return text === null ? { resolved: false } : { resolved: true, manifest: JSON.parse(text) };
+}
+
+/**
+ * Why docs/fly/<version>/ must not be written, or null when it may. `state` is
+ * publishedState(); `exists`: docs/fly/<version>/ is already on disk; `allow`:
+ * FLY_CDN_ALLOW_UNPUBLISHED=1. Unknown publication state refuses an existing directory.
+ */
+export function cdnRefusal({ state, version, fresh, exists, allow }) {
+  if (!state.resolved) {
+    if (!exists || allow) return null;
+    return (
+      `origin/main cannot be read, so it is unknown whether docs/fly/${version}/ is published; ` +
+      'run git fetch origin main, or set FLY_CDN_ALLOW_UNPUBLISHED=1 if this version was never published.'
+    );
+  }
+  const conflicts = publishedConflicts(state.manifest, version, fresh);
+  if (!conflicts.length) return null;
+  return (
+    `docs/fly/${version}/ is published on origin/main with different files (${conflicts.join(', ')}). ` +
+    'A published version never changes: bump NEXT_VERSION in scripts/build-cdn.mjs (or tag the new release).'
+  );
 }
 export const CDN = join(ROOT, 'docs/fly');
 export const FLY_FILES = ['fly.css', 'fly-tokens.css', 'fly-utilities.css', ...SCRIPTS];
@@ -111,13 +142,14 @@ export async function buildCdn() {
   const sources = await releaseSources();
   const fresh = {};
   for (const [path, source] of Object.entries(sources)) fresh[path] = sha256(await readFile(source));
-  const conflicts = publishedConflicts(publishedManifest(), FLY_VERSION, fresh);
-  if (conflicts.length) {
-    throw new Error(
-      `docs/fly/${FLY_VERSION}/ is published on origin/main with different files (${conflicts.join(', ')}). ` +
-        'A published version never changes: bump NEXT_VERSION in scripts/build-cdn.mjs (or tag the new release).',
-    );
-  }
+  const refusal = cdnRefusal({
+    state: publishedState(),
+    version: FLY_VERSION,
+    fresh,
+    exists: existsSync(join(CDN, FLY_VERSION)),
+    allow: process.env.FLY_CDN_ALLOW_UNPUBLISHED === '1',
+  });
+  if (refusal) throw new Error(refusal);
   for (const dir of [FLY_VERSION, 'latest']) await writeRelease(dir, sources);
   const files = {};
   for (const path of await filesUnder(CDN)) {
