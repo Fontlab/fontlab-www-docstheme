@@ -14,6 +14,11 @@ Exact versions are pinned in package.json and package-lock.json.
 - Playwright runs real Chromium interaction and layout checks.
 - Node's built-in test runner verifies transformations and build artifacts.
 
+Python (pyproject.toml, uv.lock): the `fly-january` package depends on mkdocs (the
+plugin API it imports: `BasePlugin`, `PluginError`), properdocs and mkdocs-materialx.
+`extra.fly` is validated with standard-library dataclasses rather than pydantic, so
+consumer sites get no extra dependency.
+
 Redistributed Basecoat, daisyUI and Tailwind license notices ship with the CDN.
 The two legacy editorial vendor sheets are retained source artifacts from the
 existing sites; their hashes and origins are recorded in provenance.json.

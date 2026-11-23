@@ -1806,7 +1806,10 @@
     --fontlab-menu-z: 3;
     --fontlab-footer-z: 3;
   }
-  header.md-header:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+  vexy-menu:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
+    --vexy-menu-z: 3;
+  }
+  body:not(.fly-chrome-none):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) header.md-header {
     display: none;
   }
   .md-footer:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {

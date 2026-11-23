@@ -2,8 +2,9 @@
 /* The global menu, the shared footer and MaterialX's previous/next strip are dark bars
    in both colour schemes (the menu renders its dark ink: mode="dark" in main.html), with
    dropdowns on the darker drop colour. Page rules beat the components' :host defaults;
-   z-index 3 sits over .md-footer (2) and the sheets. MaterialX's own header is hidden:
-   fly-bridge.js moves its search and palette out. */
+   z-index 3 sits over .md-footer (2) and the sheets. MaterialX's own header is hidden
+   (fly-bridge.js moves its search and palette out) unless the site has no global bars
+   (extra.fly.chrome: none; the fly plugin sets body.fly-chrome-<kind>). */
 @layer fly.chrome {
   :is(fontlab-menu, fontlab-footer) {
     --fl-bg: var(--fly-bar);
@@ -12,7 +13,11 @@
     --fontlab-footer-z: 3;
   }
 
-  header.md-header {
+  vexy-menu {
+    --vexy-menu-z: 3;
+  }
+
+  body:not(.fly-chrome-none) header.md-header {
     display: none;
   }
 

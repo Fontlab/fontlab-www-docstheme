@@ -4,6 +4,24 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 2026-11-23: fly plugin (Task 4)
+
+- `fly` plugin: validates `extra.fly` (chrome, chrome_options, hue, fonts, presets,
+  margin_side, utilities, debug) and page `fly:` frontmatter (legacy `subtheme:` = preset);
+  unknown keys or names fail the build with a `PluginError`.
+- Templates render plugin-provided font links, preconnects, one `<style data-fly-roles>` of
+  `--fly-<role>-<prop>` variables on `:root`, and the chosen chrome (fontlab, vexy, none or a
+  custom script/tags) with `chrome_options` attributes. `<body>` gets `data-fly-hue`,
+  `fly-chrome-<kind>`, `fly-margin-*`, `fly-no-l2` and `subtheme-<preset>`.
+- `fly-utilities.css` (1.9 MB) loads only with `extra.fly.utilities: true`.
+- Ported from fltheme27: margin-figure groups (`fly-aside`/`fly-cut`), permalink names,
+  unparsed attribute-list warnings, `?v=` cache-busting (now also the theme's own assets),
+  MaterialX rem rescale (20/14.4) on post-build. Tailwind compilation at build time is gone.
+- `chrome: none` shows MaterialX's header (bars.css scoped to `body:not(.fly-chrome-none)`).
+- fly-debug.js switches presets from the plugin's `{links, style, hue}` data.
+- `@property --fly-line` restored (Task 3 review fix).
+- Runtime dependency `mkdocs>=1.6.1` declared.
+
 ## 2026-11-23: planning for fly-january
 
 Added SPEC.md and rewrote PLAN.md and TODO.md for issues/401.md. Closed out the previous

@@ -3,6 +3,7 @@
 this_file: tests/py/test_theme_package.py
 """
 
+import re
 import subprocess
 import sys
 from importlib.metadata import entry_points
@@ -31,10 +32,9 @@ def test_theme_package_when_imported_then_ships_theme_config():
     assert (Path(fly_january.__file__).parent / "mkdocs_theme.yml").is_file()
 
 
-@pytest.fixture(scope="module")
-def built_site(tmp_path_factory):
-    site = tmp_path_factory.mktemp("site")
-    result = subprocess.run(
+def build(config: Path, site: Path) -> subprocess.CompletedProcess:
+    """`properdocs build --strict` of one fixture config into `site`."""
+    return subprocess.run(
         [
             sys.executable,
             "-m",
@@ -42,15 +42,21 @@ def built_site(tmp_path_factory):
             "build",
             "--strict",
             "-f",
-            str(FIXTURE / "mkdocs.yml"),
+            str(config),
             "-d",
             str(site),
         ],
         capture_output=True,
         text=True,
-        cwd=FIXTURE,
+        cwd=config.parent,
         check=False,
     )
+
+
+@pytest.fixture(scope="module")
+def built_site(tmp_path_factory):
+    site = tmp_path_factory.mktemp("site")
+    result = build(FIXTURE / "mkdocs.yml", site)
     assert result.returncode == 0, result.stdout + result.stderr
     return site
 
@@ -71,15 +77,29 @@ def test_fixture_when_built_then_contains_child_main_html_marker(built_site):
 
 
 def test_fixture_when_built_then_ships_and_links_fly_assets(built_site):
-    for name in ("fly.css", "fly-tokens.css", "fly-utilities.css", "fly.js", "fly-bridge.js", "fly-debug.js"):
+    for name in (
+        "fly.css",
+        "fly-tokens.css",
+        "fly-utilities.css",
+        "fly.js",
+        "fly-bridge.js",
+        "fly-debug.js",
+    ):
         assert (built_site / "assets" / "fly" / name).is_file(), name
     html = (built_site / "guide" / "index.html").read_text()
     links = [line for line in html.splitlines() if "assets/fly/" in line]
-    assert any('href="../assets/fly/fly.css"' in line for line in links), links
-    assert any('href="../assets/fly/fly-utilities.css"' in line for line in links), links
-    assert any('src="../assets/fly/fly-bridge.js"' in line for line in links), links
-    assert any('type="module" src="../assets/fly/fly.js"' in line for line in links), links
-    assert html.index("assets/stylesheets/main.") < html.index("assets/fly/fly.css"), "fly.css loads after MaterialX"
+    v = r"\?v=[0-9a-f]{10}"
+    assert any(re.search(rf'href="\.\./assets/fly/fly\.css{v}"', line) for line in links), links
+    assert any(re.search(rf'src="\.\./assets/fly/fly-bridge\.js{v}"', line) for line in links), (
+        links
+    )
+    assert any(
+        re.search(rf'type="module" src="\.\./assets/fly/fly\.js{v}"', line) for line in links
+    ), links
+    assert "fly-utilities.css" not in html, "utilities load only with extra.fly.utilities: true"
+    assert html.index("assets/stylesheets/main.") < html.index("assets/fly/fly.css"), (
+        "fly.css loads after MaterialX"
+    )
 
 
 def test_fixture_when_built_then_renders_fontlab_chrome_and_fly_partials(built_site):

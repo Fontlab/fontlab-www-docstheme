@@ -37,7 +37,7 @@ global menu components and fltheme26 and stay.
 | sessionStorage `fl27-l2` | sessionStorage `fly-l2` |
 | localStorage `fl27-debug-subtheme` | localStorage `fly-debug-subtheme` |
 | `#fl27-debug-data` | `#fly-debug-data` |
-| `data-fl27-sub`, `data-fl27-default` | `data-fly-sub`, `data-fly-default` |
+| `data-fl27-sub`, `data-fl27-default` | `data-fly-font` (font links), `data-fly-roles` (role style); no default layer |
 | container `fl27-canvas` | container `fly-canvas` |
 | layer `fl27-tailwind` | layer `fly.utilities` |
 | `extra.fltheme27` | `extra.fly` (Task 4) |

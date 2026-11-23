@@ -1,0 +1,6 @@
+# this_file: fixtures/fly/mkdocs-none.yml
+# The fly fixture with chrome: none.
+INHERIT: mkdocs.yml
+extra:
+  fly:
+    chrome: none

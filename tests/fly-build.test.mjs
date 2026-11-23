@@ -116,6 +116,8 @@ test('main.html loads the theme assets from its own path and keeps the marker', 
   }
   assert.ok(html.indexOf('fly.css') < html.indexOf('fly-utilities.css'), 'utilities load after fly.css');
   assert.ok(html.includes('<meta name="fly-january" content="skeleton">'));
-  assert.ok(html.includes('fonts: provided by the fly plugin'));
-  assert.match(html, /<fontlab-menu [\s\S]*<fontlab-footer/);
+  assert.match(html, /\{%- if fly\.utilities %\}\s*<link[^>]*fly-utilities\.css/, 'utilities only when extra.fly.utilities');
+  for (const part of ['fly.head.links', 'fly.head.style', 'fly.chrome.script', 'fly.chrome.header', 'fly.chrome.footer']) {
+    assert.ok(html.includes(part), 'main.html renders the plugin-provided ' + part);
+  }
 });

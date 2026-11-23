@@ -1,12 +1,13 @@
 // this_file: src/fly/js/fly-debug.js
 // Debug-mode preset switcher, loaded only when extra.fly.debug is true (the fly plugin
-// emits it with its #fly-debug-data block). Swaps the page's preset links (marked
-// data-fly-sub) and body class; the choice is kept in localStorage so it follows you
-// across pages. "Page default" clears it.
+// emits it with its #fly-debug-data block: the page's own look and each preset over the
+// site, as {links, style, hue}). Swaps the font links (data-fly-font), the role style
+// (data-fly-roles), data-fly-hue and the subtheme-<preset> body class; the choice is kept
+// in localStorage so it follows you across pages. "Page default" clears it.
 (() => {
   const KEY = "fly-debug-subtheme";
   const data = JSON.parse(document.getElementById("fly-debug-data").textContent);
-  const subs = new Map(data.subthemes);
+  const subs = new Map(data.presets);
   const names = [...subs.keys()];
   const store = (v) => { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch (e) {} };
   const stored = () => { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } };
@@ -15,22 +16,24 @@
     const el = document.createElement("link");
     el.rel = "stylesheet";
     el.href = href;
-    el.dataset.flySub = "";
+    el.dataset.flyFont = "";
     document.head.append(el);
   }
 
   function apply(name) {
-    const sub = subs.get(name);
-    document.querySelectorAll("link[data-fly-sub]").forEach((el) => el.remove());
+    const look = subs.get(name) || data.own;
+    document.querySelectorAll("link[data-fly-font], style[data-fly-roles]").forEach((el) => el.remove());
+    look.links.forEach(link);
+    const style = document.createElement("style");
+    style.dataset.flyRoles = "";
+    style.textContent = look.style;
+    document.head.append(style);
+    if (look.hue) document.body.dataset.flyHue = look.hue;
+    else delete document.body.dataset.flyHue;
     const body = document.body.classList;
     [...body].filter((c) => c.startsWith("subtheme-")).forEach((c) => body.remove(c));
-    if (!sub) return;
-    body.add(`subtheme-${name}`);
-    select.value = name;
-    if (name === data.default) return; // base layer (data-fly-default) is already on the page
-    sub.kit.filter((k) => !data.base.includes(k)).forEach((k) => link(`https://use.typekit.net/${k}.css`));
-    if (sub.google) link(sub.google);
-    link(sub.css);
+    const preset = name || data.page;
+    if (subs.has(preset)) body.add(`subtheme-${preset}`);
   }
 
   const ui = document.createElement("div");
@@ -51,7 +54,7 @@
 
   function choose(name) {
     store(name);
-    apply(name || data.page);
+    apply(name);
     select.value = name;
   }
   select.addEventListener("change", () => choose(select.value));

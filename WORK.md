@@ -4,6 +4,31 @@ this_file: WORK.md
 
 # Work
 
+## 2026-11-23 — fly plugin (Task 4)
+
+`theme/fly_january/plugin.py` replaces fltheme27's `hooks.py`, split into `config.py`
+(typed `extra.fly` / page frontmatter), `fonts.py` (sources, roles, precedence),
+`view.py` (template variable, body classes, chrome), `markup.py` (HTML rewrites) and
+`assets.py` (cache-busting, MaterialX rem rescale). Gates: `uv run --python 3.13 pytest
+tests/py -q` 124 passed; `npm run build`; `npm test` 39 pass.
+
+### Markdown-extension candidates
+
+Per SPEC 9, the ported functions that transform page content independently of the theme;
+they stay in the plugin until Task 8 decides:
+
+- `group_margin_figures` (markup.py): groups an `img-small`/`img-tall`/`img-cut` figure
+  with its paragraphs in a `<div class="fly-aside" style="--rows: N">` block. The grouping
+  is content structure; only the class names (`fly-aside`, `fly-cut`) are theme vocabulary
+  and would become extension options. Candidate.
+- `name_permalinks` (markup.py): adds `aria-label="Permanent link"` to toc `headerlink`
+  anchors. An accessibility fix to Python-Markdown's toc output, theme-independent.
+  Candidate (could equally be a toc option upstream).
+
+Not candidates (theme-specific, stay in the plugin): `stray_attr_lists` (lints for the
+theme's `tw:` and `.goto` contracts), body/main/article classes (`page_classes`,
+`patch_tags`), font/role/hue/chrome output, `version_links`, `rescale_materialx`.
+
 ## 2026-10-02 — marked text weight
 
 Added a computed-style regression for `font-weight: 500`; it failed at 400 before

@@ -10,6 +10,7 @@ description = "FontLab/Vexy documentation theme for ProperDocs, extending Materi
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+  "mkdocs>=1.6.1",
   "mkdocs-materialx>=10.1.8",
   "properdocs>=1.6.7",
 ]
