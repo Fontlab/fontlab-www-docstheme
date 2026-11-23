@@ -12,6 +12,7 @@ other title fails the test, so no example on those pages goes unchecked.
 import importlib.util
 import json
 import re
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -136,7 +137,10 @@ def test_tokens_page_when_rendered_then_every_hue_variant_and_grey_in_both_schem
 
 
 def test_assets_page_when_rendered_then_names_the_built_version():
-    version = re.search(r"FLY_VERSION = '([^']+)'", (ROOT / "scripts/build-cdn.mjs").read_text())[1]
+    script = "import('./scripts/build-cdn.mjs').then((m) => console.log(m.FLY_VERSION))"
+    version = subprocess.run(
+        ["node", "-e", script], cwd=ROOT, capture_output=True, text=True, check=True
+    ).stdout.strip()
     text = (SITE / "md/theme/assets.md").read_text()
     urls = set(re.findall(r"fontlab-www-docstheme/fly/([^/\s)\"]+)/", text))
     assert urls == {version}, urls

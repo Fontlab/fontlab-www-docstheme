@@ -33,6 +33,14 @@ writes the CDN tree `docs/fly/<version>/`, `docs/fly/latest/` and `docs/fly/mani
 then the demo site from `src_docs/` (strict, `uv run --group site`) synced into `docs/`
 around `docs/fly/`, then a link check (`scripts/check-links.mjs`).
 
+CDN versions: `docs/fly/<version>/` takes its version from the git tag `vX.Y.Z` on HEAD (the
+same tag hatch-vcs gives the Python package), otherwise from `NEXT_VERSION` in
+`scripts/build-cdn.mjs`, the one place that names the release being prepared. A version
+published on `origin/main` never changes: the build stops if `docs/fly/<version>/` would
+differ from the manifest there. Release steps: tag `v<NEXT_VERSION>` on a clean commit,
+run `./build.sh` and `npm run check:release` (tag, package, `NEXT_VERSION` and CDN must agree),
+commit `docs/`, then bump `NEXT_VERSION` for the next release.
+
 Layout: `theme/fly_january/` (Python package: theme and `fly` plugin),
 `src/fly/` (layered CSS and JS sources), `src_docs/` (demo site, Markdown in `src_docs/md/`),
 `docs/` (build output: demo site plus versioned assets under `docs/fly/<version>/`, served at
