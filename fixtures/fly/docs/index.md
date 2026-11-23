@@ -1,12 +1,13 @@
 # Home
 
-The fly-january fixture home page, set as a lead paragraph.
+The fly-january fixture home page, set as a lead paragraph with **strong**, *emphasis* and a [link](guide.md).
 
 A body paragraph of ordinary running text, long enough to wrap onto a second line at the narrow
 widths so that the baseline grid is exercised on more than one line of text. It carries
 *emphasis*, **strong** text and a [link to the guide](guide.md) in the same run, and some `inline code`.
 
 A second body paragraph directly after the first, so the pitch between paragraph tops is measured.
+It nests runs: **strong with a [link](guide.md) and *emphasis* inside** the same sentence.
 
 ---
 
@@ -19,6 +20,8 @@ Another body paragraph under the second-level heading.
 - A list item with a short text.
 - A second list item that is long enough to wrap onto another line when the column is narrow, so
   list leading is measured on a wrapped item as well.
+    - A nested list item.
+    - Another nested list item.
 
 A paragraph between the two lists.
 
@@ -30,6 +33,7 @@ A paragraph between the two lists.
 | Name | Role | Size |
 |------|------|------|
 | Body | Text | sm   |
+| **Strong** *Emphasis* | [Link](guide.md) `code` | <mark>Mark</mark> |
 | Nav  | Menu | xs   |
 
 ##### Fifth-level heading
@@ -42,6 +46,15 @@ A paragraph between the two lists.
 </figure>
 
 > A blockquote, set in the lead size.
+>
+> A second paragraph inside the blockquote.
 
 !!! note "A note"
     An admonition with a paragraph of its own.
+
+    A second paragraph inside the admonition.
+
+!!! note to-main "A main-column note"
+    An admonition kept in the text column.
+
+    A second paragraph inside it.

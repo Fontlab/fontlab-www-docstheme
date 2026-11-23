@@ -68,8 +68,11 @@
         text-align: left;
       }
 
+      .md-typeset :is(.admonition, details):not(.to-main) {
+        font-size: var(--fly-size-xs); /* a margin aside; .to-main stays in the flow at body size */
+      }
+
       .md-typeset :is(.admonition, details) {
-        font-size: var(--fly-size-xs);
         text-align: start;
       }
 
@@ -232,8 +235,11 @@
       font-variation-settings: normal;
     }
 
+    .md-typeset :is(.admonition, details):not(.to-main) {
+      font-size: var(--fly-size-xs); /* a margin aside; .to-main stays in the flow at body size */
+    }
+
     .md-typeset :is(.admonition, details) {
-      font-size: var(--fly-size-xs);
       text-align: start;
     }
 

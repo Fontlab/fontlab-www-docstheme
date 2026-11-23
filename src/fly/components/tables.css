@@ -27,7 +27,7 @@
     letter-spacing: var(--fly-caption-tracking);
   }
 
-  .md-typeset table :is(td, th) :is(a, strong, mark) {
+  .md-typeset table :is(td, th) :is(a, strong, em, mark) {
     font-size: inherit;
   }
 

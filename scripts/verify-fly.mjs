@@ -99,8 +99,15 @@ const PROBE_BLOCKS = `JSON.stringify((() => {
     return {tag: el.tagName.toLowerCase() + (el.classList.contains('admonition') ? '.admonition' + (getComputedStyle(el).float !== 'none' ? '.aside' : '') : '') + (el.matches('h1 + p') ? '.lead' : ''),
       sides: Object.fromEntries(sides.map(s => [s, parseFloat(cs[s])]))};
   });
+  // Paragraphs, lists and items nested in blockquotes, admonitions and list items.
+  const nested = [...art.querySelectorAll(':is(blockquote, .admonition, li) :is(p, ul, ol, li)')].map(el => {
+    const cs = getComputedStyle(el);
+    const box = el.parentElement.closest('blockquote, .admonition, li');
+    const boxTag = box.tagName.toLowerCase() + (box.classList.contains('admonition') ? '.admonition' + (getComputedStyle(box).float !== 'none' ? '.aside' : '') : '');
+    return {tag: el.tagName.toLowerCase() + '<' + boxTag, sides: Object.fromEntries(sides.map(s => [s, parseFloat(cs[s])]))};
+  });
   const gaps = [...art.querySelectorAll(':scope > p + p')].map(p => p.getBoundingClientRect().top - p.previousElementSibling.getBoundingClientRect().top);
-  return {rem, items, gaps};
+  return {rem, items: items.concat(nested), gaps};
 })())`;
 
 // Text-bearing elements of the article, navigation and footer, classed by role. Headings,
@@ -128,17 +135,17 @@ const PROBE_SIZES = `JSON.stringify((() => {
     if (el.closest('li')) return 'list';
     if (el.closest('.admonition-title, summary')) return aside(el) ? 'aside-title' : 'admonition-title';
     if (el.closest('.admonition, details')) return aside(el) ? 'aside' : 'admonition';
-    return 'body';
+    return el.closest('.md-typeset') ? 'body' : 'unclassified';
   };
   const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), items: [], inline: []};
-  const scope = document.querySelectorAll('.md-content .md-typeset *, .md-sidebar *, .md-footer *');
+  const scope = document.querySelectorAll('.md-content *, .md-sidebar *, .md-footer *');
   for (const el of scope) {
     const inArticle = !!el.closest('.md-content .md-typeset');
     const isInline = inArticle && (el.tagName in INLINE || (el.tagName === 'CODE' && !el.closest('pre') && !el.closest('h1, h2, h3, h4, h5, h6')));
     if (isInline && !el.closest('.headerlink')) {
       const parent = el.parentElement;
       const adjust = el.tagName === 'CODE' ? rootVar('--fly-mono-adjust') : rootVar(INLINE[el.tagName]);
-      out.inline.push({tag: el.tagName.toLowerCase(), inCell: !!el.closest('td, th'), nested: !!parent.closest('a, strong, em, mark'), size: size(el), parent: size(parent), adjust});
+      out.inline.push({tag: el.tagName.toLowerCase(), inCell: !!el.closest('td, th'), nested: !!parent.closest('a, strong, em, mark'), inLead: !!el.closest('.md-typeset > h1 + p'), size: size(el), parent: size(parent), adjust});
       continue;
     }
     if (el.closest(SKIP)) continue;
@@ -171,6 +178,15 @@ const PROBE_CHROME = `JSON.stringify((() => {
     brandIn: bars.filter(b => brand.test(b.outerHTML)).map(b => b.className.split(' ')[0]),
   };
 })())`;
+
+// The chrome script is a third-party CDN file: when the network cannot fetch it, say so.
+const probeDefined = tag => `(async () => {
+  const script = document.querySelector('script[src*="/menu/"]');
+  let reachable = !!script;
+  try { await fetch(script.src, {mode: 'no-cors'}); } catch { reachable = false; }
+  if (reachable) await Promise.race([customElements.whenDefined('${tag}'), new Promise(r => setTimeout(r, 6000))]);
+  return JSON.stringify({reachable, src: script && script.src, defined: !!customElements.get('${tag}')});
+})()`;
 
 const PROBE_PRESET = `JSON.stringify((() => {
   const h1 = getComputedStyle(document.querySelector('.md-typeset h1'));
@@ -212,13 +228,13 @@ const verifyGrid = async (base, width) => {
   const blocks = await ev(PROBE_BLOCKS);
   const off = [];
   for (const {tag, sides} of blocks.items) {
-    if (GRID_EXEMPT[tag]) continue;
+    if (GRID_EXEMPT[tag] || GRID_EXEMPT[tag.split('<')[1]]) continue;
     for (const [side, px] of Object.entries(sides)) {
       if (!(Math.abs(px - Math.round(px / blocks.rem) * blocks.rem) <= GRID_TOLERANCE)) off.push(`${tag}.${side}=${px}`);
     }
   }
   const tags = new Set(blocks.items.map(i => i.tag));
-  const missing = ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'blockquote', 'table', 'figure', 'hr'].filter(t => !tags.has(t));
+  const missing = ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'blockquote', 'table', 'figure', 'hr', 'p<blockquote', 'p<div.admonition', 'li<li'].filter(t => !tags.has(t));
   if (![...tags].some(t => t.startsWith('div.admonition'))) missing.push('admonition');
   check(`grid.block-spacing@${width}`, off.length === 0 && missing.length === 0,
     off.length ? `off-grid: ${off.join(' ')} rem=${blocks.rem}` : missing.length ? `not exercised: ${missing}` : `${blocks.items.length} blocks`);
@@ -231,26 +247,40 @@ const verifyGrid = async (base, width) => {
 const SIZE_OF = {th: 'xs', figcaption: 'xs', footer: 'xs', nav: 'xs', lead: 'md', quote: 'md',
   table: 'sm', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
 const WIDE_ONLY = new Set(['aside', 'aside-title']);
-const NARROW_ONLY = new Set(['admonition', 'admonition-title']);
 
-const verifySizes = async (base, width) => {
-  await open(`${base}/fontlab/`, width);
+const verifySizes = async (base, width, site = 'fontlab') => {
+  await open(`${base}/${site}/`, width);
+  const at = `${site === 'fontlab' ? '' : site + '.'}sizes`;
   const s = await ev(PROBE_SIZES);
   const tokens = {xs: s.xs, sm: s.sm, md: s.md};
   for (const kind of Object.keys(SIZE_OF)) {
-    if ((width < 1000 ? WIDE_ONLY : NARROW_ONLY).has(kind)) continue;
+    if (width < 1000 && WIDE_ONLY.has(kind)) continue; // no margin asides on a phone
     const items = s.items.filter(i => i.kind === kind);
     const bad = items.filter(i => !near(i.size, tokens[SIZE_OF[kind]], 0.05));
-    check(`sizes.${kind}@${width}`, items.length > 0 && bad.length === 0,
+    check(`${at}.${kind}@${width}`, items.length > 0 && bad.length === 0,
       bad.length ? `want --fly-size-${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
   }
   const unknown = s.items.filter(i => !(i.kind in SIZE_OF));
   const distinct = [...new Set(s.items.map(i => i.size.toFixed(2)))].sort();
   const want = [s.xs, s.sm, s.md].map(v => v.toFixed(2)).sort();
-  check(`sizes.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${s.items.length} elements`);
+  check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${s.items.length} elements`);
   const inlineBad = s.inline.filter(r => !near(r.size, r.parent * (r.tag !== 'code' && (r.inCell || r.nested) ? 1 : r.adjust), 0.05));
-  check(`sizes.inline-adjust@${width}`, s.inline.length > 0 && inlineBad.length === 0,
+  check(`${at}.inline-adjust@${width}`, s.inline.length > 0 && inlineBad.length === 0,
     inlineBad.length ? inlineBad.map(r => `${r.tag} ${r.size}px parent ${r.parent}px adjust ${r.adjust}`).join('; ') : `${s.inline.length} runs`);
+  // Runs must be exercised in every context the ratio rules distinguish.
+  const ctx = {cell: s.inline.some(r => r.inCell && r.tag !== 'code'), nested: s.inline.some(r => r.nested && r.tag !== 'code'), lead: s.inline.some(r => r.inLead), code: s.inline.some(r => r.tag === 'code')};
+  check(`${at}.inline-contexts@${width}`, Object.values(ctx).every(Boolean), JSON.stringify(ctx));
+
+};
+
+// MaterialX's own footer (chrome none): previous and next titles and the copyright, all xs.
+const verifyFooterSizes = async base => {
+  await open(`${base}/none/guide/`, 1440);
+  const s = await ev(PROBE_SIZES);
+  const footer = s.items.filter(i => i.kind === 'footer');
+  const bad = footer.filter(i => !near(i.size, s.xs, 0.05));
+  check('none.footer.sizes', footer.length >= 3 && bad.length === 0,
+    `${footer.length} footer elements [${footer.map(f => f.text).join(' | ')}] want ${s.xs}px, off: ${bad.map(b => b.size)}`);
 };
 
 const verifyHeadings = async (base, table) => {
@@ -286,6 +316,12 @@ const verifyChrome = async base => {
     // custom chrome keeps MaterialX's header visible; fontlab and vexy hide it; none has no bars.
     check(`chrome.${name}.menu`, menu ? menus.length === 1 && menus[0] === menu : menus.length === 0, `menus [${menus}]`);
     check(`chrome.${name}.footer`, footer ? footers.length === 1 && footers[0] === footer : footers.length === 0, `footers [${footers}]`);
+    if (menu && name !== 'custom') {
+      const d = await ev(probeDefined(menu));
+      if (typeof d !== 'object') check(`chrome.${name}.defined`, false, `probe returned ${String(d).slice(0, 80)}`);
+      else if (!d.reachable) console.log(`skipped chrome.${name}.defined: CDN unreachable (${d.src})`);
+      else check(`chrome.${name}.defined`, d.defined, `<${menu}> customElements.get from ${d.src}`);
+    }
     check(`chrome.${name}.header`, c.headerVisible === !hidden, `MaterialX header visible=${c.headerVisible}`);
     if (name === 'none' || name === 'custom') {
       check(`chrome.${name}.no-brand`, c.tags.every(t => name === 'custom' ? t.startsWith('acme-') : false) && c.brandIn.length === 0,
@@ -408,6 +444,8 @@ try {
   await ab('open', 'about:blank');
   for (const width of [1440, 390]) await verifyGrid(base, width);
   for (const width of [1440, 390]) await verifySizes(base, width);
+  await verifySizes(base, 1440, 'none');
+  await verifyFooterSizes(base);
   await verifyHeadings(base, table);
   await verifySchemes(base);
   await verifyChrome(base);

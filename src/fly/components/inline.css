@@ -45,7 +45,7 @@
     line-height: 1;
   }
 
-  .md-typeset :is(a, strong, mark) :is(a, strong, mark) {
+  .md-typeset :is(a, strong, em, mark) :is(a, strong, em, mark) {
     font-size: inherit;
   }
 

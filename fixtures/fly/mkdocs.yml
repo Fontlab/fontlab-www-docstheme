@@ -5,6 +5,7 @@
 # chrome (custom also turns on utilities and debug).
 site_name: fly-january fixture
 site_url: https://fixture.example/
+copyright: Fixture copyright 2026
 theme:
   name: fly-january
   features: [navigation.footer]

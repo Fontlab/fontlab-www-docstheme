@@ -63,11 +63,26 @@
     margin-block: var(--fly-line);
   }
 
+  /* Paragraphs inside a blockquote are spaced like the article's (one line below; the last
+     collapses into the blockquote's own margin). Inside an admonition the title is one line
+     tall and paragraphs sit half a line off it, so every box height is whole lines. */
+  .md-typeset blockquote > p {
+    margin-block: 0 var(--fly-line);
+  }
+
+  .md-typeset :is(.admonition, details) > :is(.admonition-title, summary) {
+    padding-block: 0;
+  }
+
+  .md-typeset :is(.admonition, details) > :is(p, ul, ol):not(.admonition-title) {
+    margin-block: var(--fly-half);
+  }
+
   /* MaterialX's hr is a 1.5em margin and a 1px border; the rule is drawn outside the box so
      the block is exactly one line either side. */
-  .md-typeset > hr {
+  .md-typeset hr {
     margin-block: var(--fly-line);
     border: 0;
-    box-shadow: 0 1px 0 var(--md-default-fg-color--lightest);
+    box-shadow: 0 1px 0 var(--fly-edge);
   }
 }

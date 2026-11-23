@@ -15,6 +15,16 @@
     margin-bottom: 0;
   }
 
+  /* The copyright line (config.copyright) is footer text: the nav role, xs. MaterialX sets it
+     at .8889rem. */
+  .md-copyright {
+    font-family: var(--fly-nav-family);
+    font-size: var(--fly-nav-size);
+    font-stretch: var(--fly-nav-stretch);
+    font-variation-settings: var(--fly-nav-variation);
+    line-height: var(--fly-nav-leading);
+  }
+
   .md-footer__link {
     align-items: center;
     flex-shrink: 1;
