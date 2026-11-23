@@ -76,10 +76,42 @@ def test_alias_when_bare_name_then_materialx_key_added_without_second_registrati
     assert alias_materialx_plugins(plugins) == [], "idempotent"
 
 
-def test_minimal_when_search_bare_then_header_has_search_box(minimal):
-    html, _ = body_tag(minimal)
-    assert '<label class="md-header__button md-icon" for="__search">' in html, "header search button"
-    assert 'class="md-search"' in html or 'data-md-component="search"' in html, "search dialog"
+def test_alias_when_both_spellings_present_then_nothing_added():
+    from fly_january.plugin import alias_materialx_plugins
+    from properdocs.plugins import BasePlugin, PluginCollection
+
+    plugins = PluginCollection()
+    plugins["fly-january/x"], plugins["materialx/x"] = BasePlugin(), BasePlugin()
+    before = dict(plugins)
+    assert alias_materialx_plugins(plugins) == []
+    assert dict(plugins) == before and plugins["materialx/x"] is not plugins["fly-january/x"]
+
+
+SEARCH_MARKUP = (
+    '<label class="md-header__button md-icon" for="__search">',
+    'class="md-search__input"',
+    'data-md-component="search"',
+)
+
+
+def assert_search_markup(site):
+    html = (site / "index.html").read_text()
+    for needle in SEARCH_MARKUP:
+        assert needle in html, f"header search markup missing: {needle}"
+
+
+@pytest.mark.parametrize("config", ["mkdocs-minimal", "mkdocs-search", "mkdocs-search-explicit"])
+def test_header_when_search_plugin_bare_or_spelled_out_then_search_markup_rendered(config, tmp_path):
+    result = build(FIXTURE / f"{config}.yml", tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert_search_markup(tmp_path)
+
+
+def test_group_plugin_when_wrapping_aliased_plugin_then_strict_build_and_search_markup(tmp_path):
+    result = build(FIXTURE / "mkdocs-group.yml", tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert_search_markup(tmp_path)
+    assert (tmp_path / "tags.json").is_file(), "the grouped tags plugin ran"
 
 
 def body_tag(site, page="index.html"):

@@ -1,0 +1,10 @@
+# this_file: fixtures/fly/mkdocs-group.yml
+# MaterialX's group plugin around an aliased plugin: strict build, each plugin processed once.
+INHERIT: mkdocs-search.yml
+plugins:
+  - search
+  - group:
+      enabled: true
+      plugins:
+        - tags
+  - fly
