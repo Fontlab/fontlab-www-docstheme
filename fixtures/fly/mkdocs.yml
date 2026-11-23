@@ -1,0 +1,10 @@
+# this_file: fixtures/fly/mkdocs.yml
+site_name: fly-january fixture
+theme:
+  name: fly-january
+plugins:
+  - fly
+nav:
+  - Home: index.md
+  - Guide: guide.md
+  - Reference: reference.md

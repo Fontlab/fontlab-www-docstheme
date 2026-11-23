@@ -1,0 +1,50 @@
+# this_file: pyproject.toml
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fly-january"
+dynamic = ["version"]
+description = "FontLab/Vexy documentation theme for ProperDocs, extending MaterialX"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "mkdocs-materialx>=10.1.8",
+  "properdocs>=1.6.7",
+]
+
+[project.entry-points."properdocs.themes"]
+fly-january = "fly_january"
+
+[project.entry-points."mkdocs.themes"]
+fly-january = "fly_january"
+
+[project.entry-points."mkdocs.plugins"]
+fly = "fly_january.plugin:FlyPlugin"
+
+[dependency-groups]
+dev = [
+  "properdocs==1.6.7",
+  "mkdocs==1.6.1",
+  "mkdocs-materialx==10.1.8",
+  "pymdown-extensions==11.0.1",
+  "pytest>=8",
+  "ruff",
+]
+
+[tool.hatch.version]
+source = "vcs"
+raw-options = { local_scheme = "no-local-version" }
+
+[tool.hatch.build.hooks.vcs]
+version-file = "theme/fly_january/__version__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["theme/fly_january"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/py"]
+
+[tool.ruff]
+line-length = 100
