@@ -55,9 +55,14 @@ BLOCK_PROPS = (
     "tracking",
     "scale",
 )
+HEADING_MEASURE_ROLES = ("h1", "h2")
 INLINE_ROLES = ("em", "strong", "mono")
 INLINE_PROPS = ("family", "weight", "adjust")
-ROLE_PROPS = {r: BLOCK_PROPS for r in BLOCK_ROLES} | {r: INLINE_PROPS for r in INLINE_ROLES}
+ROLE_PROPS = (
+    {r: BLOCK_PROPS for r in BLOCK_ROLES}
+    | {r: BLOCK_PROPS + ("measure",) for r in HEADING_MEASURE_ROLES}
+    | {r: INLINE_PROPS for r in INLINE_ROLES}
+)
 SIDES = ("left", "right")
 NAMED_CHROMES = ("fontlab", "vexy", "none")
 CHROME_OPTIONS = ("site-label", "mobile-menu", "mobile-search", "search-from")
@@ -77,6 +82,8 @@ TYPEKIT = re.compile(r"typekit:([a-z0-9]+)")
 GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+(?:&family=[A-Za-z0-9+:@.,;_-]+)*)")
 HTTPS = re.compile(r"https://[^\s\"'<>]+")
 CSS_VALUE = re.compile(r"[^<>{};\\\n\r]+")
+# A heading's maximum width: a plain length (ch, rem, em, px, %) or none.
+MEASURE = re.compile(r"none|0|\d*\.?\d+(?:ch|rem|em|px|%)")
 NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
 # A quote inside an unquoted url( ) is a bad-url token that can swallow what follows.
 BAD_URL = re.compile(r"url\(\s*(?![\"'\s])[^)]*[\"']", re.IGNORECASE)
@@ -183,8 +190,9 @@ def balanced(text: str) -> bool:
 def css_value(where: str, value: Any) -> str:
     """A role value as CSS text that cannot end its declaration, rule or <style> element.
 
-    Rejects < > { } ; backslashes, newlines, comment openers and unbalanced quotes or
-    parentheses, quotes inside an unquoted url(), since the value is written unescaped into the plugin's role style.
+    Rejects < > { } ; backslashes, newlines, comment openers, unbalanced quotes or
+    parentheses and quotes inside an unquoted url(), since the value is written unescaped
+    into the plugin's role style.
     """
     if isinstance(value, bool) or not isinstance(value, (str, int, float)):
         raise fail(where, f"must be a string or a number, got {value!r}")
@@ -194,13 +202,24 @@ def css_value(where: str, value: Any) -> str:
     return text
 
 
+def measure(where: str, value: Any) -> str:
+    """A heading measure: a CSS length such as 12ch or 18em, or none."""
+    text = str(value).strip() if isinstance(value, (str, int, float)) else ""
+    if isinstance(value, bool) or not MEASURE.fullmatch(text):
+        raise fail(where, f"must be a CSS length such as 12ch, or none, got {value!r}")
+    return text
+
+
 def parse_roles(where: str, value: Any) -> Roles:
     """Roles mapping: role name -> {property: value}, per SPEC 4.3."""
     roles: Roles = {}
     for role, props in mapping(where, value, tuple(ROLE_PROPS)).items():
         here = f"{where}.{role}"
         props = mapping(here, props, ROLE_PROPS[role])
-        roles[role] = {p: css_value(f"{here}.{p}", v) for p, v in props.items()}
+        roles[role] = {
+            p: measure(f"{here}.{p}", v) if p == "measure" else css_value(f"{here}.{p}", v)
+            for p, v in props.items()
+        }
     return roles
 
 

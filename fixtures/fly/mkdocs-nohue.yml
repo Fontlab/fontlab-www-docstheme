@@ -1,0 +1,6 @@
+# this_file: fixtures/fly/mkdocs-nohue.yml
+# The fly fixture without a site hue: no data-fly-hue on the body, so the H1 stays ink.
+INHERIT: mkdocs.yml
+extra:
+  fly:
+    hue: null

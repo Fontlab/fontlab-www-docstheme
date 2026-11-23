@@ -92,6 +92,13 @@ def test_parse_site_when_no_fly_then_defaults():
         ({"fonts": {"roles": {"h1": {"size": "calc(1rem"}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"size": "1rem)"}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"family": "url(a'b)c'"}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"measure": "12 ch"}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h1": {"measure": "wide"}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h2": {"measure": 12}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h2": {"measure": "10vw"}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h2": {"measure": "calc(1ch)"}}}}, "must be a CSS length"),
+        ({"fonts": {"roles": {"h3": {"measure": "12ch"}}}}, "fonts.roles.h3: unknown key(s) measure"),
+        ({"fonts": {"roles": {"body": {"measure": "12ch"}}}}, "unknown key(s) measure"),
         ({"fonts": {"sources": ["google:A&display=block"]}}, "font source must be"),
         ({"presets": {"Bad Name": {}}}, "preset name must match"),
         ({"presets": {"x": {"css": "a.css"}}}, "extra.fly.presets.x: unknown key(s) css"),
@@ -132,9 +139,9 @@ def test_hues_when_compared_with_semantic_css_then_identical():
 
 
 def test_role_props_when_compared_with_type_css_then_every_variable_declared():
-    declared = set(
-        re.findall(r"(--fly-[a-z0-9]+-[a-z]+):", (ROOT / "src/fly/tokens/type.css").read_text())
-    )
+    # Role variables live in type.css; the heading measures in layout.css.
+    css = "".join((ROOT / f"src/fly/tokens/{name}.css").read_text() for name in ("type", "layout"))
+    declared = set(re.findall(r"(--fly-[a-z0-9]+-[a-z]+):", css))
     wanted = {f"--fly-{role}-{prop}" for role, props in ROLE_PROPS.items() for prop in props}
     assert wanted <= declared, sorted(wanted - declared)
 
@@ -193,6 +200,22 @@ def test_resolve_when_page_preset_site_then_page_beats_preset_beats_site():
     assert resolve(config.look, preset, Look()).hue == "magenta"
     assert resolve(config.look, None, Look()).hue == "cobalt"
     assert resolve(config.look, config.presets["bare"], Look()) == config.look
+
+
+@pytest.mark.parametrize("measure", ["12ch", "18ch", "none", "0", "20.5em", "30rem", "75%"])
+def test_parse_site_when_heading_measure_valid_then_kept_and_emitted(measure):
+    config = site(fonts={"roles": {"h1": {"measure": measure}, "h2": {"measure": measure}}})
+    assert config.look.roles["h1"] == {"measure": measure}
+    css = roles_css(config.look.roles)
+    assert f"--fly-h1-measure: {measure};" in css and f"--fly-h2-measure: {measure};" in css
+
+
+def test_measure_when_preset_and_page_then_reaches_resolved_roles():
+    config = site(presets={"late": {"fonts": {"roles": {"h1": {"measure": "12ch"}}}}})
+    own = page({"fly": {"fonts": {"roles": {"h2": {"measure": "18ch"}}}}}).look
+    look = resolve(config.look, config.presets["late"], own)
+    assert look.roles["h1"]["measure"] == "12ch" and look.roles["h2"]["measure"] == "18ch"
+    assert roles_css(look.roles).count("measure") == 2
 
 
 def test_merge_roles_when_later_level_then_wins_per_property():
@@ -476,7 +499,8 @@ def _outside_strings(css: str) -> str:
 
 
 def test_rescale_rem_when_real_materialx_stylesheet_then_every_rem_scaled():
-    material = pytest.importorskip("material")
+    import material  # a missing MaterialX must fail this test, not skip it
+
     (main,) = (Path(material.__file__).parent / "templates/assets/stylesheets").glob(
         "main.*.min.css"
     )

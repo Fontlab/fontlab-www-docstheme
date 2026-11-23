@@ -127,7 +127,10 @@ tables and captions, Grtsk at 90% width for h6.
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
 multiplier that evens out x-heights when families are mixed (`--fly-strong-adjust`
 `--fly-sans-adjust`, `0.95`: Grtsk runs set inside the serif). As in the prototype, `em`
-is set like `strong`: the sans at 550, upright:
+is set like `strong`: the sans at 550, upright. The multiplier applies once: `a`, `strong`, `em`
+and `mark` inside table cells inherit the cell's size (the cell is already set in the sans),
+and a run nested in another run (`a`, `strong`, `em`, `mark`) inherits instead of compounding
+the adjust. `mono` is always `--fly-mono-adjust` times the text around it:
 
 | Role | family | weight | adjust |
 |---|---|---|---|
@@ -169,6 +172,10 @@ prototype's values):
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
 | `--fly-h1-measure` | `16ch` | H1 maximum width |
 | `--fly-h2-measure` | `20ch` | H2 maximum width from 76.25em |
+
+Both measures are also the `measure` property of the `h1` and `h2` roles: a site, preset or page
+sets `roles: {h1: {measure: 12ch}}` (a plain length in ch, rem, em, px or %, or `none`) and the fly plugin writes
+`--fly-h1-measure` on `:root` like the other role variables.
 
 ## Colour
 
@@ -305,7 +312,8 @@ the dark scale runs from dark to light.
 | `--fly-paper-3` | #fefefe | #1d1e1f | the reading canvas |
 | `--fly-ink` | #191917 | #e9e9e6 | text |
 | `--fly-quiet` | #5c5c58 | #a9a9a4 | secondary text |
-| `--fly-edge` | #19191729 | #000000a0 | sheet edges, rules |
+| `--fly-edge` | #19191729 | #000000a0 | sheet edges and borders |
+| `--fly-rule` | #cececb | #3e3d3b | hairlines drawn on the canvas (the hr); at least 1.3:1 against `--fly-paper-3` in both schemes, which `--fly-edge` is not in the dark one |
 | `--fly-hover` | #0000000d | #ffffff12 | hover wash |
 | `--fly-shadow-ink` | rgb(0 0 0 / 12%) | same | screenshot and strip shadows (the prototype's value in both schemes) |
 | `--fly-bar` | #24252a | same | global menu, footer, previous/next strip |
@@ -340,8 +348,16 @@ and focus rings use these, never a hue directly.
 | `--fly-warning` `--fly-warning-soft` `--fly-warning-deep` `--fly-warning-tint` `--fly-warning-text` | amber |
 | `--fly-danger` `--fly-danger-soft` `--fly-danger-deep` `--fly-danger-tint` `--fly-danger-text` | cherry |
 | `--fly-link` | `--fly-accent-text` |
+| `--fly-h1-color` | `--fly-ink`; on an element carrying `data-fly-hue`, `--fly-accent-text` |
 | `--fly-focus` | `--fly-accent` |
 | `--fly-mark` | `--fly-accent-tint` |
+
+The H1 is set in `--fly-h1-color` (`.md-typeset h1`; the H2 stays ink). With no hue it is ink; a
+page with a hue gets that hue's `-text` variant, which reaches 4.5:1 on the canvas in both
+schemes (`gray` gives a dark grey). A site that wants another title colour sets the token on
+`.md-typeset h1`, not `--fly-ink`. Buttons are neutral and take no hue: `.md-button` is ink on paper
+with an ink outline, `.md-button--primary` is paper (`--fly-paper-3`) on ink, hover and focus
+fill with `--fly-hover` or `--fly-quiet`; labels are never underlined. `mark` inherits its colour.
 
 `-text` is the variant that reads as text on the canvas: `-deep` in the light scheme,
 `-soft` in the dark one. SPEC §4.4's table is read as: primary and link follow the accent

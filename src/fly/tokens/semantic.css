@@ -43,6 +43,7 @@
     --fly-link: var(--fly-accent-text);
     --fly-focus: var(--fly-accent);
     --fly-mark: var(--fly-accent-tint);
+    --fly-h1-color: var(--fly-ink); /* no page hue: the title stays ink */
 
     --fly-admonition-note: var(--fly-info);
     --fly-admonition-info: var(--fly-info);
@@ -65,6 +66,11 @@
     --fly-success-text: var(--fly-success-soft);
     --fly-warning-text: var(--fly-warning-soft);
     --fly-danger-text: var(--fly-danger-soft);
+  }
+
+  /* A page with a hue (SPEC 11) sets its title in the accent's text variant. */
+  :where([data-fly-hue]) {
+    --fly-h1-color: var(--fly-accent-text);
   }
 
   [data-fly-hue='cherry'] {

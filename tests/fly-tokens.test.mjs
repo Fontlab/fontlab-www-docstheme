@@ -314,6 +314,15 @@ test('deep text on light paper and soft text on dark paper reach WCAG 4.5:1', ()
   }
 });
 
+test('the hr rule reads on the canvas (1.3:1) and footer text on the footer strip (4.5:1)', () => {
+  for (const [scheme, name] of [[LIGHT, 'light'], [DARK, 'dark']]) {
+    const ratio = contrast(colour(scheme, '--fly-rule'), colour(scheme, '--fly-paper-3'));
+    assert.ok(ratio >= 1.3, '--fly-rule on paper-3 (' + name + ') is ' + ratio.toFixed(2) + ':1');
+  }
+  const bar = contrast(colour(LIGHT, '--fly-bar-ink'), colour(LIGHT, '--fly-bar-drop'));
+  assert.ok(bar >= MIN_CONTRAST, '--fly-bar-ink on --fly-bar-drop is ' + bar.toFixed(2) + ':1');
+});
+
 test('adjacent lead hues differ by at least 0.08 in OKLab, both schemes, wrapping round', () => {
   for (const scheme of [LIGHT, DARK]) {
     HUES.forEach((hue, i) => {

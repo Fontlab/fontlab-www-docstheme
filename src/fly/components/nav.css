@@ -42,6 +42,12 @@
     background: var(--fly-hover);
   }
 
+  /* The current page is told by weight and the wash, in ink: the accent lead on the grey
+     rail is under 4.5:1. */
+  .md-nav__link--active {
+    color: var(--fly-ink);
+  }
+
   .md-nav--primary .md-nav__link--active {
     font-weight: var(--fly-nav-current-weight);
   }
