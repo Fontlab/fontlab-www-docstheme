@@ -144,9 +144,11 @@ extra_css:
   - assets/stylesheets/component-reference.css
   - assets/stylesheets/field-guide.css
   - assets/stylesheets/patterns.css
+  - assets/stylesheets/theme-pages.css
 
 extra_javascript:
   - fly/latest/basecoat.js
+  - assets/javascripts/component-mode.js
   - assets/javascripts/component-reference.js
   - assets/javascripts/compiled-examples.js
   - path: assets/javascripts/fontlab-prompt.js

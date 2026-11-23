@@ -31,7 +31,7 @@ This chart needs Chart.js 4.5.1 and Basecoat’s separate chart module, in addit
 
 <!-- specimen:basecoat-chart html -->
 <div class="fltheme-components">
-<div style="height:16rem"><canvas aria-label="Illustrative glyph counts: Latin 240, Greek 80, Cyrillic 120" id="basecoat-chart-sample-coverage-chart"></canvas></div><table class="table"><caption>Illustrative glyph counts</caption><thead><tr><th scope="col">Script</th><th scope="col">Glyphs</th></tr></thead><tbody><tr><th scope="row">Latin</th><td>240</td></tr><tr><th scope="row">Greek</th><td>80</td></tr><tr><th scope="row">Cyrillic</th><td>120</td></tr></tbody></table>
+<div class="chart" style="height:16rem"><canvas aria-label="Illustrative glyph counts: Latin 240, Greek 80, Cyrillic 120" id="basecoat-chart-sample-coverage-chart"></canvas></div><table class="table"><caption>Illustrative glyph counts</caption><thead><tr><th scope="col">Script</th><th scope="col">Glyphs</th></tr></thead><tbody><tr><th scope="row">Latin</th><td>240</td></tr><tr><th scope="row">Greek</th><td>80</td></tr><tr><th scope="row">Cyrillic</th><td>120</td></tr></tbody></table>
 </div>
 <script>
 function drawCoverageExample() {
