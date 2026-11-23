@@ -927,21 +927,7 @@
   }
   @media screen and (76.25em <= width < 100em) {
     .md-sidebar--primary:not(#\#):not(#\#):not(#\#):not(#\#) .md-nav__link .md-ellipsis {
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    body:not(.fly-no-l2):not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap {
-      width: calc(var(--fly-l1) - 0.5rem);
-    }
-
-    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)):not(#\#):not(#\#):not(#\#):not(#\#) .md-sidebar--primary .md-sidebar__scrollwrap,
-    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):not(#\#):not(#\#):not(#\#):not(#\#)
-      .md-sidebar--primary:is(:hover, :focus-within)
-      .md-sidebar__scrollwrap {
-      width: var(--fly-l1-reveal);
+      text-overflow: clip;
     }
   }
   @media screen and (min-width: 60em) {
@@ -1585,6 +1571,9 @@
     line-height: 1.2;
     overflow-wrap: anywhere;
     word-break: normal;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a > code {
+    text-decoration: inherit;
   }
   .md-nav:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
     font-family: var(--fly-nav-family);
