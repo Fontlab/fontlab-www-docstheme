@@ -15,9 +15,6 @@ dependencies = [
   "properdocs>=1.6.7",
 ]
 
-[project.entry-points."properdocs.themes"]
-fly-january = "fly_january"
-
 [project.entry-points."mkdocs.themes"]
 fly-january = "fly_january"
 

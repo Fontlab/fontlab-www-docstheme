@@ -35,7 +35,8 @@ CONTRACT_CLASSES = (
     "fly-no-l2",
     "fly-margin-left",
     "fly-margin-right",
-    "fly-chrome-none",
+    "fly-chrome-fontlab",
+    "fly-chrome-vexy",
 )
 
 

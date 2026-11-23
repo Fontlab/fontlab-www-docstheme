@@ -22,7 +22,14 @@ ASSET_VERSION_LEN = 10
 # written in rem against its 125% (20px) root, so its built CSS is rescaled by 20/14.4 to
 # keep every MaterialX size in px.
 REM_SCALE = 20 / 14.4
-REM = re.compile(r"(?<![\w.])(\d*\.?\d+)rem\b")
+# A rem length (sign kept by leaving it outside; e-notation included), or a url()/string
+# whose text is never a length.
+REM = re.compile(
+    r"url\([^)]*\)|\"[^\"]*\"|'[^']*'"
+    r"|(?<![\w.])(?<![eE][+-])(\d*\.?\d+(?:[eE][+-]?\d+)?)rem\b"
+)
+# First line of a rescaled stylesheet: a second run (serve rebuilds) leaves it alone.
+RESCALED = "/* fly: MaterialX rem rescaled by 20/14.4 */\n"
 MATERIALX_CSS = ("assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css")
 
 
@@ -65,9 +72,14 @@ def theme_versions() -> dict[str, str]:
 
 
 def rescale_rem(css: str, scale: float = REM_SCALE) -> str:
-    """Multiply every rem length in ``css`` by ``scale`` (sign and unit kept)."""
+    """Multiply every rem length in ``css`` by ``scale`` (sign and unit kept).
+
+    Lengths inside calc() and other functions scale too; url() and quoted strings do not.
+    """
 
     def repl(m: re.Match[str]) -> str:
+        if m[1] is None:
+            return m[0]
         text = f"{float(m[1]) * scale:.4f}".rstrip("0").rstrip(".")
         return (text[1:] if text.startswith("0.") else text) + "rem"
 
@@ -75,9 +87,11 @@ def rescale_rem(css: str, scale: float = REM_SCALE) -> str:
 
 
 def rescale_materialx(site: Path) -> None:
-    """Rescale MaterialX's stylesheets in the built site to the 14.4px root."""
+    """Rescale MaterialX's stylesheets in the built site to the 14.4px root, once each."""
     files = [f for pattern in MATERIALX_CSS for f in site.glob(pattern)]
     if len(files) != len(MATERIALX_CSS):
         raise PluginError(f"fly: expected MaterialX main + palette CSS, found {files}")
     for f in files:
-        f.write_text(rescale_rem(f.read_text(encoding="utf-8")), encoding="utf-8")
+        css = f.read_text(encoding="utf-8")
+        if not css.startswith(RESCALED):
+            f.write_text(RESCALED + rescale_rem(css), encoding="utf-8")

@@ -17,7 +17,10 @@ this_file: CHANGELOG.md
 - Ported from fltheme27: margin-figure groups (`fly-aside`/`fly-cut`), permalink names,
   unparsed attribute-list warnings, `?v=` cache-busting (now also the theme's own assets),
   MaterialX rem rescale (20/14.4) on post-build. Tailwind compilation at build time is gone.
-- `chrome: none` shows MaterialX's header (bars.css scoped to `body:not(.fly-chrome-none)`).
+- MaterialX's header is hidden only under the FontLab and Vexy bars; `chrome: none` and custom
+  chrome keep it (search, palette toggle, drawer).
+- The theme registers only under `mkdocs.themes` (ProperDocs reads both groups; two
+  registrations made every build warn about a duplicate provider).
 - fly-debug.js switches presets from the plugin's `{links, style, hue}` data.
 - `@property --fly-line` restored (Task 3 review fix).
 - Runtime dependency `mkdocs>=1.6.1` declared.

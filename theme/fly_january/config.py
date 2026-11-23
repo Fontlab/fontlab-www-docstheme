@@ -73,7 +73,8 @@ SITE_KEYS = (
 )
 PAGE_KEYS = ("preset", "hue", "fonts")
 TYPEKIT = re.compile(r"typekit:([a-z0-9]+)")
-GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+)")
+# One css2 family spec, or several joined by "&family=" (one stylesheet for many families).
+GOOGLE = re.compile(r"google:([A-Za-z0-9+:@.,;_-]+(?:&family=[A-Za-z0-9+:@.,;_-]+)*)")
 HTTPS = re.compile(r"https://[^\s\"'<>]+")
 CSS_VALUE = re.compile(r"[^<>{};\\\n\r]+")
 NAME = re.compile(r"[a-z0-9][a-z0-9_-]*")
@@ -162,12 +163,31 @@ def source(where: str, value: Any) -> str:
     )
 
 
+def balanced(text: str) -> bool:
+    """True when quotes close and parentheses (outside quotes) pair up."""
+    quote, depth = "", 0
+    for char in text:
+        if quote:
+            quote = "" if char == quote else quote
+        elif char in "'\"":
+            quote = char
+        elif char in "()":
+            depth += 1 if char == "(" else -1
+            if depth < 0:
+                return False
+    return not quote and depth == 0
+
+
 def css_value(where: str, value: Any) -> str:
-    """A role value as CSS text; no characters that could leave the declaration."""
+    """A role value as CSS text that cannot end its declaration, rule or <style> element.
+
+    Rejects < > { } ; backslashes, newlines, comment openers and unbalanced quotes or
+    parentheses, since the value is written unescaped into the plugin's role style.
+    """
     if isinstance(value, bool) or not isinstance(value, (str, int, float)):
         raise fail(where, f"must be a string or a number, got {value!r}")
     text = str(value).strip()
-    if not CSS_VALUE.fullmatch(text):
+    if not CSS_VALUE.fullmatch(text) or "/*" in text or not balanced(text):
         raise fail(where, f"is not a plain CSS value: {value!r}")
     return text
 
@@ -256,6 +276,9 @@ def parse_page(meta: dict[str, Any], site: SiteConfig, src: str) -> PageConfig:
     where = f"{src}: fly"
     raw = mapping(where, meta.get("fly"), PAGE_KEYS)
     preset, alias = raw.get("preset"), meta.get("subtheme")
+    for key, name in (("fly.preset", preset), ("subtheme", alias)):
+        if name is not None and not isinstance(name, str):
+            raise fail(f"{src}: {key}", f"must be a preset name, got {name!r}")
     if alias is not None and preset is not None and alias != preset:
         raise fail(where, f"subtheme {alias!r} and fly.preset {preset!r} disagree; keep one")
     preset = preset if preset is not None else alias

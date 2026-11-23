@@ -86,6 +86,12 @@ def test_parse_site_when_no_fly_then_defaults():
         ({"fonts": {"roles": {"h1": {"family": "x;} body{color:red"}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"family": "</style>"}}}}, "not a plain CSS value"),
         ({"fonts": {"roles": {"h1": {"weight": True}}}}, "must be a string or a number"),
+        ({"fonts": {"roles": {"h1": {"family": "'A' /* x"}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"family": "'A, serif"}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"family": '"A'}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"size": "calc(1rem"}}}}, "not a plain CSS value"),
+        ({"fonts": {"roles": {"h1": {"size": "1rem)"}}}}, "not a plain CSS value"),
+        ({"fonts": {"sources": ["google:A&display=block"]}}, "font source must be"),
         ({"presets": {"Bad Name": {}}}, "preset name must match"),
         ({"presets": {"x": {"css": "a.css"}}}, "extra.fly.presets.x: unknown key(s) css"),
         ({"presets": {"x": {"hue": "beige"}}}, "extra.fly.presets.x.hue"),
@@ -150,6 +156,9 @@ def test_parse_page_when_subtheme_alias_then_read_as_preset():
         ({"fly": {"hue": "beige"}}, "p.md: fly.hue"),
         ({"fly": "sitka"}, "p.md: fly: must be a mapping"),
         ({"margin_side": "top"}, "p.md: margin_side: must be one of left, right"),
+        ({"fly": {"preset": ["sitka"]}}, "p.md: fly.preset: must be a preset name"),
+        ({"fly": {"preset": {"a": 1}}}, "p.md: fly.preset: must be a preset name"),
+        ({"subtheme": 5}, "p.md: subtheme: must be a preset name"),
     ],
 )
 def test_parse_page_when_invalid_then_plugin_error_names_page(meta, message):
@@ -190,6 +199,29 @@ def test_merge_roles_when_later_level_then_wins_per_property():
         "h1": {"a": "1", "b": "3"},
         "h2": {"a": "4"},
     }
+
+
+def test_parse_site_when_values_balanced_then_accepted():
+    roles = {"h1": {"family": "'A (x)', \"B\", serif", "size": "calc((1rem + 2px) * 2)"}}
+    assert parse_site({"fly": {"fonts": {"roles": roles}}}).look.roles["h1"]["size"] == (
+        "calc((1rem + 2px) * 2)"
+    )
+
+
+def test_source_url_when_google_multi_family_then_one_url_html_escaped_in_template():
+    from jinja2 import Environment
+
+    spec = "google:Outfit:wght@100..900&family=REM:wght@100..900"
+    url = source_url(parse_site({"fly": {"fonts": {"sources": [spec]}}}).look.sources[0])
+    assert url == (
+        "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900"
+        "&family=REM:wght@100..900&display=swap"
+    )
+    html = Environment(autoescape=True).from_string('<link href="{{ u | e }}">').render(u=url)
+    assert html == (
+        '<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900'
+        '&amp;family=REM:wght@100..900&amp;display=swap">'
+    )
 
 
 def test_source_url_when_each_kind_then_expanded():
@@ -392,8 +424,22 @@ def test_on_post_build_when_materialx_css_present_then_rescaled(tmp_path):
     (d / "main.abc.min.css").write_text("a{width:1rem}")
     (d / "palette.def.min.css").write_text("b{top:2rem}")
     FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
-    assert (d / "main.abc.min.css").read_text() == "a{width:1.3889rem}"
-    assert (d / "palette.def.min.css").read_text() == "b{top:2.7778rem}"
+    marker = assets.RESCALED
+    assert (d / "main.abc.min.css").read_text() == marker + "a{width:1.3889rem}"
+    assert (d / "palette.def.min.css").read_text() == marker + "b{top:2.7778rem}"
+    FlyPlugin().on_post_build({"site_dir": str(tmp_path)})
+    assert (d / "main.abc.min.css").read_text() == marker + "a{width:1.3889rem}", (
+        "second run: no-op"
+    )
+
+
+def test_rescale_rem_when_calc_url_strings_and_e_notation_then_lengths_only():
+    css = 'a{w:calc(100% - 2rem);m:calc(-1rem*2);b:url(img/2rem.svg);c:"1rem";d:1e-1rem;e:1E1rem}'
+    assert assets.rescale_rem(css) == (
+        'a{w:calc(100% - 2.7778rem);m:calc(-1.3889rem*2);b:url(img/2rem.svg);c:"1rem";'
+        "d:.1389rem;e:13.8889rem}"
+    )
+    assert assets.rescale_rem("a{b:url('x/.5rem.png') 1rem}") == "a{b:url('x/.5rem.png') 1.3889rem}"
 
 
 # --- hooks ----------------------------------------------------------------------------

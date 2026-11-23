@@ -1809,7 +1809,7 @@
   vexy-menu:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
     --vexy-menu-z: 3;
   }
-  body:not(.fly-chrome-none):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) header.md-header {
+  body:is(.fly-chrome-fontlab, .fly-chrome-vexy):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) header.md-header {
     display: none;
   }
   .md-footer:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {

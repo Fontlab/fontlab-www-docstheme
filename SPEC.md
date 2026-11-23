@@ -36,8 +36,10 @@ components, navigation and keyboard bridges) keeps working unchanged until a sit
   `assets/fly/` (built CSS/JS), `plugin.py` and helpers.
 - Build backend hatchling + hatch-vcs; version from git tags (`vX.Y.Z`); generated
   `theme/fly_january/__version__.py` is git-ignored.
-- Entry points: `properdocs.themes` and `mkdocs.themes` → `fly-january = fly_january`;
-  `mkdocs.plugins` → `fly = fly_january.plugin:FlyPlugin`.
+- Entry points: `mkdocs.themes` → `fly-january = fly_january` (only this group: ProperDocs
+  reads both `mkdocs.themes` and `properdocs.themes`, so registering in both makes every
+  build warn about a duplicate `fly-january` provider); `mkdocs.plugins` →
+  `fly = fly_january.plugin:FlyPlugin`.
 - Dependencies: `mkdocs-materialx>=10.1.8`, `properdocs>=1.6.7`. Python >=3.12.
 - Consumer contract:
 

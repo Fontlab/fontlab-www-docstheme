@@ -15,10 +15,16 @@ ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "fixtures" / "fly"
 
 
-@pytest.mark.parametrize("group", ["properdocs.themes", "mkdocs.themes"])
-def test_theme_when_entry_point_group_then_discoverable(group):
-    found = {ep.name: ep.value for ep in entry_points(group=group)}
-    assert found.get("fly-january") == "fly_january", f"{group}: {found}"
+def test_theme_when_registered_then_only_mkdocs_group_and_properdocs_finds_it():
+    from properdocs.utils import get_theme_names, get_themes
+
+    found = {ep.name: ep.value for ep in entry_points(group="mkdocs.themes")}
+    assert found.get("fly-january") == "fly_january", found
+    assert "fly-january" not in {ep.name for ep in entry_points(group="properdocs.themes")}, (
+        "a second registration makes ProperDocs warn about a duplicate provider"
+    )
+    assert "fly-january" in get_theme_names()
+    assert get_themes()["fly-january"].value == "fly_january"
 
 
 def test_plugin_when_entry_point_then_loads_flyplugin():
@@ -58,6 +64,8 @@ def built_site(tmp_path_factory):
     site = tmp_path_factory.mktemp("site")
     result = build(FIXTURE / "mkdocs.yml", site)
     assert result.returncode == 0, result.stdout + result.stderr
+    log = (result.stdout + result.stderr).lower()
+    assert "duplicate" not in log and "provided by the python packages" not in log, log
     return site
 
 
