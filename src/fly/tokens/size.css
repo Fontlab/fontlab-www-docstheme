@@ -1,0 +1,11 @@
+/* this_file: src/fly/tokens/size.css */
+/* The three text sizes (SPEC 4.2). Continuous text and navigation use only these;
+   headings have fluid sizes of their own (type.css). At the 14.4px root: xs 14px,
+   sm 18px, md 23.4px. */
+@layer fly.tokens {
+  :root {
+    --fly-size-xs: 0.9722rem; /* captions, th, navigation, footers */
+    --fly-size-sm: 1.25rem; /* body text, tables */
+    --fly-size-md: 1.625rem; /* lead paragraphs, blockquotes */
+  }
+}

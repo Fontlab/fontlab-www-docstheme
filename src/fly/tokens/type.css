@@ -1,0 +1,157 @@
+/* this_file: src/fly/tokens/type.css */
+/* Typographic roles (SPEC 4.3). Every role has the same nine properties:
+   --fly-<role>-family -weight -stretch -features -variation -size -leading -tracking -scale.
+   Rules read roles only through these variables. Heading sizes are fluid
+   clamp(rem floor, rem + vw slope, rem ceiling) multiplied by the role's unitless -scale;
+   the three text sizes come from size.css. Leadings in flowing text are whole multiples
+   of 1rem: headings round their natural leading up to the next 1rem step. Navigation,
+   captions and code are xs text and keep unitless leadings off the grid.
+   The variables are resolved on :root, so a page or site override (the fly plugin's
+   <style>) must also target :root. Inline roles em, strong and mono have -family,
+   -weight and -adjust, an em multiplier that evens out x-heights between families. */
+@layer fly.tokens {
+  :root {
+    --fly-h1-family: 'newsserif-huge-variable', Georgia, serif;
+    --fly-h1-weight: 700;
+    --fly-h1-stretch: normal;
+    --fly-h1-features: normal;
+    --fly-h1-variation: normal;
+    --fly-h1-size: calc(clamp(2.625rem, 6vw, 6rem) * var(--fly-h1-scale));
+    --fly-h1-leading: round(up, 0.8em, 1rem);
+    --fly-h1-tracking: -0.01em;
+    --fly-h1-scale: 1;
+
+    --fly-h2-family: 'quire-sans', Arial, sans-serif;
+    --fly-h2-weight: 300;
+    --fly-h2-stretch: normal;
+    --fly-h2-features: normal;
+    --fly-h2-variation: normal;
+    --fly-h2-size: calc(clamp(2.25rem, 1.5rem + 2vw, 3.375rem) * var(--fly-h2-scale));
+    --fly-h2-leading: round(up, 1em, 1rem);
+    --fly-h2-tracking: -0.02em;
+    --fly-h2-scale: 1;
+
+    --fly-h3-family: var(--fly-nav-family);
+    --fly-h3-weight: 400;
+    --fly-h3-stretch: var(--fly-nav-stretch);
+    --fly-h3-features: normal;
+    --fly-h3-variation: var(--fly-nav-variation);
+    --fly-h3-size: calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h3-scale));
+    --fly-h3-leading: round(up, 1.3em, 1rem);
+    --fly-h3-tracking: 0;
+    --fly-h3-scale: 1;
+
+    --fly-h4-family: var(--fly-nav-family);
+    --fly-h4-weight: 300;
+    --fly-h4-stretch: var(--fly-nav-stretch);
+    --fly-h4-features: normal;
+    --fly-h4-variation: var(--fly-nav-variation);
+    --fly-h4-size: calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h4-scale));
+    --fly-h4-leading: round(up, 1.3em, 1rem);
+    --fly-h4-tracking: 0;
+    --fly-h4-scale: 1;
+
+    --fly-h5-family: var(--fly-h2-family);
+    --fly-h5-weight: 400;
+    --fly-h5-stretch: normal;
+    --fly-h5-features: normal;
+    --fly-h5-variation: normal;
+    --fly-h5-size: calc(clamp(1.75rem, 1.25rem + 1vw, 2.1875rem) * var(--fly-h5-scale));
+    --fly-h5-leading: round(up, 1.1em, 1rem);
+    --fly-h5-tracking: 0;
+    --fly-h5-scale: 1;
+
+    --fly-h6-family: 'grtsk-vf', Arial, sans-serif;
+    --fly-h6-weight: 500;
+    --fly-h6-stretch: 90%;
+    --fly-h6-features: normal;
+    --fly-h6-variation: 'slnt' 0;
+    --fly-h6-size: calc(clamp(1.1875rem, 1rem + 0.5vw, 1.25rem) * var(--fly-h6-scale));
+    --fly-h6-leading: var(--fly-line);
+    --fly-h6-tracking: 0;
+    --fly-h6-scale: 1;
+
+    --fly-body-family: 'sole-serif-small-variable', Georgia, serif;
+    --fly-body-weight: 400;
+    --fly-body-stretch: normal;
+    --fly-body-features: normal;
+    --fly-body-variation: normal;
+    --fly-body-size: calc(var(--fly-size-sm) * var(--fly-body-scale));
+    --fly-body-leading: var(--fly-line);
+    --fly-body-tracking: 0;
+    --fly-body-scale: 1;
+
+    --fly-lead-family: var(--fly-h2-family);
+    --fly-lead-weight: 500;
+    --fly-lead-stretch: normal;
+    --fly-lead-features: normal;
+    --fly-lead-variation: normal;
+    --fly-lead-size: calc(var(--fly-size-md) * var(--fly-lead-scale));
+    --fly-lead-leading: var(--fly-line);
+    --fly-lead-tracking: 0;
+    --fly-lead-scale: 1;
+
+    --fly-nav-family: 'grtsk-vf', Arial, sans-serif;
+    --fly-nav-weight: 400;
+    --fly-nav-stretch: 60%;
+    --fly-nav-features: normal;
+    --fly-nav-variation: 'wdth' 60, 'slnt' 0;
+    --fly-nav-size: calc(var(--fly-size-xs) * var(--fly-nav-scale));
+    --fly-nav-leading: 1.25;
+    --fly-nav-tracking: 0;
+    --fly-nav-scale: 1;
+
+    --fly-table-family: var(--fly-nav-family);
+    --fly-table-weight: 400;
+    --fly-table-stretch: var(--fly-nav-stretch);
+    --fly-table-features: normal;
+    --fly-table-variation: var(--fly-nav-variation);
+    --fly-table-size: calc(var(--fly-size-sm) * var(--fly-table-scale));
+    --fly-table-leading: var(--fly-line);
+    --fly-table-tracking: 0;
+    --fly-table-scale: 1;
+
+    --fly-caption-family: var(--fly-nav-family);
+    --fly-caption-weight: 500;
+    --fly-caption-stretch: var(--fly-nav-stretch);
+    --fly-caption-features: normal;
+    --fly-caption-variation: var(--fly-nav-variation);
+    --fly-caption-size: calc(var(--fly-size-xs) * var(--fly-caption-scale));
+    --fly-caption-leading: 1.35;
+    --fly-caption-tracking: 0;
+    --fly-caption-scale: 1;
+
+    --fly-code-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --fly-code-weight: 400;
+    --fly-code-stretch: normal;
+    --fly-code-features: normal;
+    --fly-code-variation: normal;
+    --fly-code-size: calc(var(--fly-size-xs) * var(--fly-code-scale));
+    --fly-code-leading: 1.5;
+    --fly-code-tracking: 0;
+    --fly-code-scale: 1;
+
+    --fly-em-family: var(--fly-body-family);
+    --fly-em-weight: 400;
+    --fly-em-adjust: 1;
+
+    --fly-strong-family: 'grtsk-vf', Arial, sans-serif;
+    --fly-strong-weight: 550;
+    --fly-strong-adjust: 0.95;
+
+    --fly-mono-family: var(--fly-code-family);
+    --fly-mono-weight: 400;
+    --fly-mono-adjust: 0.95;
+  }
+
+  /* Without round(), heading leadings fall back to their unitless design values. */
+  @supports not (line-height: round(up, 1em, 1rem)) {
+    :root {
+      --fly-h1-leading: 0.8;
+      --fly-h2-leading: 1;
+      --fly-h3-leading: 1.3;
+      --fly-h4-leading: 1.3;
+      --fly-h5-leading: 1.1;
+    }
+  }
+}

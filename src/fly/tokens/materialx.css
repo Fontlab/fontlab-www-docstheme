@@ -1,0 +1,94 @@
+/* this_file: src/fly/tokens/materialx.css */
+/* MaterialX bridge (SPEC 4.4). MaterialX colours and typesets everything through its
+   --md-* variables; here each one is set from a fly token, for both scheme values and for
+   elements with their own page hue. MaterialX declares the same variables in unlayered
+   CSS: these layered declarations take effect once the build flattens the layers into
+   selector weight (scripts/cascade.mjs) or MaterialX sits in a lower layer. */
+@layer fly.tokens {
+  :root,
+  [data-md-color-scheme],
+  [data-fly-hue] {
+    --md-text-font: var(--fly-body-family);
+    --md-code-font: var(--fly-code-family);
+
+    --md-default-fg-color: var(--fly-ink);
+    --md-default-fg-color--light: var(--fly-quiet);
+    --md-default-fg-color--lighter: color-mix(in srgb, var(--fly-ink) 32%, transparent);
+    --md-default-fg-color--lightest: color-mix(in srgb, var(--fly-ink) 7%, transparent);
+    --md-default-fg-color--quote: color-mix(in srgb, var(--fly-ink) 12%, transparent);
+    --md-default-bg-color: var(--fly-paper-3);
+    --md-default-bg-color--light: color-mix(in srgb, var(--fly-paper-3) 70%, transparent);
+    --md-default-bg-color--lighter: color-mix(in srgb, var(--fly-paper-3) 30%, transparent);
+    --md-default-bg-color--lightest: color-mix(in srgb, var(--fly-paper-3) 12%, transparent);
+
+    --md-primary-fg-color: var(--fly-primary);
+    --md-primary-fg-color--light: var(--fly-primary-soft);
+    --md-primary-fg-color--dark: var(--fly-primary-deep);
+    --md-primary-fg-color--transparent: color-mix(in srgb, var(--fly-primary) 10%, transparent);
+    --md-primary-bg-color: var(--fly-bar-ink);
+    --md-primary-bg-color--light: color-mix(in srgb, var(--fly-bar-ink) 70%, transparent);
+    --md-accent-fg-color: var(--fly-accent);
+    --md-accent-fg-color--transparent: color-mix(in srgb, var(--fly-accent) 10%, transparent);
+    --md-accent-bg-color: var(--fly-bar-ink);
+    --md-accent-bg-color--light: color-mix(in srgb, var(--fly-bar-ink) 70%, transparent);
+
+    --md-typeset-color: var(--fly-ink);
+    --md-typeset-a-color: var(--fly-link);
+    --md-typeset-mark-color: var(--fly-mark);
+    --md-typeset-del-color: color-mix(in srgb, var(--fly-danger) 15%, transparent);
+    --md-typeset-ins-color: color-mix(in srgb, var(--fly-success) 15%, transparent);
+    --md-typeset-kbd-color: var(--fly-paper-2);
+    --md-typeset-kbd-accent-color: var(--fly-paper-3);
+    --md-typeset-kbd-border-color: var(--fly-edge);
+    --md-typeset-table-color: var(--fly-edge);
+    --md-typeset-table-color--light: color-mix(in srgb, var(--fly-ink) 6%, transparent);
+    --md-typeset-table-row-color: var(--fly-hover);
+
+    --md-code-fg-color: var(--fly-ink);
+    --md-code-bg-color: var(--fly-paper-2);
+    --md-code-bg-color--light: color-mix(in srgb, var(--fly-paper-2) 70%, transparent);
+    --md-code-bg-color--lighter: color-mix(in srgb, var(--fly-paper-2) 30%, transparent);
+    --md-code-hl-color: var(--fly-accent);
+    --md-code-hl-color--light: color-mix(in srgb, var(--fly-accent) 10%, transparent);
+    --md-code-hl-number-color: var(--fly-cherry-deep);
+    --md-code-hl-special-color: var(--fly-magenta-deep);
+    --md-code-hl-function-color: var(--fly-violet-deep);
+    --md-code-hl-constant-color: var(--fly-indigo-deep);
+    --md-code-hl-keyword-color: var(--fly-cobalt-deep);
+    --md-code-hl-string-color: var(--fly-emerald-deep);
+
+    --md-admonition-fg-color: var(--fly-ink);
+    --md-admonition-bg-color: var(--fly-paper-3);
+    --md-admonition-color--note: var(--fly-admonition-note);
+    --md-admonition-color--abstract: var(--fly-admonition-abstract);
+    --md-admonition-color--info: var(--fly-admonition-info);
+    --md-admonition-color--tip: var(--fly-admonition-tip);
+    --md-admonition-color--success: var(--fly-admonition-success);
+    --md-admonition-color--question: var(--fly-admonition-question);
+    --md-admonition-color--warning: var(--fly-admonition-warning);
+    --md-admonition-color--failure: var(--fly-admonition-failure);
+    --md-admonition-color--danger: var(--fly-admonition-danger);
+    --md-admonition-color--bug: var(--fly-admonition-bug);
+    --md-admonition-color--example: var(--fly-admonition-example);
+    --md-admonition-color--quote: var(--fly-admonition-quote);
+    --md-warning-fg-color: var(--fly-ink);
+    --md-warning-bg-color: var(--fly-warning-tint);
+
+    --md-footer-fg-color: var(--fly-bar-ink);
+    --md-footer-fg-color--light: color-mix(in srgb, var(--fly-bar-ink) 70%, transparent);
+    --md-footer-fg-color--lighter: color-mix(in srgb, var(--fly-bar-ink) 45%, transparent);
+    --md-footer-bg-color: var(--fly-bar);
+    --md-footer-bg-color--dark: var(--fly-bar-drop);
+  }
+
+  /* Syntax colours read as text: deep on the light canvas, soft on the dark one. */
+  [data-md-color-scheme='slate'],
+  [data-md-color-scheme='slate'] [data-fly-hue] {
+    --md-code-hl-number-color: var(--fly-cherry-soft);
+    --md-code-hl-special-color: var(--fly-magenta-soft);
+    --md-code-hl-function-color: var(--fly-violet-soft);
+    --md-code-hl-constant-color: var(--fly-indigo-soft);
+    --md-code-hl-keyword-color: var(--fly-cobalt-soft);
+    --md-code-hl-string-color: var(--fly-emerald-soft);
+  }
+}
