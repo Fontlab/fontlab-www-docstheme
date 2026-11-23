@@ -79,3 +79,9 @@ Update README.md, CHANGELOG.md and WORK.md when contracts change. Update the
 relevant consumer's integration notes for site-specific configuration changes.
 `consumers.json` and dated review records describe deployment scope; historical
 evidence is not a substitute for checking the current published state.
+
+## Browser rule (owner instruction)
+
+Playwright's headless Chromium (`chrome-headless-shell`) crashes on the owner's machine. Never run
+`npm run test:browser`, `playwright test`, `npx playwright …`, `tests/browser/*.spec.mjs`, or any Playwright /
+Puppeteer MCP tool or skill. Browser checks use the `agent-browser` CLI only (`npm run verify:fly`).

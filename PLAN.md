@@ -21,7 +21,10 @@ Spec: `SPEC.md` (binding). Brief: `issues/401.md`. Earlier initiatives (task422,
   `requires-python >=3.12`, ruff line length 100, pytest.
 - Every source file carries a `this_file:` record.
 - `docs/` in this repo is build output; never hand-edit it. `dist/` and
-  `../img/docs/fltheme26` (the fltheme26 bundle) must keep building and passing their tests.
+  `../img/docs/fltheme26` (the fltheme26 bundle) must keep building (`npm run build`) and
+  passing `npm test`. The legacy browser suite (`npm run test:browser`, `tests/browser/*.spec.mjs`,
+  `playwright test`, `npx playwright`) is Playwright and is NOT run in this initiative; prove the
+  legacy bundle unchanged with `git diff origin/main -- dist` instead.
 - Never discard owner edits in any repo. Tasks 1–11 do not push, publish or deploy; release
   is Task 12, and Task 13 pushes each site only after it.
 - Before Task 12, other repos install the theme and plugins from local paths (editable
