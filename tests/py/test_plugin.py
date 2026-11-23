@@ -476,7 +476,8 @@ def _outside_strings(css: str) -> str:
 
 
 def test_rescale_rem_when_real_materialx_stylesheet_then_every_rem_scaled():
-    material = pytest.importorskip("material")
+    import material  # a missing MaterialX must fail this test, not skip it
+
     (main,) = (Path(material.__file__).parent / "templates/assets/stylesheets").glob(
         "main.*.min.css"
     )

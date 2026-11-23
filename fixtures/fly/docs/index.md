@@ -4,7 +4,11 @@ The fly-january fixture home page, set as a lead paragraph.
 
 A body paragraph of ordinary running text, long enough to wrap onto a second line at the narrow
 widths so that the baseline grid is exercised on more than one line of text. It carries
-*emphasis*, **strong** text and a [link to the guide](guide.md) in the same run.
+*emphasis*, **strong** text and a [link to the guide](guide.md) in the same run, and some `inline code`.
+
+A second body paragraph directly after the first, so the pitch between paragraph tops is measured.
+
+---
 
 ## Second-level heading
 
@@ -15,6 +19,8 @@ Another body paragraph under the second-level heading.
 - A list item with a short text.
 - A second list item that is long enough to wrap onto another line when the column is narrow, so
   list leading is measured on a wrapped item as well.
+
+A paragraph between the two lists.
 
 1. First ordered item.
 2. Second ordered item.

@@ -13,6 +13,12 @@
    figure spans every row, so its top is level with the first paragraph; --rows is that
    row count. .fly-cut figures cut into the text column by --cut and the text wraps them. */
 @layer fly.layout {
+  /* In the flow an admonition is body text; MaterialX sets it at .8889rem. Floated into the
+     margin (below) it is an aside, xs. */
+  .md-typeset :is(.admonition, details) {
+    font-size: var(--fly-body-size);
+  }
+
   @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
     @container fly-canvas (min-width: 66.6667rem) {
       .md-typeset > :is(h3, h4, .admonition, details).to-main {

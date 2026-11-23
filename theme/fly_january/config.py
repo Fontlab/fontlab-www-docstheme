@@ -183,8 +183,9 @@ def balanced(text: str) -> bool:
 def css_value(where: str, value: Any) -> str:
     """A role value as CSS text that cannot end its declaration, rule or <style> element.
 
-    Rejects < > { } ; backslashes, newlines, comment openers and unbalanced quotes or
-    parentheses, quotes inside an unquoted url(), since the value is written unescaped into the plugin's role style.
+    Rejects < > { } ; backslashes, newlines, comment openers, unbalanced quotes or
+    parentheses and quotes inside an unquoted url(), since the value is written unescaped
+    into the plugin's role style.
     """
     if isinstance(value, bool) or not isinstance(value, (str, int, float)):
         raise fail(where, f"must be a string or a number, got {value!r}")

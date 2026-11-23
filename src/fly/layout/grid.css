@@ -62,4 +62,12 @@
   .md-typeset > :is(.md-typeset__scrollwrap, .highlight, .admonition, details) {
     margin-block: var(--fly-line);
   }
+
+  /* MaterialX's hr is a 1.5em margin and a 1px border; the rule is drawn outside the box so
+     the block is exactly one line either side. */
+  .md-typeset > hr {
+    margin-block: var(--fly-line);
+    border: 0;
+    box-shadow: 0 1px 0 var(--md-default-fg-color--lightest);
+  }
 }

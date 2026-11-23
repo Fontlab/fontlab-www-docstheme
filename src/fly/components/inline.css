@@ -87,6 +87,18 @@
     letter-spacing: var(--fly-lead-tracking);
   }
 
+  /* Blockquotes are lead-size text (SPEC 4.2: lead paragraphs, blockquotes); MaterialX sets
+     them at .9722rem. Inline code is the mono role at --fly-mono-adjust of the text around
+     it (MaterialX: .85em). */
+  .md-typeset blockquote {
+    font-size: var(--fly-lead-size);
+    line-height: var(--fly-lead-leading);
+  }
+
+  .md-typeset :not(pre) > code {
+    font-size: calc(var(--fly-mono-adjust) * 1em);
+  }
+
   .md-typeset h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
     line-height: 0;
   }

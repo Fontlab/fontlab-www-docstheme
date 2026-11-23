@@ -958,6 +958,11 @@
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) > :is(.md-typeset__scrollwrap, .highlight, .admonition, details) {
     margin-block: var(--fly-line);
   }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) > hr {
+    margin-block: var(--fly-line);
+    border: 0;
+    box-shadow: 0 1px 0 var(--md-default-fg-color--lightest);
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) figure {
     margin: var(--fly-line) auto;
   }
@@ -1079,6 +1084,9 @@
     .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-typeset__scrollwrap, .highlight):has(table, pre) {
       clear: both;
     }
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#) :is(.admonition, details) {
+    font-size: var(--fly-body-size);
   }
   @media not screen and (min-width: 60em) and (max-width: 76.234375em) {
     @container fly-canvas (min-width: 66.6667rem) {
@@ -1497,6 +1505,13 @@
     font-variation-settings: var(--fly-lead-variation);
     line-height: var(--fly-lead-leading);
     letter-spacing: var(--fly-lead-tracking);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) blockquote {
+    font-size: var(--fly-lead-size);
+    line-height: var(--fly-lead-leading);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :not(pre) > code {
+    font-size: calc(var(--fly-mono-adjust) * 1em);
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) h1 + p :is(strong, b, em, i, a, mark, code, kbd) {
     line-height: 0;
