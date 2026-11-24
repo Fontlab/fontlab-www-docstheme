@@ -19,6 +19,7 @@ from mkdocs.utils import get_theme_dir
 
 THEME_DIR = Path(__file__).parent
 THEME_ASSETS = ("fly.css", "fly-utilities.css", "fly.js", "fly-bridge.js", "fly-debug.js")
+CDN_ASSETS = (*THEME_ASSETS, "fly-tokens.css", "components.css", "basecoat.js")
 ASSET_VERSION_LEN = 10
 # The theme sets the root to 90% (14.4px) so the 28.8px body line is 2rem. MaterialX is
 # written in rem against its 125% (20px) root, so its built CSS is rescaled by 20/14.4 to
@@ -57,18 +58,29 @@ def versioned(url: str, roots: list[Path]) -> str:
     return url
 
 
-def version_links(config: Any) -> None:
+def version_links(config: Any, assets_url: str | None = None) -> None:
     """Version local extra_css / extra_javascript links in place."""
     roots = [Path(config.get("docs_dir") or "."), THEME_DIR]
+
+    def link(url: str) -> str:
+        prefix = "assets/fly/"
+        if assets_url and url.startswith(prefix):
+            name = url.removeprefix(prefix).split("?", 1)[0]
+            if name in CDN_ASSETS:
+                return assets_url + name
+            if not (roots[0] / prefix / name).is_file():
+                log.warning("Remote Fly CDN does not include %s; keeping its local URL", url)
+        return versioned(url, roots)
+
     css = config.get("extra_css")
     if css is not None:
-        css[:] = [versioned(u, roots) for u in css]
+        css[:] = [link(u) for u in css]
     scripts = config.get("extra_javascript") or []
     for i, item in enumerate(scripts):
         if isinstance(item, str):
-            scripts[i] = versioned(item, roots)
+            scripts[i] = link(item)
         elif hasattr(item, "path"):
-            item.path = versioned(item.path, roots)
+            item.path = link(item.path)
 
 
 def theme_versions() -> dict[str, str]:

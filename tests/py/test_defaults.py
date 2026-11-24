@@ -4,6 +4,7 @@ this_file: tests/py/test_defaults.py
 """
 
 import json
+import re
 import tomllib
 from importlib.metadata import entry_points
 
@@ -21,14 +22,15 @@ def installed_materialx_plugins() -> dict[str, str]:
     }
 
 
-def test_entry_points_when_materialx_plugins_then_each_has_a_fly_january_twin():
+@pytest.mark.parametrize("theme", ["fly-january", "fly-january-remote"])
+def test_entry_points_when_materialx_plugins_then_each_has_a_fly_january_twin(theme):
     declared = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]["entry-points"][
         "mkdocs.plugins"
     ]
     twins = {
-        name.removeprefix("fly-january/"): value
+        name.removeprefix(f"{theme}/"): value
         for name, value in declared.items()
-        if name.startswith("fly-january/")
+        if name.startswith(f"{theme}/")
     }
     assert twins == installed_materialx_plugins(), (
         "pyproject.toml fly-january/<name> entry points must mirror the installed "
@@ -37,10 +39,11 @@ def test_entry_points_when_materialx_plugins_then_each_has_a_fly_january_twin():
     assert declared["fly"] == "fly_january.plugin:FlyPlugin"
 
 
-def test_entry_points_when_installed_then_fly_january_twins_load_materialx_classes():
+@pytest.mark.parametrize("theme", ["fly-january", "fly-january-remote"])
+def test_entry_points_when_installed_then_fly_january_twins_load_materialx_classes(theme):
     live = {ep.name: ep for ep in entry_points(group="mkdocs.plugins")}
     for name, value in installed_materialx_plugins().items():
-        assert live[f"fly-january/{name}"].value == value, name
+        assert live[f"{theme}/{name}"].value == value, name
 
 
 @pytest.fixture(scope="module")
@@ -238,3 +241,48 @@ def test_blog_when_blog_alias_then_strict_build_with_excerpts_and_pagination(tmp
     assert (tmp_path / "a-post-with-a-wide-table/index.html").is_file() or list(
         tmp_path.glob("**/a-post-with-a-wide-table/index.html")
     )
+
+
+@pytest.mark.parametrize(
+    ("theme", "options", "cdn"),
+    [
+        ("fly-january", "", None),
+        ("fly-january", "assets: remote", "https://fontlab.dev/fontlab-www-docstheme/fly/latest/"),
+        (
+            "fly-january-remote",
+            "assets_url: https://cdn.invalid/fly/0.4.0/",
+            "https://cdn.invalid/fly/0.4.0/",
+        ),
+    ],
+)
+def test_fixture_asset_delivery(tmp_path, theme, options, cdn):
+    config = tmp_path / "mkdocs.yml"
+    components = (
+        "extra_css: [assets/fly/fly-tokens.css, assets/fly/components.css]\n"
+        "extra_javascript: [{path: assets/fly/basecoat.js, defer: true}]\n"
+        if cdn else "extra_css: [assets/fly/fly-tokens.css]\n"
+    )
+    config.write_text(
+        f"INHERIT: {FIXTURE / 'mkdocs-minimal.yml'}\ndocs_dir: {FIXTURE / 'docs-minimal'}\n"
+        f"theme: {{name: {theme}}}\n{components}"
+        f"extra:\n  fly:\n    debug: true\n    utilities: true\n    {options}\n"
+    )
+    site = tmp_path / "site"
+    result = build(config, site)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert_search_markup(site)
+    html = (site / "guide/index.html").read_text()
+    files = [
+        "fly.css", "fly-utilities.css", "fly.js", "fly-bridge.js", "fly-debug.js", "fly-tokens.css"
+    ]
+    if cdn:
+        files.extend(["components.css", "basecoat.js"])
+    error_page = (site / "404.html").read_text()
+    for name in files:
+        if cdn:
+            assert f'="{cdn}{name}"' in html and f'="{cdn}{name}"' in error_page
+        else:
+            assert re.search(r'="\.\./assets/fly/' + re.escape(name) + r'\?v=[a-f0-9]{10}"', html)
+    assert (site / "assets/fly").exists() == (cdn is None)
+    assert 'href="../assets/stylesheets/' in html
+    assert 'src="../assets/javascripts/' in html

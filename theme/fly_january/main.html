@@ -5,15 +5,19 @@
     classes and data-fly-hue. -#}
 {% extends "base.html" %}
 
+{% macro asset(name) -%}
+  {{ (fly.assets_url ~ name) | e if fly.assets_url else (('assets/fly/' ~ name) | url ~ '?v=' ~ fly.v[name]) }}
+{%- endmacro %}
+
 {% block styles %}
   {%- if fly is not defined %}
     {{ fly_january_requires_the_fly_plugin__add_fly_to_plugins() }}
   {% endif %}
   {{ super() }}
   {% include "partials/fly-photoswipe.html" %}
-  <link rel="stylesheet" href="{{ 'assets/fly/fly.css' | url }}?v={{ fly.v['fly.css'] }}">
+  <link rel="stylesheet" href="{{ asset('fly.css') }}">
   {%- if fly.utilities %}
-  <link rel="stylesheet" href="{{ 'assets/fly/fly-utilities.css' | url }}?v={{ fly.v['fly-utilities.css'] }}">
+  <link rel="stylesheet" href="{{ asset('fly-utilities.css') }}">
   {%- endif %}
 {% endblock %}
 
@@ -35,7 +39,7 @@
   {%- endif %}
   {%- if fly.debug %}
   <script id="fly-debug-data" type="application/json">{{ fly.debug | safe }}</script>
-  <script src="{{ 'assets/fly/fly-debug.js' | url }}?v={{ fly.v['fly-debug.js'] }}" defer></script>
+  <script src="{{ asset('fly-debug.js') }}" defer></script>
   {%- endif %}
   {%- if fly.chrome.script %}
   <script src="{{ fly.chrome.script | e }}" defer></script>
@@ -59,6 +63,6 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ 'assets/fly/fly-bridge.js' | url }}?v={{ fly.v['fly-bridge.js'] }}"></script>
-  <script type="module" src="{{ 'assets/fly/fly.js' | url }}?v={{ fly.v['fly.js'] }}"></script>
+  <script src="{{ asset('fly-bridge.js') }}"></script>
+  <script type="module" src="{{ asset('fly.js') }}"></script>
 {% endblock %}

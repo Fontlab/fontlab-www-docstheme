@@ -61,6 +61,7 @@ def page(meta):
 
 def test_parse_site_when_no_fly_then_defaults():
     config = parse_site({})
+    assert config.assets == "local"
     assert config.chrome.kind == "fontlab" and not config.utilities and not config.debug
     assert config.margin_side == "left" and config.presets == {}
     assert config.look == Look(sources=DEFAULT_SOURCES), "a bare site gets the default font sources"
@@ -435,7 +436,7 @@ def test_versioned_when_local_asset_then_hash_query_idempotent(tmp_path):
     assert assets.versioned(v, [tmp_path]) != v, "content change -> new URL"
 
 
-def test_version_links_when_extra_css_and_js_then_local_ones_versioned(tmp_path):
+def test_version_links_when_extra_css_and_js_then_local_ones_versioned(tmp_path, caplog):
     (tmp_path / "site.css").write_text("x{}")
     (tmp_path / "site.js").write_text("1")
     script = SimpleNamespace(path="site.js")
@@ -450,6 +451,11 @@ def test_version_links_when_extra_css_and_js_then_local_ones_versioned(tmp_path)
     assert config["extra_javascript"][0].startswith("site.js?v=") and script.path.startswith(
         "site.js?v="
     )
+
+    config["extra_css"] = ["assets/fly/unlisted.css"]
+    config["extra_javascript"] = ["assets/fly/unlisted.js"]
+    assets.version_links(config, "https://cdn.example/")
+    assert all(path in caplog.text for path in ("assets/fly/unlisted.css", "assets/fly/unlisted.js"))
 
 
 def test_theme_versions_when_built_assets_then_one_hash_each():
@@ -729,3 +735,18 @@ def test_body_attributes_when_h1_and_links_accent_then_data_attributes():
 def test_parse_site_when_h1_invalid_then_error(bad):
     with pytest.raises(PluginError, match="extra.fly.h1"):
         site(h1=bad)
+
+
+@pytest.mark.parametrize(
+    "url", ["https://host/fly", "/fly/", "https:///", "https://host/?x=/", "https://host:abc/", None]
+)
+def test_site_rejects_invalid_asset_directory(url):
+    with pytest.raises(PluginError, match="extra.fly.assets_url"):
+        parse_site({"fly": {"assets_url": url}})
+
+
+def test_site_rejects_conflicting_or_unknown_asset_modes():
+    with pytest.raises(PluginError, match="fly-january-remote requires remote"):
+        parse_site({"fly": {"assets": "local"}}, "fly-january-remote")
+    with pytest.raises(PluginError, match="extra.fly.assets"):
+        parse_site({"fly": {"assets": "both"}})

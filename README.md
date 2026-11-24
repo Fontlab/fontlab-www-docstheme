@@ -24,6 +24,30 @@ plugins: [search, fly]
 
 Create `docs/index.md` and run `properdocs build --strict`.
 
+## Local and remote assets
+
+By default, `fly-january` serves its CSS and JavaScript from the built site with
+content hashes in their URLs. Set `extra.fly.assets: remote` or select
+`theme.name: fly-january-remote` with the same `fly` plugin. Using `fly-january-remote` with `extra.fly.assets: local` fails the build.
+
+Remote pages load Fly styles and scripts from
+`https://fontlab.dev/fontlab-www-docstheme/fly/latest/`. After a release and
+browser cache refresh, deployed pages pick up CSS and JavaScript changes without
+a site rebuild. Template and plugin changes require upgrading the Python package
+and rebuilding. Both modes use the installed MaterialX styles and scripts locally.
+Building in remote mode requires no connection to the asset host.
+
+By default, remote mode runs JavaScript from `fontlab.dev` without Subresource Integrity (SRI). Pinning `assets_url` to a versioned folder limits exposure to future releases.
+
+To pin Fly assets to one release, set the base URL including its trailing slash.
+
+```yaml
+extra:
+  fly:
+    assets: remote
+    assets_url: https://fontlab.dev/fontlab-www-docstheme/fly/0.4.0/
+```
+
 ## Adopting fly-january in an existing MaterialX site
 
 1. Change `theme.name` to `fly-january` and add `fly` to your plugin list. Keep your existing features and bare plugin names such as `search`, `blog` and `tags`. The theme registers MaterialX’s implementations and makes them available to its templates.

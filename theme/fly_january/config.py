@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from typing import Any, Literal
+from urllib.parse import urlsplit
 
 from mkdocs.exceptions import PluginError
 
@@ -83,7 +84,11 @@ CHROME_OPTIONS = ("site-label", "site-url", "mobile-menu", "mobile-search", "sea
 # The menu's site-url: an absolute http(s) URL or a root-relative path, no quotes or markup.
 # A host must follow "://"; "//host" and "/\host" (protocol-relative to a browser) are refused.
 SITE_URL = re.compile(r"https?://[^\s\"'<>/\\?#]+[^\s\"'<>\\]*|/(?![/\\])[^\s\"'<>\\]*")
+REMOTE_THEME = "fly-january-remote"
+DEFAULT_ASSETS_URL = "https://fontlab.dev/fontlab-www-docstheme/fly/latest/"
 SITE_KEYS = (
+    "assets",
+    "assets_url",
     "chrome",
     "chrome_options",
     "hue",
@@ -145,6 +150,8 @@ class SiteConfig:
     margin_side: str = "left"
     utilities: bool = False
     debug: bool = False
+    assets: str = "local"
+    assets_url: str = DEFAULT_ASSETS_URL
 
 
 @dataclass(frozen=True)
@@ -326,11 +333,30 @@ def parse_presets(where: str, value: Any) -> dict[str, Look]:
     return presets
 
 
-def parse_site(extra: Any) -> SiteConfig:
+def asset_directory(value: Any) -> str:
+    """An absolute HTTP(S) base for concatenating CDN file names."""
+    if isinstance(value, str) and value.endswith("/") and SITE_URL.fullmatch(value):
+        try:
+            url = urlsplit(value)
+            _ = url.port  # urlsplit validates the port when it is accessed.
+            if url.scheme in ("https", "http") and url.hostname and not (url.query or url.fragment):
+                return value
+        except ValueError:
+            pass
+    raise fail("extra.fly.assets_url", "must be an absolute HTTP(S) directory URL ending in /")
+
+
+def parse_site(extra: Any, theme_name: str | None = None) -> SiteConfig:
     """Validate `config.extra` -> SiteConfig (absent `fly` is all defaults)."""
     raw = mapping("extra.fly", (extra or {}).get("fly"), SITE_KEYS)
     options, sticky = parse_options("extra.fly.chrome_options", raw.get("chrome_options"))
+    implied = "remote" if theme_name == REMOTE_THEME else "local"
+    assets = choice("extra.fly.assets", raw.get("assets", implied), ("local", "remote"))
+    if theme_name == REMOTE_THEME and assets != implied:
+        raise fail("extra.fly.assets", f"theme {REMOTE_THEME} requires remote assets")
     return SiteConfig(
+        assets=assets,
+        assets_url=asset_directory(raw.get("assets_url", DEFAULT_ASSETS_URL)),
         chrome=parse_chrome("extra.fly.chrome", raw.get("chrome", "fontlab")),
         chrome_options=options,
         sticky=sticky,

@@ -18,7 +18,7 @@ const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
 // not tokens. Every other --fly-* reference must be declared in src/fly/tokens.
 const LOCALS = [
   '--fly-mt', '--fly-mb', '--fly-gbox', '--fly-gmb', '--fly-float-top', '--fly-float-mb',
-  '--fly-alert-accent', '--fly-button-height', '--fly-button-label-size',
+  '--fly-l2-transform', '--fly-alert-accent', '--fly-button-height', '--fly-button-label-size',
 ];
 
 async function files(dir, ext) {
@@ -103,6 +103,18 @@ test('committed fly.css and fly-tokens.css match a fresh build and are flat', as
     assert.equal(await readFile(join(OUT, name), 'utf8'), css, name + ' is stale: run npm run build');
     assert.doesNotMatch(strip(css), /@layer|@import|&/, name + ' must be flattened and inlined');
   }
+  const sheets = new Set();
+  postcss.parse(await readFile(join(OUT, 'fly.css'), 'utf8')).walkAtRules('media', media => {
+    if (media.params !== '(prefers-reduced-motion: reduce)') return;
+    media.walkDecls('transition', decl => {
+      if (decl.value === 'none') {
+        for (const selector of decl.parent.selectors) sheets.add(selector.replaceAll(String.raw`:not(#\#)`, ''));
+      }
+    });
+  });
+  for (const sheet of ['body .md-main', '.md-main__inner::before', '.md-sidebar--secondary']) {
+    assert.ok(sheets.has(sheet), `missing reduced-motion override for ${sheet}`);
+  }
   // @property rules register token types; their descriptors are not declarations.
   const tokens = strip(await readFile(join(OUT, 'fly-tokens.css'), 'utf8')).replace(/@property\s+--fly-[a-z0-9-]+\s*\{[^{}]*\}/g, '');
   for (const [, block] of tokens.matchAll(/\{([^{}]*)\}/g)) {
@@ -149,10 +161,10 @@ test('committed scripts equal their sources; utilities are the layered tw: subse
   }
 });
 
-test('main.html loads the theme assets from its own path', async () => {
+test('main.html routes every theme asset through its asset macro', async () => {
   const html = await readFile(join(root, 'theme/fly_january/main.html'), 'utf8');
-  for (const name of ['fly.css', 'fly-utilities.css', 'fly-bridge.js', 'fly.js']) {
-    assert.ok(html.includes("'assets/fly/" + name + "' | url"), 'main.html must load assets/fly/' + name);
+  for (const name of ['fly.css', 'fly-utilities.css', 'fly-bridge.js', 'fly.js', 'fly-debug.js']) {
+    assert.ok(html.includes("asset('" + name + "')"), 'main.html must resolve ' + name);
   }
   assert.ok(html.indexOf('fly.css') < html.indexOf('fly-utilities.css'), 'utilities load after fly.css');
   assert.match(html, /\{%- if fly\.utilities %\}\s*<link[^>]*fly-utilities\.css/, 'utilities only when extra.fly.utilities');

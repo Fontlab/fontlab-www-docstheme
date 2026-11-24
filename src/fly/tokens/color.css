@@ -9,15 +9,16 @@
 @layer fly.tokens {
   :root,
   [data-md-color-scheme='default'] {
-    --fly-paper-1: #e4e4e2; /* first sheet: site navigation */
-    --fly-paper-2: #f1f1ef; /* second sheet: page navigation */
+    --fly-paper-1-covered: #eff0f1;
+    --fly-paper-1: #f6f7f8; /* first sheet: site navigation */
+    --fly-paper-2: #f6f7f8; /* second sheet: page navigation */
     --fly-paper-3: #fefefe; /* third sheet: the reading canvas */
     --fly-ink: #191917;
     --fly-quiet: #5c5c58;
     --fly-edge: #19191729;
     --fly-rule: #cececb; /* hairlines that must read on the canvas (hr): gray-3 */
     --fly-hover: #0000000d;
-    --fly-shadow-ink: rgb(0 0 0 / 12%);
+    --fly-shadow-ink: rgb(0 0 0 / 3%);
     /* Global bars (menu, footer, previous/next strip) are dark in both schemes. */
     --fly-bar: #24252a;
     --fly-bar-drop: #1d1e1f;
@@ -87,6 +88,7 @@
 
   [data-md-color-scheme='slate'] {
     --fly-paper-1: #24252a;
+    --fly-paper-1-covered: var(--fly-paper-1);
     --fly-paper-2: #24252a;
     --fly-paper-3: #1d1e1f;
     --fly-ink: #e9e9e6;
@@ -94,7 +96,7 @@
     --fly-edge: #000000a0;
     --fly-rule: #3e3d3b;
     --fly-hover: #ffffff12;
-    --fly-shadow-ink: rgb(0 0 0 / 12%);
+    --fly-shadow-ink: rgb(0 0 0 / 3%);
     --fly-key: #313137;
     --fly-gray-1: oklch(25% 0.004 95);
     --fly-gray-2: oklch(30% 0.004 95);
@@ -158,10 +160,10 @@
   /* Shadows, declared wherever a scheme is set so --fly-shadow-ink resolves per scheme. */
   :root,
   [data-md-color-scheme] {
-    --fly-shadow: -1px 0 3px rgb(0 0 0 / 8%); /* vertical sheet edges */
-    --fly-shadow-down: 0 2px 6px var(--fly-shadow-ink); /* light-edged screenshots */
-    --fly-shadow-up: 0 -2px 6px var(--fly-shadow-ink); /* previous/next strip, cast up */
-    --fly-drawer-shadow: -2px 0 8px rgb(0 0 0 / 20%); /* phone navigation drawer */
+    --fly-shadow: -1px 0 2px var(--fly-shadow-ink); /* vertical sheet edges */
+    --fly-shadow-down: 0 2px 2px var(--fly-shadow-ink); /* light-edged screenshots */
+    --fly-shadow-up: 0 -2px 2px var(--fly-shadow-ink); /* previous/next strip, cast up */
+    --fly-drawer-shadow: -2px 0 2px var(--fly-shadow-ink); /* phone navigation drawer */
   }
 
   @supports not (color: oklch(0% 0 0)) {
