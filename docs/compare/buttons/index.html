@@ -1,0 +1,4082 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The fly-january documentation theme and the FontLab web design patterns.">
+      
+      
+        <meta name="author" content="Fontlab Ltd.">
+      
+      
+        <link rel="canonical" href="https://fontlab.dev/fontlab-www-docstheme/compare/buttons/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../cards/">
+      
+      
+        
+      
+      
+      
+      
+        
+        
+        
+          <link rel="icon" href="../../assets/images/favicon.png">
+        
+      
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-materialx-10.1.8">
+    
+    
+      
+        <title>Buttons - FontLab web design system</title>
+      
+    
+    
+  
+      <link rel="stylesheet" href="../../assets/stylesheets/main.314bbef5.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a45159b5.min.css">
+      
+    
+  <link rel="stylesheet" data-fly-photoswipe="" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../assets/fly/fly.css?v=ba13bf2171">
+
+    
+
+    
+
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../fly/latest/components.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/component-reference.css?v=06792b2caf">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/field-guide.css?v=15cf2103f4">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/patterns.css?v=077fdb62b5">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/theme-pages.css?v=17b4f9a0a3">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script>try{if(sessionStorage.getItem("fly-l2")==="in"){document.documentElement.dataset.flyL2="in";sessionStorage.removeItem("fly-l2")}}catch(e){}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&amp;icon_names=arrow_back,arrow_forward,dark_mode,light_mode&amp;display=block">
+  <script>try{document.fonts.load('20px "Material Symbols Outlined"',"arrow_backarrow_forwarddark_modelight_mode").then(function(f){if(f.length)document.documentElement.classList.add("fly-msym")})}catch(e){}</script>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin="">
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin="">
+  <link rel="stylesheet" href="https://use.typekit.net/xht3uat.css" data-fly-font="">
+  <link rel="stylesheet" href="https://use.typekit.net/cna4jfp.css" data-fly-font="">
+  <link rel="stylesheet" href="https://use.typekit.net/wck5koo.css" data-fly-font="">
+  <script src="https://i.fontlab.com/menu/fontlab.js" defer=""></script>
+
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+        </style></head>
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" data-mx-topbar="glass" class="fly-margin-left fly-chrome-fontlab" data-fly-hue="cobalt">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="toc" type="checkbox" id="__toc" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__toc"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#buttons" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  <fontlab-menu mode="dark" site-label="Design system" site-url="https://fontlab.dev/fontlab-www-docstheme/" mobile-menu="materialx" mobile-search="materialx" search-from="docstheme"></fontlab-menu>
+  
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FontLab web design system" class="md-header__button md-logo" aria-label="FontLab web design system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FontLab web design system
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Buttons
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../theme/tokens/" class="md-tabs__link">
+          
+  
+  
+  Theme
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Compare
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../showcase/" class="md-tabs__link">
+          
+  
+  
+  Showcase
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../brand-assets/" class="md-tabs__link">
+          
+  
+  
+  Brand assets
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../start/" class="md-tabs__link">
+          
+  
+  
+  Design
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FontLab web design system" class="md-nav__button md-logo" aria-label="FontLab web design system" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    FontLab web design system
+  </label>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theme
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Theme
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme/tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Tokens">
+    
+  
+    Tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Configuration">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme/assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Assets">
+    
+  
+    Assets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme/chrome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Chrome">
+    
+  
+    Chrome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compare
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Compare
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Overview">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis" title="Buttons">
+    
+  
+    Buttons
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis" title="Buttons">
+    
+  
+    Buttons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Contents">
+  
+  
+  
+  
+    
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Buttons
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#basecoat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basecoat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basecoat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daisyui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        daisyUI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="daisyUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materialx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MaterialX
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MaterialX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Cards and surfaces">
+    
+  
+    Cards and surfaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Fields">
+    
+  
+    Fields
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../choices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Choices and switches">
+    
+  
+    Choices and switches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Tabs">
+    
+  
+    Tabs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alerts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Alerts, admonitions and callouts">
+    
+  
+    Alerts, admonitions and callouts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../badges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Badges, tags and keys">
+    
+  
+    Badges, tags and keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Tables">
+    
+  
+    Tables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Disclosure">
+    
+  
+    Disclosure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Dialogs">
+    
+  
+    Dialogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Showcase
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Showcase
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../showcase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Overview">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../showcase/fontlab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="FontLab product imagery">
+    
+  
+    FontLab product imagery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../showcase/vexy-lines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Vexy vector imagery">
+    
+  
+    Vexy vector imagery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Brand assets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Brand assets
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../brand-assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Overview and usage">
+    
+  
+    Overview and usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../brand-assets/fontlab-marketingpack-company/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Company wordmarks">
+    
+  
+    Company wordmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../brand-assets/fontlab-banners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Product banners">
+    
+  
+    Product banners
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../brand-assets/fontlab-marketingpack-fontlab-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="FontLab 8">
+    
+  
+    FontLab 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../brand-assets/fontlab-marketingpack-transtype-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="TransType 4">
+    
+  
+    TransType 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Start">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/choose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choose a pattern
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copy and adapt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theme and setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Text">
+    
+  
+    Text
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Text
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../text/type/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type and emphasis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../text/lists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lists and steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../text/links/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Links and buttons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../text/code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code and keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Structure">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Structure
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structure/cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cards and groups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structure/grids/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grids and columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structure/sections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sections and dividers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structure/disclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabs and disclosure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4">
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Images">
+    
+  
+    Images
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Images
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/pictures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pictures and captions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/galleries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Galleries and comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/marks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Avatars and marks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../images/frames/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device frames
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Navigation">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Navigation
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../navigation/location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Breadcrumbs and pagination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../navigation/menus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Menus and bars
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../navigation/drawers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drawers and sidebars
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../navigation/search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Search and commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Forms">
+    
+  
+    Forms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Forms
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../forms/fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fields and labels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../forms/choices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choices and switches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../forms/ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ranges and ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../forms/validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation and submission
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7">
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Feedback">
+    
+  
+    Feedback
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Feedback
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes and alerts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/progress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress and loading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/dialogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogs and popovers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/hints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications and hints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_8">
+        
+          
+          <label class="md-nav__link" for="__nav_6_8" id="__nav_6_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Data">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tables and lists
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Statistics and charts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/timelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timelines and milestones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/states/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Empty and changing states
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_9">
+        
+          
+          <label class="md-nav__link" for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Layouts">
+    
+  
+    Layouts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Layouts
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../layouts/editorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editorial features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../layouts/products/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product pages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../layouts/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparison and pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../layouts/tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials and reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_10">
+        
+          
+          <label class="md-nav__link" for="__nav_6_10" id="__nav_6_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis" title="Presentations">
+    
+  
+    Presentations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Presentations
+  
+
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../presentations/campaigns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campaign stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../presentations/releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../presentations/portfolios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Product portfolios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../presentations/workspaces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive workspaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Contents">
+  
+  
+  
+  
+    
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Buttons
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#basecoat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basecoat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basecoat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daisyui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        daisyUI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="daisyUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materialx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MaterialX
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MaterialX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variants_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#states-and-shapes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        States and shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Compare
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="buttons">Buttons<a aria-label="Permanent link" class="headerlink" href="#buttons" title="Permanent link">¶</a></h1>
+<p>Compare the same two export links first, then the variants, sizes and states each library supplies.</p>
+<section class="fl-example" id="example-compare-buttons"><div class="fl-example-preview"><div class="fl-library-grid fl-compare">
+<section data-compare-library="basecoat">
+<h2 id="basecoat">Basecoat<a aria-label="Permanent link" class="headerlink" href="#basecoat" title="Permanent link">&para;</a></h2>
+<div class="fltheme-components fl-compare-stack">
+<div class="fl-demo-row">
+<a class="btn" data-compare-control="primary" href="../fields/">Set up export</a>
+<a class="btn" data-variant="outline" href="../choices/">View options</a>
+</div>
+<h3 id="variants">Variants<a aria-label="Permanent link" class="headerlink" href="#variants" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<a class="btn" href="../fields/">Default</a>
+<a class="btn" data-variant="primary" href="../fields/">Primary</a>
+<a class="btn" data-variant="secondary" href="../fields/">Secondary</a>
+<a class="btn" data-variant="outline" href="../fields/">Outline</a>
+<a class="btn" data-variant="ghost" href="../fields/">Ghost</a>
+<a class="btn" data-variant="link" href="../fields/">Link</a>
+<a class="btn" data-variant="destructive" href="../fields/">Destructive</a>
+</div>
+<h3 id="sizes">Sizes<a aria-label="Permanent link" class="headerlink" href="#sizes" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<a class="btn" data-size="xs" href="../fields/">XS</a>
+<a class="btn" data-size="sm" href="../fields/">SM</a>
+<a class="btn" data-size="default" href="../fields/">Default</a>
+<a class="btn" data-size="lg" href="../fields/">LG</a>
+</div>
+<h3 id="states-and-shapes">States and shapes<a aria-label="Permanent link" class="headerlink" href="#states-and-shapes" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<button class="btn" disabled type="button">Unavailable</button>
+<a aria-label="Set up export (icon-xs)" class="btn" data-size="icon-xs" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+<a aria-label="Set up export (icon-sm)" class="btn" data-size="icon-sm" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+<a aria-label="Set up export (icon)" class="btn" data-size="icon" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+<a aria-label="Set up export (icon-lg)" class="btn" data-size="icon-lg" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+</div>
+<nav aria-label="Export references" class="button-group">
+<a class="btn" data-variant="outline" href="../fields/">Fields</a>
+<a class="btn" data-variant="outline" href="../choices/">Choices</a>
+</nav>
+</div>
+</section>
+<section data-compare-library="daisyui">
+<h2 id="daisyui">daisyUI<a aria-label="Permanent link" class="headerlink" href="#daisyui" title="Permanent link">&para;</a></h2>
+<div class="fltheme-components fl-compare-stack">
+<div class="fl-demo-row">
+<a class="du-btn du-btn-primary" data-compare-control="primary" href="../fields/">Set up export</a>
+<a class="du-btn du-btn-outline" href="../choices/">View options</a>
+</div>
+<h3 id="variants_1">Variants<a aria-label="Permanent link" class="headerlink" href="#variants_1" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<a class="du-btn" href="../fields/">Default</a>
+<a class="du-btn du-btn-primary" href="../fields/">Primary</a>
+<a class="du-btn du-btn-neutral" href="../fields/">Neutral</a>
+<a class="du-btn du-btn-secondary" href="../fields/">Secondary</a>
+<a class="du-btn du-btn-accent" href="../fields/">Accent</a>
+<a class="du-btn du-btn-info" href="../fields/">Info</a>
+<a class="du-btn du-btn-success" href="../fields/">Success</a>
+<a class="du-btn du-btn-warning" href="../fields/">Warning</a>
+<a class="du-btn du-btn-error" href="../fields/">Error</a>
+<a class="du-btn du-btn-outline" href="../fields/">Outline</a>
+<a class="du-btn du-btn-dash" href="../fields/">Dash</a>
+<a class="du-btn du-btn-soft" href="../fields/">Soft</a>
+<a class="du-btn du-btn-ghost" href="../fields/">Ghost</a>
+<a class="du-btn du-btn-link" href="../fields/">Link</a>
+</div>
+<h3 id="sizes_1">Sizes<a aria-label="Permanent link" class="headerlink" href="#sizes_1" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<a class="du-btn du-btn-xs" href="../fields/">XS</a>
+<a class="du-btn du-btn-sm" href="../fields/">SM</a>
+<a class="du-btn du-btn-md" href="../fields/">MD</a>
+<a class="du-btn du-btn-lg" href="../fields/">LG</a>
+<a class="du-btn du-btn-xl" href="../fields/">XL</a>
+</div>
+<div class="fl-demo-row">
+<a class="du-btn du-btn-wide" href="../fields/">Wide</a>
+<a class="du-btn du-btn-block" href="../fields/">Block</a>
+</div>
+<h3 id="states-and-shapes_1">States and shapes<a aria-label="Permanent link" class="headerlink" href="#states-and-shapes_1" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<button class="du-btn" disabled type="button">Unavailable</button>
+<a class="du-btn du-btn-active" href="../fields/">Active</a>
+<a aria-label="Set up export (square)" class="du-btn du-btn-square" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+<a aria-label="Set up export (circle)" class="du-btn du-btn-circle" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+</div>
+<nav aria-label="Export references" class="du-join">
+<a class="du-btn du-join-item" href="../fields/">Fields</a>
+<a class="du-btn du-join-item" href="../choices/">Choices</a>
+</nav>
+</div>
+</section>
+<section data-compare-library="materialx">
+<h2 id="materialx">MaterialX<a aria-label="Permanent link" class="headerlink" href="#materialx" title="Permanent link">&para;</a></h2>
+<div class="fl-compare-stack">
+<div class="fl-demo-row">
+<p><a class="md-button md-button--primary" data-compare-control="primary" href="../fields/">Set up export</a>
+<a class="md-button" href="../choices/">View options</a></p>
+</div>
+<h3 id="variants_2">Variants<a aria-label="Permanent link" class="headerlink" href="#variants_2" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<p><a class="md-button md-button--primary" href="../fields/">Primary</a>
+<a class="md-button" href="../fields/">Outline</a></p>
+</div>
+<h3 id="sizes_2">Sizes<a aria-label="Permanent link" class="headerlink" href="#sizes_2" title="Permanent link">&para;</a></h3>
+<p>Fly adds sizes to the MaterialX button with <code>data-size</code>.</p>
+<div class="fl-demo-row">
+<p><a class="md-button" data-size="xs" href="../fields/">XS</a>
+<a class="md-button" data-size="sm" href="../fields/">SM</a>
+<a class="md-button" href="../fields/">Default</a>
+<a class="md-button" data-size="lg" href="../fields/">LG</a>
+<a class="md-button" data-size="xl" href="../fields/">XL</a></p>
+</div>
+<h3 id="states-and-shapes_2">States and shapes<a aria-label="Permanent link" class="headerlink" href="#states-and-shapes_2" title="Permanent link">&para;</a></h3>
+<div class="fl-demo-row">
+<button class="md-button" disabled type="button">Unavailable</button>
+<a aria-label="Set up export" class="md-button" data-size="icon" href="../fields/"><span aria-hidden="true">&rarr;</span></a>
+</div>
+<div class="fl-demo-row">
+<p><a class="md-button" href="../fields/">Fields</a>
+<a class="md-button" href="../choices/">Choices</a></p>
+</div>
+</div>
+</section>
+</div>
+</div><div class="fl-example-code" data-copy-language="html"><div class="fl-example-codebar"><span>HTML &middot; compiled output</span><button aria-label="Copy HTML for compare buttons" data-copy-target="example-compare-buttons-html" type="button">Copy HTML</button></div><pre class="no-copy" id="example-compare-buttons-html-block" tabindex="0"><code class="language-html" id="example-compare-buttons-html">&lt;div class="fl-library-grid fl-compare"&gt;
+&lt;section data-compare-library="basecoat"&gt;
+&lt;h2 id="basecoat"&gt;Basecoat&lt;a aria-label="Permanent link" class="headerlink" href="#basecoat" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="fltheme-components fl-compare-stack"&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="btn" data-compare-control="primary" href="../fields/"&gt;Set up export&lt;/a&gt;
+&lt;a class="btn" data-variant="outline" href="../choices/"&gt;View options&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="variants"&gt;Variants&lt;a aria-label="Permanent link" class="headerlink" href="#variants" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="btn" href="../fields/"&gt;Default&lt;/a&gt;
+&lt;a class="btn" data-variant="primary" href="../fields/"&gt;Primary&lt;/a&gt;
+&lt;a class="btn" data-variant="secondary" href="../fields/"&gt;Secondary&lt;/a&gt;
+&lt;a class="btn" data-variant="outline" href="../fields/"&gt;Outline&lt;/a&gt;
+&lt;a class="btn" data-variant="ghost" href="../fields/"&gt;Ghost&lt;/a&gt;
+&lt;a class="btn" data-variant="link" href="../fields/"&gt;Link&lt;/a&gt;
+&lt;a class="btn" data-variant="destructive" href="../fields/"&gt;Destructive&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="sizes"&gt;Sizes&lt;a aria-label="Permanent link" class="headerlink" href="#sizes" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="btn" data-size="xs" href="../fields/"&gt;XS&lt;/a&gt;
+&lt;a class="btn" data-size="sm" href="../fields/"&gt;SM&lt;/a&gt;
+&lt;a class="btn" data-size="default" href="../fields/"&gt;Default&lt;/a&gt;
+&lt;a class="btn" data-size="lg" href="../fields/"&gt;LG&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="states-and-shapes"&gt;States and shapes&lt;a aria-label="Permanent link" class="headerlink" href="#states-and-shapes" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="btn" disabled type="button"&gt;Unavailable&lt;/button&gt;
+&lt;a aria-label="Set up export (icon-xs)" class="btn" data-size="icon-xs" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a aria-label="Set up export (icon-sm)" class="btn" data-size="icon-sm" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a aria-label="Set up export (icon)" class="btn" data-size="icon" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a aria-label="Set up export (icon-lg)" class="btn" data-size="icon-lg" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;nav aria-label="Export references" class="button-group"&gt;
+&lt;a class="btn" data-variant="outline" href="../fields/"&gt;Fields&lt;/a&gt;
+&lt;a class="btn" data-variant="outline" href="../choices/"&gt;Choices&lt;/a&gt;
+&lt;/nav&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section data-compare-library="daisyui"&gt;
+&lt;h2 id="daisyui"&gt;daisyUI&lt;a aria-label="Permanent link" class="headerlink" href="#daisyui" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="fltheme-components fl-compare-stack"&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="du-btn du-btn-primary" data-compare-control="primary" href="../fields/"&gt;Set up export&lt;/a&gt;
+&lt;a class="du-btn du-btn-outline" href="../choices/"&gt;View options&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="variants_1"&gt;Variants&lt;a aria-label="Permanent link" class="headerlink" href="#variants_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="du-btn" href="../fields/"&gt;Default&lt;/a&gt;
+&lt;a class="du-btn du-btn-primary" href="../fields/"&gt;Primary&lt;/a&gt;
+&lt;a class="du-btn du-btn-neutral" href="../fields/"&gt;Neutral&lt;/a&gt;
+&lt;a class="du-btn du-btn-secondary" href="../fields/"&gt;Secondary&lt;/a&gt;
+&lt;a class="du-btn du-btn-accent" href="../fields/"&gt;Accent&lt;/a&gt;
+&lt;a class="du-btn du-btn-info" href="../fields/"&gt;Info&lt;/a&gt;
+&lt;a class="du-btn du-btn-success" href="../fields/"&gt;Success&lt;/a&gt;
+&lt;a class="du-btn du-btn-warning" href="../fields/"&gt;Warning&lt;/a&gt;
+&lt;a class="du-btn du-btn-error" href="../fields/"&gt;Error&lt;/a&gt;
+&lt;a class="du-btn du-btn-outline" href="../fields/"&gt;Outline&lt;/a&gt;
+&lt;a class="du-btn du-btn-dash" href="../fields/"&gt;Dash&lt;/a&gt;
+&lt;a class="du-btn du-btn-soft" href="../fields/"&gt;Soft&lt;/a&gt;
+&lt;a class="du-btn du-btn-ghost" href="../fields/"&gt;Ghost&lt;/a&gt;
+&lt;a class="du-btn du-btn-link" href="../fields/"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="sizes_1"&gt;Sizes&lt;a aria-label="Permanent link" class="headerlink" href="#sizes_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="du-btn du-btn-xs" href="../fields/"&gt;XS&lt;/a&gt;
+&lt;a class="du-btn du-btn-sm" href="../fields/"&gt;SM&lt;/a&gt;
+&lt;a class="du-btn du-btn-md" href="../fields/"&gt;MD&lt;/a&gt;
+&lt;a class="du-btn du-btn-lg" href="../fields/"&gt;LG&lt;/a&gt;
+&lt;a class="du-btn du-btn-xl" href="../fields/"&gt;XL&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a class="du-btn du-btn-wide" href="../fields/"&gt;Wide&lt;/a&gt;
+&lt;a class="du-btn du-btn-block" href="../fields/"&gt;Block&lt;/a&gt;
+&lt;/div&gt;
+&lt;h3 id="states-and-shapes_1"&gt;States and shapes&lt;a aria-label="Permanent link" class="headerlink" href="#states-and-shapes_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="du-btn" disabled type="button"&gt;Unavailable&lt;/button&gt;
+&lt;a class="du-btn du-btn-active" href="../fields/"&gt;Active&lt;/a&gt;
+&lt;a aria-label="Set up export (square)" class="du-btn du-btn-square" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a aria-label="Set up export (circle)" class="du-btn du-btn-circle" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;nav aria-label="Export references" class="du-join"&gt;
+&lt;a class="du-btn du-join-item" href="../fields/"&gt;Fields&lt;/a&gt;
+&lt;a class="du-btn du-join-item" href="../choices/"&gt;Choices&lt;/a&gt;
+&lt;/nav&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section data-compare-library="materialx"&gt;
+&lt;h2 id="materialx"&gt;MaterialX&lt;a aria-label="Permanent link" class="headerlink" href="#materialx" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="fl-compare-stack"&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;p&gt;&lt;a class="md-button md-button--primary" data-compare-control="primary" href="../fields/"&gt;Set up export&lt;/a&gt;
+&lt;a class="md-button" href="../choices/"&gt;View options&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id="variants_2"&gt;Variants&lt;a aria-label="Permanent link" class="headerlink" href="#variants_2" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;p&gt;&lt;a class="md-button md-button--primary" href="../fields/"&gt;Primary&lt;/a&gt;
+&lt;a class="md-button" href="../fields/"&gt;Outline&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id="sizes_2"&gt;Sizes&lt;a aria-label="Permanent link" class="headerlink" href="#sizes_2" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Fly adds sizes to the MaterialX button with &lt;code&gt;data-size&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;p&gt;&lt;a class="md-button" data-size="xs" href="../fields/"&gt;XS&lt;/a&gt;
+&lt;a class="md-button" data-size="sm" href="../fields/"&gt;SM&lt;/a&gt;
+&lt;a class="md-button" href="../fields/"&gt;Default&lt;/a&gt;
+&lt;a class="md-button" data-size="lg" href="../fields/"&gt;LG&lt;/a&gt;
+&lt;a class="md-button" data-size="xl" href="../fields/"&gt;XL&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id="states-and-shapes_2"&gt;States and shapes&lt;a aria-label="Permanent link" class="headerlink" href="#states-and-shapes_2" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="md-button" disabled type="button"&gt;Unavailable&lt;/button&gt;
+&lt;a aria-label="Set up export" class="md-button" data-size="icon" href="../fields/"&gt;&lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;p&gt;&lt;a class="md-button" href="../fields/"&gt;Fields&lt;/a&gt;
+&lt;a class="md-button" href="../choices/"&gt;Choices&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/div&gt;</code></pre></div><div class="fl-example-code" data-copy-language="markdown"><div class="fl-example-codebar"><span>Markdown &middot; authored source</span><button aria-label="Copy MARKDOWN for compare buttons" data-copy-target="example-compare-buttons-markdown" type="button">Copy Markdown</button></div><pre class="no-copy" id="example-compare-buttons-markdown-block" tabindex="0"><code class="language-markdown" id="example-compare-buttons-markdown">&lt;div class="fl-library-grid fl-compare" markdown="1"&gt;
+
+&lt;section data-compare-library="basecoat" markdown="1"&gt;
+
+## Basecoat
+
+&lt;div markdown="0" class="fltheme-components fl-compare-stack"&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="btn" data-compare-control="primary"&gt;Set up export&lt;/a&gt;
+&lt;a href="../choices/" class="btn" data-variant="outline"&gt;View options&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Variants&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="btn"&gt;Default&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="primary"&gt;Primary&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="secondary"&gt;Secondary&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="outline"&gt;Outline&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="ghost"&gt;Ghost&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="link"&gt;Link&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-variant="destructive"&gt;Destructive&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Sizes&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="btn" data-size="xs"&gt;XS&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="sm"&gt;SM&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="default"&gt;Default&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="lg"&gt;LG&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;States and shapes&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="btn" type="button" disabled&gt;Unavailable&lt;/button&gt;
+&lt;a href="../fields/" class="btn" data-size="icon-xs" aria-label="Set up export (icon-xs)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="icon-sm" aria-label="Set up export (icon-sm)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="icon" aria-label="Set up export (icon)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a href="../fields/" class="btn" data-size="icon-lg" aria-label="Set up export (icon-lg)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;nav class="button-group" aria-label="Export references"&gt;
+&lt;a class="btn" data-variant="outline" href="../fields/"&gt;Fields&lt;/a&gt;
+&lt;a class="btn" data-variant="outline" href="../choices/"&gt;Choices&lt;/a&gt;
+&lt;/nav&gt;
+&lt;/div&gt;
+
+&lt;/section&gt;
+
+&lt;section data-compare-library="daisyui" markdown="1"&gt;
+
+## daisyUI
+
+&lt;div markdown="0" class="fltheme-components fl-compare-stack"&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="du-btn du-btn-primary" data-compare-control="primary"&gt;Set up export&lt;/a&gt;
+&lt;a href="../choices/" class="du-btn du-btn-outline"&gt;View options&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Variants&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="du-btn"&gt;Default&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-primary"&gt;Primary&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-neutral"&gt;Neutral&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-secondary"&gt;Secondary&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-accent"&gt;Accent&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-info"&gt;Info&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-success"&gt;Success&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-warning"&gt;Warning&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-error"&gt;Error&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-outline"&gt;Outline&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-dash"&gt;Dash&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-soft"&gt;Soft&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-ghost"&gt;Ghost&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-link"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Sizes&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="du-btn du-btn-xs"&gt;XS&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-sm"&gt;SM&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-md"&gt;MD&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-lg"&gt;LG&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-xl"&gt;XL&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;a href="../fields/" class="du-btn du-btn-wide"&gt;Wide&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-block"&gt;Block&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;States and shapes&lt;/h3&gt;
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="du-btn" type="button" disabled&gt;Unavailable&lt;/button&gt;
+&lt;a href="../fields/" class="du-btn du-btn-active"&gt;Active&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-square" aria-label="Set up export (square)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;a href="../fields/" class="du-btn du-btn-circle" aria-label="Set up export (circle)"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;nav class="du-join" aria-label="Export references"&gt;
+&lt;a class="du-btn du-join-item" href="../fields/"&gt;Fields&lt;/a&gt;
+&lt;a class="du-btn du-join-item" href="../choices/"&gt;Choices&lt;/a&gt;
+&lt;/nav&gt;
+&lt;/div&gt;
+
+&lt;/section&gt;
+
+&lt;section data-compare-library="materialx" markdown="1"&gt;
+
+## MaterialX
+
+&lt;div class="fl-compare-stack" markdown="1"&gt;
+
+&lt;div class="fl-demo-row" markdown="1"&gt;
+
+[Set up export](fields.md){ .md-button .md-button--primary data-compare-control="primary" }
+[View options](choices.md){ .md-button }
+
+&lt;/div&gt;
+
+### Variants
+
+&lt;div class="fl-demo-row" markdown="1"&gt;
+
+[Primary](fields.md){ .md-button .md-button--primary }
+[Outline](fields.md){ .md-button }
+
+&lt;/div&gt;
+
+### Sizes
+
+Fly adds sizes to the MaterialX button with `data-size`.
+
+&lt;div class="fl-demo-row" markdown="1"&gt;
+
+[XS](fields.md){ .md-button data-size="xs" }
+[SM](fields.md){ .md-button data-size="sm" }
+[Default](fields.md){ .md-button }
+[LG](fields.md){ .md-button data-size="lg" }
+[XL](fields.md){ .md-button data-size="xl" }
+
+&lt;/div&gt;
+
+### States and shapes
+
+&lt;div class="fl-demo-row"&gt;
+&lt;button class="md-button" type="button" disabled&gt;Unavailable&lt;/button&gt;
+&lt;a href="../fields/" class="md-button" data-size="icon" aria-label="Set up export"&gt;&lt;span aria-hidden="true"&gt;&rarr;&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class="fl-demo-row" markdown="1"&gt;
+
+[Fields](fields.md){ .md-button }
+[Choices](choices.md){ .md-button }
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/section&gt;
+
+&lt;/div&gt;</code></pre></div><p aria-live="polite" class="fl-example-copy-status" role="status"></p></section>
+
+<p>Choose MaterialX for links in an article. Choose Basecoat for application actions with a small set of weights, or daisyUI when an interface needs semantic colours, more sizes or joined controls. Preserve the link or button semantics when you change its appearance.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+          <div class="md-top" data-md-component="top" hidden="">
+  <div class="md-top__center">
+    <button type="button" class="md-top__button md-top__button--main" data-md-action="top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+      <span>Back to top</span>
+    </button>
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--nav" for="__drawer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg>
+      </label>
+    
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--toc" for="__toc">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M15 3v18"></path></svg>
+      </label>
+    
+  </div>
+</div>
+      </main>
+      
+  
+        <footer class="md-footer">
+  
+  
+</footer>
+      
+  <fontlab-footer mode="dark"></fontlab-footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "code": {"fold": {"enabled": true}}, "features": ["navigation.path", "navigation.tabs", "navigation.top", "toc.follow", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.footnote.tooltips", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "code.collapse": "Collapse", "code.download": "Download", "code.expand": "Expand remaining # lines", "code.select": "Toggle line selection", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.fc193f93.min.js"></script>
+      
+        <script src="../../fly/latest/basecoat.js"></script>
+      
+        <script src="../../assets/javascripts/component-reference.js?v=9952d642a5"></script>
+      
+        <script src="../../assets/javascripts/compiled-examples.js?v=35e56a60fb"></script>
+      
+        <script src="../../assets/javascripts/fontlab-prompt.js?v=ab2a0b7627" type="module"></script>
+      
+    
+  <script src="../../assets/fly/fly-bridge.js?v=86c9984233"></script>
+  <script type="module" src="../../assets/fly/fly.js?v=f51ac22526"></script>
+
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body></html>

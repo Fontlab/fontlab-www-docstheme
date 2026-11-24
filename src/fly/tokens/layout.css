@@ -9,7 +9,6 @@
     --fly-part-rail: clamp(12.5rem, 15vw, 19.4444rem); /* L2 rail; L1 too from 100em */
     --fly-sliver: clamp(4.1667rem, 5vw, 6.9444rem); /* L1 under an extended L2 */
     --fly-l1: var(--fly-rail);
-    --fly-l1-label: 10.0694rem; /* longest L1 label at 1440px */
     --fly-l1-reveal: var(--fly-rail); /* how far L2 retracts to show L1's labels */
     --fly-notch: var(--fly-size-sm); /* heading permalink notch: one body em tall */
     --fly-h1-measure: 16ch; /* heading measures, in the heading's own units */
@@ -30,8 +29,8 @@
   /* Mid desktop: L1 is a sliver under L2 until L2 retracts. */
   @media screen and (76.25em <= width < 100em) {
     :root {
+      --fly-sliver: 10rem;
       --fly-l1: var(--fly-sliver);
-      --fly-l1-reveal: calc(1.1111rem + var(--fly-l1-label) + 1.3889rem);
     }
 
     .fly-no-l2 {

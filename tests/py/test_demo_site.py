@@ -24,6 +24,7 @@ from fly_january.config import (
     BLOCK_PROPS,
     BLOCK_ROLES,
     CHROME_OPTIONS,
+    DEFAULT_SOURCES,
     HUES,
     INLINE_PROPS,
     INLINE_ROLES,
@@ -118,7 +119,9 @@ def test_demo_site_config_when_parsed_then_valid_with_fly_theme():
     assert site.chrome.kind == "fontlab"
     assert site.chrome_options["site-label"] == "Design system"
     assert site.look.hue == "cobalt"
-    assert "typekit:gav0zux" in site.look.sources
+    assert "fonts" not in config["extra"]["fly"]
+    assert site.look.sources == DEFAULT_SOURCES
+    assert site.look.roles == {}
     assert not any("i.fontlab.com" in str(u) for u in config["extra_css"])
     assert not any("i.fontlab.com" in str(u) for u in config["extra_javascript"])
 

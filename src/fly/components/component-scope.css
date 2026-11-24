@@ -1,0 +1,80 @@
+/* this_file: src/fly/components/component-scope.css */
+/* Basecoat and daisyUI palette declarations come from the separately flattened bundle. */
+@layer fly.components {
+  /* The optional library bundle and Fly are flattened independently. Override the
+     library's root palette here without altering the standalone fltheme26 assets. */
+  .md-typeset .fltheme-components {
+    --size-field: calc(var(--fly-control-height) / 10);
+    --radius-field: var(--fly-control-radius);
+    --radius-selector: var(--fly-control-radius);
+    --radius-box: var(--fly-card-radius);
+    --du-border: 1px;
+    --depth: 0;
+    --noise: 0;
+    background-color: transparent;
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    line-height: 1.4;
+  }
+
+  .md-typeset .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --background: var(--fly-paper-3) !important;
+    --foreground: var(--fly-ink) !important;
+    --card: var(--fly-surface-raised) !important;
+    --card-foreground: var(--fly-ink) !important;
+    --popover: var(--fly-surface-raised) !important;
+    --popover-foreground: var(--fly-ink) !important;
+    --primary: var(--fly-ink) !important;
+    --primary-foreground: var(--fly-paper-3) !important;
+    --secondary: var(--fly-surface-raised) !important;
+    --secondary-foreground: var(--fly-ink) !important;
+    --muted: var(--fly-surface-raised) !important;
+    --muted-foreground: var(--fly-quiet) !important;
+    --accent: var(--fly-accent-tint) !important;
+    --accent-foreground: var(--fly-accent-text) !important;
+    --destructive: var(--fly-danger-text) !important;
+    --border: var(--fly-card-border) !important;
+    --input: var(--fly-control-border) !important;
+    --ring: var(--fly-focus-ring) !important;
+    color: var(--fly-ink);
+  }
+
+  .md-typeset .fltheme-components[data-fltheme-mode='light'] { color-scheme: light; }
+  .md-typeset .fltheme-components[data-fltheme-mode='dark'] { color-scheme: dark; }
+
+  /* An explicit specimen mode uses its own library ink and paper. Resolve the
+     derived properties at this boundary so direct Fly rules use them too. */
+  .md-typeset .fltheme-components:is([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --fly-ink: var(--foreground);
+    --fly-paper-3: var(--background);
+    --fly-surface-raised: var(--muted);
+    --fly-quiet: color-mix(in srgb, var(--fly-ink) 74%, var(--fly-paper-3));
+    --fly-hover: color-mix(in srgb, var(--fly-ink) 8%, transparent);
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 65%, var(--fly-paper-3));
+    --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
+    --fly-focus-ring: var(--fly-quiet);
+    --fly-accent-text: var(--fly-quiet);
+    --fly-danger-text: light-dark(var(--fly-cherry-deep), var(--fly-cherry-soft));
+    background-color: var(--background);
+  }
+
+  .md-typeset .fltheme-components {
+    --color-base-100: var(--background);
+    --color-base-200: var(--muted);
+    --color-base-300: var(--border);
+    --color-base-content: var(--foreground);
+    --color-primary-content: var(--primary-foreground);
+    --color-secondary-content: var(--secondary-foreground);
+    --color-accent-content: var(--accent-foreground);
+    --color-neutral: var(--primary);
+    --color-neutral-content: var(--primary-foreground);
+    --color-info: var(--fly-info-tint);
+    --color-info-content: var(--fly-info-text);
+    --color-success: var(--fly-success-tint);
+    --color-success-content: var(--fly-success-text);
+    --color-warning: var(--fly-warning-tint);
+    --color-warning-content: var(--fly-warning-text);
+    --color-error: var(--fly-danger-tint);
+    --color-error-content: var(--fly-danger-text);
+  }
+}

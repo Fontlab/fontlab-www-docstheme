@@ -119,24 +119,6 @@ extra:
       site-label: Design system
       search-from: docstheme
     hue: cobalt
-    # The fonts the Marketing site loaded (overrides/main.html): the FontLab Typekit kit and
-    # five Google families. Its default look set headings and text in Outfit, navigation
-    # and captions in REM.
-    fonts:
-      sources:
-        - typekit:gav0zux
-        - google:Funnel+Display:wght@300..800
-        - google:Funnel+Sans:ital,wght@0,300..800;1,300..800
-        - google:Outfit:wght@100..900
-        - google:REM:ital,wght@0,100..900;1,100..900
-        - google:Work+Sans:ital,wght@0,100..900;1,100..900
-      roles:
-        h1: {family: "'Outfit', sans-serif", weight: 600}
-        h2: {family: "'Outfit', sans-serif", weight: 400}
-        body: {family: "'Outfit', sans-serif", weight: 300}
-        lead: {family: "'Outfit', sans-serif", weight: 300}
-        nav: {family: "'REM', sans-serif"}
-        caption: {family: "'REM', sans-serif"}
 
 # The Basecoat/daisyUI component bundle comes from this site's own CDN tree (docs/fly/,
 # written by npm run build), so the field-guide pages render the release they document.

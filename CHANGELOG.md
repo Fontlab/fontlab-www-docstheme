@@ -4,6 +4,13 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.3.0 — unreleased
+
+- Shared control, surface and focus tokens bring Basecoat, daisyUI and MaterialX into the same type scale and palette. Button links keep their component styling, and forms and cards have visible boundaries in light and slate.
+- Mid-desktop navigation wraps site labels inside the exposed rail, with the in-page rail still retracting on hover and focus.
+- Added eleven Compare pages, including an overview, with live specimens and their authored and compiled source. The demo uses the theme’s default fonts and keeps FontLab chrome.
+- Added agent-browser assertions for control measurements, decoration, boundary contrast and the 1440px navigation rail.
+
 ## 0.2.1 — 2026-11-24
 
 - On phones, the alternate-style tab label row stays inside the article column and scrolls horizontally.

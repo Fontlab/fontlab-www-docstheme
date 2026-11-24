@@ -1,0 +1,197 @@
+/* this_file: src/fly/components/widgets.css */
+/* Basecoat and daisyUI component declarations are weighted in a separate build. */
+@layer fly.components {
+  .md-typeset :is(
+    .fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box),
+    .grid > .card, .grid.cards > ul > li, dialog.fly-dialog
+  ) {
+    background-color: var(--fly-surface-raised) !important;
+    color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-card-radius) !important;
+    box-shadow: none;
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size) !important;
+    line-height: 1.4;
+  }
+
+  .md-typeset :is(.fltheme-components .card, .grid > .card, .grid.cards > ul > li) {
+    gap: var(--fly-half);
+    padding: var(--fly-card-padding);
+  }
+
+  .md-typeset .fltheme-components .card > :is(header, section, footer) {
+    padding-inline: 0;
+  }
+
+  .md-typeset .fltheme-components .du-card-body {
+    --du-card-p: var(--fly-card-padding);
+    --du-card-fs: var(--fly-control-size);
+    font-family: var(--fly-control-font);
+  }
+
+  .md-typeset :is(
+    .fltheme-components .card > header > :is(h2, h3, .card-title, [data-title]),
+    .fltheme-components .du-card-title,
+    .grid > .card > :is(h2, h3), .grid.cards > ul > li > :is(h2, h3)
+  ) {
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-card-title-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+    font-stretch: var(--fly-sans-stretch);
+    line-height: 1.2;
+    margin: 0;
+    text-align: start;
+  }
+
+  .md-typeset :is(.fltheme-components .card, .fltheme-components .du-card) p {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.alert, .du-alert), .admonition, details:not(.fltheme-components *)) {
+    border-radius: var(--fly-card-radius);
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) {
+    background-color: var(--fly-surface-raised) !important;
+    color: var(--fly-ink) !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-card-radius) !important;
+    padding: var(--fly-card-padding);
+    box-shadow: none !important;
+    font-size: var(--fly-control-size) !important;
+    line-height: 1.4;
+  }
+
+  .md-typeset :is(
+    .admonition > .admonition-title, details:not(.fltheme-components *) > summary,
+    .fltheme-components :is(.alert, .du-alert) :is(h2, h3, strong, [data-title])
+  ) {
+    font-family: var(--fly-control-font);
+    font-weight: var(--fly-control-weight);
+    text-align: start;
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) :is(h2, h3, strong, [data-title]) {
+    margin-block: 0 0.3rem;
+    font-size: var(--fly-control-size);
+    line-height: inherit;
+  }
+
+  .md-typeset .fltheme-components :is(.du-alert-info, .du-alert-success, .du-alert-warning, .du-alert-error, .alert[data-variant='destructive']) {
+    border-inline-start: 3px solid var(--fly-alert-accent, var(--fly-info-text)) !important;
+  }
+
+  .md-typeset .fltheme-components .du-alert-success { --fly-alert-accent: var(--fly-success-text); }
+  .md-typeset .fltheme-components .du-alert-warning { --fly-alert-accent: var(--fly-warning-text); }
+  .md-typeset .fltheme-components :is(.du-alert-error, .alert[data-variant='destructive']) {
+    --fly-alert-accent: var(--fly-danger-text);
+  }
+
+  .md-typeset :is(
+    .tabbed-set > .tabbed-labels > label,
+    .fltheme-components :is(.tabs [role='tab'], .du-tab)
+  ) {
+    min-block-size: var(--fly-control-height) !important;
+    align-content: center;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-size-xs) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+
+  .md-typeset .tabbed-set {
+    --md-accent-fg-color: var(--fly-accent-text);
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [role='tab'], .du-tab) {
+    color: var(--fly-quiet) !important;
+    border-bottom-color: var(--fly-control-border);
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [aria-selected='true'], .du-tab:is(:checked, .du-tab-active)) {
+    color: var(--fly-accent-text) !important;
+  }
+
+  .md-typeset :is(.md-tag, .fltheme-components :is(.badge, .du-badge), mark.fly-badge) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.65rem;
+    padding: 0 0.55em;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-control-radius) !important;
+    background: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-size-xs) !important;
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) {
+    padding: 0;
+    background-color: var(--fly-surface-raised);
+    border: 1px solid var(--fly-control-border);
+    border-radius: var(--fly-control-radius);
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) > summary {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--fly-control-height);
+    margin: 0;
+    padding: 0.5rem 2rem 0.5rem var(--fly-card-padding);
+    background: transparent;
+    color: var(--fly-ink);
+    font-size: inherit;
+    font-weight: var(--fly-control-weight);
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) > summary::before {
+    content: none;
+  }
+
+  .md-typeset .fltheme-components .accordion > details > summary:not(:has(> svg))::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: var(--fly-card-padding);
+    top: 50%;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    background: none;
+    rotate: 45deg;
+    translate: 0 -70%;
+  }
+
+  .md-typeset .fltheme-components .accordion > details[open] > summary:not(:has(> svg))::after {
+    rotate: 225deg;
+    translate: 0 -30%;
+  }
+
+  .md-typeset .fltheme-components .du-collapse > summary::after {
+    background: transparent;
+    mask: none;
+  }
+
+  .md-typeset .fltheme-components details[open]:is(.accordion > details, .du-collapse) > :not(summary) {
+    padding: 0 var(--fly-card-padding) var(--fly-card-padding);
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
+    max-inline-size: min(28rem, calc(100vw - 2rem));
+    padding: calc(1.5 * var(--fly-card-padding));
+  }
+
+  .md-typeset dialog.fly-dialog {
+    margin: auto;
+  }
+
+  .md-typeset dialog.fly-dialog::backdrop {
+    background: var(--fly-scrim);
+  }
+}

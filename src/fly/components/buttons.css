@@ -1,24 +1,78 @@
 /* this_file: src/fly/components/buttons.css */
-/* MaterialX buttons in the button face, uppercase. They are neutral: an outlined button is
-   ink on paper with a 1px ink ring (MaterialX 10 has no border), a primary one paper on ink,
-   so the page hue is an accent and never a fill. Hover fills (--fly-hover, --fly-quiet);
-   keyboard focus (:focus-visible) draws a ring outside the button, in chrome/focus.css.
-   A mouse click leaves no state: :focus is set back to the resting look because MaterialX
-   would fill a focused button from its accent. Labels are never underlined, unlike article
-   links (components/inline.css). */
+/* Basecoat and daisyUI button variants are flattened independently of Fly. */
 @layer fly.components {
-  .md-typeset .md-button,
-  .md-typeset .md-button:focus {
-    font-family: var(--fly-button-family);
-    font-size: var(--fly-button-size);
-    font-weight: var(--fly-button-weight);
+  /* Library CSS is compiled separately. Metrics and link decoration must win over
+     its independently weighted selectors; daisyUI still owns join corners. */
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)) {
+    --fly-button-height: var(--fly-control-height);
+    --fly-button-label-size: var(--fly-button-size);
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    height: var(--fly-button-height) !important;
+    min-height: 0;
+    max-inline-size: 100%;
+    font-family: var(--fly-button-family) !important;
+    font-size: var(--fly-button-label-size) !important;
+    font-weight: var(--fly-button-weight) !important;
+    font-stretch: var(--fly-sans-stretch);
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    text-transform: none;
     letter-spacing: var(--fly-button-tracking);
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.7em 1.6em;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components .btn):not(.button-group > *, .du-join-item) {
+    border-radius: var(--fly-control-radius) !important;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):not(
+    [data-size^='icon'], .du-btn-circle, .du-btn-square
+  ) {
+    padding-block: 0;
+    padding-inline: 0.85rem;
+    white-space: normal;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='xs'], [data-size='icon-xs'], .du-btn-xs
+  ) {
+    --fly-button-height: 2rem;
+    --fly-button-label-size: var(--fly-size-xs);
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='sm'], [data-size='icon-sm'], .du-btn-sm
+  ) {
+    --fly-button-height: 2.5rem;
+    --fly-button-label-size: var(--fly-size-xs);
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='lg'], [data-size='icon-lg'], .du-btn-lg
+  ) {
+    --fly-button-height: 3.5rem;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is([data-size='xl'], .du-btn-xl) {
+    --fly-button-height: 4rem;
+    --fly-button-label-size: var(--fly-size-md);
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size^='icon'], .du-btn-circle, .du-btn-square
+  ) {
+    inline-size: var(--fly-button-height) !important;
+    padding: 0;
+  }
+
+  .md-typeset :is(.md-button, .md-button:focus) {
     color: var(--fly-ink);
     background: transparent;
-    box-shadow: inset 0 0 0 1px var(--fly-ink); /* the outline, outside the layout */
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
 
   .md-typeset .md-button:hover {
@@ -27,8 +81,7 @@
     box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
 
-  .md-typeset .md-button--primary,
-  .md-typeset .md-button--primary:focus {
+  .md-typeset :is(.md-button--primary, .md-button--primary:focus) {
     color: var(--fly-paper-3);
     background: var(--fly-ink);
     box-shadow: inset 0 0 0 1px var(--fly-ink);
@@ -38,5 +91,42 @@
     color: var(--fly-paper-3);
     background: var(--fly-quiet);
     box-shadow: inset 0 0 0 1px var(--fly-quiet);
+  }
+
+  .md-typeset .md-button:is(:disabled, [aria-disabled='true']) {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  .md-typeset .fltheme-components :is(.du-btn, .du-join-item.du-btn) {
+    border-width: 1px !important;
+    box-shadow: none !important;
+    text-shadow: none;
+  }
+
+  .md-typeset .fltheme-components .du-btn:not(
+    .du-btn-primary, .du-btn-neutral, .du-btn-secondary, .du-btn-accent, .du-btn-info,
+    .du-btn-success, .du-btn-warning, .du-btn-error, .du-btn-outline, .du-btn-dash,
+    .du-btn-ghost, .du-btn-link, .du-btn-disabled, :disabled, [aria-disabled='true']
+  ) {
+    border-color: var(--fly-control-border) !important;
+  }
+
+  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']) {
+    color: var(--fly-ink) !important;
+    background-color: transparent !important;
+    border-color: var(--fly-control-border) !important;
+  }
+
+  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']):is(:hover, :active) {
+    background-color: var(--fly-hover) !important;
+  }
+
+  .md-typeset .fltheme-components .btn[data-variant='secondary'] {
+    border-color: var(--fly-control-border) !important;
+  }
+
+  .md-typeset .fltheme-components :is(.du-btn-secondary, .du-btn-accent, .du-btn-info, .du-btn-success, .du-btn-warning, .du-btn-error) {
+    border-color: var(--fly-control-border) !important;
   }
 }

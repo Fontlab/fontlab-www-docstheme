@@ -6,6 +6,18 @@ nav:
       - Configuration: theme/configuration.md
       - Assets: theme/assets.md
       - Chrome: theme/chrome.md
+  - Compare:
+      - Overview: compare/index.md
+      - Buttons: compare/buttons.md
+      - Cards and surfaces: compare/cards.md
+      - Fields: compare/fields.md
+      - Choices and switches: compare/choices.md
+      - Tabs: compare/tabs.md
+      - Alerts, admonitions and callouts: compare/alerts.md
+      - Badges, tags and keys: compare/badges.md
+      - Tables: compare/tables.md
+      - Disclosure: compare/disclosure.md
+      - Dialogs: compare/dialogs.md
   - Showcase:
       - Overview: showcase/index.md
       - FontLab product imagery: showcase/fontlab.md

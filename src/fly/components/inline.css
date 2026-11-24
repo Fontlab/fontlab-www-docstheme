@@ -9,7 +9,8 @@
 @layer fly.components {
   /* Article links: every link in the article except the components. A MaterialX component
      carries a class starting md- (md-button, md-tag, md-post__readlink, md-pagination__link,
-     md-annotation, md-source...) and the permalink is .headerlink; those keep what MaterialX
+     md-annotation, md-source...) and the permalink is .headerlink. Library actions, tabs and badges also keep their
+     component styling; the remaining MaterialX links keep what MaterialX
      and their own CSS say. Every other link, classless or classed by Markdown (attr_list's
      { .x }, autorefs, magiclink, glightbox, footnotes), gets the article look. A site
      component link opts out with data-fly-plain on the link or on an element around it; it
@@ -18,7 +19,7 @@
      --fly-link-color (extra.fly.links: accent sets it to --fly-link), else the text colour.
      The conditions sit in :where() so the rule weighs no more than the nested-run rule below,
      which must win for a link inside strong or em. */
-  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)) {
+  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))) {
     color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -29,7 +30,7 @@
     line-height: 1;
   }
 
-  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)):is(:hover, :focus-visible) {
+  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))):is(:hover, :focus-visible) {
     color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
 

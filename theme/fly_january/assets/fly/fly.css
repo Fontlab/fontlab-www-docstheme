@@ -165,10 +165,10 @@
     --fly-sans-stretch: 90%;
     --fly-sans-variation: 'slnt' 0;
     --fly-sans-adjust: 0.95;
-    --fly-button-family: var(--fly-sans-family);
-    --fly-button-size: 0.9em;
-    --fly-button-weight: 500;
-    --fly-button-tracking: 0.06em;
+    --fly-button-family: var(--fly-control-font);
+    --fly-button-size: var(--fly-control-size);
+    --fly-button-weight: var(--fly-control-weight);
+    --fly-button-tracking: normal;
     --fly-ui-family: system-ui, sans-serif;
     --fly-icon-family: 'Material Symbols Outlined';
     --fly-nav-current-weight: 600;
@@ -620,7 +620,6 @@
     --fly-part-rail: clamp(12.5rem, 15vw, 19.4444rem);
     --fly-sliver: clamp(4.1667rem, 5vw, 6.9444rem);
     --fly-l1: var(--fly-rail);
-    --fly-l1-label: 10.0694rem;
     --fly-l1-reveal: var(--fly-rail);
     --fly-notch: var(--fly-size-sm);
     --fly-h1-measure: 16ch;
@@ -637,8 +636,8 @@
   }
   @media screen and (76.25em <= width < 100em) {
     :root {
+      --fly-sliver: 10rem;
       --fly-l1: var(--fly-sliver);
-      --fly-l1-reveal: calc(1.1111rem + var(--fly-l1-label) + 1.3889rem);
     }
 
     .fly-no-l2 {
@@ -739,6 +738,22 @@
     --md-code-hl-constant-color: var(--fly-indigo-soft);
     --md-code-hl-keyword-color: var(--fly-cobalt-soft);
     --md-code-hl-string-color: var(--fly-emerald-soft);
+  }
+  :root {
+    --fly-control-height: 3rem;
+    --fly-control-radius: 0.5rem;
+    --fly-control-font: var(--fly-sans-family);
+    --fly-control-size: var(--fly-size-sm);
+    --fly-control-weight: 500;
+    --fly-card-padding: var(--fly-half);
+    --fly-card-radius: 0.75rem;
+    --fly-card-title-size: var(--fly-size-md);
+  }
+  :where(:root, [data-md-color-scheme], [data-fly-hue]) {
+    --fly-surface-raised: var(--fly-paper-2);
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 65%, var(--fly-paper-3));
+    --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
+    --fly-focus-ring: var(--fly-accent-text);
   }
   :root:not(#\#):not(#\#) {
     font-variation-settings: var(--fly-sans-variation);
@@ -969,8 +984,17 @@
     }
   }
   @media screen and (76.25em <= width < 100em) {
-    .md-sidebar--primary:not(#\#):not(#\#):not(#\#):not(#\#) .md-nav__link .md-ellipsis {
-      text-overflow: clip;
+    body:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link):not(#\#):not(#\#):not(#\#):not(#\#)
+      .md-sidebar--primary .md-nav__link {
+      max-inline-size: calc(var(--fly-l1) - 0.5rem);
+      padding-inline: 0.65rem;
+    }
+
+    body:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link):not(#\#):not(#\#):not(#\#):not(#\#)
+      .md-sidebar--primary .md-nav__link .md-ellipsis {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      overflow: visible;
     }
   }
   @media screen and (min-width: 60em) {
@@ -1102,18 +1126,18 @@
     display: none;
   }
   @media screen and (max-width: 44.984375em) {
-    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) > .tabbed-set .tabbed-labels {
+    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) .tabbed-set .tabbed-labels {
       margin-inline: 0;
       max-width: 100%;
       padding-inline: 0;
       scroll-padding-inline-start: 0;
     }
 
-    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) > .tabbed-set .tabbed-labels::after {
+    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) .tabbed-set .tabbed-labels::after {
       padding-inline: 0;
     }
 
-    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) > .tabbed-set .tabbed-labels ~ .tabbed-control {
+    .md-content__inner:not(#\#):not(#\#):not(#\#):not(#\#) .tabbed-set .tabbed-labels ~ .tabbed-control {
       margin-inline: 0;
       padding-inline: 0;
       width: 1.2rem;
@@ -1574,7 +1598,7 @@
     font-weight: inherit;
     line-height: inherit;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))) {
     color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -1584,7 +1608,7 @@
     font-size: calc(var(--fly-sans-adjust) * 1em);
     line-height: 1;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a)):is(:hover, :focus-visible) {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))):is(:hover, :focus-visible) {
     color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) strong {
@@ -1824,6 +1848,25 @@
     font-variation-settings: inherit;
     font-weight: inherit;
   }
+  .md-typeset:not(#\#) .fltheme-components :is(.table, .du-table) {
+    font-size: var(--fly-table-size) !important;
+    line-height: var(--fly-table-leading) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.table, .du-table) {
+    color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-typeset__table table, .fltheme-components :is(.table, .du-table)) > thead {
+    background-color: var(--fly-surface-raised);
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.table, .du-table) :is(td, th) {
+    padding: 0.4688em 0.625em !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.table, .du-table) :is(td, th) {
+    color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.table, .du-table) tbody > tr + tr {
+    border-top: 1px solid var(--fly-rule);
+  }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.admonition, details) {
     border: 1px solid var(--fly-edge);
     background: transparent;
@@ -1872,17 +1915,143 @@
     font-size: inherit;
     line-height: inherit;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button,
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button:focus {
-    font-family: var(--fly-button-family);
-    font-size: var(--fly-button-size);
-    font-weight: var(--fly-button-weight);
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components {
+    --size-field: calc(var(--fly-control-height) / 10);
+    --radius-field: var(--fly-control-radius);
+    --radius-selector: var(--fly-control-radius);
+    --radius-box: var(--fly-card-radius);
+    --du-border: 1px;
+    --depth: 0;
+    --noise: 0;
+    background-color: transparent;
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    line-height: 1.4;
+  }
+  .md-typeset:not(#\#) .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --background: var(--fly-paper-3) !important;
+    --foreground: var(--fly-ink) !important;
+    --card: var(--fly-surface-raised) !important;
+    --card-foreground: var(--fly-ink) !important;
+    --popover: var(--fly-surface-raised) !important;
+    --popover-foreground: var(--fly-ink) !important;
+    --primary: var(--fly-ink) !important;
+    --primary-foreground: var(--fly-paper-3) !important;
+    --secondary: var(--fly-surface-raised) !important;
+    --secondary-foreground: var(--fly-ink) !important;
+    --muted: var(--fly-surface-raised) !important;
+    --muted-foreground: var(--fly-quiet) !important;
+    --accent: var(--fly-accent-tint) !important;
+    --accent-foreground: var(--fly-accent-text) !important;
+    --destructive: var(--fly-danger-text) !important;
+    --border: var(--fly-card-border) !important;
+    --input: var(--fly-control-border) !important;
+    --ring: var(--fly-focus-ring) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    color: var(--fly-ink);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components[data-fltheme-mode='light'] { color-scheme: light; }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components[data-fltheme-mode='dark'] { color-scheme: dark; }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components:is([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --fly-ink: var(--foreground);
+    --fly-paper-3: var(--background);
+    --fly-surface-raised: var(--muted);
+    --fly-quiet: color-mix(in srgb, var(--fly-ink) 74%, var(--fly-paper-3));
+    --fly-hover: color-mix(in srgb, var(--fly-ink) 8%, transparent);
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 65%, var(--fly-paper-3));
+    --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
+    --fly-focus-ring: var(--fly-quiet);
+    --fly-accent-text: var(--fly-quiet);
+    --fly-danger-text: light-dark(var(--fly-cherry-deep), var(--fly-cherry-soft));
+    background-color: var(--background);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components {
+    --color-base-100: var(--background);
+    --color-base-200: var(--muted);
+    --color-base-300: var(--border);
+    --color-base-content: var(--foreground);
+    --color-primary-content: var(--primary-foreground);
+    --color-secondary-content: var(--secondary-foreground);
+    --color-accent-content: var(--accent-foreground);
+    --color-neutral: var(--primary);
+    --color-neutral-content: var(--primary-foreground);
+    --color-info: var(--fly-info-tint);
+    --color-info-content: var(--fly-info-text);
+    --color-success: var(--fly-success-tint);
+    --color-success-content: var(--fly-success-text);
+    --color-warning: var(--fly-warning-tint);
+    --color-warning-content: var(--fly-warning-text);
+    --color-error: var(--fly-danger-tint);
+    --color-error-content: var(--fly-danger-text);
+  }
+  .md-typeset:not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)) {
+    height: var(--fly-button-height) !important;
+    font-family: var(--fly-button-family) !important;
+    font-size: var(--fly-button-label-size) !important;
+    font-weight: var(--fly-button-weight) !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)) {
+    --fly-button-height: var(--fly-control-height);
+    --fly-button-label-size: var(--fly-button-size);
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    min-height: 0;
+    max-inline-size: 100%;
+    font-stretch: var(--fly-sans-stretch);
+    text-transform: none;
     letter-spacing: var(--fly-button-tracking);
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.7em 1.6em;
+  }
+  .md-typeset:not(#\#) :is(.md-button, .fltheme-components .btn):not(.button-group > *, .du-join-item) {
+    border-radius: var(--fly-control-radius) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):not(
+    [data-size^='icon'], .du-btn-circle, .du-btn-square
+  ) {
+    padding-block: 0;
+    padding-inline: 0.85rem;
+    white-space: normal;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='xs'], [data-size='icon-xs'], .du-btn-xs
+  ) {
+    --fly-button-height: 2rem;
+    --fly-button-label-size: var(--fly-size-xs);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='sm'], [data-size='icon-sm'], .du-btn-sm
+  ) {
+    --fly-button-height: 2.5rem;
+    --fly-button-label-size: var(--fly-size-xs);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size='lg'], [data-size='icon-lg'], .du-btn-lg
+  ) {
+    --fly-button-height: 3.5rem;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is([data-size='xl'], .du-btn-xl) {
+    --fly-button-height: 4rem;
+    --fly-button-label-size: var(--fly-size-md);
+  }
+  .md-typeset:not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size^='icon'], .du-btn-circle, .du-btn-square
+  ) {
+    inline-size: var(--fly-button-height) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(
+    [data-size^='icon'], .du-btn-circle, .du-btn-square
+  ) {
+    padding: 0;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button, .md-button:focus) {
     color: var(--fly-ink);
     background: transparent;
+    border: 0;
     box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button:hover {
@@ -1890,8 +2059,7 @@
     background: var(--fly-hover);
     box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button--primary,
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button--primary:focus {
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-button--primary, .md-button--primary:focus) {
     color: var(--fly-paper-3);
     background: var(--fly-ink);
     box-shadow: inset 0 0 0 1px var(--fly-ink);
@@ -1900,6 +2068,394 @@
     color: var(--fly-paper-3);
     background: var(--fly-quiet);
     box-shadow: inset 0 0 0 1px var(--fly-quiet);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button:is(:disabled, [aria-disabled='true']) {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.du-btn, .du-join-item.du-btn) {
+    border-width: 1px !important;
+    box-shadow: none !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.du-btn, .du-join-item.du-btn) {
+    text-shadow: none;
+  }
+  .md-typeset:not(#\#) .fltheme-components .du-btn:not(
+    .du-btn-primary, .du-btn-neutral, .du-btn-secondary, .du-btn-accent, .du-btn-info,
+    .du-btn-success, .du-btn-warning, .du-btn-error, .du-btn-outline, .du-btn-dash,
+    .du-btn-ghost, .du-btn-link, .du-btn-disabled, :disabled, [aria-disabled='true']
+  ) {
+    border-color: var(--fly-control-border) !important;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']) {
+    color: var(--fly-ink) !important;
+    background-color: transparent !important;
+    border-color: var(--fly-control-border) !important;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']):is(:hover, :active) {
+    background-color: var(--fly-hover) !important;
+  }
+  .md-typeset:not(#\#) .fltheme-components .btn[data-variant='secondary'] {
+    border-color: var(--fly-control-border) !important;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.du-btn-secondary, .du-btn-accent, .du-btn-info, .du-btn-success, .du-btn-warning, .du-btn-error) {
+    border-color: var(--fly-control-border) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fly-form {
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    line-height: 1.4;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) :is(label, legend):not(.du-btn, .du-tab) {
+    color: var(--fly-ink) !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) label:has(> input:is([type='checkbox'], [type='radio'])) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: 2rem;
+    width: fit-content;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is(fieldset, .du-fieldset) {
+    min-inline-size: 0;
+    padding: 0.5rem var(--fly-card-padding);
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-card-radius);
+    font-size: inherit;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is(.description, .du-label:not(label), small) {
+    color: var(--fly-quiet);
+    font-size: var(--fly-size-xs);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is([role='alert'], [data-error]):not(.alert, .du-alert) {
+    color: var(--fly-danger-text);
+  }
+  .md-typeset:not(#\#) :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button):not([type='checkbox'], [type='radio'], [type='range']),
+    .fly-form :is(input:not([type='checkbox'], [type='radio'], [type='range'], [type='hidden']), select, textarea)
+  ) {
+    min-block-size: var(--fly-control-height) !important;
+    background-color: var(--fly-paper-3) !important;
+    border: 1px solid var(--fly-control-border) !important;
+    color: var(--fly-ink) !important;
+    box-shadow: none !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button):not([type='checkbox'], [type='radio'], [type='range']),
+    .fly-form :is(input:not([type='checkbox'], [type='radio'], [type='range'], [type='hidden']), select, textarea)
+  ) {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    padding-inline-start: 0.7rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .md-typeset:not(#\#) :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button),
+    .fly-form :is(input, select, textarea)
+  ):not(.du-join-item, [type='checkbox'], [type='radio'], [type='range']) {
+    border-radius: var(--fly-control-radius) !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components input.du-input, .fltheme-components input.input, .fly-form input):not(
+    [type='checkbox'], [type='radio'], [type='range'], [type='hidden']
+  ) {
+    block-size: var(--fly-control-height) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is(input, textarea)::placeholder {
+    color: var(--fly-quiet);
+    opacity: 1;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) :is(input, select, textarea, button)[aria-invalid='true'] {
+    border-color: var(--fly-danger-text) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) textarea {
+    padding-block: 0.5rem;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is(input[type='range'], .du-range) {
+    accent-color: var(--fly-accent-text);
+    color: var(--fly-accent-text);
+    max-inline-size: 100%;
+  }
+  .md-typeset:not(#\#) .fltheme-components .du-range {
+    --du-range-bg: var(--fly-control-border) !important;
+  }
+  .md-typeset:not(#\#) :is(
+    .fltheme-components input:is(.input, .du-checkbox, .du-radio, .du-toggle),
+    .fly-form input
+  ):is([type='checkbox'], [type='radio']) {
+    appearance: none !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    inline-size: 1.4rem !important;
+    block-size: 1.4rem !important;
+    padding: 0 !important;
+    border: 1px solid var(--fly-control-border) !important;
+    border-radius: 0.25rem !important;
+    background: var(--fly-paper-3) !important;
+    color: var(--fly-ink) !important;
+    box-shadow: none !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .fltheme-components input:is(.input, .du-checkbox, .du-radio, .du-toggle),
+    .fly-form input
+  ):is([type='checkbox'], [type='radio']) {
+    flex: none;
+    min-block-size: 0;
+    margin: 0;
+    vertical-align: middle;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .du-toggle, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  )::before {
+    content: '' !important;
+    grid-area: 1 / 1 !important;
+    inline-size: 0.75rem !important;
+    block-size: 0.75rem !important;
+    background: currentColor !important;
+    border-radius: 0 !important;
+    mask: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    scale: none !important;
+    translate: none !important;
+    rotate: none !important;
+    opacity: 0 !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):is(
+    [type='checkbox']:not([role='switch'])
+  )::before {
+    clip-path: polygon(14% 44%, 0 59%, 40% 100%, 100% 20%, 84% 7%, 38% 70%) !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio'], .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio']::before {
+    border-radius: 50% !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  ):checked::before {
+    opacity: 1 !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):indeterminate::before {
+    clip-path: inset(40% 0) !important;
+    opacity: 1 !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']) {
+    grid-template-columns: 1fr 1fr !important;
+    inline-size: 2.5rem !important;
+    border-radius: 2rem !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])::before {
+    grid-column: 1 !important;
+    inline-size: 0.9rem !important;
+    block-size: 0.9rem !important;
+    border-radius: 50% !important;
+    opacity: 1 !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']):checked {
+    background: var(--fly-ink) !important;
+    color: var(--fly-paper-3) !important;
+  }
+  .md-typeset:not(#\#) :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']):checked::before {
+    grid-column: 2 !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .du-toggle::after {
+    content: none;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components, .fly-form) :is(input, select, textarea):disabled {
+    opacity: 0.55;
+  }
+  .md-typeset:not(#\#) :is(
+    .fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box),
+    .grid > .card, .grid.cards > ul > li, dialog.fly-dialog
+  ) {
+    background-color: var(--fly-surface-raised) !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-card-radius) !important;
+    font-size: var(--fly-control-size) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box),
+    .grid > .card, .grid.cards > ul > li, dialog.fly-dialog
+  ) {
+    color: var(--fly-ink);
+    box-shadow: none;
+    font-family: var(--fly-control-font);
+    line-height: 1.4;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components .card, .grid > .card, .grid.cards > ul > li) {
+    gap: var(--fly-half);
+    padding: var(--fly-card-padding);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .card > :is(header, section, footer) {
+    padding-inline: 0;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .du-card-body {
+    --du-card-p: var(--fly-card-padding);
+    --du-card-fs: var(--fly-control-size);
+    font-family: var(--fly-control-font);
+  }
+  .md-typeset:not(#\#) :is(
+    .fltheme-components .card > header > :is(h2, h3, .card-title, [data-title]),
+    .fltheme-components .du-card-title,
+    .grid > .card > :is(h2, h3), .grid.cards > ul > li > :is(h2, h3)
+  ) {
+    font-size: var(--fly-card-title-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .fltheme-components .card > header > :is(h2, h3, .card-title, [data-title]),
+    .fltheme-components .du-card-title,
+    .grid > .card > :is(h2, h3), .grid.cards > ul > li > :is(h2, h3)
+  ) {
+    font-family: var(--fly-control-font);
+    font-stretch: var(--fly-sans-stretch);
+    line-height: 1.2;
+    margin: 0;
+    text-align: start;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components .card, .fltheme-components .du-card) p {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components :is(.alert, .du-alert), .admonition, details:not(.fltheme-components *)) {
+    border-radius: var(--fly-card-radius);
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.alert, .du-alert) {
+    background-color: var(--fly-surface-raised) !important;
+    color: var(--fly-ink) !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-card-radius) !important;
+    box-shadow: none !important;
+    font-size: var(--fly-control-size) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.alert, .du-alert) {
+    padding: var(--fly-card-padding);
+    line-height: 1.4;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .admonition > .admonition-title, details:not(.fltheme-components *) > summary,
+    .fltheme-components :is(.alert, .du-alert) :is(h2, h3, strong, [data-title])
+  ) {
+    font-family: var(--fly-control-font);
+    font-weight: var(--fly-control-weight);
+    text-align: start;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.alert, .du-alert) :is(h2, h3, strong, [data-title]) {
+    margin-block: 0 0.3rem;
+    font-size: var(--fly-control-size);
+    line-height: inherit;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.du-alert-info, .du-alert-success, .du-alert-warning, .du-alert-error, .alert[data-variant='destructive']) {
+    border-inline-start: 3px solid var(--fly-alert-accent, var(--fly-info-text)) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .du-alert-success { --fly-alert-accent: var(--fly-success-text); }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .du-alert-warning { --fly-alert-accent: var(--fly-warning-text); }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.du-alert-error, .alert[data-variant='destructive']) {
+    --fly-alert-accent: var(--fly-danger-text);
+  }
+  .md-typeset:not(#\#) :is(
+    .tabbed-set > .tabbed-labels > label,
+    .fltheme-components :is(.tabs [role='tab'], .du-tab)
+  ) {
+    min-block-size: var(--fly-control-height) !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-size-xs) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(
+    .tabbed-set > .tabbed-labels > label,
+    .fltheme-components :is(.tabs [role='tab'], .du-tab)
+  ) {
+    align-content: center;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .tabbed-set {
+    --md-accent-fg-color: var(--fly-accent-text);
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.tabs [role='tab'], .du-tab) {
+    color: var(--fly-quiet) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components :is(.tabs [role='tab'], .du-tab) {
+    border-bottom-color: var(--fly-control-border);
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(.tabs [aria-selected='true'], .du-tab:is(:checked, .du-tab-active)) {
+    color: var(--fly-accent-text) !important;
+  }
+  .md-typeset:not(#\#) :is(.md-tag, .fltheme-components :is(.badge, .du-badge), mark.fly-badge) {
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-control-radius) !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-size-xs) !important;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.md-tag, .fltheme-components :is(.badge, .du-badge), mark.fly-badge) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.65rem;
+    padding: 0 0.55em;
+    background: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components details:is(.accordion > details, .du-collapse) {
+    padding: 0;
+    background-color: var(--fly-surface-raised);
+    border: 1px solid var(--fly-control-border);
+    border-radius: var(--fly-control-radius);
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components details:is(.accordion > details, .du-collapse) > summary {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--fly-control-height);
+    margin: 0;
+    padding: 0.5rem 2rem 0.5rem var(--fly-card-padding);
+    background: transparent;
+    color: var(--fly-ink);
+    font-size: inherit;
+    font-weight: var(--fly-control-weight);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components details:is(.accordion > details, .du-collapse) > summary::before {
+    content: none;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .accordion > details > summary:not(:has(> svg))::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: var(--fly-card-padding);
+    top: 50%;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    background: none;
+    rotate: 45deg;
+    translate: 0 -70%;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .accordion > details[open] > summary:not(:has(> svg))::after {
+    rotate: 225deg;
+    translate: 0 -30%;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components .du-collapse > summary::after {
+    background: transparent;
+    mask: none;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .fltheme-components details[open]:is(.accordion > details, .du-collapse) > :not(summary) {
+    padding: 0 var(--fly-card-padding) var(--fly-card-padding);
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
+    max-inline-size: min(28rem, calc(100vw - 2rem));
+    padding: calc(1.5 * var(--fly-card-padding));
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) dialog.fly-dialog {
+    margin: auto;
+  }
+  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) dialog.fly-dialog::backdrop {
+    background: var(--fly-scrim);
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) kbd {
     display: inline-flex;
@@ -1920,9 +2476,19 @@
     letter-spacing: 0.01em;
     color: var(--foreground, var(--fly-ink));
     background: var(--muted, var(--fly-key));
-    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-    border-radius: 0.5208rem;
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-control-radius);
     box-shadow: none;
+  }
+  .md-typeset:not(#\#) .fltheme-components :is(kbd.kbd, kbd.du-kbd) {
+    height: 1.7em !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-control-radius) !important;
+    color: var(--fly-ink) !important;
+    background: var(--fly-surface-raised) !important;
+    font-family: var(--fly-nav-family) !important;
+    font-size: var(--fly-nav-size) !important;
+    box-shadow: none !important;
   }
   .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) kbd[data-fl-key-symbol]::before {
     content: attr(data-fl-key-symbol);
@@ -2282,9 +2848,12 @@
     outline: 1px solid var(--fl-focus-color, var(--fly-focus));
     outline-offset: -1px;
   }
-  .md-typeset:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .md-button:focus-visible {
-    outline: 2px solid var(--fly-ink);
-    outline-offset: 2px;
+  .md-typeset :is(
+    .md-button, .fltheme-components :is(.btn, .du-btn, input, select, textarea, .select > button),
+    .fly-form :is(input, select, textarea), dialog.fly-dialog button
+  ):focus-visible {
+    outline: 2px solid var(--fly-focus-ring) !important;
+    outline-offset: 2px !important;
   }
   .md-header:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) {
     --fl-focus-color: var(--fly-bar-ink);
@@ -2325,6 +2894,19 @@
     background-color: var(--fly-scrollbar);
   }
   @media (prefers-reduced-motion: reduce) {
+    .md-typeset .fltheme-components,
+    .md-typeset .fltheme-components *,
+    .md-typeset .fltheme-components *::before,
+    .md-typeset .fltheme-components *::after {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+
+    .md-typeset .fltheme-components details::details-content {
+      transition: none !important;
+    }
+
     *:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#),
     *:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::before,
     *:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#):not(#\#)::after {

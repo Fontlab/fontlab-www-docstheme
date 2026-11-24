@@ -1,4 +1,5 @@
 /* this_file: src/fly/components/keys.css */
+/* Basecoat and daisyUI keycap rules are flattened separately from Fly. */
 /* Key caps in the navigation face: a 1.7em box (border-box) with the label lowered
    slightly. Negative block margins keep the cap's margin box inside the line box, so
    lines stay on the grid. fly-bridge.js puts a symbol on named keys (data-fl-key-symbol). */
@@ -22,9 +23,20 @@
     letter-spacing: 0.01em;
     color: var(--foreground, var(--fly-ink));
     background: var(--muted, var(--fly-key));
-    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-    border-radius: 0.5208rem;
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-control-radius);
     box-shadow: none;
+  }
+
+  .md-typeset .fltheme-components :is(kbd.kbd, kbd.du-kbd) {
+    height: 1.7em !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-control-radius) !important;
+    color: var(--fly-ink) !important;
+    background: var(--fly-surface-raised) !important;
+    font-family: var(--fly-nav-family) !important;
+    font-size: var(--fly-nav-size) !important;
+    box-shadow: none !important;
   }
 
   .md-typeset kbd[data-fl-key-symbol]::before {

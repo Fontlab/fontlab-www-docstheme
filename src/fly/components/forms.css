@@ -1,0 +1,188 @@
+/* this_file: src/fly/components/forms.css */
+/* Basecoat and daisyUI field and choice selectors carry their own specificity boosts. */
+@layer fly.components {
+  .md-typeset .fly-form {
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    line-height: 1.4;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(label, legend):not(.du-btn, .du-tab) {
+    color: var(--fly-ink) !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) label:has(> input:is([type='checkbox'], [type='radio'])) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: 2rem;
+    width: fit-content;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(fieldset, .du-fieldset) {
+    min-inline-size: 0;
+    padding: 0.5rem var(--fly-card-padding);
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-card-radius);
+    font-size: inherit;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(.description, .du-label:not(label), small) {
+    color: var(--fly-quiet);
+    font-size: var(--fly-size-xs);
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is([role='alert'], [data-error]):not(.alert, .du-alert) {
+    color: var(--fly-danger-text);
+  }
+
+  .md-typeset :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button):not([type='checkbox'], [type='radio'], [type='range']),
+    .fly-form :is(input:not([type='checkbox'], [type='radio'], [type='range'], [type='hidden']), select, textarea)
+  ) {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    min-block-size: var(--fly-control-height) !important;
+    background-color: var(--fly-paper-3) !important;
+    border: 1px solid var(--fly-control-border) !important;
+    color: var(--fly-ink) !important;
+    box-shadow: none !important;
+    padding-inline-start: 0.7rem;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .md-typeset :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button),
+    .fly-form :is(input, select, textarea)
+  ):not(.du-join-item, [type='checkbox'], [type='radio'], [type='range']) {
+    border-radius: var(--fly-control-radius) !important;
+  }
+
+  .md-typeset :is(.fltheme-components input.du-input, .fltheme-components input.input, .fly-form input):not(
+    [type='checkbox'], [type='radio'], [type='range'], [type='hidden']
+  ) {
+    block-size: var(--fly-control-height) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, textarea)::placeholder {
+    color: var(--fly-quiet);
+    opacity: 1;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, select, textarea, button)[aria-invalid='true'] {
+    border-color: var(--fly-danger-text) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) textarea {
+    padding-block: 0.5rem;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input[type='range'], .du-range) {
+    accent-color: var(--fly-accent-text);
+    color: var(--fly-accent-text);
+    max-inline-size: 100%;
+  }
+
+  .md-typeset .fltheme-components .du-range {
+    --du-range-bg: var(--fly-control-border) !important;
+  }
+
+  /* Use the same boundary and marks for native and library choices. */
+  .md-typeset :is(
+    .fltheme-components input:is(.input, .du-checkbox, .du-radio, .du-toggle),
+    .fly-form input
+  ):is([type='checkbox'], [type='radio']) {
+    appearance: none !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    flex: none;
+    inline-size: 1.4rem !important;
+    block-size: 1.4rem !important;
+    min-block-size: 0;
+    margin: 0;
+    padding: 0 !important;
+    vertical-align: middle;
+    border: 1px solid var(--fly-control-border) !important;
+    border-radius: 0.25rem !important;
+    background: var(--fly-paper-3) !important;
+    color: var(--fly-ink) !important;
+    box-shadow: none !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .du-toggle, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  )::before {
+    content: '' !important;
+    grid-area: 1 / 1 !important;
+    inline-size: 0.75rem !important;
+    block-size: 0.75rem !important;
+    background: currentColor !important;
+    border-radius: 0 !important;
+    mask: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    scale: none !important;
+    translate: none !important;
+    rotate: none !important;
+    opacity: 0 !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):is(
+    [type='checkbox']:not([role='switch'])
+  )::before {
+    clip-path: polygon(14% 44%, 0 59%, 40% 100%, 100% 20%, 84% 7%, 38% 70%) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio'],
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio']::before {
+    border-radius: 50% !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  ):checked::before {
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):indeterminate::before {
+    clip-path: inset(40% 0) !important;
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']) {
+    grid-template-columns: 1fr 1fr !important;
+    inline-size: 2.5rem !important;
+    border-radius: 2rem !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])::before {
+    grid-column: 1 !important;
+    inline-size: 0.9rem !important;
+    block-size: 0.9rem !important;
+    border-radius: 50% !important;
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']):checked {
+    background: var(--fly-ink) !important;
+    color: var(--fly-paper-3) !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch']):checked::before {
+    grid-column: 2 !important;
+  }
+
+  .md-typeset .fltheme-components .du-toggle::after {
+    content: none;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, select, textarea):disabled {
+    opacity: 0.55;
+  }
+}

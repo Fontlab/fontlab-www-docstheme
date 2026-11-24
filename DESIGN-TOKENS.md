@@ -16,6 +16,7 @@ contract; this file records the values, where they came from and why. The source
 | `color.css` | twelve hues, greys and surfaces, light and dark |
 | `semantic.css` | accent, primary, link, status and admonition colours |
 | `materialx.css` | MaterialX `--md-*` colour and font variables, set from the above |
+| `components.css` | shared control metrics, surface borders and focus |
 
 `tests/fly-tokens.test.mjs` (run by `npm test`) checks every token named in this file
 exists, every colour token in the CSS is named here, every role has all its properties,
@@ -153,14 +154,40 @@ Faces outside the roles, used by the rules in `src/fly/`:
 | `--fly-sans-stretch` | `90%` | width of the inline sans and of h6 |
 | `--fly-sans-variation` | `'slnt' 0` | the root's variation settings; h3/h4 below 60em |
 | `--fly-sans-adjust` | `0.95` | inline sans size relative to the text around it |
-| `--fly-button-family` | `var(--fly-sans-family)` | MaterialX buttons |
-| `--fly-button-size` | `0.9em` | button label size |
-| `--fly-button-weight` | `500` | button label weight |
-| `--fly-button-tracking` | `0.06em` | button letter-spacing |
+| `--fly-button-family` | `var(--fly-control-font)` | button family |
+| `--fly-button-size` | `var(--fly-control-size)` | default button label size |
+| `--fly-button-weight` | `var(--fly-control-weight)` | button label weight |
+| `--fly-button-tracking` | `normal` | button letter-spacing |
 | `--fly-ui-family` | `system-ui, sans-serif` | search results, drawer close button |
 | `--fly-icon-family` | `'Material Symbols Outlined'` | palette toggle, arrows |
 | `--fly-nav-current-weight` | `600` | the current page in L1, the page title over L2 |
 | `--fly-nav-section-weight` | `500` | the current section in L2 |
+
+## Components
+
+MaterialX and native HTML controls in `.fly-form` share these values with Basecoat
+and prefixed daisyUI inside `.md-typeset .fltheme-components`. The default button
+and text-entry field height is 43.2px at the standard root size. Button variants
+can change height while retaining the shared family and weight.
+
+| Token | Default | Applies to |
+|---|---|---|
+| `--fly-control-height` | `3rem` | standard buttons, single-line fields and minimum tab height |
+| `--fly-control-radius` | `0.5rem` | standard buttons, text fields, badges and keycaps |
+| `--fly-control-font` | `var(--fly-sans-family)` | controls, labels and component panels |
+| `--fly-control-size` | `var(--fly-size-sm)` | default control and component text |
+| `--fly-control-weight` | `500` | labels, buttons and component titles |
+| `--fly-control-border` | 65% ink mixed into paper 3 in sRGB | controls that need a visible boundary |
+| `--fly-surface-raised` | `var(--fly-paper-2)` | cards, modal panels and quiet fills |
+| `--fly-focus-ring` | `var(--fly-accent-text)` | 2px keyboard outline on buttons and fields |
+| `--fly-card-padding` | `var(--fly-half)` | inset for cards and related panels |
+| `--fly-card-radius` | `0.75rem` | cards and modal panels |
+| `--fly-card-border` | 35% ink mixed into paper 3 in sRGB | surface outlines |
+| `--fly-card-title-size` | `var(--fly-size-md)` | card headings |
+
+Colour aliases resolve on the active scheme or hue. The control border targets
+at least 3:1 on the canvas and raised paper, while surface outlines target 1.5:1
+on the canvas.
 
 ## Layout
 
@@ -171,10 +198,9 @@ prototype's values):
 |---|---|---|
 | `--fly-rail` | `clamp(13.8889rem, 17vw, 25rem)` | full L1 rail; the L2 width from 100em |
 | `--fly-part-rail` | `clamp(12.5rem, 15vw, 19.4444rem)` | L2 rail |
-| `--fly-sliver` | `clamp(4.1667rem, 5vw, 6.9444rem)` | L1 under an extended L2 (76.25em–100em) |
+| `--fly-sliver` | `10rem` at 76.25em–100em | exposed part of L1 under an extended L2 |
 | `--fly-l1` | `var(--fly-rail)`; sliver, rail or `0.5208rem` per width | the L1 width L2 starts after |
-| `--fly-l1-label` | `10.0694rem` | longest L1 label at 1440px |
-| `--fly-l1-reveal` | `calc(1.1111rem + var(--fly-l1-label) + 1.3889rem)` at mid desktop | how far L2 retracts |
+| `--fly-l1-reveal` | `var(--fly-rail)` | exposed L1 width when L2 retracts |
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
 | `--fly-margin-col` | `clamp(11.1111rem, 20cqi, 20.8333rem)` | the margin column (`--m`) from 66.67rem of canvas; the blog post layout takes half of `--fly-post-bar` off it |
 | `--fly-bar-h` | `3.8889rem` | the global bar's height (56px at the default root); sticky rails and anchors clear it |
@@ -186,7 +212,8 @@ Both measures are also the `measure` property of the `h1` and `h2` roles: a site
 sets `roles: {h1: {measure: 12ch}}` (a plain length in ch, rem, em, px or %, or `none`) and the fly plugin writes
 `--fly-h1-measure` on `:root` like the other role variables.
 
-On phones, alternate-style content tab labels scroll within the article column. The in-page
+In the mid-desktop band, L1 labels wrap within the exposed strip. Hover or keyboard
+focus still retracts L2. On phones, alternate-style content tab labels scroll within the article column. The in-page
 navigation panel slides within a fixed shell clipped horizontally at the viewport edges.
 Code blocks with a toolbar reserve an inline-end gutter sized to the controls, so the code
 scrolls in its own column.

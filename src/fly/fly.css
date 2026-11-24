@@ -13,6 +13,7 @@
 @import 'tokens/semantic.css';
 @import 'tokens/layout.css';
 @import 'tokens/materialx.css';
+@import 'tokens/components.css';
 @import 'base/root.css';
 @import 'base/typeset.css';
 @import 'layout/sheets.css';
@@ -31,7 +32,10 @@
 @import 'components/tables.css';
 @import 'components/admonitions.css';
 @import 'components/cards.css';
+@import 'components/component-scope.css';
 @import 'components/buttons.css';
+@import 'components/forms.css';
+@import 'components/widgets.css';
 @import 'components/keys.css';
 @import 'components/palette.css';
 @import 'components/footer.css';

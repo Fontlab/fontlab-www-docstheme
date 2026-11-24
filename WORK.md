@@ -4,6 +4,24 @@ this_file: WORK.md
 
 # Work
 
+## 0.3.0 component comparison
+
+Fly puts shared control and surface styling on MaterialX and on the Basecoat and
+daisyUI bundle inside the article. The Compare overview and ten specimen pages
+use the default typography and FontLab chrome. The mid-desktop site rail uses a
+10rem strip with wrapping labels. Hover and focus still retract the in-page rail.
+
+All four requested gates exited 0. The Node suite passed 60 tests, the Python
+suite passed 235, and the strict demo build checked 8,713 internal links on 86
+pages with zero broken. The 72 CDN files match the manifest, and the 48 files
+from earlier versions are byte-identical to the starting revision. The generated
+Compare HTML has three renderer columns and two copy panels on each specimen
+page, unique IDs, and resolved label and ARIA references.
+
+The browser scripts passed syntax checks. The orchestrator owns browser
+verification of the 1440px rail and light/slate control measurements. This local
+build used `FLY_CDN_ALLOW_UNPUBLISHED=1`. Version 0.3.0 remains unreleased.
+
 ## 0.2.1 rollout layout fixes
 
 The rollout fixture builds three pages for alternate-style tabs, the in-page

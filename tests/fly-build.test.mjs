@@ -15,7 +15,10 @@ const src = join(root, 'src/fly');
 const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
 // Element-local working variables: declared and read per element in the layer files,
 // not tokens. Every other --fly-* reference must be declared in src/fly/tokens.
-const LOCALS = ['--fly-mt', '--fly-mb', '--fly-gbox', '--fly-gmb', '--fly-float-top', '--fly-float-mb'];
+const LOCALS = [
+  '--fly-mt', '--fly-mb', '--fly-gbox', '--fly-gmb', '--fly-float-top', '--fly-float-mb',
+  '--fly-alert-accent', '--fly-button-height', '--fly-button-label-size',
+];
 
 async function files(dir, ext) {
   const entries = await readdir(dir, { recursive: true, withFileTypes: true });
@@ -72,9 +75,12 @@ test('every var(--fly-*) used in src/fly is declared in the tokens', () => {
 
 test('!important appears only with a comment naming what it beats', () => {
   for (const [path, css] of Object.entries(sources)) {
-    for (const line of css.split('\n').filter((l) => l.includes('!important'))) {
-      assert.match(line, /!important;\s*\/\*.*MaterialX/, path + ': ' + line.trim());
-    }
+    postcss.parse(css).walkDecls(decl => {
+      if (!decl.important) return;
+      if (decl.next()?.type === 'comment' && decl.next().text.includes('MaterialX')) return;
+      assert.match(decl.parent.selector, /^\.md-typeset\b/, `${path}: independent bundle overrides must stay inside the article`);
+      assert.match(css.split('\n')[1], /\/\* Basecoat and daisyUI .+\*\//, `${path}: name the independent rules the override beats`);
+    });
   }
 });
 

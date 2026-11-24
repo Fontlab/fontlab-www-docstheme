@@ -637,24 +637,82 @@ const verifyInlineCode = async (base, width) => {
     JSON.stringify({long, scroll}));
 };
 
-// Between 76.25em and 100em the L2 sheet covers most of L1: L1's labels keep their full
-// line and run under the sheet (text-overflow clip, no narrowed box), so a label still shows
-// at least 48px of text before the sheet's edge; rail links carry their title.
+// Check text bounds against the actual L2 edge as well as each label's own box.
 const PROBE_RAIL_LABELS = `JSON.stringify((() => {
   const sheet = document.querySelector('.md-sidebar--secondary').getBoundingClientRect();
-  return [...document.querySelectorAll('.md-sidebar--primary .md-nav__link .md-ellipsis')].filter(s => s.getClientRects().length).map(s => {
-    const box = s.getBoundingClientRect();
-    return {text: s.textContent.trim(), title: s.title, overflow: getComputedStyle(s).textOverflow,
-      visible: Math.round(Math.min(box.left + s.scrollWidth, sheet.left) - box.left), cut: s.scrollWidth > s.clientWidth};
-  });
+  const rail = document.querySelector('.md-sidebar--primary');
+  const labels = [...rail.querySelectorAll('.md-nav__link .md-ellipsis')].filter(el => el.getClientRects().length);
+  return {sheet: sheet.left, labels: labels.map(el => {
+    const text = document.createRange();
+    text.selectNodeContents(el);
+    return {text: el.textContent.trim(), title: el.title, edge: text.getBoundingClientRect().right,
+      cut: el.scrollWidth > el.clientWidth};
+  })};
 })())`;
 
 const verifyRailLabels = async base => {
-  await open(`${base}/fontlab/`, 1440);
-  const labels = await ev(PROBE_RAIL_LABELS);
-  const widest = labels.reduce((a, b) => (b.visible > (a?.visible ?? -1) ? b : a), null);
-  check('rail.l1-label-clip@1440', labels.length >= 3 && labels.every(l => l.overflow === 'clip' && !l.cut && l.title === l.text) && widest.visible >= 48,
-    JSON.stringify(labels));
+  for (const site of ['fontlab/', 'demo/compare/buttons/']) {
+    await open(`${base}/${site}`, 1440);
+    await ab('mouse', 'move', '5', '5');
+    await settle();
+    await ev("document.documentElement.dataset.flyL2 = 'out'; 1");
+    const rest = await ev(PROBE_RAIL_LABELS);
+    const fits = ({labels, sheet}) => labels.length >= 3 &&
+      labels.every(l => !l.cut && l.edge <= sheet + 1 && l.title === l.text);
+    check(`rail.l1-labels-fit.${site}@1440`, fits(rest), JSON.stringify(rest));
+    await ev("document.querySelector('.md-sidebar--primary a.md-nav__link--active').focus(); 1");
+    const revealed = await ev(PROBE_RAIL_LABELS);
+    check(`rail.l2-retracts-on-focus.${site}@1440`, revealed.sheet > rest.sheet + 1 && fits(revealed),
+      `L2 edge ${rest.sheet} → ${revealed.sheet}`);
+  }
+};
+
+const probeComparison = control => `JSON.stringify((() => {${COLOUR_LIB}
+  return [...document.querySelectorAll('.fl-library-grid [data-compare-library]')].map(column => {
+    const el = column.querySelector('[data-compare-control="${control}"]');
+    if (!el) return {library: column.dataset.compareLibrary, missing: true};
+    const cs = getComputedStyle(el);
+    const page = backdrop(document.querySelector('.md-content'));
+    const border = rgba(cs.borderTopColor);
+    const [hi, lo] = [lum(over(border, page)), lum(page)].sort((a, b) => b - a);
+    return {library: column.dataset.compareLibrary, height: el.getBoundingClientRect().height,
+      radius: cs.borderTopLeftRadius, decoration: cs.textDecorationLine,
+      border: parseFloat(cs.borderTopWidth), alpha: border[3], contrast: (hi + 0.05) / (lo + 0.05)};
+  });
+})())`;
+
+const verifyComparison = async base => {
+  const buttonRadii = new Map();
+  for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card']]) {
+    await open(`${base}/demo/compare/${page}/`, 1440);
+    for (const scheme of ['default', 'slate']) {
+      await setScheme(scheme);
+      const items = await ev(probeComparison(control));
+      const detail = JSON.stringify(items);
+      const name = `compare.${page}.${scheme}`;
+      const complete = items.length === 3 && items.every(i => !i.missing && i.height > 0) &&
+        new Set(items.map(i => i.library)).size === 3;
+      check(`${name}.specimens`, complete, detail);
+      if (!complete) continue;
+      if (control === 'card') {
+        check(`${name}.visible-borders`, items.every(i => i.border > 0 && i.alpha > 0 && i.contrast >= 1.5), detail);
+        continue;
+      }
+      const heights = items.map(i => i.height);
+      check(`${name}.height`, Math.max(...heights) - Math.min(...heights) <= 1, detail);
+      check(`${name}.radius`, items.every(i => i.radius === items[0].radius && parseFloat(i.radius) > 0), detail);
+      if (control === 'primary') buttonRadii.set(scheme, items[0].radius);
+      if (control === 'text') {
+        check(`${name}.matches-button-radius`, items.every(i => i.radius === buttonRadii.get(scheme)), detail);
+        check(`${name}.control-boundaries`, items.every(i => i.border > 0 && i.contrast >= 3), detail);
+      } else {
+        const decorated = await ev(`[...document.querySelectorAll('.fl-compare :is(.btn, .du-btn, .md-button)')]
+          .filter(el => getComputedStyle(el).textDecorationLine !== 'none').map(el => el.textContent.trim())`);
+        check(`${name}.no-decoration`, items.every(i => i.decoration === 'none') && decorated.length === 0,
+          `decorated ${JSON.stringify(decorated)}`);
+      }
+    }
+  }
 };
 
 const CANARY = 'verify-fly-canary';
@@ -996,6 +1054,10 @@ try {
     sites[name] = path.join(tmp, name);
     await build(config, sites[name]);
   }));
+  sites.demo = path.join(ROOT, 'docs');
+  if (!fs.existsSync(path.join(sites.demo, 'compare/buttons/index.html'))) {
+    throw new Error('The built Compare demo is missing. Run ./build.sh before browser verification.');
+  }
   server = await serve(sites);
   const base = `http://127.0.0.1:${server.address().port}`;
   session = (await run('agent-browser', ['session', 'id', '--scope', 'worktree', '--prefix', 'verify'], {cwd: ROOT, encoding: 'utf8'})).stdout.trim();
@@ -1023,6 +1085,7 @@ try {
   await verifyKeyboard(base);
   for (const width of [1440, 390]) await verifyInlineCode(base, width);
   await verifyRailLabels(base);
+  await verifyComparison(base);
   await verifyNoErrors(base);
 } catch (error) {
   check('verify-fly.run', false, String(error?.stack || error).split('\n').slice(0, 4).join(' / '));

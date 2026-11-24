@@ -151,10 +151,10 @@
     --fly-sans-stretch: 90%;
     --fly-sans-variation: 'slnt' 0;
     --fly-sans-adjust: 0.95;
-    --fly-button-family: var(--fly-sans-family);
-    --fly-button-size: 0.9em;
-    --fly-button-weight: 500;
-    --fly-button-tracking: 0.06em;
+    --fly-button-family: var(--fly-control-font);
+    --fly-button-size: var(--fly-control-size);
+    --fly-button-weight: var(--fly-control-weight);
+    --fly-button-tracking: normal;
     --fly-ui-family: system-ui, sans-serif; /* search results */
     --fly-icon-family: 'Material Symbols Outlined'; /* palette toggle, arrows */
     --fly-nav-current-weight: 600; /* the current page in L1, the page title over L2 */

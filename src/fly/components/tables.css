@@ -1,4 +1,5 @@
 /* this_file: src/fly/components/tables.css */
+/* Basecoat and daisyUI table rules carry their own specificity boosts. */
 /* Tables in the table role (the rail face and width); header cells in the caption role.
    Cell padding is half MaterialX's. Inline runs keep the cell's face, size and weight. */
 @layer fly.components {
@@ -36,5 +37,24 @@
     font-stretch: inherit;
     font-variation-settings: inherit;
     font-weight: inherit;
+  }
+
+  .md-typeset .fltheme-components :is(.table, .du-table) {
+    font-size: var(--fly-table-size) !important;
+    line-height: var(--fly-table-leading) !important;
+    color: var(--fly-ink);
+  }
+
+  .md-typeset :is(.md-typeset__table table, .fltheme-components :is(.table, .du-table)) > thead {
+    background-color: var(--fly-surface-raised);
+  }
+
+  .md-typeset .fltheme-components :is(.table, .du-table) :is(td, th) {
+    padding: 0.4688em 0.625em !important;
+    color: var(--fly-ink);
+  }
+
+  .md-typeset .fltheme-components :is(.table, .du-table) tbody > tr + tr {
+    border-top: 1px solid var(--fly-rule);
   }
 }

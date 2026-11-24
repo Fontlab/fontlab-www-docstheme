@@ -10,7 +10,7 @@ import { test } from 'node:test';
 
 const root = new URL('..', import.meta.url).pathname;
 const tokensDir = join(root, 'src/fly/tokens');
-const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'layout.css', 'materialx.css'];
+const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'layout.css', 'materialx.css', 'components.css'];
 const HUES = ['cherry', 'tangerine', 'amber', 'lime', 'emerald', 'teal', 'sky', 'cobalt', 'indigo', 'violet', 'magenta', 'rose'];
 const VARIANTS = ['', '-soft', '-deep', '-tint'];
 const ROLES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body', 'lead', 'nav', 'table', 'caption', 'code'];
@@ -185,10 +185,34 @@ test('every token named in DESIGN-TOKENS.md is declared, and every colour token 
   );
   assert.ok(documented.size > 100, 'DESIGN-TOKENS.md documents too few tokens: ' + documented.size);
   for (const name of documented) assert.ok(declared.has(name), name + ' is documented but not declared');
-  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css', 'layout.css']) {
+  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css', 'layout.css', 'components.css']) {
     for (const rule of rules[file]) {
       for (const name of Object.keys(rule.decls)) {
         if (name.startsWith('--fly-')) assert.ok(documented.has(name), name + ' (' + file + ') is not documented');
+      }
+    }
+  }
+});
+
+test('component outlines contrast with their adjacent paper in both schemes', () => {
+  const selector = ':where(:root, [data-md-color-scheme], [data-fly-hue])';
+  for (const [name, minimum, papers] of [
+    ['--fly-control-border', 3, ['--fly-paper-3', '--fly-paper-2']],
+    ['--fly-card-border', 1.5, ['--fly-paper-3']],
+  ]) {
+    const value = valueOf(rules['components.css'], selector, name);
+    const [, percentage] = /^color-mix\(in srgb, var\(--fly-ink\) (\d+)%, var\(--fly-paper-3\)\)$/.exec(value);
+    for (const scheme of [LIGHT, DARK]) {
+      const ink = colour(scheme, '--fly-ink');
+      const canvas = colour(scheme, '--fly-paper-3');
+      const channels = ink.slice(1).match(/../g).map((hex, i) => {
+        const start = Number.parseInt(canvas.slice(1 + 2 * i, 3 + 2 * i), 16);
+        const end = Number.parseInt(hex, 16);
+        return Math.round(start + (percentage / 100) * (end - start)).toString(16).padStart(2, '0');
+      });
+      for (const paper of papers) {
+        const ratio = contrast('#' + channels.join(''), colour(scheme, paper));
+        assert.ok(ratio >= minimum, `${name} against ${paper} in ${scheme} is ${ratio.toFixed(2)}:1`);
       }
     }
   }
