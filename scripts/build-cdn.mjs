@@ -21,11 +21,9 @@ import { fileURLToPath } from 'node:url';
 import { OUT, SCRIPTS } from './build-fly.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-// The version comes from the same source as the Python package's (hatch-vcs): the git tag
-// vX.Y.Z when HEAD carries exactly one, else NEXT_VERSION, the release being prepared. This
-// constant is the one place to bump after a release (README "Release"); npm run
-// check:release verifies tag, package and CDN agree.
-export const NEXT_VERSION = '0.3.0';
+// Build the planned version even when preparing the next release on the previous tag.
+// check:release independently requires the tag and Python package to agree with it.
+export const NEXT_VERSION = '0.4.0';
 const RELEASE_TAG = /^v(\d+\.\d+\.\d+)$/;
 
 /** X.Y.Z from the release tags on HEAD (none: null; several: an error). */
@@ -43,7 +41,7 @@ function git(...args) {
   }
 }
 
-export const FLY_VERSION = tagVersion((git('tag', '--points-at', 'HEAD') ?? '').split('\n')) ?? NEXT_VERSION;
+export const FLY_VERSION = NEXT_VERSION;
 
 /**
  * Differences between a published version and a new build of it: paths (relative to the
@@ -99,7 +97,7 @@ export function cdnRefusal({ state, version, fresh, exists, allow }) {
   if (!conflicts.length) return null;
   return (
     `docs/fly/${version}/ is published on origin/main with different files (${conflicts.join(', ')}). ` +
-    'A published version never changes: bump NEXT_VERSION in scripts/build-cdn.mjs (or tag the new release).'
+    'A published version never changes: bump NEXT_VERSION in scripts/build-cdn.mjs.'
   );
 }
 export const CDN = join(ROOT, 'docs/fly');

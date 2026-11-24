@@ -23,10 +23,36 @@ plugins:
 `main.html` replaces the theme's own and drops its stylesheets and scripts, so prefer a
 hook or a partial for additions.
 
+## Local and remote assets
+
+By default, `fly-january` serves its CSS and JavaScript from the built site with
+content hashes in their URLs. Set `extra.fly.assets: remote` or select
+`theme.name: fly-january-remote` with the same `fly` plugin. Using `fly-january-remote` with `extra.fly.assets: local` fails the build.
+
+Remote pages load Fly styles and scripts from
+`https://fontlab.dev/fontlab-www-docstheme/fly/latest/`. After a release and
+browser cache refresh, deployed pages pick up CSS and JavaScript changes without
+a site rebuild. Template and plugin changes require upgrading the Python package
+and rebuilding. Both modes use the installed MaterialX styles and scripts locally.
+Building in remote mode requires no connection to the asset host.
+
+By default, remote mode runs JavaScript from `fontlab.dev` without Subresource Integrity (SRI). Pinning `assets_url` to a versioned folder limits exposure to future releases.
+
+To pin Fly assets to one release, set the base URL including its trailing slash.
+
+```yaml title="mkdocs.yml"
+extra:
+  fly:
+    assets: remote
+    assets_url: https://fontlab.dev/fontlab-www-docstheme/fly/0.4.0/
+```
+
 ## Site keys: `extra.fly`
 
 | Key | Default | Value |
 |---|---|---|
+| `assets` | `local` (remote alias: `remote`) | `local` or `remote` |
+| `assets_url` | Fly CDN `latest/` | Remote asset directory URL ending in `/` |
 | `chrome` | `fontlab` | `fontlab`, `vexy`, `none` or `{script, header, footer}`; see [chrome](chrome.md) |
 | `chrome_options` | none | menu attributes: `site-label`, `site-url` (an absolute http(s) URL or a root-relative path; defaults to the site URL), `mobile-menu`, `mobile-search`, `search-from`, and `sticky` (true pins the bar to the top; default false) |
 | `hue` | none (accent `cobalt`) | the accent: `cherry`, `tangerine`, `amber`, `lime`, `emerald`, `teal`, `sky`, `cobalt`, `indigo`, `violet`, `magenta`, `rose` or `gray` |

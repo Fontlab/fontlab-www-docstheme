@@ -644,7 +644,8 @@ const PROBE_RAIL_LABELS = `JSON.stringify((() => {
   const sheet = document.querySelector('.md-sidebar--secondary').getBoundingClientRect();
   const rail = document.querySelector('.md-sidebar--primary');
   const labels = [...rail.querySelectorAll('.md-nav__link .md-ellipsis')].filter(el => el.getClientRects().length);
-  return {sheet: sheet.left, labels: labels.map(el => {
+  return {sheet: sheet.left, l1: getComputedStyle(document.querySelector('.md-main')).backgroundColor,
+    l2: getComputedStyle(document.querySelector('.md-main__inner'), '::before').backgroundColor, labels: labels.map(el => {
     const text = document.createRange();
     text.selectNodeContents(el);
     return {text: el.textContent.trim(), title: el.title, edge: text.getBoundingClientRect().right,
@@ -656,16 +657,29 @@ const verifyRailLabels = async base => {
   for (const site of ['fontlab/', 'demo/compare/buttons/']) {
     await open(`${base}/${site}`, 1440);
     await ab('mouse', 'move', '5', '5');
-    await settle();
+    await setScheme('default');
     await ev("document.documentElement.dataset.flyL2 = 'out'; 1");
     const rest = await ev(PROBE_RAIL_LABELS);
+    check(`rail.covered-papers.${site}@1440`, rest.l1 === 'rgb(239, 240, 241)' && rest.l2 === 'rgb(246, 247, 248)',
+      `L1 ${rest.l1}, L2 ${rest.l2}`);
     const fits = ({labels, sheet}) => labels.length >= 3 &&
       labels.every(l => !l.cut && l.edge <= sheet + 1 && l.title === l.text);
     check(`rail.l1-labels-fit.${site}@1440`, fits(rest), JSON.stringify(rest));
     await ev("document.querySelector('.md-sidebar--primary a.md-nav__link--active').focus(); 1");
     const revealed = await ev(PROBE_RAIL_LABELS);
+    check(`rail.revealed-paper.${site}@1440`, revealed.l1 === 'rgb(246, 247, 248)', revealed.l1);
     check(`rail.l2-retracts-on-focus.${site}@1440`, revealed.sheet > rest.sheet + 1 && fits(revealed),
       `L2 edge ${rest.sheet} → ${revealed.sheet}`);
+  }
+  for (const [page, width] of [['fontlab/', 1920], ['fontlab/guide/', 1440], ['fontlab/', 390]]) {
+    await open(`${base}/${page}`, width);
+    await setScheme('default');
+    const l1 = await ev(`getComputedStyle(document.querySelector('${width === 390 ? '.md-sidebar--primary' : '.md-main'}')).backgroundColor`);
+    check(`rail.full-paper.${page}@${width}`, l1 === 'rgb(246, 247, 248)', l1);
+    if (width === 390) {
+      const l2 = await ev("getComputedStyle(document.querySelector('.md-sidebar--secondary .md-sidebar__scrollwrap')).backgroundColor");
+      check('rail.page-drawer-paper@390', l2 === 'rgb(246, 247, 248)', l2);
+    }
   }
 };
 

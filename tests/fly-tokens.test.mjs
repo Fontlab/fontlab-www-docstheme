@@ -389,6 +389,17 @@ test('greys and surfaces exist for both schemes', () => {
   assert.ok(colour(LIGHT, '--fly-bar'), '--fly-bar missing');
 });
 
+test('navigation papers and directional shadows follow the sheet palette', () => {
+  assert.equal(colour(LIGHT, '--fly-paper-1'), '#f6f7f8');
+  assert.equal(colour(LIGHT, '--fly-paper-2'), '#f6f7f8');
+  assert.equal(colour(LIGHT, '--fly-paper-1-covered'), '#eff0f1');
+  assert.equal(colour(DARK, '--fly-paper-1-covered'), 'var(--fly-paper-1)');
+  for (const scheme of [LIGHT, DARK]) assert.equal(colour(scheme, '--fly-shadow-ink'), 'rgb(0 0 0 / 3%)');
+  for (const [token, offset] of Object.entries({
+    '--fly-shadow': '-1px 0', '--fly-shadow-down': '0 2px', '--fly-shadow-up': '0 -2px', '--fly-drawer-shadow': '-2px 0',
+  })) assert.equal(colour(':root, [data-md-color-scheme]', token), offset + ' 2px var(--fly-shadow-ink)');
+});
+
 test('semantic tokens map onto hues through var() only', () => {
   const css = sources['semantic.css'].replace(/\/\*[\s\S]*?\*\//g, '');
   assert.doesNotMatch(css, /#[0-9a-f]{3,8}\b|oklch\(|rgba?\(|hsla?\(|color-mix\(/i, 'semantic.css must not hold colour literals');

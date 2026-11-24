@@ -43,6 +43,10 @@
       z-index: 201;
     }
 
+    html.fl-mobile-navigation[data-fl-mobile-menu='materialx'] body:not([data-md-color-scheme='slate']) .md-sidebar.md-sidebar--primary {
+      background: var(--fly-paper-1);
+    }
+
     html.fl-mobile-navigation.fl-drawer-open .md-sidebar.md-sidebar--primary {
       display: block;
       transform: translateX(0);

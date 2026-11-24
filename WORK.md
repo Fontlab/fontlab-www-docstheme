@@ -4,6 +4,16 @@ this_file: WORK.md
 
 # Work
 
+## 0.4.0 preparation
+
+Updated the light navigation sheets and shadow tokens, added remote Fly asset delivery,
+and built the 0.4.0 CDN directory and latest alias. All 84 manifest sizes and hashes
+matched disk, including 12 identical files in each of the two release directories.
+
+The build exited 0. All 62 Node tests and 248 Python tests passed. The strict site
+build checked 8,720 internal links on 86 pages with zero broken. The orchestrator ran
+`npm run verify:fly` outside the sandbox. It exited 0 with 351 assertions passing.
+
 ## 0.3.0 release-gate review, round 4
 
 Buttons can grow when labels wrap. Native admonitions and disclosures use the

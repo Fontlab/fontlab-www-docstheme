@@ -4,6 +4,14 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.4.0
+
+- `NEXT_VERSION` selects the CDN build directory. The Git tag is checked separately at release.
+
+- Light navigation sheets use `#f6f7f8`. The partially covered site rail darkens on mid-sized desktops and lightens when revealed.
+- Sheet and drawer shadows use a 2px blur at 3% opacity in both schemes.
+- Select `fly-january-remote` or set `extra.fly.assets: remote` to load Fly assets from the CDN. Follow `latest/` or pin a release with `assets_url`.
+
 ## 0.3.0 — 2026-11-24
 
 - Release tags build and check the Python distributions before uploading through Trusted Publishing. Owner setup on PyPI: register `Fontlab/fontlab-www-docstheme`, workflow `pypi-upload.yml`, environment `pypi` for `fly-january`.

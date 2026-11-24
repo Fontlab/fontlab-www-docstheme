@@ -33,6 +33,7 @@ Changelog = "https://github.com/Fontlab/fontlab-www-docstheme/blob/main/CHANGELO
 
 [project.entry-points."mkdocs.themes"]
 fly-january = "fly_january"
+fly-january-remote = "fly_january"
 
 [project.entry-points."mkdocs.plugins"]
 fly = "fly_january.plugin:FlyPlugin"
@@ -49,6 +50,17 @@ fly = "fly_january.plugin:FlyPlugin"
 "fly-january/search" = "material.plugins.search.plugin:SearchPlugin"
 "fly-january/social" = "material.plugins.social.plugin:SocialPlugin"
 "fly-january/tags" = "material.plugins.tags.plugin:TagsPlugin"
+
+"fly-january-remote/blog" = "material.plugins.blog.plugin:BlogPlugin"
+"fly-january-remote/group" = "material.plugins.group.plugin:GroupPlugin"
+"fly-january-remote/info" = "material.plugins.info.plugin:InfoPlugin"
+"fly-january-remote/meta" = "material.plugins.meta.plugin:MetaPlugin"
+"fly-january-remote/offline" = "material.plugins.offline.plugin:OfflinePlugin"
+"fly-january-remote/optimize" = "material.plugins.optimize.plugin:OptimizePlugin"
+"fly-january-remote/privacy" = "material.plugins.privacy.plugin:PrivacyPlugin"
+"fly-january-remote/search" = "material.plugins.search.plugin:SearchPlugin"
+"fly-january-remote/social" = "material.plugins.social.plugin:SocialPlugin"
+"fly-january-remote/tags" = "material.plugins.tags.plugin:TagsPlugin"
 
 [dependency-groups]
 dev = [

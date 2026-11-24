@@ -17,6 +17,14 @@
   }
 
   @media screen and (max-width: 59.984375em) {
+    body:not([data-md-color-scheme='slate']) .md-sidebar--primary {
+      background-color: var(--fly-paper-1);
+    }
+
+    body:not([data-md-color-scheme='slate']) .md-sidebar--secondary .md-sidebar__scrollwrap {
+      background-color: var(--fly-paper-2);
+    }
+
     /* Clip the moving panel in its fixed shell so article popovers can still overflow. */
     .md-sidebar--secondary {
       inset-inline: 0;
@@ -48,7 +56,7 @@
     #__toc:checked ~ .md-container .md-sidebar--secondary .md-sidebar__scrollwrap {
       pointer-events: auto;
       transform: none;
-      box-shadow: var(--md-shadow-z3);
+      box-shadow: var(--fly-drawer-shadow);
       transition: transform 0.2s cubic-bezier(0.7, 0, 0.1, 1), box-shadow 0.2s;
     }
   }
@@ -98,19 +106,32 @@
       transition: transform 200ms ease;
     }
 
-    /* Spelled out: pseudo-elements cannot go inside :is(). */
-    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-main__inner::before,
-    :root[data-fly-l2='in']:not(:has(.md-sidebar--secondary:focus-within)) .md-sidebar--secondary,
-    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):has(
-        .md-sidebar--primary:is(:hover, :focus-within)
-      )
-      .md-main__inner::before,
-    :root:not([data-fly-l2='out']):not(:has(.md-sidebar--secondary:focus-within)):has(
-        .md-sidebar--primary:is(:hover, :focus-within)
-      )
-      .md-sidebar--secondary {
-      /* Just far enough for the label; a strip of L2 stays. */
-      transform: translateX(calc(var(--fly-l1-reveal) - var(--fly-sliver)));
+    body:where(:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link)) .md-main {
+      background-color: var(--fly-paper-1-covered);
+      transition: background-color 200ms ease;
+    }
+
+    :root:not(:has(.md-sidebar--secondary:focus-within)):is(
+      [data-fly-l2='in'],
+      :not([data-fly-l2='out']):has(.md-sidebar--primary:is(:hover, :focus-within))
+    ) .md-main {
+      --fly-l2-transform: translateX(calc(var(--fly-l1-reveal) - var(--fly-sliver)));
+      background-color: var(--fly-paper-1);
+    }
+
+    .md-main__inner::before,
+    .md-sidebar--secondary {
+      transform: var(--fly-l2-transform, none);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body .md-main,
+    .md-main__inner::before,
+    .md-sidebar--secondary,
+    .md-sidebar--secondary .md-sidebar__scrollwrap,
+    #__toc:checked ~ .md-container .md-sidebar--secondary .md-sidebar__scrollwrap {
+      transition: none;
     }
   }
 

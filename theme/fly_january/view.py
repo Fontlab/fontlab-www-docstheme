@@ -44,6 +44,7 @@ class View:
     preset: str | None
     chrome: ChromeView
     utilities: bool
+    assets_url: str | None
     v: dict[str, str]
     debug: str | None
 
@@ -102,6 +103,7 @@ def view(site: SiteConfig, page: PageConfig | None, config: Any, versions: dict[
         preset=page.preset if page else None,
         chrome=chrome_view(site, config),
         utilities=site.utilities,
+        assets_url=site.assets_url if site.assets == "remote" else None,
         v=versions,
         debug=debug_data(site, page, look) if site.debug else None,
     )

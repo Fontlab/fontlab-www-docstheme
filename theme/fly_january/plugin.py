@@ -24,8 +24,8 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.structure.files import Files
 from vexy_markdown_figure_groups import group_figures
 
-from .assets import rescale_materialx, theme_versions, version_links
-from .config import PageConfig, SiteConfig, parse_page, parse_site
+from .assets import THEME_DIR, rescale_materialx, theme_versions, version_links
+from .config import REMOTE_THEME, PageConfig, SiteConfig, parse_page, parse_site
 from .markup import name_permalinks, patch_tags, stray_attr_lists
 from .view import body_attributes, h1_mode, page_classes, preset_look, view
 
@@ -46,7 +46,7 @@ def src_of(page: Any) -> str:
     return getattr(getattr(page, "file", None), "src_uri", "?")
 
 
-THEME_PLUGINS = "fly-january/"
+THEME_PLUGINS = ("fly-january", REMOTE_THEME)
 MATERIALX_PLUGINS = "materialx/"
 
 
@@ -61,8 +61,9 @@ def alias_materialx_plugins(plugins: Any) -> list[str]:
     """
     added = []
     for key in list(plugins):
-        twin = MATERIALX_PLUGINS + key.removeprefix(THEME_PLUGINS)
-        if key.startswith(THEME_PLUGINS) and twin not in plugins:
+        theme, _, name = key.partition("/")
+        twin = MATERIALX_PLUGINS + name
+        if theme in THEME_PLUGINS and name and twin not in plugins:
             dict.__setitem__(plugins, twin, plugins[key])
             added.append(twin)
     return added
@@ -80,17 +81,21 @@ class FlyPlugin(BasePlugin):
 
     def on_config(self, config: Any, **_: Any) -> Any:
         """Validate extra.fly and version local CSS/JS links."""
-        self.site = parse_site(config.get("extra"))
+        self.site = parse_site(config.get("extra"), (config.get("theme") or {}).get("name"))
         if config.get("plugins") is not None:
             alias_materialx_plugins(config["plugins"])
-        self.versions = theme_versions()
+        self.versions = theme_versions() if self.site.assets == "local" else {}
         self.pages = {}
-        version_links(config)
+        version_links(config, self.site.assets_url if self.site.assets == "remote" else None)
         return config
 
     def on_files(self, files: Files, **_: Any) -> Files:
-        """Leave the opt-in utility bundle out of the static files copied to the site."""
-        if not self.site.utilities:
+        """Omit remote theme assets and the disabled local utility sheet."""
+        if self.site.assets == "remote":
+            for file in list(files):
+                if file.src_uri.startswith("assets/fly/") and file.src_dir and Path(file.src_dir).resolve() == THEME_DIR.resolve():
+                    files.remove(file)
+        elif not self.site.utilities:
             bundle = files.get_file_from_path("assets/fly/fly-utilities.css")
             if bundle is not None:
                 files.remove(bundle)

@@ -350,15 +350,16 @@ the dark scale runs from dark to light.
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--fly-paper-1` | #e4e4e2 | #24252a | first sheet: site navigation |
-| `--fly-paper-2` | #f1f1ef | #24252a | second sheet: page navigation, code |
+| `--fly-paper-1` | #f6f7f8 | #24252a | first sheet: site navigation |
+| `--fly-paper-1-covered` | #eff0f1 | `var(--fly-paper-1)` | L1 sliver under extended L2 |
+| `--fly-paper-2` | #f6f7f8 | #24252a | second sheet: page navigation, code |
 | `--fly-paper-3` | #fefefe | #1d1e1f | the reading canvas |
 | `--fly-ink` | #191917 | #e9e9e6 | text |
 | `--fly-quiet` | #5c5c58 | #a9a9a4 | secondary text |
 | `--fly-edge` | #19191729 | #000000a0 | sheet edges and borders |
 | `--fly-rule` | #cececb | #3e3d3b | hairlines drawn on the canvas (the hr); at least 1.3:1 against `--fly-paper-3` in both schemes, which `--fly-edge` is not in the dark one |
 | `--fly-hover` | #0000000d | #ffffff12 | hover wash |
-| `--fly-shadow-ink` | rgb(0 0 0 / 12%) | same | screenshot and strip shadows (the prototype's value in both schemes) |
+| `--fly-shadow-ink` | rgb(0 0 0 / 3%) | same | shadow colour in both schemes |
 | `--fly-bar` | #24252a | same | global menu, footer, previous/next strip |
 | `--fly-bar-drop` | #1d1e1f | same | dropdowns on the bar |
 | `--fly-bar-ink` | #e9e9e6 | same | text on the bar and on dark primary fills (never on lime or amber) |
@@ -367,15 +368,17 @@ the dark scale runs from dark to light.
 | `--fly-scrim` | #00000088 | same | behind the search panel |
 | `--fly-scrim-strong` | #000000bb | same | under lightbox captions |
 
+The covered L1 keeps the cool hue of L2 and lowers HSL lightness by 2.75 percentage points. This marks the overlap at mid-desktop widths. When L2 retracts, L1 returns to its full sheet colour over the same 200ms, or immediately with reduced motion.
+
 Shadows are declared on `:root` and on every `[data-md-color-scheme]`, so their
 `--fly-shadow-ink` resolves per scheme:
 
 | Token | Value | Use |
 |---|---|---|
-| `--fly-shadow` | `-1px 0 3px rgb(0 0 0 / 8%)` | vertical sheet edges |
-| `--fly-shadow-down` | `0 2px 6px var(--fly-shadow-ink)` | light-edged screenshots |
-| `--fly-shadow-up` | `0 -2px 6px var(--fly-shadow-ink)` | previous/next strip, cast up |
-| `--fly-drawer-shadow` | `-2px 0 8px rgb(0 0 0 / 20%)` | phone navigation drawer |
+| `--fly-shadow` | `-1px 0 2px var(--fly-shadow-ink)` | vertical sheet edges |
+| `--fly-shadow-down` | `0 2px 2px var(--fly-shadow-ink)` | light-edged screenshots |
+| `--fly-shadow-up` | `0 -2px 2px var(--fly-shadow-ink)` | previous/next strip, cast up |
+| `--fly-drawer-shadow` | `-2px 0 2px var(--fly-shadow-ink)` | phone navigation drawer |
 
 ### Semantic colours
 

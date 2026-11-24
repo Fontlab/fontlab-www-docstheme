@@ -45,7 +45,7 @@
       
     
   <link rel="stylesheet" data-fly-photoswipe="" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css" integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../assets/fly/fly.css?v=c8fad73934">
+  <link rel="stylesheet" href="../../assets/fly/fly.css?v=d99780ca03">
 
     
 
@@ -598,6 +598,17 @@
     <span class="md-ellipsis">
       
         Turn the theme on
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-and-remote-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local and remote assets
       
     </span>
   </a>
@@ -3275,6 +3286,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#local-and-remote-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local and remote assets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#site-keys-extrafly" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3374,6 +3396,23 @@ theme's tests (<code>tests/py/test_demo_site.py</code>).</p>
 <p><code>custom_dir</code> stays available for site-specific templates. A template override named
 <code>main.html</code> replaces the theme's own and drops its stylesheets and scripts, so prefer a
 hook or a partial for additions.</p>
+<h2 id="local-and-remote-assets">Local and remote assets<a aria-label="Permanent link" class="headerlink" href="#local-and-remote-assets" title="Permanent link">¶</a></h2>
+<p>By default, <code>fly-january</code> serves its CSS and JavaScript from the built site with
+content hashes in their URLs. Set <code>extra.fly.assets: remote</code> or select
+<code>theme.name: fly-january-remote</code> with the same <code>fly</code> plugin. Using <code>fly-january-remote</code> with <code>extra.fly.assets: local</code> fails the build.</p>
+<p>Remote pages load Fly styles and scripts from
+<code>https://fontlab.dev/fontlab-www-docstheme/fly/latest/</code>. After a release and
+browser cache refresh, deployed pages pick up CSS and JavaScript changes without
+a site rebuild. Template and plugin changes require upgrading the Python package
+and rebuilding. Both modes use the installed MaterialX styles and scripts locally.
+Building in remote mode requires no connection to the asset host.</p>
+<p>By default, remote mode runs JavaScript from <code>fontlab.dev</code> without Subresource Integrity (SRI). Pinning <code>assets_url</code> to a versioned folder limits exposure to future releases.</p>
+<p>To pin Fly assets to one release, set the base URL including its trailing slash.</p>
+<div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">extra</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">assets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remote</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">assets_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://fontlab.dev/fontlab-www-docstheme/fly/0.4.0/</span>
+</span></code></pre></div>
 <h2 id="site-keys-extrafly">Site keys: <code>extra.fly</code><a aria-label="Permanent link" class="headerlink" href="#site-keys-extrafly" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -3384,6 +3423,16 @@ hook or a partial for additions.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>assets</code></td>
+<td><code>local</code> (remote alias: <code>remote</code>)</td>
+<td><code>local</code> or <code>remote</code></td>
+</tr>
+<tr>
+<td><code>assets_url</code></td>
+<td>Fly CDN <code>latest/</code></td>
+<td>Remote asset directory URL ending in <code>/</code></td>
+</tr>
 <tr>
 <td><code>chrome</code></td>
 <td><code>fontlab</code></td>
@@ -3449,51 +3498,51 @@ uses. Set <code>fonts.sources: []</code> to use the system fallbacks.
 The prototype's Quire Sans exists only in an all-families kit (<code>gav0zux</code>, 654 KB), which the
 theme never loads by default: add it to <code>sources</code> and set the <code>h2</code> family to use it.</p>
 <p>A complete site block:</p>
-<div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">extra</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">chrome</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fontlab</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">chrome_options</span><span class="p">:</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">site-label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Design system</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">site-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://design.example/</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">mobile-menu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">materialx</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">mobile-search</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">materialx</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nt">search-from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docstheme</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="nt">sticky</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cobalt</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ink</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">links</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inherit</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typekit:gav0zux</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google:Outfit:wght@100..900</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/fonts.css</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nt">roles</span><span class="p">:</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">        </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'newsserif-huge-variable',</span><span class="nv"> </span><span class="s">serif"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">700</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="nt">h2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'quire-sans',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">300</span><span class="p p-Indicator">,</span><span class="nt"> scale</span><span class="p">:</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Outfit',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> features</span><span class="p">:</span><span class="w"> </span><span class="s">'"onum"</span><span class="nv"> </span><span class="s">1'</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="nt">strong</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="nv">600</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">        </span><span class="nt">em</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">style</span><span class="p">:</span><span class="w"> </span><span class="nv">italic</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">        </span><span class="nt">sans</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Outfit',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> stretch</span><span class="p">:</span><span class="w"> </span><span class="nv">normal</span><span class="p p-Indicator">,</span><span class="nt"> variation</span><span class="p">:</span><span class="w"> </span><span class="nv">normal</span><span class="p p-Indicator">,</span><span class="nt"> adjust</span><span class="p">:</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">}</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">presets</span><span class="p">:</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">      </span><span class="nt">fl9-color</span><span class="p">:</span>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">        </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">          </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">google</span><span class="p p-Indicator">:</span><span class="nv">Blaka+Ink</span><span class="p p-Indicator">]</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">          </span><span class="nt">roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Blaka</span><span class="nv"> </span><span class="s">Ink'"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">400</span><span class="p p-Indicator">,</span><span class="nt"> scale</span><span class="p">:</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">}}</span>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">magenta</span>
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">      </span><span class="nt">plain</span><span class="p">:</span>
-</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gray</span>
-</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="nt">margin_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span>
-</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="nt">utilities</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">    </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">extra</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">chrome</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fontlab</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">chrome_options</span><span class="p">:</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">site-label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Design system</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">site-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://design.example/</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">mobile-menu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">materialx</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nt">mobile-search</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">materialx</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">search-from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docstheme</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">sticky</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cobalt</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ink</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">links</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inherit</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typekit:gav0zux</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google:Outfit:wght@100..900</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/fonts.css</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">      </span><span class="nt">roles</span><span class="p">:</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">        </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'newsserif-huge-variable',</span><span class="nv"> </span><span class="s">serif"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">700</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">        </span><span class="nt">h2</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'quire-sans',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">300</span><span class="p p-Indicator">,</span><span class="nt"> scale</span><span class="p">:</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">        </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Outfit',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> features</span><span class="p">:</span><span class="w"> </span><span class="s">'"onum"</span><span class="nv"> </span><span class="s">1'</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">        </span><span class="nt">strong</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="nv">600</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="nt">em</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">style</span><span class="p">:</span><span class="w"> </span><span class="nv">italic</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">        </span><span class="nt">sans</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Outfit',</span><span class="nv"> </span><span class="s">sans-serif"</span><span class="p p-Indicator">,</span><span class="nt"> stretch</span><span class="p">:</span><span class="w"> </span><span class="nv">normal</span><span class="p p-Indicator">,</span><span class="nt"> variation</span><span class="p">:</span><span class="w"> </span><span class="nv">normal</span><span class="p p-Indicator">,</span><span class="nt"> adjust</span><span class="p">:</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">}</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">    </span><span class="nt">presets</span><span class="p">:</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">      </span><span class="nt">fl9-color</span><span class="p">:</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">        </span><span class="nt">fonts</span><span class="p">:</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">          </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">google</span><span class="p p-Indicator">:</span><span class="nv">Blaka+Ink</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">          </span><span class="nt">roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"'Blaka</span><span class="nv"> </span><span class="s">Ink'"</span><span class="p p-Indicator">,</span><span class="nt"> weight</span><span class="p">:</span><span class="w"> </span><span class="nv">400</span><span class="p p-Indicator">,</span><span class="nt"> scale</span><span class="p">:</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">}}</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">magenta</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">      </span><span class="nt">plain</span><span class="p">:</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gray</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">    </span><span class="nt">margin_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">right</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="w">    </span><span class="nt">utilities</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">    </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </span></code></pre></div>
 <p><code>typekit:gav0zux</code> loads <code>https://use.typekit.net/gav0zux.css</code>; <code>google:Outfit:wght@100..900</code>
 loads <code>https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap</code>. Join
 several Google families into one stylesheet with <code>&amp;family=</code>:</p>
-<div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">extra</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google:Outfit:wght@100..900&amp;family=REM:wght@100..900</span>
+<div class="language-yaml highlight"><span class="filename">mkdocs.yml</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">extra</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google:Outfit:wght@100..900&amp;family=REM:wght@100..900</span>
 </span></code></pre></div>
 <p>Role properties: block roles (<code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, <code>h6</code>, <code>body</code>, <code>lead</code>, <code>nav</code>,
 <code>table</code>, <code>caption</code>, <code>code</code>) take <code>family</code>, <code>weight</code>, <code>stretch</code>, <code>features</code>, <code>variation</code>, <code>size</code>, <code>leading</code>,
@@ -3501,64 +3550,64 @@ several Google families into one stylesheet with <code>&amp;family=</code>:</p>
 and <code>adjust</code>; <code>sans</code> (the face of links, marks and h6) takes <code>family</code>, <code>stretch</code>, <code>variation</code> and <code>adjust</code>. Values are plain CSS: a value that could end its declaration (<code>;</code>, braces,
 <code>&lt;</code>, a comment or an unbalanced quote) is rejected.</p>
 <p>These blocks fail the build:</p>
-<div class="language-yaml highlight"><span class="filename">Invalid: unknown hue</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">extra</span><span class="p">:</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">crimson</span>
-</span></code></pre></div>
-<div class="language-yaml highlight"><span class="filename">Invalid: unknown key</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">extra</span><span class="p">:</span>
+<div class="language-yaml highlight"><span class="filename">Invalid: unknown hue</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">extra</span><span class="p">:</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">colour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cobalt</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">crimson</span>
 </span></code></pre></div>
-<div class="language-yaml highlight"><span class="filename">Invalid: font source without a scheme</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">extra</span><span class="p">:</span>
+<div class="language-yaml highlight"><span class="filename">Invalid: unknown key</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">extra</span><span class="p">:</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">fonts.example.com/a.css</span><span class="p p-Indicator">]</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">colour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cobalt</span>
 </span></code></pre></div>
-<div class="language-yaml highlight"><span class="filename">Invalid: role value that ends the declaration</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">extra</span><span class="p">:</span>
+<div class="language-yaml highlight"><span class="filename">Invalid: font source without a scheme</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">extra</span><span class="p">:</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">roles</span><span class="p">:</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"serif;</span><span class="nv"> </span><span class="s">color:</span><span class="nv"> </span><span class="s">red"</span><span class="p p-Indicator">}</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">fonts.example.com/a.css</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<div class="language-yaml highlight"><span class="filename">Invalid: role value that ends the declaration</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">extra</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">fonts</span><span class="p">:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="nt">roles</span><span class="p">:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">family</span><span class="p">:</span><span class="w"> </span><span class="s">"serif;</span><span class="nv"> </span><span class="s">color:</span><span class="nv"> </span><span class="s">red"</span><span class="p p-Indicator">}</span>
 </span></code></pre></div>
 <h2 id="page-keys-front-matter">Page keys: front matter<a aria-label="Permanent link" class="headerlink" href="#page-keys-front-matter" title="Permanent link">¶</a></h2>
 <p>A page can change its look. Precedence: page <code>fonts</code> and <code>hue</code> over the page's preset
 over the site. Font sources accumulate (each loaded once); roles merge property by
 property. These examples assume the site block above.</p>
-<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
-</span></code></pre></div>
 <div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">teal</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ink</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">fonts</span><span class="p">:</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">typekit</span><span class="p p-Indicator">:</span><span class="nv">abc1def</span><span class="p p-Indicator">]</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">roles</span><span class="p">:</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="nv">300</span><span class="p p-Indicator">}</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">      </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">features</span><span class="p">:</span><span class="w"> </span><span class="s">'"onum"</span><span class="nv"> </span><span class="s">1'</span><span class="p p-Indicator">}</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
+</span></code></pre></div>
+<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">teal</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ink</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">fonts</span><span class="p">:</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">sources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">typekit</span><span class="p p-Indicator">:</span><span class="nv">abc1def</span><span class="p p-Indicator">]</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nt">roles</span><span class="p">:</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">      </span><span class="nt">h1</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="nv">300</span><span class="p p-Indicator">}</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">      </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">features</span><span class="p">:</span><span class="w"> </span><span class="s">'"onum"</span><span class="nv"> </span><span class="s">1'</span><span class="p p-Indicator">}</span>
 </span></code></pre></div>
 <p>The legacy key <code>subtheme</code> is read as <code>fly.preset</code> and also adds <code>subtheme-&lt;name&gt;</code> to
 <code>&lt;body&gt;</code>:</p>
-<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">subtheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
+<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">subtheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
 </span></code></pre></div>
 <p>Other page keys the plugin reads:</p>
-<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">classes</span><span class="p">:</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wide-page</span><span class="p p-Indicator">]</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ref-main</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">article</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">specimen</span><span class="p p-Indicator">]</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nt">margin_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">left</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nt">hide</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">toc</span><span class="p p-Indicator">]</span>
+<div class="language-yaml highlight"><span class="filename">Page front matter</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">classes</span><span class="p">:</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">wide-page</span><span class="p p-Indicator">]</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ref-main</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">article</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">specimen</span><span class="p p-Indicator">]</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nt">margin_side</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">left</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nt">hide</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">toc</span><span class="p p-Indicator">]</span>
 </span></code></pre></div>
 <p><code>classes</code> adds classes to the first <code>&lt;body&gt;</code>, <code>&lt;main&gt;</code> and <code>&lt;article&gt;</code>; <code>margin_side</code>
 overrides <code>extra.fly.margin_side</code> (<code>fly-margin-left</code> or <code>fly-margin-right</code> on <code>&lt;body&gt;</code>);
 <code>hide: [toc]</code> removes the page's table of contents (<code>fly-no-l2</code>).</p>
 <p>These page blocks fail the build:</p>
-<div class="language-yaml highlight"><span class="filename">Invalid page: unknown preset</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">newspaper</span>
+<div class="language-yaml highlight"><span class="filename">Invalid page: unknown preset</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">newspaper</span>
 </span></code></pre></div>
-<div class="language-yaml highlight"><span class="filename">Invalid page: subtheme and preset disagree</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">subtheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nt">fly</span><span class="p">:</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
+<div class="language-yaml highlight"><span class="filename">Invalid page: subtheme and preset disagree</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">subtheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nt">fly</span><span class="p">:</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fl9-color</span>
 </span></code></pre></div>
 
 
