@@ -117,12 +117,12 @@ The browser check uses the agent-browser CLI and a locally installed Chrome. The
 
 ## Release
 
-1. Set `NEXT_VERSION` in `scripts/build-cdn.mjs`. Publish the required figure-groups dependency first, remove its local uv source, and refresh the lock. Run `./build.sh` and the test gates.
+1. Set `NEXT_VERSION` in `scripts/build-cdn.mjs`. Run `./build.sh` and the test gates.
 2. Commit the verified sources and generated `docs/` (including `docs/fly/<version>/`, `latest/` and `manifest.json`).
 3. Tag **that commit** `vX.Y.Z`, using the same version as `NEXT_VERSION`.
 4. Run `npm run check:release`. It requires a clean worktree, fetches main, and checks the tag, package version and CDN tree.
-5. From the tagged commit, choose an empty output directory, for example `release-dist`. Run `uv build --out-dir release-dist` and `uvx twine check --strict release-dist/*`.
-6. Publish the checked distributions, push the release commit and tag, then verify Pages and the public manifest hashes.
+5. Push the release commit and tag. The tag triggers `pypi-upload.yml`, which repeats the release check, builds the wheel and sdist, runs strict Twine checks and uploads those files through PyPI Trusted Publishing.
+6. Verify the PyPI files, Pages and the public manifest hashes. The PyPI publisher for `fly-january` must name `Fontlab/fontlab-www-docstheme`, workflow `pypi-upload.yml` and GitHub environment `pypi`.
 
 The CDN builder fetches main before writing. A version already published there must match its manifest byte for byte. If publication state is unknown, rebuilding an existing version directory requires confirmation that it was never published (`FLY_CDN_ALLOW_UNPUBLISHED=1`). Bump `NEXT_VERSION` to prepare the next release.
 
