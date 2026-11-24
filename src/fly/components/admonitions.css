@@ -27,6 +27,11 @@
     text-align: start;
   }
 
+  .md-typeset .fltheme-components :is(.alert, .du-alert) + :is(.alert, .du-alert),
+  .md-typeset .admonition + .admonition {
+    margin-block-start: var(--fly-line);
+  }
+
   .md-typeset .fltheme-components :is(.alert, .du-alert) {
     display: block !important;
   }
@@ -48,7 +53,6 @@
 
   .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)),
   .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(section, p, [data-description]) {
-    font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
     color: var(--fly-ink) !important;
     text-align: start;
   }
@@ -71,12 +75,6 @@
   .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(h2, h3, [data-title]) {
     background: transparent !important;
     color: var(--fly-ink) !important;
-    font-family: var(--fly-control-font) !important;
-    font-weight: 600 !important;
-    font-size: inherit !important;
-    line-height: var(--fly-body-leading) !important;
-    text-align: start;
-    margin: 0;
   }
 
   .md-typeset :is(.admonition-title, details:not(.fltheme-components *) > summary) {

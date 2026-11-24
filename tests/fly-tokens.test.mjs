@@ -246,13 +246,14 @@ test('every role declares every property and every inline role its three', () =>
 });
 
 test('text roles use the three sizes; headings use clamp() times their scale', () => {
-  const expected = { body: 'sm', table: 'sm', nav: 'xs', caption: 'xs', lead: 'md' };
+  const expected = { body: 'sm', nav: 'xs', caption: 'xs', lead: 'md' };
   for (const [role, size] of Object.entries(expected)) {
     assert.equal(
       valueOf(rules['type.css'], ':root', '--fly-' + role + '-size'),
       'calc(var(--fly-size-' + size + ') * var(--fly-' + role + '-scale))',
     );
   }
+  assert.equal(valueOf(rules['type.css'], ':root', '--fly-table-size'), 'calc(var(--fly-body-size) * 0.9 * var(--fly-table-scale))');
   for (const size of ['xs', 'sm', 'md']) assert.match(valueOf(rules['size.css'], ':root', '--fly-size-' + size), /^[\d.]+rem$/);
   for (let level = 1; level <= 6; level += 1) {
     assert.match(

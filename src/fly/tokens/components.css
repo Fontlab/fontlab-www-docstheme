@@ -6,6 +6,7 @@
     --fly-control-font: var(--fly-sans-family);
     --fly-control-size: calc(var(--fly-body-size) * 0.9);
     --fly-control-weight: 500;
+    --fly-dialog-width: 28rem;
     --fly-card-padding: var(--fly-half);
     --fly-card-radius: 0.75rem;
     --fly-card-title-size: var(--fly-size-md);

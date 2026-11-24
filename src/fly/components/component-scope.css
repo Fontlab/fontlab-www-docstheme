@@ -12,9 +12,34 @@
     --depth: 0;
     --noise: 0;
     background-color: transparent;
-    font-family: var(--fly-control-font);
-    font-size: var(--fly-control-size);
-    line-height: 1.4;
+  }
+
+  .md-typeset :is(
+    .fltheme-components, .fltheme-components :is(.card, .card > section, .du-card-body, .alert, .alert > section, .du-alert, .accordion > details > section, .du-collapse-content, [role='tabpanel'], .du-tab-content),
+    .fltheme-components p:not(.admonition-title, td *, th *),
+    .grid > .card, .grid.cards > ul > li, .tabbed-block, .tabbed-block > p,
+    .fly-callout, .fly-callout > p, dialog.fly-dialog, dialog.fly-dialog p
+  ) {
+    font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
+    font-stretch: var(--fly-body-stretch) !important;
+    font-feature-settings: var(--fly-body-features) !important;
+    font-variation-settings: var(--fly-body-variation) !important;
+    letter-spacing: var(--fly-body-tracking);
+  }
+
+  .md-typeset :is(
+    :is(.grid > .card, .fltheme-components .card) > :is(h1, h2, h3, h4, h5, h6), .grid.cards > ul > li > :is(h1, h2, h3, h4, h5, h6),
+    .fltheme-components .card > header > :is(h1, h2, h3, h4, h5, h6, .card-title, [data-title]),
+    .fltheme-components .du-card-title, .admonition-title, details:not(.fltheme-components *) > summary,
+    :is(.fly-callout, dialog.fly-dialog, .fltheme-components :is(.alert, .du-alert, .dialog, .alert-dialog, .du-modal-box)) :is(h2, h3, [data-title])
+  ) {
+    font: 600 var(--fly-card-title-size) / var(--fly-body-leading) var(--fly-control-font) !important;
+    font-stretch: var(--fly-sans-stretch) !important;
+    font-feature-settings: normal !important;
+    font-variation-settings: var(--fly-sans-variation) !important;
+    letter-spacing: normal;
+    margin: 0;
+    text-align: start;
   }
 
   .md-typeset .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {

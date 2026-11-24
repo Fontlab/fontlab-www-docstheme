@@ -47,12 +47,14 @@ Open the same family preview three ways. Close it with the button or Escape.
 
 ## MaterialX
 
+<div markdown="0">
 <button class="md-button md-button--primary" type="button" onclick="document.getElementById('mx-family-dialog').showModal()">Inspect family</button>
 <dialog class="fly-dialog" id="mx-family-dialog" aria-labelledby="mx-family-title" aria-describedby="mx-family-details">
   <h3 id="mx-family-title">Studio Sans</h3>
   <p id="mx-family-details">Regular, Italic and Bold are ready to inspect.</p>
   <form method="dialog"><button class="md-button md-button--primary" type="submit" autofocus>Close</button></form>
 </dialog>
+</div>
 
 </section>
 

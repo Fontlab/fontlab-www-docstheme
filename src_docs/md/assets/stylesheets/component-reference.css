@@ -18,7 +18,7 @@
   margin: 0 0 .75rem !important;
   font: 500 var(--fly-size-xs) / 1.35 var(--fly-control-font) !important;
   color: var(--fly-quiet) !important;
-  text-align: start;
+  text-align: start !important;
 }
 @container fly-canvas (min-width: 44rem) {
   .md-typeset > .fl-example:has(.fl-compare) {

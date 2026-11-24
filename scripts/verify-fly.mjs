@@ -143,7 +143,7 @@ const PROBE_SIZES = `JSON.stringify((() => {
     if (el.closest('.admonition, details')) return aside(el) ? 'aside' : 'admonition';
     return el.closest('.md-typeset') ? 'body' : 'unclassified';
   };
-  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), items: [], inline: []};
+  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), table: token('--fly-table-size'), title: token('--fly-card-title-size'), items: [], inline: []};
   const scope = document.querySelectorAll('.md-content *, .md-sidebar *, .md-footer *');
   for (const el of scope) {
     const inArticle = !!el.closest('.md-content .md-typeset');
@@ -448,25 +448,27 @@ const verifyActiveNav = async base => {
 };
 
 const SIZE_OF = {th: 'xs', figcaption: 'xs', footer: 'xs', nav: 'xs', lead: 'md', quote: 'md',
-  table: 'sm', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
+  table: 'table', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'title', aside: 'xs', 'aside-title': 'title'};
 const WIDE_ONLY = new Set(['aside', 'aside-title']);
 
 const verifySizes = async (base, width, site = 'fontlab') => {
   await open(`${base}/${site}/`, width);
   const at = `${site === 'fontlab' ? '' : site + '.'}sizes`;
   const s = await ev(PROBE_SIZES);
-  const tokens = {xs: s.xs, sm: s.sm, md: s.md};
+  const tokens = {xs: s.xs, sm: s.sm, md: s.md, table: s.table, title: s.title};
   for (const kind of Object.keys(SIZE_OF)) {
     if (width < 1000 && WIDE_ONLY.has(kind)) continue; // no margin asides on a phone
     const items = s.items.filter(i => i.kind === kind);
     const bad = items.filter(i => !near(i.size, tokens[SIZE_OF[kind]], 0.05));
     check(`${at}.${kind}@${width}`, items.length > 0 && bad.length === 0,
-      bad.length ? `want --fly-size-${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
+      bad.length ? `want ${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
   }
   const unknown = s.items.filter(i => !(i.kind in SIZE_OF));
-  const distinct = [...new Set(s.items.map(i => i.size.toFixed(2)))].sort();
+  // Table cells and component titles have dedicated roles checked above.
+  const flow = s.items.filter(i => !['table', 'title'].includes(SIZE_OF[i.kind]));
+  const distinct = [...new Set(flow.map(i => i.size.toFixed(2)))].sort();
   const want = [s.xs, s.sm, s.md].map(v => v.toFixed(2)).sort();
-  check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${s.items.length} elements`);
+  check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${flow.length} elements`);
   const inlineBad = s.inline.filter(r => !near(r.size, r.parent * (r.tag !== 'code' && (r.inCell || r.nested) ? 1 : r.adjust), 0.05));
   check(`${at}.inline-adjust@${width}`, s.inline.length > 0 && inlineBad.length === 0,
     inlineBad.length ? inlineBad.map(r => `${r.tag} ${r.size}px parent ${r.parent}px adjust ${r.adjust}`).join('; ') : `${s.inline.length} runs`);
@@ -718,6 +720,37 @@ const sampleColumns = async (selector, read) => ev(`JSON.stringify(
     values: [...column.querySelectorAll(${JSON.stringify(selector)})].map(${read})
   })))`);
 
+const verifyCompareDialogs = async name => {
+  const boxes = [];
+  for (const library of ['basecoat', 'daisyui', 'materialx']) {
+    const column = `.fl-compare [data-compare-library="${library}"]`;
+    await ab('click', column + ' button[type="button"]');
+    try {
+      const box = await ev(`(() => {
+        const modal = document.querySelector('${column} dialog:modal');
+        if (!modal) return null;
+        const panel = modal.querySelector(':scope > .du-modal-box, :scope.dialog > div') || modal;
+        const cs = getComputedStyle(panel);
+        const backdrop = getComputedStyle(modal, '::backdrop').backgroundColor;
+        return {library:'${library}', width:panel.offsetWidth,
+          padding:[cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft], backdrop};
+      })()`);
+      check(`${name}.${library}.opens`, !!box);
+      if (box) boxes.push(box);
+    } finally {
+      await ab('press', 'Escape');
+      check(`${name}.${library}.escape`, await ev(`!document.querySelector('${column} dialog[open]')`));
+    }
+  }
+  const detail = JSON.stringify(boxes);
+  check(`${name}.width`, boxes.length === 3 && boxes.every(b => b.width > 0 &&
+    Math.abs(b.width - boxes[0].width) <= 1), detail);
+  check(`${name}.padding`, boxes.length === 3 && boxes.every(b => b.padding.every((v, i) =>
+    parseFloat(v) > 0 && v === boxes[0].padding[i])), detail);
+  check(`${name}.backdrop`, boxes.length === 3 && boxes.every(b => b.backdrop === boxes[0].backdrop &&
+    b.backdrop !== 'rgba(0, 0, 0, 0)' && b.backdrop !== 'transparent'), detail);
+};
+
 const verifySpecimens = async (page, name) => {
   const sample = async (selector, read, count) => {
     const columns = await sampleColumns(selector, read);
@@ -726,6 +759,29 @@ const verifySpecimens = async (page, name) => {
     return {complete: complete && columns.length === 3, values: columns.flatMap(c => c.values),
       detail: JSON.stringify(columns)};
   };
+  const readType = el => {
+    const cs = getComputedStyle(el);
+    return [cs.fontFamily, cs.fontWeight, cs.fontSize, cs.lineHeight];
+  };
+  // Let CSSOM resolve the reference font so quoted fallback lists serialize identically.
+  const textRole = async (selector, count, role, font, properties) => {
+    const actual = await sample(selector, readType, count);
+    const expected = await ev(`(() => {
+      const ref = document.createElement('span');
+      ref.style.font = ${JSON.stringify(font)};
+      document.body.append(ref);
+      const result = (${readType})(ref);
+      ref.remove();
+      return result;
+    })()`);
+    check(`${name}.${role}-type`, actual.complete && actual.values.every(styles =>
+      expected.slice(0, properties).every((v, i) => v === styles[i])),
+      `expected ${JSON.stringify(expected)} ${actual.detail}`);
+  };
+  const prose = (selector, count) => textRole(selector, count, 'prose',
+    'var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family)', 4);
+  const titles = (selector, count) => textRole(selector, count, 'title',
+    '600 var(--fly-card-title-size) var(--fly-control-font)', 3);
   const spread = xs => Math.max(...xs) - Math.min(...xs);
   if (page === 'buttons') {
     const s = await sample('button:disabled', el => {
@@ -747,12 +803,39 @@ const verifySpecimens = async (page, name) => {
       measureChoiceMark, 2);
     check(`${name}.centred-marks`, s.complete && s.values.every(v => v && v.w > 0 && v.h > 0 &&
       Math.abs(v.dx) <= 1 && Math.abs(v.dy) <= 1) && new Set(s.values.map(v => v?.type)).size === 2, s.detail);
+  } else if (page === 'badges') {
+    await prose('p:has(kbd)', 1);
+  } else if (page === 'cards') {
+    await prose('[data-compare-control="card"] p:not(:has(.md-button))', 1);
+    await titles('[data-compare-control="card"] h3', 1);
+  } else if (page === 'dialogs') {
+    await prose('dialog p[id]', 1);
+    await titles('dialog h3', 1);
+    await verifyCompareDialogs(name);
+  } else if (page === 'tables') {
+    await textRole('tbody td', 9, 'cell', 'var(--fly-table-weight) var(--fly-table-size) var(--fly-body-family)', 3);
+    await textRole('thead th', 3, 'header', '600 var(--fly-caption-size) var(--fly-control-font)', 3);
+    const stripes = await sample('tbody', el => [...el.rows].map(row =>
+      [row, ...row.cells].map(node => {
+        const cs = getComputedStyle(node);
+        return cs.backgroundColor + ' ' + cs.backgroundImage;
+      }).join('|')), 1);
+    check(`${name}.no-zebra`, stripes.complete && stripes.values.every(rows =>
+      rows.length === 3 && new Set(rows).size === 1), stripes.detail);
   } else if (page === 'tabs') {
+    await prose('[role="tabpanel"], .du-tab-content, .tabbed-block > p', 2);
     const s = await sample('[role="tab"], .du-tab, .tabbed-labels > label', el =>
       [el, ...el.querySelectorAll('a')].map(label => getComputedStyle(label).textDecorationLine), 2);
     check(`${name}.label-decoration`, s.complete && s.values.flat().every(d => d === 'none'), s.detail);
   } else if (page === 'alerts') {
-    const s = await sample('.alert > section, .du-alert p, .admonition > p:not(.admonition-title)', el => {
+    const description = '.alert > section, .du-alert p, .admonition > p:not(.admonition-title)';
+    await prose(description, 2);
+    await titles('.alert h3, .du-alert h3, .admonition-title', 2);
+    const gaps = await sample('.alert + .alert, .du-alert + .du-alert, .admonition + .admonition', el =>
+      (el.getBoundingClientRect().top - el.previousElementSibling.getBoundingClientRect().bottom) /
+      parseFloat(getComputedStyle(document.documentElement).fontSize), 1);
+    check(`${name}.stack-gap`, gaps.complete && gaps.values.every(v => v >= 0.75), gaps.detail);
+    const s = await sample(description, el => {
       const cs = getComputedStyle(el);
       return parseFloat(cs.lineHeight) / parseFloat(cs.fontSize);
     }, 2);
@@ -763,7 +846,7 @@ const verifySpecimens = async (page, name) => {
 const verifyComparison = async base => {
   const buttonRadii = new Map();
   for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card'],
-    ['choices'], ['tabs'], ['alerts']]) {
+    ['choices'], ['tabs'], ['alerts'], ['badges'], ['tables'], ['dialogs']]) {
     await open(`${base}/demo/compare/${page}/`, 1440);
     for (const scheme of ['default', 'slate']) {
       await setScheme(scheme);

@@ -102,12 +102,12 @@
     --fly-nav-tracking: 0;
     --fly-nav-scale: 1;
 
-    --fly-table-family: var(--fly-nav-family);
-    --fly-table-weight: 400;
-    --fly-table-stretch: var(--fly-nav-stretch);
-    --fly-table-features: normal;
-    --fly-table-variation: var(--fly-nav-variation);
-    --fly-table-size: calc(var(--fly-size-sm) * var(--fly-table-scale));
+    --fly-table-family: var(--fly-body-family);
+    --fly-table-weight: var(--fly-body-weight);
+    --fly-table-stretch: var(--fly-body-stretch);
+    --fly-table-features: var(--fly-body-features);
+    --fly-table-variation: var(--fly-body-variation);
+    --fly-table-size: calc(var(--fly-body-size) * 0.9 * var(--fly-table-scale));
     --fly-table-leading: 1.3;
     --fly-table-tracking: 0;
     --fly-table-scale: 1;

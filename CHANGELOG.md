@@ -6,6 +6,10 @@ this_file: CHANGELOG.md
 
 ## 0.3.0 — unreleased
 
+- Component descriptions and keyboard instructions use the article body face. Card, alert and dialog titles share the control face at weight 600.
+- Tables use smaller body text, a quiet header and hairline row separators in both palettes. Stacked alerts have breathing room, Compare labels align with their columns, and tab baselines span each column.
+- Dialogs share panel geometry, action alignment and a subtle backdrop. Browser checks cover typography, table fills, alert spacing and the open/close cycle for each dialog.
+
 - Primary controls have a 44px minimum standard height, quieter labels and a shared disabled treatment. Selected controls use ink in light and slate, while focus follows the site hue.
 - Refined choice marks, range tracks, selects, textareas, tab panels and status messages across the three vocabularies. Compare stages use compact column headings.
 

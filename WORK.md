@@ -4,6 +4,20 @@ this_file: WORK.md
 
 # Work
 
+## 0.3.0 Compare visual review, round 3
+
+Component prose follows the body role. Titles use the control face at weight
+600, and table data uses the body face at 90% of body size. Compare columns,
+tab baselines and alert stacks now share their alignment and spacing. Dialogs
+use a 28rem panel, common action alignment and a native backdrop.
+
+The npm build and tests, frozen Python tests and strict demo build exited 0.
+Node passed 60 tests and Python passed 235. The demo checked 8,713 internal
+links on 86 pages with zero broken. Static inspection covered 18 renderer
+columns on six Compare pages. The browser verifier passed its syntax check.
+Rendered measurements, including opening each modal and dismissing it with
+Escape in both palettes, remain for the orchestrator.
+
 ## 0.3.0 Compare visual review, round 2
 
 Primary actions and selection marks use scheme ink. All three ranges use the

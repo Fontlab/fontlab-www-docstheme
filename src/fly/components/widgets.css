@@ -10,9 +10,6 @@
     border: 1px solid var(--fly-card-border) !important;
     border-radius: var(--fly-card-radius) !important;
     box-shadow: none;
-    font-family: var(--fly-control-font);
-    font-size: var(--fly-control-size) !important;
-    line-height: 1.4;
   }
 
   .md-typeset :is(.fltheme-components .card, .grid > .card, .grid.cards > ul > li) {
@@ -26,28 +23,12 @@
 
   .md-typeset .fltheme-components .du-card-body {
     --du-card-p: var(--fly-card-padding);
-    --du-card-fs: var(--fly-control-size);
-    font-family: var(--fly-control-font);
+    --du-card-fs: var(--fly-body-size);
   }
 
-  .md-typeset :is(
-    .fltheme-components .card > header > :is(h2, h3, .card-title, [data-title]),
-    .fltheme-components .du-card-title,
-    .grid > .card > :is(h2, h3), .grid.cards > ul > li > :is(h2, h3)
-  ) {
-    font-family: var(--fly-control-font);
-    font-size: var(--fly-card-title-size) !important;
-    font-weight: var(--fly-control-weight) !important;
-    font-stretch: var(--fly-sans-stretch);
-    line-height: 1.2;
-    margin: 0;
-    text-align: start;
-  }
-
-  .md-typeset :is(.fltheme-components .card, .fltheme-components .du-card) p {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
+  .md-typeset :is(.tabbed-labels, .fltheme-components :is(.tabs [role='tablist']:not([aria-orientation='vertical']), .du-tabs-border)) {
+    box-sizing: border-box;
+    inline-size: 100% !important;
   }
 
   .md-typeset :is(.tabbed-labels, .fltheme-components .tabs [role='tablist']) {
@@ -59,13 +40,39 @@
     height: auto !important;
   }
 
+  .md-typeset .fltheme-components .tabs [role='tablist']:not([aria-orientation='vertical']) {
+    justify-content: flex-start !important;
+    gap: 0;
+  }
+
+  .md-typeset .fltheme-components .tabs [role='tablist']:not([aria-orientation='vertical']) > [role='tab'] {
+    flex: none !important;
+  }
+
   .md-typeset :is(.tabbed-labels > label, .fltheme-components :is(.tabs [role='tab'], .du-tab)) {
+    box-sizing: border-box;
+    block-size: var(--fly-control-height) !important;
     min-block-size: var(--fly-control-height) !important;
     align-content: center;
     font-family: var(--fly-control-font) !important;
     font-size: var(--fly-control-size) !important;
     font-weight: var(--fly-control-weight) !important;
     text-decoration: none !important;
+  }
+
+  .md-typeset :is(.tabbed-labels:not(.tabbed-labels--linked) > label, .fltheme-components :is(.tabs [role='tab'], .du-tab)) {
+    padding: 0 var(--fly-half) !important;
+  }
+
+  .md-typeset .tabbed-labels--linked > label {
+    padding: 0 !important;
+  }
+
+  .md-typeset .tabbed-labels--linked > label > a {
+    display: grid;
+    align-items: center;
+    height: 100%;
+    padding: 0 var(--fly-half);
   }
 
   .md-typeset .tabbed-labels > label a {
@@ -92,6 +99,17 @@
     color: var(--fly-quiet) !important;
   }
 
+  /* The panels share this flex container. Extend the baseline across the
+     remaining label-row space before the first panel (order 1). */
+  .md-typeset .fltheme-components .du-tabs-border::after {
+    content: '';
+    position: static !important;
+    flex: 1 0 0;
+    align-self: flex-end;
+    height: 1px;
+    background: var(--fly-card-border);
+  }
+
   .md-typeset .fltheme-components .du-tabs-border > .du-tab::before {
     content: none !important;
   }
@@ -99,14 +117,6 @@
   .md-typeset .fltheme-components :is(.tabs [aria-selected='true'], .du-tab:is(:checked, :has(:checked), .du-tab-active, [aria-selected='true'], [aria-current='page'])) {
     color: var(--fly-selection) !important;
     box-shadow: inset 0 -2px var(--fly-selection) !important;
-  }
-
-  .md-typeset :is(.tabbed-block, .fltheme-components :is(.tabs [role='tabpanel'], .du-tab-content)),
-  .md-typeset :is(.tabbed-block, .fltheme-components :is(.tabs [role='tabpanel'], .du-tab-content)) p {
-    font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
-    font-stretch: var(--fly-body-stretch);
-    font-variation-settings: var(--fly-body-variation);
-    color: var(--fly-ink);
   }
 
   .md-typeset :is(.md-tag, .fltheme-components :is(.badge, .du-badge), mark.fly-badge) {
@@ -189,27 +199,57 @@
   }
 
   .md-typeset :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
-    max-inline-size: min(28rem, calc(100vw - 2rem));
-    padding: calc(1.5 * var(--fly-card-padding));
+    box-sizing: border-box;
+    inline-size: min(var(--fly-dialog-width), calc(100vw - 2rem)) !important;
+    max-inline-size: none !important;
+    max-block-size: calc(100dvh - 2rem) !important;
+    overflow-y: auto;
+    padding: calc(1.5 * var(--fly-card-padding)) !important;
+    box-shadow: var(--fly-shadow-down) !important;
   }
 
-  .md-typeset :is(.fltheme-components :is(.dialog, .alert-dialog, .du-modal-box), dialog.fly-dialog) :is(h2, h3) {
-    font: 600 var(--fly-card-title-size) / 1.25 var(--fly-control-font) !important;
-    text-align: start;
-    margin: 0;
+  .md-typeset :is(.fltheme-components :is(.dialog[open] > div, .alert-dialog[open] > div, .du-modal-box), dialog.fly-dialog[open]) {
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--fly-half) !important;
   }
 
-  .md-typeset :is(.fltheme-components :is(.dialog, .alert-dialog, .du-modal-box), dialog.fly-dialog) p {
-    font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
-    color: var(--fly-ink);
-    margin-block: var(--fly-half);
+  .md-typeset :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) > :is(header, section, h2, h3, p, footer, form, .du-modal-action),
+  .md-typeset .fltheme-components :is(.dialog, .alert-dialog) > div > :is(header, section) > :is(h2, h3, p):only-child {
+    margin-block: 0 !important;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog, .alert-dialog) > div > footer, .fltheme-components .du-modal-action, dialog.fly-dialog > form[method='dialog']) {
+    display: flex;
+    flex-flow: row wrap !important;
+    justify-content: flex-end !important;
+    gap: var(--fly-half);
+  }
+
+  .md-typeset dialog :is(.md-button--primary, .fltheme-components .du-btn-primary, .fltheme-components .btn:not([data-variant]), .fltheme-components .btn[data-variant='primary']):not(:disabled, [aria-disabled='true'], .du-btn-disabled) {
+    background-color: var(--fly-selection) !important;
+    color: var(--fly-paper-3) !important;
   }
 
   .md-typeset dialog.fly-dialog {
     margin: auto;
   }
 
-  .md-typeset dialog.fly-dialog::backdrop {
-    background: var(--fly-scrim);
+  /* daisyUI dims its full-screen dialog element in addition to the native backdrop. */
+  .md-typeset .fltheme-components dialog.du-modal:modal {
+    background: transparent !important;
+  }
+
+  .md-typeset :is(.fltheme-components dialog:is(.dialog, .alert-dialog, .du-modal), dialog.fly-dialog)::backdrop {
+    display: block !important;
+    background: rgb(0 0 0 / 32%) !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .md-typeset :is(.fltheme-components dialog:is(.dialog, .alert-dialog, .du-modal), dialog.fly-dialog)::backdrop {
+      background: var(--fly-paper-3) !important;
+    }
   }
 }
