@@ -21,8 +21,8 @@
     font-variation-settings: var(--fly-nav-variation);
     line-height: var(--fly-nav-leading);
     letter-spacing: 0.01em;
-    color: var(--foreground, var(--fly-ink));
-    background: var(--muted, var(--fly-key));
+    color: var(--fly-ink);
+    background: var(--fly-surface-raised);
     border: 1px solid var(--fly-card-border);
     border-radius: var(--fly-control-radius);
     box-shadow: none;
@@ -36,6 +36,9 @@
     background: var(--fly-surface-raised) !important;
     font-family: var(--fly-nav-family) !important;
     font-size: var(--fly-nav-size) !important;
+    padding: 0.2em 0.3em 0.1em !important;
+    font-weight: var(--fly-nav-weight) !important;
+    line-height: var(--fly-nav-leading) !important;
     box-shadow: none !important;
   }
 

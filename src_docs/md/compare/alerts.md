@@ -14,7 +14,7 @@ Compare a successful export and a missing source. Each specimen is a static mess
 ## Basecoat
 
 <div markdown="0" class="fltheme-components">
-  <div class="alert">
+  <div class="alert" data-status="success">
   <h3>Export ready</h3>
   <section>Open the build and inspect the result.</section>
   </div>
@@ -63,7 +63,7 @@ Use a MaterialX admonition for an authored instruction. Use either component ale
 ## A callout in the reading flow
 
 <!-- specimen:compare-alert-callout -->
-<section class="fl-card" markdown="1">
+<section class="fly-callout" markdown="1">
 
 ### Source missing
 

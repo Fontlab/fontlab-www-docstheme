@@ -75,7 +75,7 @@ Prefer `extra.fly` options and `fonts.roles`, or set a `--fly-*` variable on the
 
 Fly leaves component link styling to MaterialX, Basecoat and daisyUI. Its article-link rule excludes library buttons, tabs and badges inside `.fltheme-components`, MaterialX classes starting with `md-`, permalink links and links with `data-fly-plain` on themselves or an ancestor. Put `data-fly-plain` on a site-owned component to style its links with ordinary CSS such as `.md-typeset .signup-link`. Theme cards, headings and tables also supply their own contextual styles. To override those properties inside a theme component, use its tokens or the selector technique below.
 
-Inside the article, the Basecoat and daisyUI bundles use Fly control and surface tokens. Keep Basecoat and `du-` markup inside `.fltheme-components`. Use `.fly-form` for native fields and `dialog.fly-dialog` for a native modal in a MaterialX page. The Compare section in the demo includes matched HTML and Markdown examples.
+Inside the article, the Basecoat and daisyUI bundles use Fly control and surface tokens. Keep Basecoat and `du-` markup inside `.fltheme-components`. Use `.fly-form` for native fields and `dialog.fly-dialog` for a native modal in a MaterialX page. Primary actions and selected controls use the current scheme’s ink. Keyboard focus uses the site hue. The Compare section shows these states in matched HTML and Markdown examples.
 
 For direct overrides of fly-styled properties, source order alone is insufficient. The build flattens cascade layers to beat MaterialX’s unlayered rules. Each generated selector has a maximum of 10 ID boosts. Copy this prefix into your site stylesheet and change the target and declaration as needed.
 

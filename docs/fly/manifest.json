@@ -211,16 +211,16 @@
       "sha256": "d0238887f0703ec875b61bab4777774a157eacf851e19b96607b01335c6812f1"
     },
     "0.3.0/fly-tokens.css": {
-      "size": 28058,
-      "sha256": "8e4842b50e6edc10b0f904efe1f7d96410c2d3653f7894b5b6434b4fdfb80ece"
+      "size": 28120,
+      "sha256": "068b1900407ca4018bc5c46733736cff39ae0fee5ac983b0f42e05c7ecf8a639"
     },
     "0.3.0/fly-utilities.css": {
       "size": 2225469,
       "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
     },
     "0.3.0/fly.css": {
-      "size": 118273,
-      "sha256": "ba13bf2171d6c62124516c4f95552f44a873673c3a60c3b5b4691bc438273a75"
+      "size": 128742,
+      "sha256": "6fff7d30a9f302d4f07b23776b4eb8f6ea0a2fe8c665782ba902084ab64df19d"
     },
     "0.3.0/fly.js": {
       "size": 5532,
@@ -259,16 +259,16 @@
       "sha256": "d0238887f0703ec875b61bab4777774a157eacf851e19b96607b01335c6812f1"
     },
     "latest/fly-tokens.css": {
-      "size": 28058,
-      "sha256": "8e4842b50e6edc10b0f904efe1f7d96410c2d3653f7894b5b6434b4fdfb80ece"
+      "size": 28120,
+      "sha256": "068b1900407ca4018bc5c46733736cff39ae0fee5ac983b0f42e05c7ecf8a639"
     },
     "latest/fly-utilities.css": {
       "size": 2225469,
       "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
     },
     "latest/fly.css": {
-      "size": 118273,
-      "sha256": "ba13bf2171d6c62124516c4f95552f44a873673c3a60c3b5b4691bc438273a75"
+      "size": 128742,
+      "sha256": "6fff7d30a9f302d4f07b23776b4eb8f6ea0a2fe8c665782ba902084ab64df19d"
     },
     "latest/fly.js": {
       "size": 5532,

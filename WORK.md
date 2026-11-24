@@ -4,6 +4,20 @@ this_file: WORK.md
 
 # Work
 
+## 0.3.0 Compare visual review, round 2
+
+Primary actions and selection marks use scheme ink. All three ranges use the
+platform slider with an ink accent, including its native fill and thumb. The
+Compare stages retain semantic headings at a quieter size. Fields, tabs, status
+messages, disabled buttons, keycaps and disclosure markers now share their
+respective metrics across the three implementations.
+
+The build and strict demo gates exited 0 with the unpublished-CDN flag. Node
+passed 60 tests and Python passed 235. The demo checked 8,713 internal links
+across 86 pages, with zero broken. Static review covered cascade specificity and
+duplicate choice glyphs. The new light/slate browser assertions passed syntax
+checking. Their execution and visual acceptance remain with the orchestrator.
+
 ## 0.3.0 component comparison
 
 Fly puts shared control and surface styling on MaterialX and on the Basecoat and

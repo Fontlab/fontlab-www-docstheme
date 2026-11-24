@@ -167,17 +167,18 @@ Faces outside the roles, used by the rules in `src/fly/`:
 
 MaterialX and native HTML controls in `.fly-form` share these values with Basecoat
 and prefixed daisyUI inside `.md-typeset .fltheme-components`. The default button
-and text-entry field height is 43.2px at the standard root size. Button variants
+and text-entry field height is at least 44px. Button variants
 can change height while retaining the shared family and weight.
 
 | Token | Default | Applies to |
 |---|---|---|
-| `--fly-control-height` | `3rem` | standard buttons, single-line fields and minimum tab height |
+| `--fly-control-height` | `max(44px, 3rem)` | standard buttons, single-line fields and minimum tab height |
 | `--fly-control-radius` | `0.5rem` | standard buttons, text fields, badges and keycaps |
 | `--fly-control-font` | `var(--fly-sans-family)` | controls, labels and component panels |
-| `--fly-control-size` | `var(--fly-size-sm)` | default control and component text |
+| `--fly-control-size` | 90% of body size | default control and component text |
 | `--fly-control-weight` | `500` | labels, buttons and component titles |
-| `--fly-control-border` | 65% ink mixed into paper 3 in sRGB | controls that need a visible boundary |
+| `--fly-selection` | `var(--fly-ink)` | primary actions, selected tabs, choice marks and range fill |
+| `--fly-control-border` | 58% ink mixed into paper 3 in sRGB | controls that need a visible boundary |
 | `--fly-surface-raised` | `var(--fly-paper-2)` | cards, modal panels and quiet fills |
 | `--fly-focus-ring` | `var(--fly-accent-text)` | 2px keyboard outline on buttons and fields |
 | `--fly-card-padding` | `var(--fly-half)` | inset for cards and related panels |

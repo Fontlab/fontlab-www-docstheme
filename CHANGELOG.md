@@ -6,6 +6,9 @@ this_file: CHANGELOG.md
 
 ## 0.3.0 — unreleased
 
+- Primary controls have a 44px minimum standard height, quieter labels and a shared disabled treatment. Selected controls use ink in light and slate, while focus follows the site hue.
+- Refined choice marks, range tracks, selects, textareas, tab panels and status messages across the three vocabularies. Compare stages use compact column headings.
+
 - Shared control, surface and focus tokens bring Basecoat, daisyUI and MaterialX into the same type scale and palette. Button links keep their component styling, and forms and cards have visible boundaries in light and slate.
 - Mid-desktop navigation wraps site labels inside the exposed rail, with the in-page rail still retracting on hover and focus.
 - Added eleven Compare pages, including an overview, with live specimens and their authored and compiled source. The demo uses the theme’s default fonts and keeps FontLab chrome.

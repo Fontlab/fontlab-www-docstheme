@@ -19,7 +19,7 @@
      --fly-link-color (extra.fly.links: accent sets it to --fly-link), else the text colour.
      The conditions sit in :where() so the rule weighs no more than the nested-run rule below,
      which must win for a link inside strong or em. */
-  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))) {
+  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .tabbed-labels a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))) {
     color: var(--fly-link-color, inherit);
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -30,7 +30,7 @@
     line-height: 1;
   }
 
-  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))):is(:hover, :focus-visible) {
+  .md-typeset a:where(:not([class^='md-'], [class*=' md-'], .headerlink, [data-fly-plain])):where(:not([data-fly-plain] a, .tabbed-labels a, .fltheme-components a:is(.btn, .du-btn, .du-join-item, .badge, .du-badge, .du-tab))):is(:hover, :focus-visible) {
     color: var(--fly-link-hover-color, var(--fly-link-color, inherit));
   }
 

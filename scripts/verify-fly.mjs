@@ -681,15 +681,97 @@ const probeComparison = control => `JSON.stringify((() => {${COLOUR_LIB}
   });
 })())`;
 
+// Pseudo-elements have no DOMRect API. Lay out their resolved styles on a measurable
+// child of a same-sized control box. This retains offsets, margins and transforms.
+const measureChoiceMark = input => {
+  const pseudo = getComputedStyle(input, '::before');
+  if (['none', 'normal'].includes(pseudo.content) || pseudo.display === 'none' ||
+      pseudo.visibility !== 'visible' || Number(pseudo.opacity) === 0) return null;
+  const host = document.createElement('div');
+  host.style.cssText = 'position:fixed;left:0;top:0;visibility:hidden;pointer-events:none';
+  document.body.append(host);
+  try {
+    const box = document.createElement('div');
+    const mark = document.createElement('span');
+    host.attachShadow({mode: 'open'}).append(box);
+    box.append(mark);
+    const copyComputed = (styles, node) => {
+      for (const property of styles) node.style.setProperty(property, styles.getPropertyValue(property));
+    };
+    copyComputed(getComputedStyle(input), box);
+    copyComputed(pseudo, mark);
+    // A replaced input has no real children. The mirror is its positioning container.
+    box.style.position = 'relative';
+    const rect = box.getBoundingClientRect();
+    const ink = mark.getBoundingClientRect();
+    return {type: input.type, dx: (ink.left + ink.right - rect.left - rect.right) / 2,
+      dy: (ink.top + ink.bottom - rect.top - rect.bottom) / 2, w: ink.width, h: ink.height};
+  } finally {
+    host.remove();
+  }
+};
+
+// Evaluate the live controls in each renderer, including labels inserted by MaterialX.
+const sampleColumns = async (selector, read) => ev(`JSON.stringify(
+  [...document.querySelectorAll('.fl-compare [data-compare-library]')].map(column => ({
+    library: column.dataset.compareLibrary,
+    values: [...column.querySelectorAll(${JSON.stringify(selector)})].map(${read})
+  })))`);
+
+const verifySpecimens = async (page, name) => {
+  const sample = async (selector, read, count) => {
+    const columns = await sampleColumns(selector, read);
+    const complete = ['basecoat', 'daisyui', 'materialx'].every(library =>
+      columns.filter(c => c.library === library && c.values.length === count).length === 1);
+    return {complete: complete && columns.length === 3, values: columns.flatMap(c => c.values),
+      detail: JSON.stringify(columns)};
+  };
+  const spread = xs => Math.max(...xs) - Math.min(...xs);
+  if (page === 'buttons') {
+    const s = await sample('button:disabled', el => {
+      const cs = getComputedStyle(el);
+      return [cs.opacity, cs.color, cs.backgroundColor, cs.borderTopColor].join('|');
+    }, 1);
+    check(`${name}.disabled-treatment`, s.complete && new Set(s.values).size === 1, s.detail);
+  } else if (page === 'fields') {
+    const selects = await sample('select', el => ({
+      width: el.getBoundingClientRect().width, field: el.parentElement.getBoundingClientRect().width
+    }), 1);
+    check(`${name}.select-widths`, selects.complete && selects.values.every(v => v.width > 0 &&
+      Math.abs(v.width - v.field) <= 1) && spread(selects.values.map(v => v.width)) <= 1, selects.detail);
+    const areas = await sample('textarea', el => el.getBoundingClientRect().height, 1);
+    check(`${name}.textarea-heights`, areas.complete && Math.min(...areas.values) > 0 &&
+      spread(areas.values) <= 2, areas.detail);
+  } else if (page === 'choices') {
+    const s = await sample('input[type="checkbox"]:checked:not([role="switch"]), input[type="radio"]:checked',
+      measureChoiceMark, 2);
+    check(`${name}.centred-marks`, s.complete && s.values.every(v => v && v.w > 0 && v.h > 0 &&
+      Math.abs(v.dx) <= 1 && Math.abs(v.dy) <= 1) && new Set(s.values.map(v => v?.type)).size === 2, s.detail);
+  } else if (page === 'tabs') {
+    const s = await sample('[role="tab"], .du-tab, .tabbed-labels > label', el =>
+      [el, ...el.querySelectorAll('a')].map(label => getComputedStyle(label).textDecorationLine), 2);
+    check(`${name}.label-decoration`, s.complete && s.values.flat().every(d => d === 'none'), s.detail);
+  } else if (page === 'alerts') {
+    const s = await sample('.alert > section, .du-alert p, .admonition > p:not(.admonition-title)', el => {
+      const cs = getComputedStyle(el);
+      return parseFloat(cs.lineHeight) / parseFloat(cs.fontSize);
+    }, 2);
+    check(`${name}.body-leading`, s.complete && s.values.every(ratio => ratio >= 1.35), s.detail);
+  }
+};
+
 const verifyComparison = async base => {
   const buttonRadii = new Map();
-  for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card']]) {
+  for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card'],
+    ['choices'], ['tabs'], ['alerts']]) {
     await open(`${base}/demo/compare/${page}/`, 1440);
     for (const scheme of ['default', 'slate']) {
       await setScheme(scheme);
+      const name = `compare.${page}.${scheme}`;
+      await verifySpecimens(page, name);
+      if (!control) continue;
       const items = await ev(probeComparison(control));
       const detail = JSON.stringify(items);
-      const name = `compare.${page}.${scheme}`;
       const complete = items.length === 3 && items.every(i => !i.missing && i.height > 0) &&
         new Set(items.map(i => i.library)).size === 3;
       check(`${name}.specimens`, complete, detail);

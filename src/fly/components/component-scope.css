@@ -24,7 +24,7 @@
     --card-foreground: var(--fly-ink) !important;
     --popover: var(--fly-surface-raised) !important;
     --popover-foreground: var(--fly-ink) !important;
-    --primary: var(--fly-ink) !important;
+    --primary: var(--fly-selection) !important;
     --primary-foreground: var(--fly-paper-3) !important;
     --secondary: var(--fly-surface-raised) !important;
     --secondary-foreground: var(--fly-ink) !important;
@@ -46,11 +46,12 @@
      derived properties at this boundary so direct Fly rules use them too. */
   .md-typeset .fltheme-components:is([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
     --fly-ink: var(--foreground);
+    --fly-selection: var(--fly-ink);
     --fly-paper-3: var(--background);
     --fly-surface-raised: var(--muted);
     --fly-quiet: color-mix(in srgb, var(--fly-ink) 74%, var(--fly-paper-3));
     --fly-hover: color-mix(in srgb, var(--fly-ink) 8%, transparent);
-    --fly-control-border: color-mix(in srgb, var(--fly-ink) 65%, var(--fly-paper-3));
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 58%, var(--fly-paper-3));
     --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
     --fly-focus-ring: var(--fly-quiet);
     --fly-accent-text: var(--fly-quiet);
@@ -63,6 +64,7 @@
     --color-base-200: var(--muted);
     --color-base-300: var(--border);
     --color-base-content: var(--foreground);
+    --color-primary: var(--fly-selection);
     --color-primary-content: var(--primary-foreground);
     --color-secondary-content: var(--secondary-foreground);
     --color-accent-content: var(--accent-foreground);

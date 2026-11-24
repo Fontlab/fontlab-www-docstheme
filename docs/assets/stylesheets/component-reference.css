@@ -12,7 +12,14 @@
 .md-typeset .fl-library-grid h3 { margin: 0 0 .8rem; }
 .md-typeset .fl-library-grid p { margin: .75rem 0; text-indent: 0; }
 .md-typeset .fl-library-grid a:not([class]) { text-underline-offset: .2em; }
-.md-typeset .fl-library-grid.fl-compare { gap: 1.5rem; }
+.md-typeset .fl-library-grid.fl-compare { gap: 1.5rem; margin-block: 0; }
+.md-typeset .fl-example-preview:has(> .fl-compare) { padding-block-start: var(--fly-half); }
+.md-typeset .fl-compare > section > h2 {
+  margin: 0 0 .75rem !important;
+  font: 500 var(--fly-size-xs) / 1.35 var(--fly-control-font) !important;
+  color: var(--fly-quiet) !important;
+  text-align: start;
+}
 @container fly-canvas (min-width: 44rem) {
   .md-typeset > .fl-example:has(.fl-compare) {
     width: calc(100cqi - 2 * var(--pad));
@@ -35,6 +42,11 @@
 .fl-compare-fields fieldset { display: grid; gap: .5rem; min-inline-size: 0; }
 .fl-compare-fields :is(input, select, textarea) { max-inline-size: 100%; }
 .fl-compare-field :is(input, select, textarea) { inline-size: 100%; }
+.md-typeset .fl-compare-field > select {
+  width: 100% !important;
+  inline-size: 100% !important;
+  min-inline-size: 0;
+}
 .fl-compare-fields label { white-space: normal; }
 .fl-compare-field small { font: var(--fly-size-xs) / 1.4 var(--fly-sans-family); }
 .md-typeset .fl-demo {

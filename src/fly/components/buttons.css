@@ -83,7 +83,7 @@
 
   .md-typeset :is(.md-button--primary, .md-button--primary:focus) {
     color: var(--fly-paper-3);
-    background: var(--fly-ink);
+    background: var(--fly-selection);
     box-shadow: inset 0 0 0 1px var(--fly-ink);
   }
 
@@ -91,11 +91,6 @@
     color: var(--fly-paper-3);
     background: var(--fly-quiet);
     box-shadow: inset 0 0 0 1px var(--fly-quiet);
-  }
-
-  .md-typeset .md-button:is(:disabled, [aria-disabled='true']) {
-    opacity: 0.55;
-    cursor: default;
   }
 
   .md-typeset .fltheme-components :is(.du-btn, .du-join-item.du-btn) {
@@ -112,13 +107,13 @@
     border-color: var(--fly-control-border) !important;
   }
 
-  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']) {
+  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true'], .du-btn-disabled, .du-btn-active, [aria-pressed='true'], [aria-current='page']) {
     color: var(--fly-ink) !important;
     background-color: transparent !important;
     border-color: var(--fly-control-border) !important;
   }
 
-  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true']):is(:hover, :active) {
+  .md-typeset .fltheme-components :is(.du-btn-outline, .du-btn-dash, .btn[data-variant='outline']):not(:disabled, [aria-disabled='true'], .du-btn-disabled, .du-btn-active, [aria-pressed='true'], [aria-current='page']):is(:hover, :active) {
     background-color: var(--fly-hover) !important;
   }
 
@@ -128,5 +123,19 @@
 
   .md-typeset .fltheme-components :is(.du-btn-secondary, .du-btn-accent, .du-btn-info, .du-btn-success, .du-btn-warning, .du-btn-error) {
     border-color: var(--fly-control-border) !important;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(.du-btn-active, [aria-pressed='true'], [aria-current='page']) {
+    color: var(--fly-paper-3) !important;
+    background-color: var(--fly-selection) !important;
+  }
+
+  .md-typeset :is(.md-button, .fltheme-components :is(.btn, .du-btn)):is(:disabled, [aria-disabled='true'], .du-btn-disabled) {
+    opacity: 1 !important;
+    color: var(--fly-quiet) !important;
+    background-color: var(--fly-surface-raised) !important;
+    border: 1px solid var(--fly-card-border) !important;
+    box-shadow: none !important;
+    cursor: default;
   }
 }

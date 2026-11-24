@@ -54,7 +54,13 @@
     color: var(--fly-ink);
   }
 
-  .md-typeset .fltheme-components :is(.table, .du-table) tbody > tr + tr {
-    border-top: 1px solid var(--fly-rule);
+  .md-typeset .fltheme-components :is(.table, .du-table) th {
+    font-weight: var(--fly-caption-weight) !important;
+    font-size: var(--fly-caption-size) !important;
+    color: var(--fly-ink) !important;
+  }
+
+  .md-typeset :is(.md-typeset__table table, .fltheme-components :is(.table, .du-table)) tbody > tr > td {
+    border-block-start: 1px solid var(--fly-rule);
   }
 }
