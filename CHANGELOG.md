@@ -4,7 +4,7 @@ this_file: CHANGELOG.md
 
 # Changelog
 
-## 0.3.0 — unreleased
+## 0.3.0 — 2026-11-24
 
 - Release tags build and check the Python distributions before uploading through Trusted Publishing. Owner setup on PyPI: register `Fontlab/fontlab-www-docstheme`, workflow `pypi-upload.yml`, environment `pypi` for `fly-january`.
 - Basecoat, daisyUI and MaterialX share control metrics, ink selection marks, focus rings and disabled states. `.md-button` preserves label case, spaces icons and grows from a fixed 44px minimum at standard size when labels wrap.
