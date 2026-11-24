@@ -161,7 +161,8 @@
     body:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link)
       .md-sidebar--primary .md-nav__link .md-ellipsis {
       white-space: normal;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
+      hyphens: auto;
       overflow: visible;
     }
   }

@@ -6,17 +6,13 @@ this_file: CHANGELOG.md
 
 ## 0.3.0 — unreleased
 
-- Component descriptions and keyboard instructions use the article body face. Card, alert and dialog titles share the control face at weight 600.
-- Tables use smaller body text, a quiet header and hairline row separators in both palettes. Stacked alerts have breathing room, Compare labels align with their columns, and tab baselines span each column.
-- Dialogs share panel geometry, action alignment and a subtle backdrop. Browser checks cover typography, table fills, alert spacing and the open/close cycle for each dialog.
-
-- Primary controls have a 44px minimum standard height, quieter labels and a shared disabled treatment. Selected controls use ink in light and slate, while focus follows the site hue.
-- Refined choice marks, range tracks, selects, textareas, tab panels and status messages across the three vocabularies. Compare stages use compact column headings.
-
-- Shared control, surface and focus tokens bring Basecoat, daisyUI and MaterialX into the same type scale and palette. Button links keep their component styling, and forms and cards have visible boundaries in light and slate.
-- Mid-desktop navigation wraps site labels inside the exposed rail, with the in-page rail still retracting on hover and focus.
-- Added eleven Compare pages, including an overview, with live specimens and their authored and compiled source. The demo uses the theme’s default fonts and keeps FontLab chrome.
-- Added agent-browser assertions for control measurements, decoration, boundary contrast and the 1440px navigation rail.
+- Basecoat, daisyUI and MaterialX share control metrics, ink selection marks, focus rings and disabled states. `.md-button` preserves label case, spaces icons and grows from a fixed 44px minimum at standard size when labels wrap.
+- Admonitions and details use a tinted fill, a 3px inline-start bar and sans titles sized to the surrounding body or margin aside. Expandable summaries use a chevron.
+- Prose tables use smaller serif text, hairline row separators and a paper header. Header cells use the control face at weight 600 and caption size. The `roles.caption` family no longer sets the header face.
+- Content tab labels have a 44px minimum height and a full-width baseline. Component prose follows the body typography. Grid cards gain a raised fill and border, and `.md-tag` shares the compact badge styling.
+- New public classes include `.fly-form` for native controls, `dialog.fly-dialog` for modals, `.fly-callout` for editorial callouts and `mark.fly-badge` for inline labels. Dialogs share panel geometry and backdrop treatment.
+- The mid-desktop L1 sliver is 10rem wide so its labels can wrap. This narrows the content area between 76.25em and 100em (about 1220–1600px). **Breaking:** removed `--fly-l1-label`. Set `--fly-sliver` to adjust the exposed rail width.
+- The Compare overview and ten specimen pages show the three vocabularies with authored and compiled source. The demo uses the default theme typography and FontLab chrome.
 
 ## 0.2.1 — 2026-11-24
 

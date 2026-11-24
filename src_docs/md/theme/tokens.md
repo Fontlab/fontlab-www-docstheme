@@ -99,7 +99,7 @@ The inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjus
 ## Grid and sizes
 
 `1rem` is half a body line, and every vertical length in flowing text is a whole
-number of rems. Continuous text uses exactly three sizes.
+number of rems. The prose scale has three base sizes. Table text and controls default to 90% of body size. Card and dialog titles use a component token based on the large prose size. Admonition and disclosure titles follow the body or margin-aside size.
 
 | Token | Value | At the 14.4px root | Use |
 |---|---|---|---|

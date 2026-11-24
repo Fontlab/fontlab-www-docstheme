@@ -1,10 +1,14 @@
 /* this_file: src/fly/components/widgets.css */
-/* Basecoat and daisyUI component declarations are weighted in a separate build. */
 @layer fly.components {
-  .md-typeset :is(
-    .fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box),
-    .grid > .card, .grid.cards > ul > li, dialog.fly-dialog
-  ) {
+  .md-typeset :is(.grid > .card, .grid.cards > ul > li) {
+    background-color: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-card-radius);
+    box-shadow: none;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
     background-color: var(--fly-surface-raised) !important;
     color: var(--fly-ink);
     border: 1px solid var(--fly-card-border) !important;
@@ -26,12 +30,25 @@
     --du-card-fs: var(--fly-body-size);
   }
 
-  .md-typeset :is(.tabbed-labels, .fltheme-components :is(.tabs [role='tablist']:not([aria-orientation='vertical']), .du-tabs-border)) {
+  .md-typeset .tabbed-labels {
+    box-sizing: border-box;
+    inline-size: 100%;
+    box-shadow: inset 0 -1px var(--fly-card-border);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    height: auto;
+    --md-default-fg-color: var(--fly-selection);
+    --md-accent-fg-color: var(--fly-selection);
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [role='tablist']:not([aria-orientation='vertical']), .du-tabs-border) {
     box-sizing: border-box;
     inline-size: 100% !important;
   }
 
-  .md-typeset :is(.tabbed-labels, .fltheme-components .tabs [role='tablist']) {
+  .md-typeset .fltheme-components .tabs [role='tablist'] {
     box-shadow: inset 0 -1px var(--fly-card-border) !important;
     background: transparent !important;
     border: 0 !important;
@@ -49,7 +66,18 @@
     flex: none !important;
   }
 
-  .md-typeset :is(.tabbed-labels > label, .fltheme-components :is(.tabs [role='tab'], .du-tab)) {
+  .md-typeset .tabbed-labels > label {
+    box-sizing: border-box;
+    block-size: var(--fly-control-height);
+    min-block-size: var(--fly-control-height);
+    align-content: center;
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [role='tab'], .du-tab) {
     box-sizing: border-box;
     block-size: var(--fly-control-height) !important;
     min-block-size: var(--fly-control-height) !important;
@@ -58,14 +86,20 @@
     font-size: var(--fly-control-size) !important;
     font-weight: var(--fly-control-weight) !important;
     text-decoration: none !important;
+    padding: 0 var(--fly-half) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: inset 0 -1px var(--fly-card-border) !important;
+    color: var(--fly-quiet) !important;
   }
 
-  .md-typeset :is(.tabbed-labels:not(.tabbed-labels--linked) > label, .fltheme-components :is(.tabs [role='tab'], .du-tab)) {
-    padding: 0 var(--fly-half) !important;
+  .md-typeset .tabbed-labels:not(.tabbed-labels--linked) > label {
+    padding: 0 var(--fly-half);
   }
 
   .md-typeset .tabbed-labels--linked > label {
-    padding: 0 !important;
+    padding: 0;
   }
 
   .md-typeset .tabbed-labels--linked > label > a {
@@ -78,25 +112,12 @@
   .md-typeset .tabbed-labels > label a {
     color: inherit;
     font: inherit;
-    text-decoration: none !important;
-  }
-
-  .md-typeset .tabbed-set {
-    --md-default-fg-color: var(--fly-selection);
-    --md-accent-fg-color: var(--fly-selection);
+    text-decoration: none;
   }
 
   .md-typeset .tabbed-labels::before {
     background: var(--fly-selection);
     height: 2px;
-  }
-
-  .md-typeset .fltheme-components :is(.tabs [role='tab'], .du-tab) {
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: inset 0 -1px var(--fly-card-border) !important;
-    color: var(--fly-quiet) !important;
   }
 
   /* The panels share this flex container. Extend the baseline across the
@@ -119,7 +140,22 @@
     box-shadow: inset 0 -2px var(--fly-selection) !important;
   }
 
-  .md-typeset :is(.md-tag, .fltheme-components :is(.badge, .du-badge), mark.fly-badge) {
+  .md-typeset :is(.md-tag, mark.fly-badge) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.65rem;
+    padding: 0 0.55em;
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-control-radius);
+    background: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-size-xs);
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components :is(.badge, .du-badge) {
     display: inline-flex;
     align-items: center;
     min-block-size: 1.65rem;
@@ -134,7 +170,7 @@
     text-decoration: none;
   }
 
-  .md-typeset :is(.md-tag, mark.fly-badge, .fltheme-components :is(.badge[data-variant='secondary'], .du-badge-neutral)) {
+  .md-typeset .fltheme-components :is(.badge[data-variant='secondary'], .du-badge-neutral) {
     background: var(--fly-surface-raised) !important;
     color: var(--fly-ink) !important;
   }
@@ -226,7 +262,7 @@
     gap: var(--fly-half);
   }
 
-  .md-typeset dialog :is(.md-button--primary, .fltheme-components .du-btn-primary, .fltheme-components .btn:not([data-variant]), .fltheme-components .btn[data-variant='primary']):not(:disabled, [aria-disabled='true'], .du-btn-disabled) {
+  .md-typeset :is(dialog.fly-dialog .md-button--primary, .fltheme-components dialog :is(.du-btn-primary, .btn:not([data-variant]), .btn[data-variant='primary'])):not(:disabled, [aria-disabled='true'], .du-btn-disabled) {
     background-color: var(--fly-selection) !important;
     color: var(--fly-paper-3) !important;
   }

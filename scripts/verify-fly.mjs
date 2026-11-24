@@ -143,7 +143,7 @@ const PROBE_SIZES = `JSON.stringify((() => {
     if (el.closest('.admonition, details')) return aside(el) ? 'aside' : 'admonition';
     return el.closest('.md-typeset') ? 'body' : 'unclassified';
   };
-  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), table: token('--fly-table-size'), title: token('--fly-card-title-size'), items: [], inline: []};
+  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), table: token('--fly-table-size'), items: [], inline: []};
   const scope = document.querySelectorAll('.md-content *, .md-sidebar *, .md-footer *');
   for (const el of scope) {
     const inArticle = !!el.closest('.md-content .md-typeset');
@@ -448,14 +448,14 @@ const verifyActiveNav = async base => {
 };
 
 const SIZE_OF = {th: 'xs', figcaption: 'xs', footer: 'xs', nav: 'xs', lead: 'md', quote: 'md',
-  table: 'table', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'title', aside: 'xs', 'aside-title': 'title'};
+  table: 'table', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
 const WIDE_ONLY = new Set(['aside', 'aside-title']);
 
 const verifySizes = async (base, width, site = 'fontlab') => {
   await open(`${base}/${site}/`, width);
   const at = `${site === 'fontlab' ? '' : site + '.'}sizes`;
   const s = await ev(PROBE_SIZES);
-  const tokens = {xs: s.xs, sm: s.sm, md: s.md, table: s.table, title: s.title};
+  const tokens = {xs: s.xs, sm: s.sm, md: s.md, table: s.table};
   for (const kind of Object.keys(SIZE_OF)) {
     if (width < 1000 && WIDE_ONLY.has(kind)) continue; // no margin asides on a phone
     const items = s.items.filter(i => i.kind === kind);
@@ -464,8 +464,8 @@ const verifySizes = async (base, width, site = 'fontlab') => {
       bad.length ? `want ${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
   }
   const unknown = s.items.filter(i => !(i.kind in SIZE_OF));
-  // Table cells and component titles have dedicated roles checked above.
-  const flow = s.items.filter(i => !['table', 'title'].includes(SIZE_OF[i.kind]));
+  // Table cells have their own size checked above.
+  const flow = s.items.filter(i => SIZE_OF[i.kind] !== 'table');
   const distinct = [...new Set(flow.map(i => i.size.toFixed(2)))].sort();
   const want = [s.xs, s.sm, s.md].map(v => v.toFixed(2)).sort();
   check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${flow.length} elements`);
@@ -830,7 +830,8 @@ const verifySpecimens = async (page, name) => {
   } else if (page === 'alerts') {
     const description = '.alert > section, .du-alert p, .admonition > p:not(.admonition-title)';
     await prose(description, 2);
-    await titles('.alert h3, .du-alert h3, .admonition-title', 2);
+    await textRole('.alert h3, .du-alert h3, .admonition-title', 2, 'title',
+      '600 var(--fly-body-size) var(--fly-control-font)', 2);
     const gaps = await sample('.alert + .alert, .du-alert + .du-alert, .admonition + .admonition', el =>
       (el.getBoundingClientRect().top - el.previousElementSibling.getBoundingClientRect().bottom) /
       parseFloat(getComputedStyle(document.documentElement).fontSize), 1);
@@ -843,7 +844,40 @@ const verifySpecimens = async (page, name) => {
   }
 };
 
+const verifyGuideControlFonts = async base => {
+  for (const [page, selector, count] of [
+    ['navigation/menus', '.dropdown-menu [role="menuitem"]', 2],
+    ['navigation/location', '.pagination .btn', 3],
+    ['feedback/dialogs', '.popover [data-popover] :is(h3, p)', 2],
+    ['feedback/hints', '#toaster .toast-content :is(h2, p)', 2],
+  ]) {
+    await open(`${base}/demo/${page}/`);
+    if (page === 'feedback/hints') await ab('click', '.fltheme-components button:has(+ #toaster)');
+    const got = await ev(`(() => {
+      const reference = document.createElement('span');
+      reference.style.fontFamily = 'var(--fly-control-font)';
+      document.body.append(reference);
+      const expected = getComputedStyle(reference).fontFamily;
+      reference.remove();
+      const fonts = [...document.querySelectorAll(${JSON.stringify('.fltheme-components ' + selector)})]
+        .map(el => getComputedStyle(el).fontFamily);
+      return {expected, fonts};
+    })()`);
+    check(`guide.control-face.${page}`, got.fonts.length === count && got.fonts.every(f => f === got.expected), JSON.stringify(got));
+  }
+};
+
 const verifyComparison = async base => {
+  await open(`${base}/demo/compare/buttons/`, 390);
+  const labels = await sampleColumns('[data-compare-label]', el => {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    return {kind: el.dataset.compareLabel, wrapped: range.getClientRects().length > 1,
+      visible: el.clientHeight, content: el.scrollHeight};
+  });
+  check('compare.buttons.labels-fit@390', labels.length === 3 && labels.every(({values}) =>
+    values.length === 2 && values.some(v => v.kind === 'icon') && values.some(v => v.kind === 'long' && v.wrapped) &&
+    values.every(v => v.visible > 0 && v.content <= v.visible + 1)), JSON.stringify(labels));
   const buttonRadii = new Map();
   for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card'],
     ['choices'], ['tabs'], ['alerts'], ['badges'], ['tables'], ['dialogs']]) {
@@ -1251,6 +1285,7 @@ try {
   for (const width of [1440, 390]) await verifyInlineCode(base, width);
   await verifyRailLabels(base);
   await verifyComparison(base);
+  await verifyGuideControlFonts(base);
   await verifyNoErrors(base);
 } catch (error) {
   check('verify-fly.run', false, String(error?.stack || error).split('\n').slice(0, 4).join(' / '));

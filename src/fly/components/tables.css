@@ -1,49 +1,82 @@
 /* this_file: src/fly/components/tables.css */
-/* Basecoat and daisyUI table rules carry their own specificity boosts. */
+/* Data cells use the smaller body-face table role, headers use the control face.
+   Cell padding is half MaterialX’s, with inline runs sized to the cell. */
 @layer fly.components {
   .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) {
-    font-family: var(--fly-table-family) !important;
-    font-size: var(--fly-table-size) !important;
+    font-family: var(--fly-table-family);
+    font-size: var(--fly-table-size);
     font-weight: var(--fly-table-weight);
     font-stretch: var(--fly-table-stretch);
     font-feature-settings: var(--fly-table-features);
     font-variation-settings: var(--fly-table-variation);
-    line-height: var(--fly-table-leading) !important;
+    line-height: var(--fly-table-leading);
     letter-spacing: var(--fly-table-tracking);
-    border: 0 !important;
+    border: 0;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
   }
 
-  .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > :is(thead, tbody) > tr {
+  .md-typeset .fltheme-components :is(table.table, table.du-table) {
+    font-family: var(--fly-table-family) !important;
+    font-size: var(--fly-table-size) !important;
+    line-height: var(--fly-table-leading) !important;
     border: 0 !important;
-    background: transparent !important;
+  }
+
+  .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > :is(thead, tbody) > tr {
+    border: 0;
+    background: transparent;
     box-shadow: none;
   }
 
+  .md-typeset .fltheme-components :is(table.table, table.du-table) > :is(thead, tbody) > tr {
+    border: 0 !important;
+    background: transparent !important;
+  }
+
   .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > :is(thead, tbody, tfoot) > tr > :is(td, th) {
+    padding: 0.4688em 0.625em;
+    border: 0;
+    font-family: var(--fly-table-family);
+    font-size: var(--fly-table-size);
+  }
+
+  .md-typeset .fltheme-components :is(table.table, table.du-table) > :is(thead, tbody, tfoot) > tr > :is(td, th) {
     padding: 0.4688em 0.625em !important;
-    color: var(--fly-ink) !important;
     border: 0 !important;
     font-family: var(--fly-table-family) !important;
     font-size: var(--fly-table-size) !important;
   }
 
   .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > tbody > tr > :is(td, th) {
+    border-block-start: 1px solid var(--fly-rule);
+  }
+
+  .md-typeset .fltheme-components :is(table.table, table.du-table) > tbody > tr > :is(td, th) {
     border-block-start: 1px solid var(--fly-rule) !important;
   }
 
   .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > thead > tr > :is(td, th) {
+    background-color: var(--fly-surface-raised);
+  }
+
+  .md-typeset .fltheme-components :is(table.table, table.du-table) > thead > tr > :is(td, th) {
     background-color: var(--fly-surface-raised) !important;
   }
 
   .md-typeset :is(table:not([class]), .md-typeset__table > table, .fltheme-components :is(table.table, table.du-table)) > :is(thead, tbody, tfoot) > tr > th {
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-caption-size);
+    font-weight: 600;
+    font-stretch: var(--fly-sans-stretch);
+    font-variation-settings: normal;
+  }
+
+  .md-typeset .fltheme-components :is(table.table, table.du-table) > :is(thead, tbody, tfoot) > tr > th {
     font-family: var(--fly-control-font) !important;
     font-size: var(--fly-caption-size) !important;
     font-weight: 600 !important;
-    font-stretch: var(--fly-sans-stretch);
-    font-variation-settings: normal;
   }
 
   .md-typeset table :is(td, th) :is(a, strong, em, mark) {

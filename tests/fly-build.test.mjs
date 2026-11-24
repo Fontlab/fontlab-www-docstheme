@@ -5,6 +5,7 @@
 // matching a fresh build.
 import assert from 'node:assert/strict';
 import postcss from 'postcss';
+import selectorParser from 'postcss-selector-parser';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { test } from 'node:test';
@@ -73,13 +74,26 @@ test('every var(--fly-*) used in src/fly is declared in the tokens', () => {
   }
 });
 
-test('!important appears only with a comment naming what it beats', () => {
+// A positive class must constrain every matching branch. A class inside :not()
+// or :has() cannot constrain the element receiving the declaration.
+function componentSelector(selector) {
+  return selector.nodes.some(node =>
+    (node.type === 'class' && (node.value === 'fltheme-components' || node.value.startsWith('fly-'))) ||
+    (node.type === 'pseudo' && [':is', ':where'].includes(node.value) && node.nodes.every(componentSelector))
+  );
+}
+
+test('!important is scoped to component markup or explains the overridden declaration', () => {
   for (const [path, css] of Object.entries(sources)) {
-    postcss.parse(css).walkDecls(decl => {
-      if (!decl.important) return;
-      if (decl.next()?.type === 'comment' && decl.next().text.includes('MaterialX')) return;
-      assert.match(decl.parent.selector, /^\.md-typeset\b/, `${path}: independent bundle overrides must stay inside the article`);
-      assert.match(css.split('\n')[1], /\/\* Basecoat and daisyUI .+\*\//, `${path}: name the independent rules the override beats`);
+    postcss.parse(css).walkRules(rule => {
+      const important = rule.nodes.filter(node => node.type === 'decl' && node.important);
+      if (!important.length || selectorParser().astSync(rule.selector).nodes.every(componentSelector)) return;
+      for (const decl of important) {
+        const comment = decl.next();
+        assert.ok(comment?.type === 'comment' && comment.source.start.line === decl.source.end.line &&
+          /MaterialX|Basecoat|daisyUI/.test(comment.text) && comment.text.includes(decl.prop),
+        `${path}:${decl.source.start.line} unscoped !important on ${decl.prop} in ${rule.selector}`);
+      }
     });
   }
 });

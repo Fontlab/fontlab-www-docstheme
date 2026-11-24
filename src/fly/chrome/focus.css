@@ -1,5 +1,4 @@
 /* this_file: src/fly/chrome/focus.css */
-/* Basecoat and daisyUI focus selectors are flattened separately. */
 /* One focus ring for every focusable element in the light DOM: 1px in the focus colour,
    inset so it stays visible in clipped search forms, rails and code blocks. The global
    menu draws its own rings in its shadow root. --fl-focus-color (the menu components'
@@ -13,8 +12,13 @@
   }
 
   /* Component rings sit outside the boundary, whether a control is filled or outlined. */
+  .md-typeset .md-button:focus-visible {
+    outline: 2px solid var(--fly-focus-ring);
+    outline-offset: 2px;
+  }
+
   .md-typeset :is(
-    .md-button, .fltheme-components :is(.btn, .du-btn, input, select, textarea, .select > button),
+    .fltheme-components :is(.btn, .du-btn, input, select, textarea, .select > button),
     .fly-form :is(input, select, textarea), dialog.fly-dialog button
   ):focus-visible {
     outline: 2px solid var(--fly-focus-ring) !important;

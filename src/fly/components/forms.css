@@ -1,5 +1,4 @@
 /* this_file: src/fly/components/forms.css */
-/* Basecoat and daisyUI field and choice selectors carry their own specificity boosts. */
 @layer fly.components {
   .md-typeset .fly-form {
     font-family: var(--fly-control-font);

@@ -1,5 +1,4 @@
 /* this_file: src/fly/utilities/motion.css */
-/* Basecoat and daisyUI transitions can outweigh the global reduced-motion reset. */
 /* Reduced motion: no transitions, animations or smooth scrolling. In the top layer, so it
    outweighs other Fly rules. The separate component library bundle has its own weights. */
 @layer fly.utilities {

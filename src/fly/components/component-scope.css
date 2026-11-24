@@ -1,5 +1,4 @@
 /* this_file: src/fly/components/component-scope.css */
-/* Basecoat and daisyUI palette declarations come from the separately flattened bundle. */
 @layer fly.components {
   /* The optional library bundle and Fly are flattened independently. Override the
      library's root palette here without altering the standalone fltheme26 assets. */
@@ -16,8 +15,7 @@
 
   .md-typeset :is(
     .fltheme-components, .fltheme-components :is(.card, .card > section, .du-card-body, .alert, .alert > section, .du-alert, .accordion > details > section, .du-collapse-content, [role='tabpanel'], .du-tab-content),
-    .fltheme-components p:not(.admonition-title, td *, th *),
-    .grid > .card, .grid.cards > ul > li, .tabbed-block, .tabbed-block > p,
+    .fltheme-components p:not(.admonition-title, td *, th *, .popover *, .toaster *, .dropdown-menu *, .pagination *),
     .fly-callout, .fly-callout > p, dialog.fly-dialog, dialog.fly-dialog p
   ) {
     font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
@@ -28,9 +26,9 @@
   }
 
   .md-typeset :is(
-    :is(.grid > .card, .fltheme-components .card) > :is(h1, h2, h3, h4, h5, h6), .grid.cards > ul > li > :is(h1, h2, h3, h4, h5, h6),
+    .fltheme-components .card > :is(h1, h2, h3, h4, h5, h6),
     .fltheme-components .card > header > :is(h1, h2, h3, h4, h5, h6, .card-title, [data-title]),
-    .fltheme-components .du-card-title, .admonition-title, details:not(.fltheme-components *) > summary,
+    .fltheme-components .du-card-title,
     :is(.fly-callout, dialog.fly-dialog, .fltheme-components :is(.alert, .du-alert, .dialog, .alert-dialog, .du-modal-box)) :is(h2, h3, [data-title])
   ) {
     font: 600 var(--fly-card-title-size) / var(--fly-body-leading) var(--fly-control-font) !important;
@@ -40,6 +38,19 @@
     letter-spacing: normal;
     margin: 0;
     text-align: start;
+  }
+
+  .md-typeset :is(.grid > .card, .grid.cards > ul > li) > :is(h1, h2, h3, h4, h5, h6) {
+    font: 600 var(--fly-card-title-size) / var(--fly-body-leading) var(--fly-control-font);
+    font-stretch: var(--fly-sans-stretch);
+    font-variation-settings: var(--fly-sans-variation);
+    margin: 0;
+    text-align: start;
+  }
+
+  .md-typeset .fltheme-components :is(.dropdown-menu, .popover, .toaster, .pagination),
+  .md-typeset .fltheme-components :is(.dropdown-menu, .popover, .toaster, .pagination) :is(a, p, h2, h3, [role='menuitem'], [data-title], [data-description]) {
+    font-family: var(--fly-control-font) !important;
   }
 
   .md-typeset .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
@@ -62,6 +73,12 @@
     --input: var(--fly-control-border) !important;
     --ring: var(--fly-focus-ring) !important;
     color: var(--fly-ink);
+  }
+
+  /* Solid destructive actions and badges need dark lettering on slate's soft cherry. */
+  .md-typeset .fltheme-components :is(.btn, .badge)[data-variant='destructive']:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--fly-danger-text) !important;
+    color: var(--fly-paper-3) !important;
   }
 
   .md-typeset .fltheme-components[data-fltheme-mode='light'] { color-scheme: light; }

@@ -1,5 +1,4 @@
 /* this_file: src/fly/components/keys.css */
-/* Basecoat and daisyUI keycap rules are flattened separately from Fly. */
 /* Key caps in the navigation face: a 1.7em box (border-box) with the label lowered
    slightly. Negative block margins keep the cap's margin box inside the line box, so
    lines stay on the grid. fly-bridge.js puts a symbol on named keys (data-fl-key-symbol). */

@@ -219,8 +219,8 @@
       "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
     },
     "0.3.0/fly.css": {
-      "size": 133064,
-      "sha256": "ea4840369f55be4317e82fb2ba729db43a278f24e7a56d96b400c7a1193fb598"
+      "size": 137177,
+      "sha256": "c8fad7393497abadb452738b68da4b8dabead54530085cf9ff9166640c65a28b"
     },
     "0.3.0/fly.js": {
       "size": 5532,
@@ -267,8 +267,8 @@
       "sha256": "f12faa3fcbd7225fa96700834f78c5ac73eaddee98841eb3e67f29abfd7e50de"
     },
     "latest/fly.css": {
-      "size": 133064,
-      "sha256": "ea4840369f55be4317e82fb2ba729db43a278f24e7a56d96b400c7a1193fb598"
+      "size": 137177,
+      "sha256": "c8fad7393497abadb452738b68da4b8dabead54530085cf9ff9166640c65a28b"
     },
     "latest/fly.js": {
       "size": 5532,

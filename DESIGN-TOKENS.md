@@ -60,7 +60,7 @@ in the source or put it in a code block.
 
 ## Sizes
 
-Continuous text and navigation use exactly three sizes:
+The prose scale has three base sizes. Table data and control labels default to 90% of body size. Card and dialog titles use a component token that defaults to the large prose size. Admonition and disclosure titles follow the body or margin-aside size.
 
 | Token | Value | px at 14.4px root | Use |
 |---|---|---|---|
@@ -200,7 +200,7 @@ prototype's values):
 |---|---|---|
 | `--fly-rail` | `clamp(13.8889rem, 17vw, 25rem)` | full L1 rail; the L2 width from 100em |
 | `--fly-part-rail` | `clamp(12.5rem, 15vw, 19.4444rem)` | L2 rail |
-| `--fly-sliver` | `10rem` at 76.25em–100em | exposed part of L1 under an extended L2 |
+| `--fly-sliver` | `clamp(4.1667rem, 5vw, 6.9444rem)`; `10rem` at 76.25em–100em | exposed part of L1 under an extended L2 |
 | `--fly-l1` | `var(--fly-rail)`; sliver, rail or `0.5208rem` per width | the L1 width L2 starts after |
 | `--fly-l1-reveal` | `var(--fly-rail)` | exposed L1 width when L2 retracts |
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |

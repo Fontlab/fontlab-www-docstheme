@@ -33,7 +33,7 @@
       padding-inline: 0;
     }
 
-    .md-content__inner .tabbed-set .tabbed-labels ~ .tabbed-control {
+    .md-content__inner > .tabbed-set > .tabbed-labels ~ .tabbed-control {
       margin-inline: 0;
       padding-inline: 0;
       width: 1.2rem;

@@ -349,6 +349,21 @@ test('deep text on light paper and soft text on dark paper reach WCAG 4.5:1', ()
   }
 });
 
+test('Basecoat destructive actions and badges retain AA foreground contrast', async () => {
+  const css = await readFile(join(root, 'src/fly/components/component-scope.css'), 'utf8');
+  const pair = parseCss(css).find(rule => rule.selector.includes(".badge)[data-variant='destructive']"));
+  assert.equal(pair?.decls['background-color'], 'var(--fly-danger-text) !important');
+  assert.equal(pair.decls.color, 'var(--fly-paper-3) !important');
+  const base = ':where(:root, [data-md-color-scheme], [data-fly-hue])';
+  const slate = ":where([data-md-color-scheme='slate'], [data-md-color-scheme='slate'] [data-fly-hue])";
+  for (const [scheme, selector] of [[LIGHT, base], [DARK, slate]]) {
+    const alias = (scope, token) => valueOf(rules['semantic.css'], scope, token).match(/^var\((--fly-[\w-]+)\)$/)[1];
+    const fill = colour(scheme, alias(base, alias(selector, '--fly-danger-text')));
+    const ratio = contrast(fill, colour(scheme, '--fly-paper-3'));
+    assert.ok(ratio >= MIN_CONTRAST, scheme + ' destructive contrast: ' + ratio);
+  }
+});
+
 test('the hr rule reads on the canvas (1.3:1) and footer text on the footer strip (4.5:1)', () => {
   for (const [scheme, name] of [[LIGHT, 'light'], [DARK, 'dark']]) {
     const ratio = contrast(colour(scheme, '--fly-rule'), colour(scheme, '--fly-paper-3'));

@@ -1,5 +1,6 @@
 /* this_file: src/fly/components/admonitions.css */
-/* Basecoat and daisyUI alert backgrounds, grid placement and type rules ship independently. */
+/* A tinted surface and inline-start bar carry the status colour. Titles follow the
+   enclosing text size, including admonitions placed in the page margin. */
 @layer fly.components {
   .md-typeset :is(.admonition, details, .fly-callout, .fltheme-components :is(.alert, .du-alert)) {
     --fly-alert-accent: var(--fly-admonition-note);
@@ -16,7 +17,18 @@
   .md-typeset :is(.admonition, details):is(.failure, .fail, .missing, .danger, .error, .bug),
   .md-typeset .fltheme-components :is(.du-alert-error, .alert[data-variant='destructive']) { --fly-alert-accent: var(--fly-admonition-danger); }
 
-  .md-typeset :is(.admonition, details:not(.fltheme-components *), .fly-callout, .fltheme-components :is(.alert, .du-alert)) {
+  .md-typeset :is(.admonition, details:not(.fltheme-components *), .fly-callout) {
+    padding: var(--fly-card-padding);
+    background: color-mix(in srgb, var(--fly-alert-accent) 7%, var(--fly-surface-raised));
+    color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border);
+    border-inline-start: 3px solid var(--fly-alert-accent);
+    border-radius: var(--fly-card-radius);
+    box-shadow: none;
+    text-align: start;
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) {
     padding: var(--fly-card-padding) !important;
     background: color-mix(in srgb, var(--fly-alert-accent) 7%, var(--fly-surface-raised)) !important;
     color: var(--fly-ink) !important;
@@ -71,13 +83,16 @@
     font-size: var(--fly-body-size);
   }
 
-  .md-typeset :is(.admonition-title, details:not(.fltheme-components *) > summary),
   .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(h2, h3, [data-title]) {
     background: transparent !important;
     color: var(--fly-ink) !important;
   }
 
   .md-typeset :is(.admonition-title, details:not(.fltheme-components *) > summary) {
+    background: transparent;
+    color: var(--fly-ink);
+    font: 600 1em / var(--fly-body-leading) var(--fly-control-font);
+    margin: 0;
     padding-block: 0;
     padding-inline: 1.6em 0;
   }
@@ -86,6 +101,7 @@
     padding-inline-end: var(--fly-card-padding);
   }
 
+  /* MaterialX positions the icon for a taller bar. Centre it on this title line. */
   .md-typeset :is(.admonition-title, summary)::before {
     top: 50%;
     inset-inline-start: 0;

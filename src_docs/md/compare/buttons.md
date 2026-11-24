@@ -40,6 +40,8 @@ Compare the same two export links first, then the variants, sizes and states eac
 
 <h3>States and shapes</h3>
 <div class="fl-demo-row">
+<a href="../fields/" class="btn" data-compare-label="icon"><span aria-hidden="true">→</span> Review fields</a>
+<a href="../fields/" class="btn" data-compare-label="long">Review the family name, outline format and export notes before preparing the files for the next round of inspection</a>
 <button class="btn" type="button" disabled>Unavailable</button>
 <a href="../fields/" class="btn" data-size="icon-xs" aria-label="Set up export (icon-xs)"><span aria-hidden="true">→</span></a>
 <a href="../fields/" class="btn" data-size="icon-sm" aria-label="Set up export (icon-sm)"><span aria-hidden="true">→</span></a>
@@ -97,6 +99,8 @@ Compare the same two export links first, then the variants, sizes and states eac
 
 <h3>States and shapes</h3>
 <div class="fl-demo-row">
+<a href="../fields/" class="du-btn" data-compare-label="icon"><span aria-hidden="true">→</span> Review fields</a>
+<a href="../fields/" class="du-btn" data-compare-label="long">Review the family name, outline format and export notes before preparing the files for the next round of inspection</a>
 <button class="du-btn" type="button" disabled>Unavailable</button>
 <a href="../fields/" class="du-btn du-btn-active">Active</a>
 <a href="../fields/" class="du-btn du-btn-square" aria-label="Set up export (square)"><span aria-hidden="true">→</span></a>
@@ -149,6 +153,8 @@ Fly adds sizes to the MaterialX button with `data-size`.
 ### States and shapes
 
 <div class="fl-demo-row">
+<a href="../fields/" class="md-button" data-compare-label="icon"><span aria-hidden="true">→</span> Review fields</a>
+<a href="../fields/" class="md-button" data-compare-label="long">Review the family name, outline format and export notes before preparing the files for the next round of inspection</a>
 <button class="md-button" type="button" disabled>Unavailable</button>
 <a href="../fields/" class="md-button" data-size="icon" aria-label="Set up export"><span aria-hidden="true">→</span></a>
 </div>
