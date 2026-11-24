@@ -1,0 +1,22 @@
+/* this_file: src/fly/tokens/components.css */
+@layer fly.tokens {
+  :root {
+    --fly-control-height: max(44px, 3rem);
+    --fly-control-radius: 0.5rem;
+    --fly-control-font: var(--fly-sans-family);
+    --fly-control-size: calc(var(--fly-body-size) * 0.9);
+    --fly-control-weight: 500;
+    --fly-dialog-width: 28rem;
+    --fly-card-padding: var(--fly-half);
+    --fly-card-radius: 0.75rem;
+    --fly-card-title-size: var(--fly-size-md);
+  }
+
+  :where(:root, [data-md-color-scheme], [data-fly-hue]) {
+    --fly-surface-raised: var(--fly-paper-2);
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 58%, var(--fly-paper-3));
+    --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
+    --fly-selection: var(--fly-ink);
+    --fly-focus-ring: var(--fly-accent-text);
+  }
+}

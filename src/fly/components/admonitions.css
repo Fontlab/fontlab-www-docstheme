@@ -1,22 +1,114 @@
 /* this_file: src/fly/components/admonitions.css */
-/* Admonitions stay quiet: a hairline and the hover wash on the title; only the icon
-   keeps its type colour (tokens/materialx.css). */
+/* A tinted surface and inline-start bar carry the status colour. Titles follow the
+   enclosing text size, including admonitions placed in the page margin. */
 @layer fly.components {
-  .md-typeset :is(.admonition, details) {
-    border: 1px solid var(--fly-edge);
-    background: transparent;
-    box-shadow: none;
+  .md-typeset :is(.admonition, details, .fly-callout, .fltheme-components :is(.alert, .du-alert)) {
+    --fly-alert-accent: var(--fly-admonition-note);
   }
 
-  .md-typeset :is(.admonition-title, summary) {
-    background: var(--fly-hover);
+  .md-typeset :is(.admonition, details):is(.abstract, .summary, .tldr) { --fly-alert-accent: var(--fly-admonition-abstract); }
+  .md-typeset :is(.admonition, details):is(.question, .help, .faq) { --fly-alert-accent: var(--fly-admonition-question); }
+  .md-typeset :is(.admonition, details).example { --fly-alert-accent: var(--fly-admonition-example); }
+  .md-typeset :is(.admonition, details):is(.quote, .cite), .md-typeset .fly-callout { --fly-alert-accent: var(--fly-admonition-quote); }
+  .md-typeset :is(.admonition, details):is(.tip, .hint, .important, .success, .check, .done),
+  .md-typeset .fltheme-components :is(.du-alert-success, .alert[data-status='success']) { --fly-alert-accent: var(--fly-admonition-success); }
+  .md-typeset :is(.admonition, details):is(.warning, .caution, .attention),
+  .md-typeset .fltheme-components .du-alert-warning { --fly-alert-accent: var(--fly-admonition-warning); }
+  .md-typeset :is(.admonition, details):is(.failure, .fail, .missing, .danger, .error, .bug),
+  .md-typeset .fltheme-components :is(.du-alert-error, .alert[data-variant='destructive']) { --fly-alert-accent: var(--fly-admonition-danger); }
+
+  .md-typeset :is(.admonition, details:not(.fltheme-components *), .fly-callout) {
+    padding: var(--fly-card-padding);
+    background: color-mix(in srgb, var(--fly-alert-accent) 7%, var(--fly-surface-raised));
     color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border);
+    border-inline-start: 3px solid var(--fly-alert-accent);
+    border-radius: var(--fly-card-radius);
+    box-shadow: none;
+    text-align: start;
   }
 
-  /* The title bar is one line (layout/grid.css); MaterialX places the icon for its own taller
-     bar, so centre it on this one. */
+  .md-typeset .fltheme-components :is(.alert, .du-alert) {
+    padding: var(--fly-card-padding) !important;
+    background: color-mix(in srgb, var(--fly-alert-accent) 7%, var(--fly-surface-raised)) !important;
+    color: var(--fly-ink) !important;
+    border: 1px solid var(--fly-card-border) !important;
+    border-inline-start: 3px solid var(--fly-alert-accent) !important;
+    border-radius: var(--fly-card-radius) !important;
+    box-shadow: none !important;
+    text-align: start;
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) + :is(.alert, .du-alert),
+  .md-typeset .admonition + .admonition {
+    margin-block-start: var(--fly-line);
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) {
+    display: block !important;
+  }
+
+  .md-typeset .fltheme-components .alert:has(> svg),
+  .md-typeset .fltheme-components .du-alert:has(> svg) {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--fly-half);
+    row-gap: 0;
+  }
+
+  .md-typeset .fltheme-components :is(.alert, .du-alert) > svg {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    color: var(--fly-alert-accent);
+  }
+
+  .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)),
+  .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(section, p, [data-description]) {
+    color: var(--fly-ink) !important;
+    text-align: start;
+  }
+
+  .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(section, p, [data-description]) {
+    margin: 0;
+  }
+
+  .md-typeset :is(.admonition, details:not(.fltheme-components *)) {
+    font-family: var(--fly-body-family);
+    line-height: var(--fly-body-leading);
+  }
+
+  /* Only top-level admonitions can float into the margin and use the aside size. */
+  .md-typeset :is(.admonition, details:not(.fltheme-components *)):not(.md-typeset > *) {
+    font-size: var(--fly-body-size);
+  }
+
+  .md-typeset :is(.fly-callout, .fltheme-components :is(.alert, .du-alert)) :is(h2, h3, [data-title]) {
+    background: transparent !important;
+    color: var(--fly-ink) !important;
+  }
+
+  .md-typeset :is(.admonition-title, details:not(.fltheme-components *) > summary) {
+    background: transparent;
+    color: var(--fly-ink);
+    font: 600 1em / var(--fly-body-leading) var(--fly-control-font);
+    margin: 0;
+    padding-block: 0;
+    padding-inline: 1.6em 0;
+  }
+
+  .md-typeset details:not(.fltheme-components *) > summary {
+    padding-inline-end: var(--fly-card-padding);
+  }
+
+  /* MaterialX positions the icon for a taller bar. Centre it on this title line. */
   .md-typeset :is(.admonition-title, summary)::before {
     top: 50%;
+    inset-inline-start: 0;
     translate: 0 -50%;
+  }
+
+  .md-typeset .fl-compare .admonition > p:not(.admonition-title) {
+    margin: 0;
   }
 }

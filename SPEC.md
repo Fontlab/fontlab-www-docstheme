@@ -185,8 +185,9 @@ unless it sets `h1: ink`; the plugin writes `data-fly-h1="accent"`), `links` (`i
 links keep the text colour and are underlined; `accent` sets `--fly-link-color` to `--fly-link`,
 `data-fly-links="accent"`) and `chrome_options.sticky` (pins the bar; the rails and anchors then clear
 `--fly-bar-h`). Role properties: `em` also takes `style` (`normal`|`italic`) and `sans` (family, stretch,
-variation, adjust) sets the inline sans used by links, `mark` and h6. Fly styles every article link except a link with a class starting
-`md-`, a `.headerlink`, or a link with `data-fly-plain` on itself or an ancestor. Put
+variation, adjust) sets the inline sans used by links, `mark` and h6. Fly styles article links except for MaterialX component classes starting with `md-`,
+Basecoat and daisyUI buttons, tabs and badges inside `.fltheme-components`,
+`.headerlink`, and links with `data-fly-plain` on themselves or an ancestor. Put
 `data-fly-plain` on site component links or their wrapper to style those links with ordinary
 site CSS. This opts out of the general article-link rule. Links inside theme cards,
 headings and tables also receive styles from those components. For theme styling,

@@ -73,7 +73,9 @@ Prefer `extra.fly` options and `fonts.roles`, or set a `--fly-*` variable on the
 .md-typeset h2 { --fly-h2-tracking: 0.02em; }
 ```
 
-Fly applies its general article-link rule to every link except links with a class starting with `md-`, links with `.headerlink`, and links with `data-fly-plain` on themselves or an ancestor. Put `data-fly-plain` on a site-owned component to style its links with ordinary CSS such as `.md-typeset .signup-link`. Theme cards, headings and tables also supply their own contextual styles. To override those properties inside a theme component, use its tokens or the selector technique below.
+Fly leaves component link styling to MaterialX, Basecoat and daisyUI. Its article-link rule excludes library buttons, tabs and badges inside `.fltheme-components`, MaterialX classes starting with `md-`, permalink links and links with `data-fly-plain` on themselves or an ancestor. Put `data-fly-plain` on a site-owned component to style its links with ordinary CSS such as `.md-typeset .signup-link`. Theme cards, headings and tables also supply their own contextual styles. To override those properties inside a theme component, use its tokens or the selector technique below.
+
+Inside the article, the Basecoat and daisyUI bundles use Fly control and surface tokens. Keep Basecoat and `du-` markup inside `.fltheme-components`. Use `.fly-form` for native fields and `dialog.fly-dialog` for a native modal in a MaterialX page. Primary actions and selected controls use the current scheme’s ink. Keyboard focus uses the site hue. The Compare section shows these states in matched HTML and Markdown examples.
 
 For direct overrides of fly-styled properties, source order alone is insufficient. The build flattens cascade layers to beat MaterialX’s unlayered rules. Each generated selector has a maximum of 10 ID boosts. Copy this prefix into your site stylesheet and change the target and declaration as needed.
 
@@ -115,12 +117,12 @@ The browser check uses the agent-browser CLI and a locally installed Chrome. The
 
 ## Release
 
-1. Set `NEXT_VERSION` in `scripts/build-cdn.mjs`. Publish the required figure-groups dependency first, remove its local uv source, and refresh the lock. Run `./build.sh` and the test gates.
+1. Set `NEXT_VERSION` in `scripts/build-cdn.mjs`. Run `./build.sh` and the test gates.
 2. Commit the verified sources and generated `docs/` (including `docs/fly/<version>/`, `latest/` and `manifest.json`).
 3. Tag **that commit** `vX.Y.Z`, using the same version as `NEXT_VERSION`.
 4. Run `npm run check:release`. It requires a clean worktree, fetches main, and checks the tag, package version and CDN tree.
-5. From the tagged commit, choose an empty output directory, for example `release-dist`. Run `uv build --out-dir release-dist` and `uvx twine check --strict release-dist/*`.
-6. Publish the checked distributions, push the release commit and tag, then verify Pages and the public manifest hashes.
+5. Push the release commit and tag. The tag triggers `pypi-upload.yml`, which repeats the release check, builds the wheel and sdist, runs strict Twine checks and uploads those files through PyPI Trusted Publishing.
+6. Verify the PyPI files, Pages and the public manifest hashes. The PyPI publisher for `fly-january` must name `Fontlab/fontlab-www-docstheme`, workflow `pypi-upload.yml` and GitHub environment `pypi`.
 
 The CDN builder fetches main before writing. A version already published there must match its manifest byte for byte. If publication state is unknown, rebuilding an existing version directory requires confirmation that it was never published (`FLY_CDN_ALLOW_UNPUBLISHED=1`). Bump `NEXT_VERSION` to prepare the next release.
 

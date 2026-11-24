@@ -4,6 +4,17 @@ this_file: CHANGELOG.md
 
 # Changelog
 
+## 0.3.0 — 2026-11-24
+
+- Release tags build and check the Python distributions before uploading through Trusted Publishing. Owner setup on PyPI: register `Fontlab/fontlab-www-docstheme`, workflow `pypi-upload.yml`, environment `pypi` for `fly-january`.
+- Basecoat, daisyUI and MaterialX share control metrics, ink selection marks, focus rings and disabled states. `.md-button` preserves label case, spaces icons and grows from a fixed 44px minimum at standard size when labels wrap.
+- Admonitions and details use a tinted fill, a 3px inline-start bar and sans titles sized to the surrounding body or margin aside. Expandable summaries use a chevron.
+- Prose tables use smaller serif text, hairline row separators and a paper header. Header cells use the control face at weight 600 and caption size. The `roles.caption` family no longer sets the header face.
+- Content tab labels have a 44px minimum height and a full-width baseline. Component prose follows the body typography. Grid cards gain a raised fill and border, and `.md-tag` shares the compact badge styling.
+- New public classes include `.fly-form` for native controls, `dialog.fly-dialog` for modals, `.fly-callout` for editorial callouts and `mark.fly-badge` for inline labels. Dialogs share panel geometry and backdrop treatment.
+- The mid-desktop L1 sliver is 10rem wide so its labels can wrap. This narrows the content area between 76.25em and 100em (about 1220–1600px). **Breaking:** removed `--fly-l1-label`. Set `--fly-sliver` to adjust the exposed rail width.
+- The Compare overview and ten specimen pages show the three vocabularies with authored and compiled source. The demo uses the default theme typography and FontLab chrome.
+
 ## 0.2.1 — 2026-11-24
 
 - On phones, the alternate-style tab label row stays inside the article column and scrolls horizontally.
@@ -47,6 +58,27 @@ this_file: CHANGELOG.md
 - Validated page classes, made missing-plugin errors actionable, and omitted disabled
   utility CSS from site output. MaterialX stylesheet discovery follows the installed
   version. CI exercises both the pinned engine and the newest compatible release.
+
+## Fly adoption and release verification (2026-11-23–24)
+
+- T1: Packaged the MaterialX child theme and strict fixture (fa6312c).
+- T2: Added the grid, type roles and twelve-hue token system (3bcadf7, `tests/fly-tokens.test.mjs`).
+- T3: Ported the layout, components and scripts into the Fly layers (e458e0a).
+- T4: Verified the plugin, font roles, presets, chrome and MaterialX rescaling with 124 Python tests.
+- T5: Verified the grid, chrome, schemes and keyboard navigation with agent-browser (d228123).
+- T6: Built the demo and CDN tree; strict link checks and five representative page captures passed (Task 6 report).
+- T7: Released page-import 0.1.0; 139 tests passed after the public refresh API change (a811826).
+- T8: Extracted figure-groups; 53 package tests and 234 theme tests passed (5e5c258, bbf0595). The theme pins its supported PyPI range (7948161).
+- T9: Adopted page-import in the toolkit; 73 tests passed and the FontLab smoke build matched all 80 baseline files (T9 and T11a controller checks).
+- T10: Compared 16 FontLab 9 pages at two widths in both schemes (Task 10 parity report).
+- T11: Checked 60 main-site and 44 blog cases locally; 13 FontLab and nine Vexy imported pages matched their baselines. The owner subsequently restored the previous blog design (8da9d51).
+- T12: Published fly-january, page-import and figure-groups 0.1.0 and toolkit 1.0.16. The controller recorded successful Pages delivery and a byte-identical live CDN manifest with all file hashes matching after the owner push.
+- T13a: The 0.2.1 rollout receipts cover the scripting sites, fontlabcom.github.io and getgo-fonts. Five later merge reports flag protected asset inventories; their strict rebuilds remain open.
+- T13b: Marketing’s one-page minisite preserved 69 redirects and 169 design-asset checksums (ce9a6a2d).
+- T13c: All five Vexy Lines sites have 0.2.1 build receipts in the rollout ledger (`vexy-lines*-v021-stdout.txt`).
+- T13d: The unofficial Vexy migrations have local adoption reviews (review batches 1–5); the vexy-print screenshot left the underlying layout obscured.
+- T13e: Both betabooks were rebuilt on 0.2.1 (`betabooks-v021-stdout.txt`); the batch 3 follow-up restored the original evidence files.
+- T15: Released the default typography in 0.2.0 (463b41c, 252 browser assertions); published the 0.2.1 layout fixes (6941f8f, 259 assertions). The two main sites and Marketing rebuilt with matching theme CSS (6401852, d54d9ce, e4503bd9).
 
 ## 2026-11-23: CDN tree and demo site (Task 6)
 

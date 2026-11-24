@@ -99,19 +99,19 @@ The inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjus
 ## Grid and sizes
 
 `1rem` is half a body line, and every vertical length in flowing text is a whole
-number of rems. Continuous text uses exactly three sizes.
+number of rems. The prose scale has three base sizes. Table text and controls default to 90% of body size. Card and dialog titles use a component token based on the large prose size. Admonition and disclosure titles follow the body or margin-aside size.
 
 | Token | Value | At the 14.4px root | Use |
 |---|---|---|---|
 | `--fly-half` | `1rem` | 14.4px | half a line; the vertical step |
 | `--fly-line` | `2rem` | 28.8px | the body line |
 | `--fly-size-xs` | `0.9722rem` | 14px | captions, table heads, navigation, footers |
-| `--fly-size-sm` | `1.25rem` | 18px | body text, tables |
+| `--fly-size-sm` | `1.25rem` | 18px | body text |
 | `--fly-size-md` | `1.625rem` | 23.4px | lead paragraphs, blockquotes |
 
 <div class="fly-demo-sizes" markdown="0">
 <p style="font-size: var(--fly-size-xs)"><code>xs</code> Captions and navigation sit at the small size.</p>
-<p style="font-size: var(--fly-size-sm)"><code>sm</code> Body text and tables use the middle size.</p>
+<p style="font-size: var(--fly-size-sm)"><code>sm</code> Body text uses the middle size. Table data uses 90% of the body size.</p>
 <p style="font-size: var(--fly-size-md)"><code>md</code> Lead paragraphs use the large size.</p>
 </div>
 

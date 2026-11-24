@@ -1,0 +1,124 @@
+/* this_file: src/fly/components/component-scope.css */
+@layer fly.components {
+  /* The optional library bundle and Fly are flattened independently. Override the
+     library's root palette here without altering the standalone fltheme26 assets. */
+  .md-typeset .fltheme-components {
+    --size-field: calc(var(--fly-control-height) / 10);
+    --radius-field: var(--fly-control-radius);
+    --radius-selector: var(--fly-control-radius);
+    --radius-box: var(--fly-card-radius);
+    --du-border: 1px;
+    --depth: 0;
+    --noise: 0;
+    background-color: transparent;
+  }
+
+  .md-typeset :is(
+    .fltheme-components, .fltheme-components :is(.card, .card > section, .du-card-body, .alert, .alert > section, .du-alert, .accordion > details > section, .du-collapse-content, [role='tabpanel'], .du-tab-content),
+    .fltheme-components p:not(.admonition-title, td *, th *, .popover *, .toaster *, .dropdown-menu *, .pagination *),
+    .fly-callout, .fly-callout > p, dialog.fly-dialog, dialog.fly-dialog p
+  ) {
+    font: var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family) !important;
+    font-stretch: var(--fly-body-stretch) !important;
+    font-feature-settings: var(--fly-body-features) !important;
+    font-variation-settings: var(--fly-body-variation) !important;
+    letter-spacing: var(--fly-body-tracking);
+  }
+
+  .md-typeset :is(
+    .fltheme-components .card > :is(h1, h2, h3, h4, h5, h6),
+    .fltheme-components .card > header > :is(h1, h2, h3, h4, h5, h6, .card-title, [data-title]),
+    .fltheme-components .du-card-title,
+    :is(.fly-callout, dialog.fly-dialog, .fltheme-components :is(.alert, .du-alert, .dialog, .alert-dialog, .du-modal-box)) :is(h2, h3, [data-title])
+  ) {
+    font: 600 var(--fly-card-title-size) / var(--fly-body-leading) var(--fly-control-font) !important;
+    font-stretch: var(--fly-sans-stretch) !important;
+    font-feature-settings: normal !important;
+    font-variation-settings: var(--fly-sans-variation) !important;
+    letter-spacing: normal;
+    margin: 0;
+    text-align: start;
+  }
+
+  .md-typeset :is(.grid > .card, .grid.cards > ul > li) > :is(h1, h2, h3, h4, h5, h6) {
+    font: 600 var(--fly-card-title-size) / var(--fly-body-leading) var(--fly-control-font);
+    font-stretch: var(--fly-sans-stretch);
+    font-variation-settings: var(--fly-sans-variation);
+    margin: 0;
+    text-align: start;
+  }
+
+  .md-typeset .fltheme-components :is(.dropdown-menu, .popover, .toaster, .pagination),
+  .md-typeset .fltheme-components :is(.dropdown-menu, .popover, .toaster, .pagination) :is(a, p, h2, h3, [role='menuitem'], [data-title], [data-description]) {
+    font-family: var(--fly-control-font) !important;
+  }
+
+  .md-typeset .fltheme-components:not([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --background: var(--fly-paper-3) !important;
+    --foreground: var(--fly-ink) !important;
+    --card: var(--fly-surface-raised) !important;
+    --card-foreground: var(--fly-ink) !important;
+    --popover: var(--fly-surface-raised) !important;
+    --popover-foreground: var(--fly-ink) !important;
+    --primary: var(--fly-selection) !important;
+    --primary-foreground: var(--fly-paper-3) !important;
+    --secondary: var(--fly-surface-raised) !important;
+    --secondary-foreground: var(--fly-ink) !important;
+    --muted: var(--fly-surface-raised) !important;
+    --muted-foreground: var(--fly-quiet) !important;
+    --accent: var(--fly-accent-tint) !important;
+    --accent-foreground: var(--fly-accent-text) !important;
+    --destructive: var(--fly-danger-text) !important;
+    --border: var(--fly-card-border) !important;
+    --input: var(--fly-control-border) !important;
+    --ring: var(--fly-focus-ring) !important;
+    color: var(--fly-ink);
+  }
+
+  /* Solid destructive actions and badges need dark lettering on slate's soft cherry. */
+  .md-typeset .fltheme-components :is(.btn, .badge)[data-variant='destructive']:not(:disabled, [aria-disabled='true']) {
+    background-color: var(--fly-danger-text) !important;
+    color: var(--fly-paper-3) !important;
+  }
+
+  .md-typeset .fltheme-components[data-fltheme-mode='light'] { color-scheme: light; }
+  .md-typeset .fltheme-components[data-fltheme-mode='dark'] { color-scheme: dark; }
+
+  /* An explicit specimen mode uses its own library ink and paper. Resolve the
+     derived properties at this boundary so direct Fly rules use them too. */
+  .md-typeset .fltheme-components:is([data-fltheme-mode='light'], [data-fltheme-mode='dark']) {
+    --fly-ink: var(--foreground);
+    --fly-selection: var(--fly-ink);
+    --fly-paper-3: var(--background);
+    --fly-surface-raised: var(--muted);
+    --fly-quiet: color-mix(in srgb, var(--fly-ink) 74%, var(--fly-paper-3));
+    --fly-hover: color-mix(in srgb, var(--fly-ink) 8%, transparent);
+    --fly-control-border: color-mix(in srgb, var(--fly-ink) 58%, var(--fly-paper-3));
+    --fly-card-border: color-mix(in srgb, var(--fly-ink) 35%, var(--fly-paper-3));
+    --fly-focus-ring: var(--fly-quiet);
+    --fly-accent-text: var(--fly-quiet);
+    --fly-danger-text: light-dark(var(--fly-cherry-deep), var(--fly-cherry-soft));
+    background-color: var(--background);
+  }
+
+  .md-typeset .fltheme-components {
+    --color-base-100: var(--background);
+    --color-base-200: var(--muted);
+    --color-base-300: var(--border);
+    --color-base-content: var(--foreground);
+    --color-primary: var(--fly-selection);
+    --color-primary-content: var(--primary-foreground);
+    --color-secondary-content: var(--secondary-foreground);
+    --color-accent-content: var(--accent-foreground);
+    --color-neutral: var(--primary);
+    --color-neutral-content: var(--primary-foreground);
+    --color-info: var(--fly-info-tint);
+    --color-info-content: var(--fly-info-text);
+    --color-success: var(--fly-success-tint);
+    --color-success-content: var(--fly-success-text);
+    --color-warning: var(--fly-warning-tint);
+    --color-warning-content: var(--fly-warning-text);
+    --color-error: var(--fly-danger-tint);
+    --color-error-content: var(--fly-danger-text);
+  }
+}

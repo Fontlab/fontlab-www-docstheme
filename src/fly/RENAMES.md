@@ -76,7 +76,8 @@ global menu components and fltheme26 and stay.
 | `--fl27-scrollbar` | `--fly-scrollbar` |
 | `--fl-key-bg` (bridge) | `--fly-key` |
 | `--fl27-rail`, `--fl27-part-rail`, `--fl27-sliver` | `--fly-rail`, `--fly-part-rail`, `--fly-sliver` |
-| `--fl27-l1`, `--fl27-l1-label`, `--fl27-l1-reveal` | `--fly-l1`, `--fly-l1-label`, `--fly-l1-reveal` |
+| `--fl27-l1`, `--fl27-l1-reveal` | `--fly-l1`, `--fly-l1-reveal` |
+| `--fl27-l1-label` | `--fly-l1-label` removed in 0.3.0. Labels wrap within the width set by `--fly-sliver`. |
 | `--fl27-notch` | `--fly-notch` |
 | `--fl27-mt`, `--fl27-mb` | `--fly-mt`, `--fly-mb` (per heading) |
 | `--fl27-gbox`, `--fl27-gmb` | `--fly-gbox`, `--fly-gmb` (per heading) |

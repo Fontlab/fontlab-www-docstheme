@@ -16,6 +16,7 @@ contract; this file records the values, where they came from and why. The source
 | `color.css` | twelve hues, greys and surfaces, light and dark |
 | `semantic.css` | accent, primary, link, status and admonition colours |
 | `materialx.css` | MaterialX `--md-*` colour and font variables, set from the above |
+| `components.css` | shared control metrics, surface borders and focus |
 
 `tests/fly-tokens.test.mjs` (run by `npm test`) checks every token named in this file
 exists, every colour token in the CSS is named here, every role has all its properties,
@@ -59,12 +60,12 @@ in the source or put it in a code block.
 
 ## Sizes
 
-Continuous text and navigation use exactly three sizes:
+The prose scale has three base sizes. Table data and control labels default to 90% of body size. Card and dialog titles use a component token that defaults to the large prose size. Admonition and disclosure titles follow the body or margin-aside size.
 
 | Token | Value | px at 14.4px root | Use |
 |---|---|---|---|
 | `--fly-size-xs` | `0.9722rem` | 14 | captions, `th`, navigation, footers |
-| `--fly-size-sm` | `1.25rem` | 18 | body text, tables |
+| `--fly-size-sm` | `1.25rem` | 18 | body text |
 | `--fly-size-md` | `1.625rem` | 23.4 | lead paragraphs, blockquotes |
 
 Headings are fluid: `--fly-h<n>-size` is `calc(clamp(floor, base + slope, ceiling) *
@@ -99,7 +100,7 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each has nine varia
 `-leading`, `-tracking` and `-scale` (unitless, default `1`); for example
 `--fly-h1-family`, `--fly-h2-scale`, `--fly-body-size`, `--fly-nav-stretch`,
 `--fly-table-features`, `--fly-caption-leading`, `--fly-code-tracking`. `th` uses the
-`caption` role; table cells use `table`.
+control face at caption size and weight 600. Data cells use `table`.
 
 | Role | family | weight | stretch | features | variation | size | leading | tracking |
 |---|---|---|---|---|---|---|---|---|
@@ -112,7 +113,7 @@ Roles: `h1 h2 h3 h4 h5 h6 body lead nav table caption code`. Each has nine varia
 | `body` | `'sole-serif-small-variable', Georgia, serif` | `400` | `normal` | `normal` | `normal` | `calc(var(--fly-size-sm) * var(--fly-body-scale))` | `var(--fly-line)` | `0` |
 | `lead` | `var(--fly-h2-family)` | `500` | `normal` | `normal` | `normal` | `calc(var(--fly-size-md) * var(--fly-lead-scale))` | `var(--fly-line)` | `0` |
 | `nav` | `'grtsk-vf', Arial, sans-serif` | `400` | `60%` | `normal` | `'wdth' 60, 'slnt' 0` | `calc(var(--fly-size-xs) * var(--fly-nav-scale))` | `1.25` | `0` |
-| `table` | `var(--fly-nav-family)` | `400` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(var(--fly-size-sm) * var(--fly-table-scale))` | `1.3` | `0` |
+| `table` | `var(--fly-body-family)` | `var(--fly-body-weight)` | `var(--fly-body-stretch)` | `var(--fly-body-features)` | `var(--fly-body-variation)` | `calc(var(--fly-body-size) * 0.9 * var(--fly-table-scale))` | `1.3` | `0` |
 | `caption` | `var(--fly-nav-family)` | `500` | `var(--fly-nav-stretch)` | `normal` | `var(--fly-nav-variation)` | `calc(var(--fly-size-xs) * var(--fly-caption-scale))` | `1.35` | `0` |
 | `code` | `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace` | `400` | `normal` | `normal` | `normal` | `calc(var(--fly-size-xs) * var(--fly-code-scale))` | `1.5` | `0` |
 
@@ -125,14 +126,14 @@ back to those unitless values where `round()` is missing. Tables keep the protot
 and h4 move into the text column and switch to the sans at its 90% width, h3 at 600 and
 h4 at 500 (a media-query override of their role variables in `type.css`).
 The default kits supply Polymath Display for H1 and Polymath for H2 and the lead
-(`xht3uat`), Sole Serif Small for body text (`cna4jfp`), and Grtsk for navigation,
-H3–H6, tables, captions and inline sans (`wck5koo`).
+(`xht3uat`), Sole Serif Small for body text and data cells (`cna4jfp`), and Grtsk for navigation,
+H3–H6, table headers, captions and inline sans (`wck5koo`).
 
 Inline roles `em`, `strong` and `mono` have `-family`, `-weight` and `-adjust`, an em
 multiplier that evens out x-heights when families are mixed (`--fly-strong-adjust`
 `--fly-sans-adjust`, `0.95`: Grtsk runs set inside the serif). As in the prototype, `em`
 is set like `strong`: the sans at 550, upright. The multiplier applies once: `a`, `strong`, `em`
-and `mark` inside table cells inherit the cell's size (the cell is already set in the sans),
+and `mark` inside table cells inherit the cell's size,
 and a run nested in another run (`a`, `strong`, `em`, `mark`) inherits instead of compounding
 the adjust. `mono` is always `--fly-mono-adjust` times the text around it. `--fly-em-style` (`normal`) is the
 `em` font-style; the `em` role's `style` property sets it (`italic`). The `sans` role sets the
@@ -153,14 +154,42 @@ Faces outside the roles, used by the rules in `src/fly/`:
 | `--fly-sans-stretch` | `90%` | width of the inline sans and of h6 |
 | `--fly-sans-variation` | `'slnt' 0` | the root's variation settings; h3/h4 below 60em |
 | `--fly-sans-adjust` | `0.95` | inline sans size relative to the text around it |
-| `--fly-button-family` | `var(--fly-sans-family)` | MaterialX buttons |
-| `--fly-button-size` | `0.9em` | button label size |
-| `--fly-button-weight` | `500` | button label weight |
-| `--fly-button-tracking` | `0.06em` | button letter-spacing |
+| `--fly-button-family` | `var(--fly-control-font)` | button family |
+| `--fly-button-size` | `var(--fly-control-size)` | default button label size |
+| `--fly-button-weight` | `var(--fly-control-weight)` | button label weight |
+| `--fly-button-tracking` | `normal` | button letter-spacing |
 | `--fly-ui-family` | `system-ui, sans-serif` | search results, drawer close button |
 | `--fly-icon-family` | `'Material Symbols Outlined'` | palette toggle, arrows |
 | `--fly-nav-current-weight` | `600` | the current page in L1, the page title over L2 |
 | `--fly-nav-section-weight` | `500` | the current section in L2 |
+
+## Components
+
+MaterialX and native HTML controls in `.fly-form` share these values with Basecoat
+and prefixed daisyUI inside `.md-typeset .fltheme-components`. The default button
+and text-entry field height is at least 44px. Button variants
+can change height while retaining the shared family and weight.
+
+| Token | Default | Applies to |
+|---|---|---|
+| `--fly-control-height` | `max(44px, 3rem)` | standard buttons, single-line fields and minimum tab height |
+| `--fly-control-radius` | `0.5rem` | standard buttons, text fields, badges and keycaps |
+| `--fly-control-font` | `var(--fly-sans-family)` | controls, labels and component titles |
+| `--fly-control-size` | 90% of body size | default control text |
+| `--fly-control-weight` | `500` | labels and buttons |
+| `--fly-selection` | `var(--fly-ink)` | primary actions, selected tabs, choice marks and range fill |
+| `--fly-control-border` | 58% ink mixed into paper 3 in sRGB | controls that need a visible boundary |
+| `--fly-surface-raised` | `var(--fly-paper-2)` | cards, modal panels and quiet fills |
+| `--fly-focus-ring` | `var(--fly-accent-text)` | 2px keyboard outline on buttons and fields |
+| `--fly-card-padding` | `var(--fly-half)` | inset for cards and related panels |
+| `--fly-card-radius` | `0.75rem` | cards and modal panels |
+| `--fly-card-border` | 35% ink mixed into paper 3 in sRGB | surface outlines |
+| `--fly-card-title-size` | `var(--fly-size-md)` | card, alert and dialog titles in the control face at weight 600 |
+| `--fly-dialog-width` | `28rem` | preferred modal panel width, limited by the available viewport |
+
+Colour aliases resolve on the active scheme or hue. The control border targets
+at least 3:1 on the canvas and raised paper, while surface outlines target 1.5:1
+on the canvas.
 
 ## Layout
 
@@ -171,10 +200,9 @@ prototype's values):
 |---|---|---|
 | `--fly-rail` | `clamp(13.8889rem, 17vw, 25rem)` | full L1 rail; the L2 width from 100em |
 | `--fly-part-rail` | `clamp(12.5rem, 15vw, 19.4444rem)` | L2 rail |
-| `--fly-sliver` | `clamp(4.1667rem, 5vw, 6.9444rem)` | L1 under an extended L2 (76.25em–100em) |
+| `--fly-sliver` | `clamp(4.1667rem, 5vw, 6.9444rem)`; `10rem` at 76.25em–100em | exposed part of L1 under an extended L2 |
 | `--fly-l1` | `var(--fly-rail)`; sliver, rail or `0.5208rem` per width | the L1 width L2 starts after |
-| `--fly-l1-label` | `10.0694rem` | longest L1 label at 1440px |
-| `--fly-l1-reveal` | `calc(1.1111rem + var(--fly-l1-label) + 1.3889rem)` at mid desktop | how far L2 retracts |
+| `--fly-l1-reveal` | `var(--fly-rail)` | exposed L1 width when L2 retracts |
 | `--fly-notch` | `var(--fly-size-sm)` | heading permalink notch height |
 | `--fly-margin-col` | `clamp(11.1111rem, 20cqi, 20.8333rem)` | the margin column (`--m`) from 66.67rem of canvas; the blog post layout takes half of `--fly-post-bar` off it |
 | `--fly-bar-h` | `3.8889rem` | the global bar's height (56px at the default root); sticky rails and anchors clear it |
@@ -186,7 +214,8 @@ Both measures are also the `measure` property of the `h1` and `h2` roles: a site
 sets `roles: {h1: {measure: 12ch}}` (a plain length in ch, rem, em, px or %, or `none`) and the fly plugin writes
 `--fly-h1-measure` on `:root` like the other role variables.
 
-On phones, alternate-style content tab labels scroll within the article column. The in-page
+In the mid-desktop band, L1 labels wrap within the exposed strip. Hover or keyboard
+focus still retracts L2. On phones, alternate-style content tab labels scroll within the article column. The in-page
 navigation panel slides within a fixed shell clipped horizontally at the viewport edges.
 Code blocks with a toolbar reserve an inline-end gutter sized to the controls, so the code
 scrolls in its own column.

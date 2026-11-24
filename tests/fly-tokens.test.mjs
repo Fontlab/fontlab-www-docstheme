@@ -10,7 +10,7 @@ import { test } from 'node:test';
 
 const root = new URL('..', import.meta.url).pathname;
 const tokensDir = join(root, 'src/fly/tokens');
-const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'layout.css', 'materialx.css'];
+const FILES = ['grid.css', 'size.css', 'type.css', 'color.css', 'semantic.css', 'layout.css', 'materialx.css', 'components.css'];
 const HUES = ['cherry', 'tangerine', 'amber', 'lime', 'emerald', 'teal', 'sky', 'cobalt', 'indigo', 'violet', 'magenta', 'rose'];
 const VARIANTS = ['', '-soft', '-deep', '-tint'];
 const ROLES = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body', 'lead', 'nav', 'table', 'caption', 'code'];
@@ -185,10 +185,34 @@ test('every token named in DESIGN-TOKENS.md is declared, and every colour token 
   );
   assert.ok(documented.size > 100, 'DESIGN-TOKENS.md documents too few tokens: ' + documented.size);
   for (const name of documented) assert.ok(declared.has(name), name + ' is documented but not declared');
-  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css', 'layout.css']) {
+  for (const file of ['grid.css', 'size.css', 'color.css', 'semantic.css', 'layout.css', 'components.css']) {
     for (const rule of rules[file]) {
       for (const name of Object.keys(rule.decls)) {
         if (name.startsWith('--fly-')) assert.ok(documented.has(name), name + ' (' + file + ') is not documented');
+      }
+    }
+  }
+});
+
+test('component outlines contrast with their adjacent paper in both schemes', () => {
+  const selector = ':where(:root, [data-md-color-scheme], [data-fly-hue])';
+  for (const [name, minimum, papers] of [
+    ['--fly-control-border', 3, ['--fly-paper-3', '--fly-paper-2']],
+    ['--fly-card-border', 1.5, ['--fly-paper-3']],
+  ]) {
+    const value = valueOf(rules['components.css'], selector, name);
+    const [, percentage] = /^color-mix\(in srgb, var\(--fly-ink\) (\d+)%, var\(--fly-paper-3\)\)$/.exec(value);
+    for (const scheme of [LIGHT, DARK]) {
+      const ink = colour(scheme, '--fly-ink');
+      const canvas = colour(scheme, '--fly-paper-3');
+      const channels = ink.slice(1).match(/../g).map((hex, i) => {
+        const start = Number.parseInt(canvas.slice(1 + 2 * i, 3 + 2 * i), 16);
+        const end = Number.parseInt(hex, 16);
+        return Math.round(start + (percentage / 100) * (end - start)).toString(16).padStart(2, '0');
+      });
+      for (const paper of papers) {
+        const ratio = contrast('#' + channels.join(''), colour(scheme, paper));
+        assert.ok(ratio >= minimum, `${name} against ${paper} in ${scheme} is ${ratio.toFixed(2)}:1`);
       }
     }
   }
@@ -222,13 +246,14 @@ test('every role declares every property and every inline role its three', () =>
 });
 
 test('text roles use the three sizes; headings use clamp() times their scale', () => {
-  const expected = { body: 'sm', table: 'sm', nav: 'xs', caption: 'xs', lead: 'md' };
+  const expected = { body: 'sm', nav: 'xs', caption: 'xs', lead: 'md' };
   for (const [role, size] of Object.entries(expected)) {
     assert.equal(
       valueOf(rules['type.css'], ':root', '--fly-' + role + '-size'),
       'calc(var(--fly-size-' + size + ') * var(--fly-' + role + '-scale))',
     );
   }
+  assert.equal(valueOf(rules['type.css'], ':root', '--fly-table-size'), 'calc(var(--fly-body-size) * 0.9 * var(--fly-table-scale))');
   for (const size of ['xs', 'sm', 'md']) assert.match(valueOf(rules['size.css'], ':root', '--fly-size-' + size), /^[\d.]+rem$/);
   for (let level = 1; level <= 6; level += 1) {
     assert.match(
@@ -321,6 +346,21 @@ test('deep text on light paper and soft text on dark paper reach WCAG 4.5:1', ()
       const ratio = contrast(text, paper);
       assert.ok(ratio >= MIN_CONTRAST, hue + ' (' + scheme + ') ' + text + ' on ' + paper + ' is ' + ratio.toFixed(2) + ':1');
     }
+  }
+});
+
+test('Basecoat destructive actions and badges retain AA foreground contrast', async () => {
+  const css = await readFile(join(root, 'src/fly/components/component-scope.css'), 'utf8');
+  const pair = parseCss(css).find(rule => rule.selector.includes(".badge)[data-variant='destructive']"));
+  assert.equal(pair?.decls['background-color'], 'var(--fly-danger-text) !important');
+  assert.equal(pair.decls.color, 'var(--fly-paper-3) !important');
+  const base = ':where(:root, [data-md-color-scheme], [data-fly-hue])';
+  const slate = ":where([data-md-color-scheme='slate'], [data-md-color-scheme='slate'] [data-fly-hue])";
+  for (const [scheme, selector] of [[LIGHT, base], [DARK, slate]]) {
+    const alias = (scope, token) => valueOf(rules['semantic.css'], scope, token).match(/^var\((--fly-[\w-]+)\)$/)[1];
+    const fill = colour(scheme, alias(base, alias(selector, '--fly-danger-text')));
+    const ratio = contrast(fill, colour(scheme, '--fly-paper-3'));
+    assert.ok(ratio >= MIN_CONTRAST, scheme + ' destructive contrast: ' + ratio);
   }
 });
 

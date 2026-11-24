@@ -1,0 +1,47 @@
+# this_file: .github/workflows/pypi-upload.yml
+name: PyPI upload
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: npm run check:release
+      - run: uv build --out-dir release-dist
+      - run: uvx twine check --strict release-dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: release-dist/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: release-dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: release-dist/
+          skip-existing: true

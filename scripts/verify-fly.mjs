@@ -143,7 +143,7 @@ const PROBE_SIZES = `JSON.stringify((() => {
     if (el.closest('.admonition, details')) return aside(el) ? 'aside' : 'admonition';
     return el.closest('.md-typeset') ? 'body' : 'unclassified';
   };
-  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), items: [], inline: []};
+  const out = {xs: token('--fly-size-xs'), sm: token('--fly-size-sm'), md: token('--fly-size-md'), table: token('--fly-table-size'), items: [], inline: []};
   const scope = document.querySelectorAll('.md-content *, .md-sidebar *, .md-footer *');
   for (const el of scope) {
     const inArticle = !!el.closest('.md-content .md-typeset');
@@ -448,25 +448,27 @@ const verifyActiveNav = async base => {
 };
 
 const SIZE_OF = {th: 'xs', figcaption: 'xs', footer: 'xs', nav: 'xs', lead: 'md', quote: 'md',
-  table: 'sm', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
+  table: 'table', list: 'sm', body: 'sm', admonition: 'sm', 'admonition-title': 'sm', aside: 'xs', 'aside-title': 'xs'};
 const WIDE_ONLY = new Set(['aside', 'aside-title']);
 
 const verifySizes = async (base, width, site = 'fontlab') => {
   await open(`${base}/${site}/`, width);
   const at = `${site === 'fontlab' ? '' : site + '.'}sizes`;
   const s = await ev(PROBE_SIZES);
-  const tokens = {xs: s.xs, sm: s.sm, md: s.md};
+  const tokens = {xs: s.xs, sm: s.sm, md: s.md, table: s.table};
   for (const kind of Object.keys(SIZE_OF)) {
     if (width < 1000 && WIDE_ONLY.has(kind)) continue; // no margin asides on a phone
     const items = s.items.filter(i => i.kind === kind);
     const bad = items.filter(i => !near(i.size, tokens[SIZE_OF[kind]], 0.05));
     check(`${at}.${kind}@${width}`, items.length > 0 && bad.length === 0,
-      bad.length ? `want --fly-size-${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
+      bad.length ? `want ${SIZE_OF[kind]}=${tokens[SIZE_OF[kind]]}px: ${bad.map(b => `${b.tag}[${b.text}]=${b.size}`).join(' ')}` : `${items.length} elements at ${tokens[SIZE_OF[kind]]}px`);
   }
   const unknown = s.items.filter(i => !(i.kind in SIZE_OF));
-  const distinct = [...new Set(s.items.map(i => i.size.toFixed(2)))].sort();
+  // Table cells have their own size checked above.
+  const flow = s.items.filter(i => SIZE_OF[i.kind] !== 'table');
+  const distinct = [...new Set(flow.map(i => i.size.toFixed(2)))].sort();
   const want = [s.xs, s.sm, s.md].map(v => v.toFixed(2)).sort();
-  check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${s.items.length} elements`);
+  check(`${at}.exactly-three@${width}`, unknown.length === 0 && distinct.join() === want.join(), `distinct ${distinct} want ${want} over ${flow.length} elements`);
   const inlineBad = s.inline.filter(r => !near(r.size, r.parent * (r.tag !== 'code' && (r.inCell || r.nested) ? 1 : r.adjust), 0.05));
   check(`${at}.inline-adjust@${width}`, s.inline.length > 0 && inlineBad.length === 0,
     inlineBad.length ? inlineBad.map(r => `${r.tag} ${r.size}px parent ${r.parent}px adjust ${r.adjust}`).join('; ') : `${s.inline.length} runs`);
@@ -637,24 +639,279 @@ const verifyInlineCode = async (base, width) => {
     JSON.stringify({long, scroll}));
 };
 
-// Between 76.25em and 100em the L2 sheet covers most of L1: L1's labels keep their full
-// line and run under the sheet (text-overflow clip, no narrowed box), so a label still shows
-// at least 48px of text before the sheet's edge; rail links carry their title.
+// Check text bounds against the actual L2 edge as well as each label's own box.
 const PROBE_RAIL_LABELS = `JSON.stringify((() => {
   const sheet = document.querySelector('.md-sidebar--secondary').getBoundingClientRect();
-  return [...document.querySelectorAll('.md-sidebar--primary .md-nav__link .md-ellipsis')].filter(s => s.getClientRects().length).map(s => {
-    const box = s.getBoundingClientRect();
-    return {text: s.textContent.trim(), title: s.title, overflow: getComputedStyle(s).textOverflow,
-      visible: Math.round(Math.min(box.left + s.scrollWidth, sheet.left) - box.left), cut: s.scrollWidth > s.clientWidth};
-  });
+  const rail = document.querySelector('.md-sidebar--primary');
+  const labels = [...rail.querySelectorAll('.md-nav__link .md-ellipsis')].filter(el => el.getClientRects().length);
+  return {sheet: sheet.left, labels: labels.map(el => {
+    const text = document.createRange();
+    text.selectNodeContents(el);
+    return {text: el.textContent.trim(), title: el.title, edge: text.getBoundingClientRect().right,
+      cut: el.scrollWidth > el.clientWidth};
+  })};
 })())`;
 
 const verifyRailLabels = async base => {
-  await open(`${base}/fontlab/`, 1440);
-  const labels = await ev(PROBE_RAIL_LABELS);
-  const widest = labels.reduce((a, b) => (b.visible > (a?.visible ?? -1) ? b : a), null);
-  check('rail.l1-label-clip@1440', labels.length >= 3 && labels.every(l => l.overflow === 'clip' && !l.cut && l.title === l.text) && widest.visible >= 48,
-    JSON.stringify(labels));
+  for (const site of ['fontlab/', 'demo/compare/buttons/']) {
+    await open(`${base}/${site}`, 1440);
+    await ab('mouse', 'move', '5', '5');
+    await settle();
+    await ev("document.documentElement.dataset.flyL2 = 'out'; 1");
+    const rest = await ev(PROBE_RAIL_LABELS);
+    const fits = ({labels, sheet}) => labels.length >= 3 &&
+      labels.every(l => !l.cut && l.edge <= sheet + 1 && l.title === l.text);
+    check(`rail.l1-labels-fit.${site}@1440`, fits(rest), JSON.stringify(rest));
+    await ev("document.querySelector('.md-sidebar--primary a.md-nav__link--active').focus(); 1");
+    const revealed = await ev(PROBE_RAIL_LABELS);
+    check(`rail.l2-retracts-on-focus.${site}@1440`, revealed.sheet > rest.sheet + 1 && fits(revealed),
+      `L2 edge ${rest.sheet} → ${revealed.sheet}`);
+  }
+};
+
+const probeComparison = control => `JSON.stringify((() => {${COLOUR_LIB}
+  return [...document.querySelectorAll('.fl-library-grid [data-compare-library]')].map(column => {
+    const el = column.querySelector('[data-compare-control="${control}"]');
+    if (!el) return {library: column.dataset.compareLibrary, missing: true};
+    const cs = getComputedStyle(el);
+    const page = backdrop(document.querySelector('.md-content'));
+    const border = rgba(cs.borderTopColor);
+    const [hi, lo] = [lum(over(border, page)), lum(page)].sort((a, b) => b - a);
+    return {library: column.dataset.compareLibrary, height: el.getBoundingClientRect().height,
+      radius: cs.borderTopLeftRadius, decoration: cs.textDecorationLine,
+      border: parseFloat(cs.borderTopWidth), alpha: border[3], contrast: (hi + 0.05) / (lo + 0.05)};
+  });
+})())`;
+
+// Pseudo-elements have no DOMRect API. Lay out their resolved styles on a measurable
+// child of a same-sized control box. This retains offsets, margins and transforms.
+const measureChoiceMark = input => {
+  const pseudo = getComputedStyle(input, '::before');
+  if (['none', 'normal'].includes(pseudo.content) || pseudo.display === 'none' ||
+      pseudo.visibility !== 'visible' || Number(pseudo.opacity) === 0) return null;
+  const host = document.createElement('div');
+  host.style.cssText = 'position:fixed;left:0;top:0;visibility:hidden;pointer-events:none';
+  document.body.append(host);
+  try {
+    const box = document.createElement('div');
+    const mark = document.createElement('span');
+    host.attachShadow({mode: 'open'}).append(box);
+    box.append(mark);
+    const copyComputed = (styles, node) => {
+      for (const property of styles) node.style.setProperty(property, styles.getPropertyValue(property));
+    };
+    copyComputed(getComputedStyle(input), box);
+    copyComputed(pseudo, mark);
+    // A replaced input has no real children. The mirror is its positioning container.
+    box.style.position = 'relative';
+    const rect = box.getBoundingClientRect();
+    const ink = mark.getBoundingClientRect();
+    return {type: input.type, dx: (ink.left + ink.right - rect.left - rect.right) / 2,
+      dy: (ink.top + ink.bottom - rect.top - rect.bottom) / 2, w: ink.width, h: ink.height};
+  } finally {
+    host.remove();
+  }
+};
+
+// Evaluate the live controls in each renderer, including labels inserted by MaterialX.
+const sampleColumns = async (selector, read) => ev(`JSON.stringify(
+  [...document.querySelectorAll('.fl-compare [data-compare-library]')].map(column => ({
+    library: column.dataset.compareLibrary,
+    values: [...column.querySelectorAll(${JSON.stringify(selector)})].map(${read})
+  })))`);
+
+const verifyCompareDialogs = async name => {
+  const boxes = [];
+  for (const library of ['basecoat', 'daisyui', 'materialx']) {
+    const column = `.fl-compare [data-compare-library="${library}"]`;
+    await ab('click', column + ' button[type="button"]');
+    try {
+      const box = await ev(`(() => {
+        const modal = document.querySelector('${column} dialog:modal');
+        if (!modal) return null;
+        const panel = modal.querySelector(':scope > .du-modal-box, :scope.dialog > div') || modal;
+        const cs = getComputedStyle(panel);
+        const backdrop = getComputedStyle(modal, '::backdrop').backgroundColor;
+        return {library:'${library}', width:panel.offsetWidth,
+          padding:[cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft], backdrop};
+      })()`);
+      check(`${name}.${library}.opens`, !!box);
+      if (box) boxes.push(box);
+    } finally {
+      await ab('press', 'Escape');
+      check(`${name}.${library}.escape`, await ev(`!document.querySelector('${column} dialog[open]')`));
+    }
+  }
+  const detail = JSON.stringify(boxes);
+  check(`${name}.width`, boxes.length === 3 && boxes.every(b => b.width > 0 &&
+    Math.abs(b.width - boxes[0].width) <= 1), detail);
+  check(`${name}.padding`, boxes.length === 3 && boxes.every(b => b.padding.every((v, i) =>
+    parseFloat(v) > 0 && v === boxes[0].padding[i])), detail);
+  check(`${name}.backdrop`, boxes.length === 3 && boxes.every(b => b.backdrop === boxes[0].backdrop &&
+    b.backdrop !== 'rgba(0, 0, 0, 0)' && b.backdrop !== 'transparent'), detail);
+};
+
+const verifySpecimens = async (page, name) => {
+  const sample = async (selector, read, count) => {
+    const columns = await sampleColumns(selector, read);
+    const complete = ['basecoat', 'daisyui', 'materialx'].every(library =>
+      columns.filter(c => c.library === library && c.values.length === count).length === 1);
+    return {complete: complete && columns.length === 3, values: columns.flatMap(c => c.values),
+      detail: JSON.stringify(columns)};
+  };
+  const readType = el => {
+    const cs = getComputedStyle(el);
+    return [cs.fontFamily, cs.fontWeight, cs.fontSize, cs.lineHeight];
+  };
+  // Let CSSOM resolve the reference font so quoted fallback lists serialize identically.
+  const textRole = async (selector, count, role, font, properties) => {
+    const actual = await sample(selector, readType, count);
+    const expected = await ev(`(() => {
+      const ref = document.createElement('span');
+      ref.style.font = ${JSON.stringify(font)};
+      document.body.append(ref);
+      const result = (${readType})(ref);
+      ref.remove();
+      return result;
+    })()`);
+    check(`${name}.${role}-type`, actual.complete && actual.values.every(styles =>
+      expected.slice(0, properties).every((v, i) => v === styles[i])),
+      `expected ${JSON.stringify(expected)} ${actual.detail}`);
+  };
+  const prose = (selector, count) => textRole(selector, count, 'prose',
+    'var(--fly-body-weight) var(--fly-body-size) / var(--fly-body-leading) var(--fly-body-family)', 4);
+  const titles = (selector, count) => textRole(selector, count, 'title',
+    '600 var(--fly-card-title-size) var(--fly-control-font)', 3);
+  const spread = xs => Math.max(...xs) - Math.min(...xs);
+  if (page === 'buttons') {
+    const s = await sample('button:disabled', el => {
+      const cs = getComputedStyle(el);
+      return [cs.opacity, cs.color, cs.backgroundColor, cs.borderTopColor].join('|');
+    }, 1);
+    check(`${name}.disabled-treatment`, s.complete && new Set(s.values).size === 1, s.detail);
+  } else if (page === 'fields') {
+    const selects = await sample('select', el => ({
+      width: el.getBoundingClientRect().width, field: el.parentElement.getBoundingClientRect().width
+    }), 1);
+    check(`${name}.select-widths`, selects.complete && selects.values.every(v => v.width > 0 &&
+      Math.abs(v.width - v.field) <= 1) && spread(selects.values.map(v => v.width)) <= 1, selects.detail);
+    const areas = await sample('textarea', el => el.getBoundingClientRect().height, 1);
+    check(`${name}.textarea-heights`, areas.complete && Math.min(...areas.values) > 0 &&
+      spread(areas.values) <= 2, areas.detail);
+  } else if (page === 'choices') {
+    const s = await sample('input[type="checkbox"]:checked:not([role="switch"]), input[type="radio"]:checked',
+      measureChoiceMark, 2);
+    check(`${name}.centred-marks`, s.complete && s.values.every(v => v && v.w > 0 && v.h > 0 &&
+      Math.abs(v.dx) <= 1 && Math.abs(v.dy) <= 1) && new Set(s.values.map(v => v?.type)).size === 2, s.detail);
+  } else if (page === 'badges') {
+    await prose('p:has(kbd)', 1);
+  } else if (page === 'cards') {
+    await prose('[data-compare-control="card"] p:not(:has(.md-button))', 1);
+    await titles('[data-compare-control="card"] h3', 1);
+  } else if (page === 'dialogs') {
+    await prose('dialog p[id]', 1);
+    await titles('dialog h3', 1);
+    await verifyCompareDialogs(name);
+  } else if (page === 'tables') {
+    await textRole('tbody td', 9, 'cell', 'var(--fly-table-weight) var(--fly-table-size) var(--fly-body-family)', 3);
+    await textRole('thead th', 3, 'header', '600 var(--fly-caption-size) var(--fly-control-font)', 3);
+    const stripes = await sample('tbody', el => [...el.rows].map(row =>
+      [row, ...row.cells].map(node => {
+        const cs = getComputedStyle(node);
+        return cs.backgroundColor + ' ' + cs.backgroundImage;
+      }).join('|')), 1);
+    check(`${name}.no-zebra`, stripes.complete && stripes.values.every(rows =>
+      rows.length === 3 && new Set(rows).size === 1), stripes.detail);
+  } else if (page === 'tabs') {
+    await prose('[role="tabpanel"], .du-tab-content, .tabbed-block > p', 2);
+    const s = await sample('[role="tab"], .du-tab, .tabbed-labels > label', el =>
+      [el, ...el.querySelectorAll('a')].map(label => getComputedStyle(label).textDecorationLine), 2);
+    check(`${name}.label-decoration`, s.complete && s.values.flat().every(d => d === 'none'), s.detail);
+  } else if (page === 'alerts') {
+    const description = '.alert > section, .du-alert p, .admonition > p:not(.admonition-title)';
+    await prose(description, 2);
+    await textRole('.alert h3, .du-alert h3, .admonition-title', 2, 'title',
+      '600 var(--fly-body-size) var(--fly-control-font)', 2);
+    const gaps = await sample('.alert + .alert, .du-alert + .du-alert, .admonition + .admonition', el =>
+      (el.getBoundingClientRect().top - el.previousElementSibling.getBoundingClientRect().bottom) /
+      parseFloat(getComputedStyle(document.documentElement).fontSize), 1);
+    check(`${name}.stack-gap`, gaps.complete && gaps.values.every(v => v >= 0.75), gaps.detail);
+    const s = await sample(description, el => {
+      const cs = getComputedStyle(el);
+      return parseFloat(cs.lineHeight) / parseFloat(cs.fontSize);
+    }, 2);
+    check(`${name}.body-leading`, s.complete && s.values.every(ratio => ratio >= 1.35), s.detail);
+  }
+};
+
+const verifyGuideControlFonts = async base => {
+  for (const [page, selector, count] of [
+    ['navigation/menus', '.dropdown-menu [role="menuitem"]', 2],
+    ['navigation/location', '.pagination .btn', 3],
+    ['feedback/dialogs', '.popover [data-popover] :is(h3, p)', 2],
+    ['feedback/hints', '#toaster .toast-content :is(h2, p)', 2],
+  ]) {
+    await open(`${base}/demo/${page}/`);
+    if (page === 'feedback/hints') await ab('click', '.fltheme-components button:has(+ #toaster)');
+    const got = await ev(`(() => {
+      const reference = document.createElement('span');
+      reference.style.fontFamily = 'var(--fly-control-font)';
+      document.body.append(reference);
+      const expected = getComputedStyle(reference).fontFamily;
+      reference.remove();
+      const fonts = [...document.querySelectorAll(${JSON.stringify('.fltheme-components ' + selector)})]
+        .map(el => getComputedStyle(el).fontFamily);
+      return {expected, fonts};
+    })()`);
+    check(`guide.control-face.${page}`, got.fonts.length === count && got.fonts.every(f => f === got.expected), JSON.stringify(got));
+  }
+};
+
+const verifyComparison = async base => {
+  await open(`${base}/demo/compare/buttons/`, 390);
+  const labels = await sampleColumns('[data-compare-label]', el => {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    return {kind: el.dataset.compareLabel, wrapped: range.getClientRects().length > 1,
+      visible: el.clientHeight, content: el.scrollHeight};
+  });
+  check('compare.buttons.labels-fit@390', labels.length === 3 && labels.every(({values}) =>
+    values.length === 2 && values.some(v => v.kind === 'icon') && values.some(v => v.kind === 'long' && v.wrapped) &&
+    values.every(v => v.visible > 0 && v.content <= v.visible + 1)), JSON.stringify(labels));
+  const buttonRadii = new Map();
+  for (const [page, control] of [['buttons', 'primary'], ['fields', 'text'], ['cards', 'card'],
+    ['choices'], ['tabs'], ['alerts'], ['badges'], ['tables'], ['dialogs']]) {
+    await open(`${base}/demo/compare/${page}/`, 1440);
+    for (const scheme of ['default', 'slate']) {
+      await setScheme(scheme);
+      const name = `compare.${page}.${scheme}`;
+      await verifySpecimens(page, name);
+      if (!control) continue;
+      const items = await ev(probeComparison(control));
+      const detail = JSON.stringify(items);
+      const complete = items.length === 3 && items.every(i => !i.missing && i.height > 0) &&
+        new Set(items.map(i => i.library)).size === 3;
+      check(`${name}.specimens`, complete, detail);
+      if (!complete) continue;
+      if (control === 'card') {
+        check(`${name}.visible-borders`, items.every(i => i.border > 0 && i.alpha > 0 && i.contrast >= 1.5), detail);
+        continue;
+      }
+      const heights = items.map(i => i.height);
+      check(`${name}.height`, Math.max(...heights) - Math.min(...heights) <= 1, detail);
+      check(`${name}.radius`, items.every(i => i.radius === items[0].radius && parseFloat(i.radius) > 0), detail);
+      if (control === 'primary') buttonRadii.set(scheme, items[0].radius);
+      if (control === 'text') {
+        check(`${name}.matches-button-radius`, items.every(i => i.radius === buttonRadii.get(scheme)), detail);
+        check(`${name}.control-boundaries`, items.every(i => i.border > 0 && i.contrast >= 3), detail);
+      } else {
+        const decorated = await ev(`[...document.querySelectorAll('.fl-compare :is(.btn, .du-btn, .md-button)')]
+          .filter(el => getComputedStyle(el).textDecorationLine !== 'none').map(el => el.textContent.trim())`);
+        check(`${name}.no-decoration`, items.every(i => i.decoration === 'none') && decorated.length === 0,
+          `decorated ${JSON.stringify(decorated)}`);
+      }
+    }
+  }
 };
 
 const CANARY = 'verify-fly-canary';
@@ -996,6 +1253,10 @@ try {
     sites[name] = path.join(tmp, name);
     await build(config, sites[name]);
   }));
+  sites.demo = path.join(ROOT, 'docs');
+  if (!fs.existsSync(path.join(sites.demo, 'compare/buttons/index.html'))) {
+    throw new Error('The built Compare demo is missing. Run ./build.sh before browser verification.');
+  }
   server = await serve(sites);
   const base = `http://127.0.0.1:${server.address().port}`;
   session = (await run('agent-browser', ['session', 'id', '--scope', 'worktree', '--prefix', 'verify'], {cwd: ROOT, encoding: 'utf8'})).stdout.trim();
@@ -1023,6 +1284,8 @@ try {
   await verifyKeyboard(base);
   for (const width of [1440, 390]) await verifyInlineCode(base, width);
   await verifyRailLabels(base);
+  await verifyComparison(base);
+  await verifyGuideControlFonts(base);
   await verifyNoErrors(base);
 } catch (error) {
   check('verify-fly.run', false, String(error?.stack || error).split('\n').slice(0, 4).join(' / '));

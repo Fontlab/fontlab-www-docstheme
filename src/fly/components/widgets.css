@@ -1,0 +1,291 @@
+/* this_file: src/fly/components/widgets.css */
+@layer fly.components {
+  .md-typeset :is(.grid > .card, .grid.cards > ul > li) {
+    background-color: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-card-radius);
+    box-shadow: none;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.card, .du-card.du-card-border, .dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
+    background-color: var(--fly-surface-raised) !important;
+    color: var(--fly-ink);
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-card-radius) !important;
+    box-shadow: none;
+  }
+
+  .md-typeset :is(.fltheme-components .card, .grid > .card, .grid.cards > ul > li) {
+    gap: var(--fly-half);
+    padding: var(--fly-card-padding);
+  }
+
+  .md-typeset .fltheme-components .card > :is(header, section, footer) {
+    padding-inline: 0;
+  }
+
+  .md-typeset .fltheme-components .du-card-body {
+    --du-card-p: var(--fly-card-padding);
+    --du-card-fs: var(--fly-body-size);
+  }
+
+  .md-typeset .tabbed-labels {
+    box-sizing: border-box;
+    inline-size: 100%;
+    box-shadow: inset 0 -1px var(--fly-card-border);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    height: auto;
+    --md-default-fg-color: var(--fly-selection);
+    --md-accent-fg-color: var(--fly-selection);
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [role='tablist']:not([aria-orientation='vertical']), .du-tabs-border) {
+    box-sizing: border-box;
+    inline-size: 100% !important;
+  }
+
+  .md-typeset .fltheme-components .tabs [role='tablist'] {
+    box-shadow: inset 0 -1px var(--fly-card-border) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+
+  .md-typeset .fltheme-components .tabs [role='tablist']:not([aria-orientation='vertical']) {
+    justify-content: flex-start !important;
+    gap: 0;
+  }
+
+  .md-typeset .fltheme-components .tabs [role='tablist']:not([aria-orientation='vertical']) > [role='tab'] {
+    flex: none !important;
+  }
+
+  .md-typeset .tabbed-labels > label {
+    box-sizing: border-box;
+    block-size: var(--fly-control-height);
+    min-block-size: var(--fly-control-height);
+    align-content: center;
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [role='tab'], .du-tab) {
+    box-sizing: border-box;
+    block-size: var(--fly-control-height) !important;
+    min-block-size: var(--fly-control-height) !important;
+    align-content: center;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+    text-decoration: none !important;
+    padding: 0 var(--fly-half) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: inset 0 -1px var(--fly-card-border) !important;
+    color: var(--fly-quiet) !important;
+  }
+
+  .md-typeset .tabbed-labels:not(.tabbed-labels--linked) > label {
+    padding: 0 var(--fly-half);
+  }
+
+  .md-typeset .tabbed-labels--linked > label {
+    padding: 0;
+  }
+
+  .md-typeset .tabbed-labels--linked > label > a {
+    display: grid;
+    align-items: center;
+    height: 100%;
+    padding: 0 var(--fly-half);
+  }
+
+  .md-typeset .tabbed-labels > label a {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+  }
+
+  .md-typeset .tabbed-labels::before {
+    background: var(--fly-selection);
+    height: 2px;
+  }
+
+  /* The panels share this flex container. Extend the baseline across the
+     remaining label-row space before the first panel (order 1). */
+  .md-typeset .fltheme-components .du-tabs-border::after {
+    content: '';
+    position: static !important;
+    flex: 1 0 0;
+    align-self: flex-end;
+    height: 1px;
+    background: var(--fly-card-border);
+  }
+
+  .md-typeset .fltheme-components .du-tabs-border > .du-tab::before {
+    content: none !important;
+  }
+
+  .md-typeset .fltheme-components :is(.tabs [aria-selected='true'], .du-tab:is(:checked, :has(:checked), .du-tab-active, [aria-selected='true'], [aria-current='page'])) {
+    color: var(--fly-selection) !important;
+    box-shadow: inset 0 -2px var(--fly-selection) !important;
+  }
+
+  .md-typeset :is(.md-tag, mark.fly-badge) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.65rem;
+    padding: 0 0.55em;
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-control-radius);
+    background: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-size-xs);
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components :is(.badge, .du-badge) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.65rem;
+    padding: 0 0.55em;
+    border: 1px solid var(--fly-card-border) !important;
+    border-radius: var(--fly-control-radius) !important;
+    background: var(--fly-surface-raised);
+    color: var(--fly-ink);
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-size-xs) !important;
+    font-weight: var(--fly-control-weight);
+    text-decoration: none;
+  }
+
+  .md-typeset .fltheme-components :is(.badge[data-variant='secondary'], .du-badge-neutral) {
+    background: var(--fly-surface-raised) !important;
+    color: var(--fly-ink) !important;
+  }
+
+  .md-typeset .fltheme-components :is(.badge[data-variant='outline'], .du-badge-outline) {
+    background: transparent !important;
+    color: var(--fly-ink) !important;
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) {
+    padding: 0;
+    background-color: var(--fly-surface-raised);
+    border: 1px solid var(--fly-control-border);
+    border-radius: var(--fly-control-radius);
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) > summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-block-size: var(--fly-control-height);
+    margin: 0;
+    padding: 0.5rem 2rem 0.5rem var(--fly-card-padding);
+    background: transparent;
+    color: var(--fly-ink);
+    font-size: inherit;
+    font-weight: var(--fly-control-weight);
+  }
+
+  .md-typeset .fltheme-components details:is(.accordion > details, .du-collapse) > summary::before {
+    content: none;
+  }
+
+  .md-typeset :is(.fltheme-components .accordion > details, .fltheme-components .du-collapse-arrow, details:not(.fltheme-components *)) > summary:not(:has(> svg))::after {
+    content: '';
+    position: absolute;
+    display: block;
+    inset-inline: auto var(--fly-card-padding);
+    top: 50%;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    box-shadow: none;
+    background: none;
+    mask: none;
+    transform: none;
+    transform-origin: center;
+    rotate: 45deg;
+    translate: 0 -70%;
+  }
+
+  .md-typeset :is(.fltheme-components .accordion > details, .fltheme-components .du-collapse-arrow, details:not(.fltheme-components *))[open] > summary:not(:has(> svg))::after {
+    rotate: 225deg;
+    translate: 0 -30%;
+  }
+
+  .md-typeset .fltheme-components details[open]:is(.accordion > details, .du-collapse) > :not(summary) {
+    padding: 0 var(--fly-card-padding) var(--fly-card-padding);
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) {
+    box-sizing: border-box;
+    inline-size: min(var(--fly-dialog-width), calc(100vw - 2rem)) !important;
+    max-inline-size: none !important;
+    max-block-size: calc(100dvh - 2rem) !important;
+    overflow-y: auto;
+    padding: calc(1.5 * var(--fly-card-padding)) !important;
+    box-shadow: var(--fly-shadow-down) !important;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog[open] > div, .alert-dialog[open] > div, .du-modal-box), dialog.fly-dialog[open]) {
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--fly-half) !important;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog > div, .alert-dialog > div, .du-modal-box), dialog.fly-dialog) > :is(header, section, h2, h3, p, footer, form, .du-modal-action),
+  .md-typeset .fltheme-components :is(.dialog, .alert-dialog) > div > :is(header, section) > :is(h2, h3, p):only-child {
+    margin-block: 0 !important;
+  }
+
+  .md-typeset :is(.fltheme-components :is(.dialog, .alert-dialog) > div > footer, .fltheme-components .du-modal-action, dialog.fly-dialog > form[method='dialog']) {
+    display: flex;
+    flex-flow: row wrap !important;
+    justify-content: flex-end !important;
+    gap: var(--fly-half);
+  }
+
+  .md-typeset :is(dialog.fly-dialog .md-button--primary, .fltheme-components dialog :is(.du-btn-primary, .btn:not([data-variant]), .btn[data-variant='primary'])):not(:disabled, [aria-disabled='true'], .du-btn-disabled) {
+    background-color: var(--fly-selection) !important;
+    color: var(--fly-paper-3) !important;
+  }
+
+  .md-typeset dialog.fly-dialog {
+    margin: auto;
+  }
+
+  /* daisyUI dims its full-screen dialog element in addition to the native backdrop. */
+  .md-typeset .fltheme-components dialog.du-modal:modal {
+    background: transparent !important;
+  }
+
+  .md-typeset :is(.fltheme-components dialog:is(.dialog, .alert-dialog, .du-modal), dialog.fly-dialog)::backdrop {
+    display: block !important;
+    background: rgb(0 0 0 / 32%) !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .md-typeset :is(.fltheme-components dialog:is(.dialog, .alert-dialog, .du-modal), dialog.fly-dialog)::backdrop {
+      background: var(--fly-paper-3) !important;
+    }
+  }
+}

@@ -1,0 +1,243 @@
+/* this_file: src/fly/components/forms.css */
+@layer fly.components {
+  .md-typeset .fly-form {
+    font-family: var(--fly-control-font);
+    font-size: var(--fly-control-size);
+    line-height: 1.4;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(label, legend):not(.du-btn, .du-tab) {
+    color: var(--fly-ink) !important;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) label:has(> input:is([type='checkbox'], [type='radio'])) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-block-size: 2rem;
+    width: fit-content;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(fieldset, .du-fieldset) {
+    min-inline-size: 0;
+    padding: 0.5rem var(--fly-card-padding);
+    border: 1px solid var(--fly-card-border);
+    border-radius: var(--fly-card-radius);
+    font-size: inherit;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(.description, .du-label:not(label), small) {
+    color: var(--fly-quiet);
+    font-size: var(--fly-size-xs);
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is([role='alert'], [data-error]):not(.alert, .du-alert) {
+    color: var(--fly-danger-text);
+  }
+
+  .md-typeset :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button):not([type='checkbox'], [type='radio'], [type='range']),
+    .fly-form :is(input:not([type='checkbox'], [type='radio'], [type='range'], [type='hidden']), select, textarea)
+  ) {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    min-block-size: var(--fly-control-height) !important;
+    background-color: var(--fly-paper-3) !important;
+    border: 1px solid var(--fly-control-border) !important;
+    color: var(--fly-ink) !important;
+    box-shadow: none !important;
+    padding-inline-start: 0.7rem;
+    font-family: var(--fly-control-font) !important;
+    font-size: var(--fly-control-size) !important;
+    font-weight: var(--fly-control-weight) !important;
+    line-height: 1.25;
+  }
+
+  .md-typeset :is(
+    .fltheme-components :is(.du-input, .du-select, .du-textarea, input.input, .textarea, select.select, .select > button),
+    .fly-form :is(input, select, textarea)
+  ):not(.du-join-item, [type='checkbox'], [type='radio'], [type='range']) {
+    border-radius: var(--fly-control-radius) !important;
+  }
+
+  .md-typeset :is(.fltheme-components input.du-input, .fltheme-components input.input, .fly-form input):not(
+    [type='checkbox'], [type='radio'], [type='range'], [type='hidden']
+  ) {
+    block-size: var(--fly-control-height) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, textarea)::placeholder {
+    color: var(--fly-quiet);
+    opacity: 1;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, select, textarea, button)[aria-invalid='true'] {
+    border-color: var(--fly-danger-text) !important;
+  }
+
+  .md-typeset :is(.fltheme-components textarea:is(.textarea, .du-textarea), .fly-form textarea):not([hidden]) {
+    field-sizing: fixed;
+    block-size: auto !important;
+    min-block-size: calc(3lh + 1rem + 2px) !important;
+    padding-block: 0.5rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Two ink strokes follow the palette and leave list boxes arrow-free. */
+  .md-typeset :is(.fltheme-components, .fly-form) select:not([multiple], [size]:not([size='1'])) {
+    appearance: none !important;
+    padding-inline-end: 2.4rem !important;
+    background-image:
+      linear-gradient(45deg, transparent 39%, currentColor 41% 59%, transparent 61%),
+      linear-gradient(-45deg, transparent 39%, currentColor 41% 59%, transparent 61%) !important;
+    background-size: 0.4rem 0.4rem !important;
+    background-position: right 1.4rem center, right 1rem center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) select:not([multiple], [size]:not([size='1'])):dir(rtl) {
+    background-position: left 1rem center, left 1.4rem center !important;
+  }
+
+  /* Each library uses the platform slider. Its thin rail, live fill and thumb
+     also track keyboard changes, form resets and scripted values without JS. */
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range'] {
+    all: revert !important;
+    box-sizing: border-box !important;
+    inline-size: min(20rem, 100%) !important;
+    min-inline-size: 0 !important;
+    block-size: max(24px, 1.6rem) !important;
+    margin: 0 !important;
+    color-scheme: inherit !important;
+    accent-color: var(--fly-selection) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']::-webkit-slider-runnable-track {
+    all: revert !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']::-webkit-slider-thumb {
+    all: revert !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']::-moz-range-track {
+    all: revert !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']::-moz-range-progress {
+    all: revert !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']::-moz-range-thumb {
+    all: revert !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input[type='range']:focus-visible {
+    outline: 2px solid var(--fly-focus-ring) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Use the same boundary and marks for native and library choices. */
+  .md-typeset :is(
+    .fltheme-components input:is(.input, .du-checkbox, .du-radio, .du-toggle),
+    .fly-form input
+  ):is([type='checkbox'], [type='radio']) {
+    appearance: none !important;
+    position: relative !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    flex: none;
+    inline-size: 1.4rem !important;
+    block-size: 1.4rem !important;
+    min-block-size: 0;
+    margin: 0;
+    padding: 0 !important;
+    vertical-align: middle;
+    border: 1px solid var(--fly-control-border) !important;
+    border-radius: 0.25rem !important;
+    background: var(--fly-paper-3) !important;
+    color: var(--fly-selection) !important;
+    box-shadow: none !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .du-toggle, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  )::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    margin: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    inline-size: 0.75rem !important;
+    block-size: 0.75rem !important;
+    background: currentColor !important;
+    border-radius: 0 !important;
+    mask: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    scale: none !important;
+    translate: none !important;
+    rotate: none !important;
+    opacity: 0 !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):is(
+    [type='checkbox']:not([role='switch'])
+  )::before {
+    clip-path: polygon(14% 40%, 0 55%, 40% 96%, 100% 16%, 84% 3%, 38% 66%) !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio'],
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-radio, .fly-form input)[type='radio']::before {
+    border-radius: 50% !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .du-radio, .fly-form input):is(
+    [type='checkbox'], [type='radio']
+  ):checked::before {
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) input:is(.input, .du-checkbox, .fly-form input):indeterminate::before {
+    clip-path: inset(40% 0) !important;
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])[type='checkbox'] {
+    grid-template-columns: 1fr 1fr !important;
+    inline-size: 2.5rem !important;
+    border-radius: 2rem !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])[type='checkbox']::before {
+    position: static !important;
+    grid-area: 1 / 1 !important;
+    inline-size: 0.9rem !important;
+    block-size: 0.9rem !important;
+    border-radius: 50% !important;
+    opacity: 1 !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])[type='checkbox']:checked {
+    background: var(--fly-selection) !important;
+    color: var(--fly-paper-3) !important;
+  }
+
+  .md-typeset :is(.fltheme-components input:is(.du-toggle, .input[role='switch']), .fly-form input[role='switch'])[type='checkbox']:checked::before {
+    grid-column: 2 !important;
+  }
+
+  /* Basecoat paints a second check in ::after. Fly paints every mark in ::before. */
+  .md-typeset .fltheme-components input:is(.input[type='checkbox'], .du-toggle)::after {
+    content: none !important;
+  }
+
+  .md-typeset :is(.fltheme-components, .fly-form) :is(input, select, textarea):disabled {
+    opacity: 0.55;
+  }
+}

@@ -150,12 +150,20 @@
     }
   }
 
-  /* While L2 covers all but a sliver of L1, L1's labels keep their full line and run
-     under the L2 sheet, which cuts them at its edge (no ellipsis: MaterialX's own
-     .md-ellipsis would add one); retracting L2 shows them whole. Rail links carry a title. */
   @media screen and (76.25em <= width < 100em) {
-    .md-sidebar--primary .md-nav__link .md-ellipsis {
-      text-overflow: clip;
+    /* Keep the complete label inside the exposed strip, even before L2 retracts. */
+    body:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link)
+      .md-sidebar--primary .md-nav__link {
+      max-inline-size: calc(var(--fly-l1) - 0.5rem);
+      padding-inline: 0.65rem;
+    }
+
+    body:not(.fly-no-l2):has(.md-sidebar--secondary .md-nav__link)
+      .md-sidebar--primary .md-nav__link .md-ellipsis {
+      white-space: normal;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      overflow: visible;
     }
   }
 

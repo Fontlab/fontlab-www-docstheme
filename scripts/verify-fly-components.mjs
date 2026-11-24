@@ -2,7 +2,7 @@
 // this_file: scripts/verify-fly-components.mjs
 // Browser checks on the demo site (src_docs/) that the fixture checks in verify-fly.mjs do
 // not cover: the component bundle's dark mode follows the palette toggle (fly.js), rails
-// without links collapse, mid-desktop L1 labels run under L2 and carry a title,
+// without links collapse,
 // short inline code is never split across lines, element ids are unique. Builds the site into a temp dir (needs
 // docs/fly/ from npm run build), serves it with agent-browser (never Playwright).
 // One line per assertion, "ok|FAIL <name> <detail>"; exit 1 on any FAIL.
@@ -105,20 +105,8 @@ try {
   const both = await evaluate("return {paper: getComputedStyle(document.querySelector('.md-main__inner'), '::before').display, l2: getComputedStyle(document.querySelector('.md-sidebar--secondary')).display}");
   check('rails.section-page-keeps-l2', both.paper !== 'none' && both.l2 !== 'none', JSON.stringify(both));
 
-  // Mid-desktop L1: labels keep their full line under the L2 sheet (clip, never an
-  // ellipsis) and carry a title; L1 focused (the same :is(:hover, :focus-within) rule as
-  // the pointer) retracts L2 past the label's end.
-  await open('theme/configuration/');
-  const label = "const span = [...document.querySelectorAll('.md-sidebar--primary .md-nav__link .md-ellipsis')].find(s => s.textContent.trim() === 'Configuration' && s.getClientRects().length); const box = span.getBoundingClientRect(); return {title: span.title, overflow: getComputedStyle(span).textOverflow, cut: span.scrollWidth > span.clientWidth, end: Math.round(box.left + span.scrollWidth), sheet: Math.round(document.querySelector('.md-sidebar--secondary').getBoundingClientRect().left)}";
-  const under = await evaluate(label);
-  check('l1.clip-under-sheet', under.title === 'Configuration' && under.overflow === 'clip' && !under.cut && under.end > under.sheet, JSON.stringify(under));
-  await evaluate("document.querySelector('.md-sidebar--primary a.md-nav__link--active').focus(); return 0");
-  await ab('wait', '400');
-  const whole = await evaluate(label);
-  check('l1.reveal-shows-label', whole.end <= whole.sheet, JSON.stringify(whole));
-
   // Element ids are unique in the DOM (compiled examples quote theirs only as text).
-  for (const page of ['start/', 'structure/disclosure/']) {
+  for (const page of ['start/', 'structure/disclosure/', 'compare/tabs/', 'compare/dialogs/']) {
     await open(page);
     const dupes = await evaluate("const seen = {}; for (const e of document.querySelectorAll('[id]')) seen[e.id] = (seen[e.id] || 0) + 1; return Object.entries(seen).filter(([, n]) => n > 1)");
     check(`ids.unique.${page}`, dupes.length === 0, JSON.stringify(dupes));
